@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>발효의 초심 · 천연발효식초 — 영동에덴원</title>
-  <meta name="description" content="누룩도 종초도 더하지 않고 옹기 안에서 자연 미생물이 1년 6개월 이상 복합 발효한 영동에덴원의 천연발효식초. 프리미엄·산야초·과실 22종으로 만나보세요." />
+  <meta name="description" content="누룩도 종초도 더하지 않고 옹기 안에서 자연 미생물이 1년 6개월 이상 복합 발효한 영동에덴원의 천연발효식초. 프리미엄·산야초·과일 22종으로 만나보세요." />
 
   <meta property="og:title" content="발효의 초심 · 천연발효식초 — 영동에덴원" />
   <meta property="og:description" content="옹기 안에서 자연 미생물이 천천히 빚어낸 천연발효식초 22종" />
@@ -1133,6 +1133,18 @@
     font-style: italic;
   }
 
+  /* 마지막 완성 사진 — 가운데 배치 */
+  .detail-photos__final {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.6rem;
+  }
+
+  .detail-photos__final .detail-photos__item {
+    max-width: 280px;
+    width: 100%;
+  }
+
   /* 활용법 */
   .detail-uses {
     display: grid;
@@ -1793,7 +1805,7 @@
       </p>
     </div>
     <div class="detail-hero__image">
-      <img src="../images/vinegar-hero.jpg" alt="영동에덴원 발효의 초심 — 산야초와 과실 두 라인" />
+      <img src="../images/vinegar-hero.jpg" alt="영동에덴원 발효의 초심 — 산야초와 과일 두 라인" />
     </div>
   </header>
 
@@ -1827,14 +1839,23 @@
       <h2 class="detail-section__title">옹기가 식초를 빚는 시간</h2>
 
       <div class="detail-photos">
-        <div class="detail-photos__item"><img src="../images/vinegar-furnace.jpg" alt="원물 달이기" loading="lazy" /></div>
-        <div class="detail-photos__item"><img src="../images/vinegar-bipa.jpg" alt="비파 원물" loading="lazy" /></div>
-        <div class="detail-photos__item"><img src="../images/vinegar-sancho.jpg" alt="산초 원물" loading="lazy" /></div>
-        <div class="detail-photos__item"><img src="../images/vinegar-aronia.jpg" alt="아로니아 원물" loading="lazy" /></div>
-        <div class="detail-photos__item"><img src="../images/vinegar-fermenting-2.jpg" alt="식초 발효 과정" loading="lazy" /></div>
-        <div class="detail-photos__item"><img src="../images/vinegar-mature.jpg" alt="완성된 천연발효식초" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-01.jpg" alt="단당물 옹기" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-02.jpg" alt="가마솥에서 단당물 만들기" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-03.jpg" alt="옹기에 담긴 원물" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-04.jpg" alt="옹기에 담긴 원물" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-05.jpg" alt="옹기에 담긴 원물" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-06.jpg" alt="옹기에 담긴 원물" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-07.jpg" alt="원물에 단당물을 더한 모습" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-08.jpg" alt="원물에 단당물을 더한 모습" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-09.jpg" alt="원물에 단당물을 더한 모습" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-10.jpg" alt="원물에 단당물을 더한 모습" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-11.jpg" alt="옹기 안에서 발효 중인 모습" loading="lazy" /></div>
+        <div class="detail-photos__item"><img src="../images/vinegar-process-12.jpg" alt="옹기 안에서 발효 중인 모습" loading="lazy" /></div>
       </div>
-      <p class="detail-photos__caption">다양한 원물을 옹기에 담아, 자연 미생물의 힘으로 천천히 발효시킵니다</p>
+      <div class="detail-photos__final">
+        <div class="detail-photos__item"><img src="../images/vinegar-process-13.jpg" alt="완성된 천연발효식초" loading="lazy" /></div>
+      </div>
+      <p class="detail-photos__caption">단당물을 빚고 원물과 만나, 옹기 안 자연 미생물의 힘으로 1년 6개월 이상 발효합니다</p>
     </div>
   </section>
 
@@ -1889,14 +1910,14 @@
         </div>
       </div>
 
-      <!-- 과실 -->
+      <!-- 과일 -->
       <div class="variety-block">
         <div class="variety-block__image">
-          <img src="../images/product-vinegar-fruit.jpg" alt="옹기 발효 과실 식초" loading="lazy" />
+          <img src="../images/product-vinegar-fruit.jpg" alt="옹기 발효 과일 식초" loading="lazy" />
         </div>
         <div class="variety-block__head">
-          <p class="variety-block__name">과실 식초 <span class="variety-block__count">1</span></p>
-          <p class="variety-block__desc">과실의 풍미를 옹기 발효로 담아낸 라인</p>
+          <p class="variety-block__name">과일 식초 <span class="variety-block__count">1</span></p>
+          <p class="variety-block__desc">과일의 풍미를 옹기 발효로 담아낸 라인</p>
         </div>
         <div class="variety-tags">
           <span class="variety-tag">아로니아</span>
@@ -1936,11 +1957,11 @@
   <section class="detail-cta">
     <h2 class="detail-cta__title">옹기가 빚은 식초,<br />직접 만나보세요</h2>
     <p class="detail-cta__sub">
-      가격 및 구매 안내는 카카오톡 채널로 문의해 주세요.<br />
+      가격 및 구매 안내는 문의해 주세요.<br />
       원하시는 식초 종류를 알려주시면 자세히 안내해 드립니다.
     </p>
     <div class="detail-cta__buttons">
-      <a href="http://pf.kakao.com/_yaKxlX" target="_blank" rel="noopener" class="btn btn--kakao" style="min-width:220px;">💬&nbsp;&nbsp;카카오톡 문의</a>
+      <a href="../contact.html" class="btn btn--earth" style="min-width:220px;">✉&nbsp;&nbsp;문의하기</a>
       <a href="../index.html#products" class="btn btn--ghost" style="border-color:rgba(244,237,224,0.5);">다른 제품 보기</a>
     </div>
   </section>
