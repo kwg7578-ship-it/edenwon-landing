@@ -1081,6 +1081,55 @@
     transition: all 0.2s ease;
   }
 
+  .variety-tag {
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s;
+  }
+
+  .variety-tag.is-active {
+    background: var(--gold);
+    color: var(--cream);
+    border-color: var(--gold);
+  }
+
+  /* 원물 정보 펼침 영역 */
+  .variety-info {
+    margin-top: 1.2rem;
+    padding: 1.2rem 1.4rem;
+    background: var(--cream-dark);
+    border-left: 3px solid var(--gold);
+    border-radius: 4px;
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .variety-info[hidden] {
+    display: none;
+  }
+
+  .variety-info__name {
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+    font-size: 1rem;
+  }
+
+  .variety-info__text {
+    color: var(--ink-soft);
+  }
+
+  /* 출처 안내 */
+  .variety-source-note {
+    margin-top: 2rem;
+    font-size: 0.78rem;
+    color: var(--ink-mute);
+    font-style: italic;
+    text-align: center;
+    line-height: 1.6;
+    padding: 0 1rem;
+  }
+
   .variety-tag:hover {
     border-color: var(--gold);
     color: var(--ink);
@@ -1822,10 +1871,10 @@
         </p>
         <p>
           옹기 안에서 오직 자연 미생물의 힘으로만<br />
-          1년 6개월 이상, 길게는 3년 넘게 천천히 익힙니다.
+          1년 6개월 이상, 길게는 3년 넘게 발효 및 숙성했습니다.
         </p>
         <p>
-          오래 걸리는 그 길이, 발효의 초심입니다.
+          정직하게 발효되는 식초, 발효의 초심입니다.
         </p>
       </div>
     </div>
@@ -1855,7 +1904,6 @@
       <div class="detail-photos__final">
         <div class="detail-photos__item"><img src="../images/vinegar-process-13.jpg" alt="완성된 천연발효식초" loading="lazy" /></div>
       </div>
-      <p class="detail-photos__caption">단당물을 빚고 원물과 만나, 옹기 안 자연 미생물의 힘으로 1년 6개월 이상 발효합니다</p>
     </div>
   </section>
 
@@ -1876,6 +1924,10 @@
           <span class="variety-tag variety-tag--premium">비파</span>
           <span class="variety-tag variety-tag--premium">포포</span>
           <span class="variety-tag variety-tag--premium">선학초</span>
+        </div>
+        <div class="variety-info" hidden>
+          <p class="variety-info__name"></p>
+          <p class="variety-info__text"></p>
         </div>
       </div>
 
@@ -1908,6 +1960,10 @@
           <span class="variety-tag">익모초</span>
           <span class="variety-tag">민트</span>
         </div>
+        <div class="variety-info" hidden>
+          <p class="variety-info__name"></p>
+          <p class="variety-info__text"></p>
+        </div>
       </div>
 
       <!-- 과일 -->
@@ -1922,9 +1978,17 @@
         <div class="variety-tags">
           <span class="variety-tag">아로니아</span>
         </div>
+        <div class="variety-info" hidden>
+          <p class="variety-info__name"></p>
+          <p class="variety-info__text"></p>
+        </div>
       </div>
 
-      <p class="detail-price-note">모든 식초는 발효의 초심과 동일하게 1년 6개월 이상 옹기 발효합니다.</p>
+      <p class="variety-source-note">
+        * 농촌진흥청 농업기술포털·식품안전나라·동의보감 등 공식 자료 참고.<br />
+        본 식초는 일반 식품으로, 표시된 원물의 전통적 활용 정보가 의학적 효능을 보장하지 않습니다.
+      </p>
+
     </div>
   </section>
 
@@ -1977,6 +2041,67 @@
       <span style="opacity: 0.5;">ⓒ 2026 영동에덴원 · All rights reserved.</span>
     </div>
   </footer>
+
+<script>
+(function() {
+  // 22개 원물 정보 (주요 성분 + 전통 활용)
+  const varietyInfo = {
+    // 프리미엄
+    '비파': '비타민·미네랄, 트리테르페노이드 함유. 동의보감에 잎과 열매가 호흡기 관련 약재로 기록.',
+    '포포': '폴리페놀, 비타민C, 칼륨 등 함유. 한국에서 번식 중인 식용 과일.',
+    '선학초': '한국 자생 약용식물. 본초학 자료에 출혈·지혈 관련 약재로 기록.',
+    // 산야초
+    '메밀': '루틴, 비타민B, 식이섬유 풍부. 한국 전통 환절기 음식 재료.',
+    '토란': '갈락탄, 뮤신 등 점액 성분 함유. 추석 명절 음식 재료, 전통적으로 소화기 관련 식재.',
+    '생강': '진저롤, 쇼가올 함유. 한식 대표 향신료, 전통적으로 소화·발한 관련 식재.',
+    '여주': '카란틴, 비타민C 등 함유. 동아시아 전통 식재료.',
+    '방풍': '한국·중국 자생 약용식물. 동의보감에 풍한 관련 약재로 기록.',
+    '쑥': '시네올, 비타민A 등 함유. 한식 떡류·한방, 동의보감에 부인과 관련 기록.',
+    '칡': '다이드제인(이소플라본) 함유. 동의보감에 갈증·숙취 관련 약재로 기록.',
+    '곰보배추': '한국 자생 약용식물. 본초학에 호흡기 관련 약재로 기록.',
+    '생강나무': '강원도 향토 산나물. 어린잎·잎·가지를 봄철 산나물·차로 전통 활용.',
+    '제비꽃': '안토시아닌 등 함유. 봄나물, 본초학에 해열 관련 기록.',
+    '돌나물': '비타민C 풍부. 봄철 김치 재료, 본초학에 해열 관련 기록.',
+    '뱀딸기': '폴리페놀 등 함유. 산야 자생 식물, 전통 약용식물로 활용.',
+    '환삼덩굴': '한국 자생 약용식물. 본초학 자료에 약재로 기록.',
+    '삼백초': '한국·동아시아 자생 약용식물. 동의보감에 호흡기 관련 약재로 기록.',
+    '엉겅퀴': '실리마린, 폴리페놀 등 함유. 본초학에 간 관련 약재로 기록.',
+    '참소엽': '토종 들깨. 페릴라알데히드, 베타카로틴 함유. 동의보감에 소화·풍사 관련 기록.',
+    '익모초': '한국 자생 약용식물. 동의보감에 부인과 관련 약재로 기록.',
+    '민트': '페퍼민트·스피어민트 등 혼합. 멘톨 등 함유. 허브로 청량감·소화 관련 전통 활용.',
+    // 과일
+    '아로니아': '안토시아닌 풍부. 식약처 건강기능식품 원료 등재 — 혈행 개선 도움(공식 인정 기능성).'
+  };
+
+  document.querySelectorAll('.variety-tag').forEach(function(tag) {
+    tag.addEventListener('click', function() {
+      const name = this.textContent.trim();
+      const block = this.closest('.variety-block');
+      if (!block) return;
+      const infoBox = block.querySelector('.variety-info');
+      if (!infoBox) return;
+
+      // 같은 태그 다시 클릭 → 닫힘
+      if (this.classList.contains('is-active')) {
+        this.classList.remove('is-active');
+        infoBox.hidden = true;
+        return;
+      }
+
+      // 같은 그룹의 다른 활성 태그 비활성화
+      block.querySelectorAll('.variety-tag.is-active').forEach(function(t) {
+        t.classList.remove('is-active');
+      });
+
+      // 현재 태그 활성화 + 정보 표시
+      this.classList.add('is-active');
+      infoBox.querySelector('.variety-info__name').textContent = name;
+      infoBox.querySelector('.variety-info__text').textContent = varietyInfo[name] || '정보 없음';
+      infoBox.hidden = false;
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
