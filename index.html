@@ -476,6 +476,89 @@
       background: var(--cream-light);
     }
 
+    /* ============ SEASONS TABS + CAROUSEL ============ */
+    .seasons-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .seasons-tab {
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: var(--ink-soft);
+      padding: 0.55rem 1.4rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border-radius: 2px;
+    }
+
+    .seasons-tab:hover {
+      border-color: var(--gold);
+      color: var(--ink);
+    }
+
+    .seasons-tab.is-active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--cream);
+    }
+
+    .seasons-carousel {
+      display: none;
+      margin-bottom: 3rem;
+    }
+
+    .seasons-carousel.is-active {
+      display: block;
+    }
+
+    .seasons-carousel__track {
+      display: flex;
+      gap: 0.6rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 0.3rem;
+    }
+
+    .seasons-carousel__track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .seasons-carousel__item {
+      flex: 0 0 auto;
+      width: clamp(280px, 78vw, 720px);
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: var(--cream-dark);
+      scroll-snap-align: center;
+      position: relative;
+    }
+
+    .seasons-carousel__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .seasons-carousel__hint {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--ink-mute);
+      letter-spacing: 0.1em;
+      margin-top: 0.8rem;
+    }
+
+    /* legacy classes still in CSS but no longer used in body — kept for safety */
     .gallery__seasons {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -1972,25 +2055,43 @@
       <div class="section-label">Four Seasons</div>
       <h2 class="section-title">씨앗부터 식탁까지,<br />땅이 빚은 사계절의 정성</h2>
 
-      <!-- 사계절 그리드 -->
-      <div class="gallery__seasons">
-        <a href="gallery.html#spring" class="gallery__season">
-          <img src="images/season-spring.jpg" alt="영동에덴원의 봄 — 파종과 새싹" loading="lazy" />
-          <div class="gallery__season-label">봄</div>
-        </a>
-        <a href="gallery.html#summer" class="gallery__season">
-          <img src="images/season-summer.jpg" alt="영동에덴원의 여름 — 무성한 농지" loading="lazy" />
-          <div class="gallery__season-label">여름</div>
-        </a>
-        <a href="gallery.html#autumn" class="gallery__season">
-          <img src="images/season-autumn.jpg" alt="영동에덴원의 가을 — 수확" loading="lazy" />
-          <div class="gallery__season-label">가을</div>
-        </a>
-        <a href="gallery.html#winter" class="gallery__season">
-          <img src="images/season-winter.jpg" alt="영동에덴원의 겨울 — 메주와 옹기" loading="lazy" />
-          <div class="gallery__season-label">겨울</div>
-        </a>
+      <!-- 사계절 탭 + 스와이프 캐러셀 -->
+      <div class="seasons-tabs" role="tablist">
+        <button class="seasons-tab is-active" data-season="spring" type="button">봄</button>
+        <button class="seasons-tab" data-season="summer" type="button">여름</button>
+        <button class="seasons-tab" data-season="autumn" type="button">가을</button>
+        <button class="seasons-tab" data-season="winter" type="button">겨울</button>
       </div>
+
+      <div class="seasons-carousel is-active" id="season-spring">
+        <div class="seasons-carousel__track">
+          <div class="seasons-carousel__item"><img src="images/season-spring-01.jpg" alt="영동에덴원의 봄 — 밭 전경" loading="lazy" /></div>
+          <div class="seasons-carousel__item"><img src="images/season-spring-02.jpg" alt="영동에덴원의 봄 — 밭갈기" loading="lazy" /></div>
+          <div class="seasons-carousel__item"><img src="images/season-spring-03.jpg" alt="영동에덴원의 봄 — 자라는 작물" loading="lazy" /></div>
+          <div class="seasons-carousel__item"><img src="images/season-spring-04.jpg" alt="영동에덴원의 봄 — 배추밭" loading="lazy" /></div>
+          <div class="seasons-carousel__item"><img src="images/season-spring-05.jpg" alt="영동에덴원의 봄 — 발효퇴비" loading="lazy" /></div>
+        </div>
+      </div>
+
+      <div class="seasons-carousel" id="season-summer">
+        <div class="seasons-carousel__track">
+          <div class="seasons-carousel__item"><img src="images/season-summer.jpg" alt="영동에덴원의 여름 — 무성한 농지" loading="lazy" /></div>
+        </div>
+      </div>
+
+      <div class="seasons-carousel" id="season-autumn">
+        <div class="seasons-carousel__track">
+          <div class="seasons-carousel__item"><img src="images/season-autumn.jpg" alt="영동에덴원의 가을 — 수확" loading="lazy" /></div>
+        </div>
+      </div>
+
+      <div class="seasons-carousel" id="season-winter">
+        <div class="seasons-carousel__track">
+          <div class="seasons-carousel__item"><img src="images/season-winter.jpg" alt="영동에덴원의 겨울 — 메주와 옹기" loading="lazy" /></div>
+        </div>
+      </div>
+
+      <p class="seasons-carousel__hint">← 옆으로 넘기며 보기 →</p>
 
       <!-- 공정 사진 -->
       <div class="gallery__process">
@@ -2069,6 +2170,27 @@
         section.classList.add('reveal');
         observer.observe(section);
       }
+    });
+  </script>
+
+  <!-- ============ SEASONS TABS ============ -->
+  <script>
+    document.querySelectorAll('.seasons-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const season = tab.dataset.season;
+        document.querySelectorAll('.seasons-tab').forEach((t) => {
+          t.classList.toggle('is-active', t === tab);
+        });
+        document.querySelectorAll('.seasons-carousel').forEach((c) => {
+          const active = c.id === 'season-' + season;
+          c.classList.toggle('is-active', active);
+          if (active) {
+            // reset scroll to start when switching seasons
+            const track = c.querySelector('.seasons-carousel__track');
+            if (track) track.scrollLeft = 0;
+          }
+        });
+      });
     });
   </script>
 
