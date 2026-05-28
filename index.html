@@ -320,6 +320,12 @@
       margin: 0 auto;
     }
 
+    .product-grid--harvest {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
     .product-card {
       background: var(--cream);
       border: 1px solid var(--border);
@@ -1904,6 +1910,25 @@
             <p class="product-card__tag">Real Rice Syrup</p>
             <p class="product-card__desc">직접 기른 엿기름과 다양한 농산물을 사용해 가마솥에서 천천히 달여낸 조청.</p>
             <p class="product-card__time">6시간 이상 달여 만든 조청</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- 농산물 -->
+      <div class="products__group">
+        <p class="products__group-label">농산물</p>
+        <p class="products__group-sub">청정 자연에서 자연 농법으로 길러낸 정직한 농산물</p>
+
+        <div class="product-grid product-grid--harvest">
+
+          <a href="products/pea.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-pea.jpg" alt="햇 완두콩" loading="lazy" /></div>
+            <h3 class="product-card__name">햇 완두콩</h3>
+            <p class="product-card__tag">Fresh Green Peas</p>
+            <p class="product-card__desc">화학 비료와 제초제 없이, 직접 만든 발효퇴비와 유기농업자재로 길러낸 맛있고 건강한 햇 완두콩.</p>
+            <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
 
