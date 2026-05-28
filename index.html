@@ -304,6 +304,49 @@
       letter-spacing: 0.05em;
     }
 
+    /* ===== 발효 탭 (순수 CSS) ===== */
+    .ferment-tabs__radio {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .ferment-tabs__nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .ferment-tabs__label {
+      padding: 0.55rem 1.6rem;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      color: var(--ink-mute);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      background: transparent;
+    }
+    .ferment-tabs__label:hover {
+      color: var(--ink-soft);
+      border-color: var(--gold);
+    }
+    .ferment-tabs__panel {
+      display: none;
+    }
+    /* 탭1 선택 → 패널1, 탭2 선택 → 패널2 */
+    #ferment-tab-1:checked ~ .ferment-tabs__nav label[for="ferment-tab-1"],
+    #ferment-tab-2:checked ~ .ferment-tabs__nav label[for="ferment-tab-2"] {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+    }
+    #ferment-tab-1:checked ~ .ferment-tabs__panels .ferment-tabs__panel--1,
+    #ferment-tab-2:checked ~ .ferment-tabs__panels .ferment-tabs__panel--2 {
+      display: block;
+    }
+
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -321,6 +364,12 @@
     }
 
     .product-grid--harvest {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    .product-grid--single {
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       max-width: 360px;
       margin: 0 auto;
@@ -1815,11 +1864,23 @@
       <div class="section-label">Products</div>
       <h2 class="section-title">시간이 빚어낸 진심</h2>
 
-      <!-- 발효식품 (옹기 발효) -->
+      <!-- 발효 식품 (탭: 옹기 발효 / 발효) -->
       <div class="products__group">
-        <p class="products__group-label">옹기 발효</p>
-        <p class="products__group-sub">옹기 안에서 익혀낸 영동에덴원의 진심</p>
+        <p class="products__group-label">발효 식품</p>
+        <p class="products__group-sub">시간과 미생물이 빚어낸 영동에덴원의 진심</p>
 
+        <input type="radio" name="ferment-tabs" id="ferment-tab-1" class="ferment-tabs__radio" checked />
+        <input type="radio" name="ferment-tabs" id="ferment-tab-2" class="ferment-tabs__radio" />
+
+        <div class="ferment-tabs__nav">
+          <label for="ferment-tab-1" class="ferment-tabs__label">옹기 발효</label>
+          <label for="ferment-tab-2" class="ferment-tabs__label">발효</label>
+        </div>
+
+        <div class="ferment-tabs__panels">
+
+          <!-- 패널 1: 옹기 발효 -->
+          <div class="ferment-tabs__panel ferment-tabs__panel--1">
         <div class="product-grid product-grid--ferment">
 
           <a href="products/vinegar.html" class="product-card">
@@ -1884,6 +1945,27 @@
             <p class="product-card__time">토마토잼과 고추장의 콜라보</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
+
+        </div>
+          </div>
+          <!-- /패널 1 -->
+
+          <!-- 패널 2: 발효 -->
+          <div class="ferment-tabs__panel ferment-tabs__panel--2">
+            <div class="product-grid product-grid--single">
+
+              <a href="products/meju.html" class="product-card">
+                <div class="product-card__image"><img src="images/product-meju.jpg" alt="명품 메주" loading="lazy" /></div>
+                <h3 class="product-card__name">명품 메주</h3>
+                <p class="product-card__tag">Artisan Meju</p>
+                <p class="product-card__desc">직접 농사 지은 콩으로 빚어, 발효실에서 속까지 완전하게 띄운 명품 메주. 전통 방식과 과학적 관리가 만났습니다.</p>
+                <p class="product-card__time">발효실에서 완전히 발효시킨 메주</p>
+                <span class="product-card__more">자세히 보기 →</span>
+              </a>
+
+            </div>
+          </div>
+          <!-- /패널 2 -->
 
         </div>
       </div>
