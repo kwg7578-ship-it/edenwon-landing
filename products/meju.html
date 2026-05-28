@@ -883,6 +883,26 @@
     margin-bottom: 0;
   }
 
+  /* 본문 이미지 */
+  .detail-figure {
+    margin: 2.5rem auto 0;
+    max-width: 600px;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  .detail-figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .detail-figure__caption {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--ink-mute);
+    margin-top: 0.8rem;
+    letter-spacing: 0.03em;
+  }
+
   /* Process steps */
   .detail-process {
     display: grid;
@@ -1785,7 +1805,7 @@
   <header class="detail-hero">
     <div class="detail-hero__inner">
       <div class="detail-hero__eyebrow">Artisan Meju</div>
-      <h1 class="detail-hero__title">명품 메주</h1>
+      <h1 class="detail-hero__title">영동에덴원 명품(名品) 메주</h1>
       <p class="detail-hero__tagline">전통을 과학으로 빚다,<br />속까지 완전하게 띄운 명품 메주.</p>
     </div>
     <div class="detail-hero__image">
@@ -1801,8 +1821,8 @@
       <h2 class="detail-section__title">발효에 진심인 정직한 고집</h2>
       <div class="detail-section__body">
         <p>영동에덴원의 이름을 걸고, 콩의 선별부터 성형까지<br />모든 과정을 직접 책임집니다.</p>
-        <p>자연발효식초와 전통 발효 식품을 연구하며 얻은 데이터로,<br />최적의 메주 형태와 발효 조건을 맞춥니다.</p>
-        <p>단순히 메주를 파는 것이 아니라,<br />당신의 소중한 식탁 위 장의 맛을 책임진다는 마음으로 빚습니다.</p>
+        <p>자연발효식초와 전통 발효 식품을 연구하며 얻은 데이터로,<br />최적의 메주 형태와 발효 조건으로 메주를 발효합니다.</p>
+        <p>단순히 메주를 띄우는 것이 아닌,<br />건강하고 깊은 감칠맛의 장 맛을 제공한다는 마음으로 발효합니다.</p>
       </div>
     </div>
   </section>
@@ -1817,7 +1837,7 @@
       <div class="detail-uses">
         <div class="detail-uses__item">
           <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">손으로 빚은 메주가 발효실에 들어와 백국균·복합균을 맞이할 준비를 합니다</span>
+          <span class="detail-uses__text">손으로 빚은 메주가 발효실에 입실하여 백국균·복합균을 맞이할 준비를 합니다</span>
         </div>
         <div class="detail-uses__item">
           <span class="detail-uses__bullet">●</span>
@@ -1825,13 +1845,23 @@
         </div>
         <div class="detail-uses__item">
           <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">표면의 균이 메주 속까지 이동하여 속까지 완전하게 발효됩니다</span>
+          <span class="detail-uses__text">표면의 균이 메주 내부까지 이동하여 메주 속까지 완전하게 발효됩니다</span>
         </div>
         <div class="detail-uses__item">
           <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">햇빛 들이기와 바람치기로 잡내를 날리고 풍미를 높입니다</span>
+          <span class="detail-uses__text">햇빛 들이기와 바람치기로 잡내를 날리고 백국균을 살균하면서 풍미를 높입니다</span>
         </div>
       </div>
+
+      <figure class="detail-figure">
+        <img src="../images/meju-detail-room.jpg" alt="발효실에서 발효 중인 메주" loading="lazy" />
+        <figcaption class="detail-figure__caption">발효실에서 온도·습도를 관리하며 발효시키고 있는 메주</figcaption>
+      </figure>
+
+      <figure class="detail-figure">
+        <img src="../images/meju-detail-inside.jpg" alt="속까지 발효된 메주 단면" loading="lazy" />
+        <figcaption class="detail-figure__caption">속까지 완전하게 발효된 메주의 단면</figcaption>
+      </figure>
     </div>
   </section>
 
