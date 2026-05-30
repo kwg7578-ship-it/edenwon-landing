@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>주문 조회 — 영동에덴원</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #F4EDE0; --cream-light: #FBF7EF; --cream-dark: #E8DFCC;
+      --ink: #2A1F14; --ink-soft: #5A4A38; --ink-mute: #8B7A65;
+      --gold: #8B6F47; --gold-dark: #6B5532;
+      --border: rgba(42, 31, 20, 0.08); --border-strong: rgba(42, 31, 20, 0.15);
+      --font-display: "Gowun Batang", "Noto Serif KR", serif;
+      --font-body: "Noto Sans KR", system-ui, -apple-system, sans-serif;
+      --font-latin: "Cormorant Garamond", serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--cream); color: var(--ink);
+      line-height: 1.7; font-weight: 300; -webkit-font-smoothing: antialiased; }
+
+    .nav { border-bottom: 1px solid var(--border); background: var(--cream); }
+    .nav__inner { max-width: 640px; margin: 0 auto; padding: 1.1rem 1.5rem;
+      display: flex; justify-content: space-between; align-items: center; }
+    .nav__back { font-size: 0.92rem; color: var(--ink-soft); text-decoration: none; }
+    .nav__brand { font-family: var(--font-latin); font-size: 0.85rem;
+      letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); }
+
+    .wrap { max-width: 640px; margin: 0 auto; padding: clamp(2.5rem, 7vh, 4.5rem) 1.5rem 5rem; }
+
+    .eyebrow { font-family: var(--font-latin); font-size: 0.85rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold); text-align: center; margin-bottom: 1rem; }
+    .title { font-family: var(--font-display); font-size: clamp(1.7rem, 4.5vw, 2.3rem);
+      font-weight: 400; text-align: center; line-height: 1.4; margin-bottom: 0.9rem; }
+    .lede { text-align: center; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.9;
+      max-width: 480px; margin: 0 auto 2.4rem; }
+    .divider { width: 40px; height: 1px; background: var(--gold); margin: 0 auto 2.4rem; opacity: 0.6; }
+
+    .card { background: var(--cream-light); border: 1px solid var(--border);
+      padding: clamp(1.8rem, 5vw, 2.4rem); }
+
+    .field { margin-bottom: 1.4rem; }
+    .field:last-of-type { margin-bottom: 0; }
+    .field__label { display: block; font-size: 0.9rem; color: var(--ink);
+      margin-bottom: 0.55rem; font-weight: 400; }
+    .field__hint { font-size: 0.8rem; color: var(--ink-mute); margin-top: 0.4rem; }
+
+    input { width: 100%; font-family: var(--font-body); font-size: 0.98rem; font-weight: 300;
+      color: var(--ink); background: var(--cream); border: 1px solid var(--border-strong);
+      padding: 0.85rem 1rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+    input:focus { outline: none; border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(139, 111, 71, 0.12); }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; width: 100%;
+      padding: 1rem 2rem; font-family: var(--font-body); font-size: 0.98rem; font-weight: 400;
+      letter-spacing: 0.05em; cursor: pointer; border: 1px solid var(--ink);
+      background: var(--ink); color: var(--cream); transition: all 0.25s ease; margin-top: 1.6rem; }
+    .btn:hover { background: var(--gold-dark); border-color: var(--gold-dark); transform: translateY(-1px); }
+    .btn[disabled] { opacity: 0.55; cursor: default; transform: none; }
+
+    .msg { display: none; font-size: 0.88rem; padding: 0.85rem 1rem; margin-top: 1rem; line-height: 1.6; }
+    .msg.show { display: block; }
+    .msg--err { background: #f6e9e6; border: 1px solid #d9b3aa; color: #7d2c20; }
+
+    /* 조회 결과 */
+    .result { display: none; margin-top: 2rem; }
+    .result.show { display: block; animation: fade 0.45s ease; }
+    @keyframes fade { from { opacity: 0; transform: translateY(10px);} to {opacity:1; transform:none;} }
+
+    .result__num { text-align: center; font-family: var(--font-display); font-size: 1.3rem;
+      letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+    .result__num-label { text-align: center; font-family: var(--font-latin); font-size: 0.75rem;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.6rem; }
+
+    .summary { border: 1px solid var(--border-strong); }
+    .summary__row { display: flex; justify-content: space-between; padding: 0.85rem 1.2rem;
+      font-size: 0.92rem; border-bottom: 1px solid var(--border); }
+    .summary__row:last-child { border-bottom: none; }
+    .summary__row .k { color: var(--ink-mute); }
+    .summary__row .v { color: var(--ink); }
+
+    .status-pill { padding: 0.12rem 0.75rem; font-size: 0.82rem; border-radius: 2px; }
+    .st-wait   { background: var(--cream-dark); color: var(--gold-dark); }
+    .st-paid   { background: #e4ecdf; color: #4a5f3c; }
+    .st-ready  { background: #e4ecdf; color: #4a5f3c; }
+    .st-done   { background: #dfe6ec; color: #3c5060; }
+    .st-cancel { background: #efe1de; color: #7d2c20; }
+
+    .bank { background: var(--cream-dark); padding: 1.3rem 1.3rem; margin-top: 1.4rem; }
+    .bank__title { font-family: var(--font-display); font-size: 1rem; margin-bottom: 0.8rem; }
+    .bank__row { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 0.28rem 0; }
+    .bank__row .k { color: var(--ink-mute); }
+    .bank__placeholder { color: var(--gold-dark); }
+    .bank__v { color: var(--ink); text-align: right; }
+    .bank__note { font-size: 0.82rem; color: var(--ink-soft); margin-top: 0.8rem; line-height: 1.6; }
+    .bank__note strong { color: var(--ink); }
+
+    .privacy { text-align: center; font-size: 0.8rem; color: var(--ink-mute);
+      margin-top: 1.6rem; line-height: 1.6; }
+    .relink { text-align: center; margin-top: 1.5rem; }
+    .relink button { background: none; border: none; color: var(--gold-dark);
+      font-family: var(--font-body); font-size: 0.88rem; cursor: pointer;
+      border-bottom: 1px solid var(--border-strong); padding: 0 0 1px; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__back">← 영동에덴원</a>
+      <span class="nav__brand">Yeongdong Edenwon</span>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="eyebrow">Order Status</div>
+    <h1 class="title">주문 조회</h1>
+    <p class="lede">주문 시 받으신 주문번호와 전화번호 뒷자리 4자리로<br />주문 상태를 확인하실 수 있습니다.</p>
+    <div class="divider"></div>
+
+    <!-- 조회 폼 -->
+    <div class="card" id="lookupCard">
+      <div class="field">
+        <label class="field__label">주문번호</label>
+        <input type="text" id="orderNo" placeholder="ED-20260530-XXXX" autocomplete="off" />
+        <div class="field__hint">주문 완료 화면에서 받으신 번호입니다.</div>
+      </div>
+      <div class="field">
+        <label class="field__label">전화번호 뒷자리 4자리</label>
+        <input type="tel" id="last4" inputmode="numeric" maxlength="4" placeholder="5678" autocomplete="off" />
+      </div>
+
+      <button class="btn" id="lookupBtn">주문 조회하기</button>
+      <div class="msg msg--err" id="errMsg"></div>
+    </div>
+
+    <!-- 조회 결과 (개인정보 없음) -->
+    <div class="result" id="result">
+      <div class="result__num" id="rNo">—</div>
+      <div class="result__num-label">Order Number · 주문번호</div>
+
+      <div class="card">
+        <div class="summary">
+          <div class="summary__row"><span class="k">품목</span><span class="v" id="rProduct">—</span></div>
+          <div class="summary__row"><span class="k">수량</span><span class="v" id="rQty">—</span></div>
+          <div class="summary__row"><span class="k">주문일</span><span class="v" id="rDate">—</span></div>
+          <div class="summary__row"><span class="k">상태</span><span id="rStatusWrap"><span class="status-pill st-wait" id="rStatus">—</span></span></div>
+        </div>
+
+        <div class="bank" id="bankBox" style="display:none;">
+          <div class="bank__title">입금 안내</div>
+          <div class="bank__row"><span class="k">은행</span><span class="bank__v">농협</span></div>
+          <div class="bank__row"><span class="k">계좌번호</span><span class="bank__v">3010294897501</span></div>
+          <div class="bank__row"><span class="k">예금주</span><span class="bank__v">농업회사법인 주식회사 에프엔엘바이오푸드</span></div>
+          <p class="bank__note">아직 입금 전이라면, 입금자명을 <strong>주문자 성함</strong>으로 해 주시면 확인이 빠릅니다.</p>
+        </div>
+
+        <p class="privacy">이 화면에는 이름·전화번호 같은 개인정보가 표시되지 않습니다.</p>
+      </div>
+
+      <div class="relink"><button id="againBtn">다른 주문 조회하기</button></div>
+    </div>
+  </div>
+
+  <script>
+    var API_BASE = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
+      ? "https://api.yd-edenwon.com" : "";
+
+    var btn = document.getElementById("lookupBtn");
+    var errMsg = document.getElementById("errMsg");
+
+    function showErr(msg) { errMsg.textContent = msg; errMsg.classList.add("show"); }
+    function hideErr() { errMsg.classList.remove("show"); }
+
+    function statusClass(s) {
+      if (s.indexOf("입금 확인") >= 0) return "st-paid";
+      if (s.indexOf("준비") >= 0) return "st-ready";
+      if (s.indexOf("수령") >= 0 || s.indexOf("완료") >= 0) return "st-done";
+      if (s.indexOf("취소") >= 0) return "st-cancel";
+      return "st-wait";
+    }
+
+    var SS_KEY = "edenwon_order_lookup";
+
+    function remember(orderNo, last4) {
+      try { sessionStorage.setItem(SS_KEY, JSON.stringify({ o: orderNo, l: last4 })); } catch (e) {}
+    }
+    function forget() {
+      try { sessionStorage.removeItem(SS_KEY); } catch (e) {}
+    }
+    function recall() {
+      try { var raw = sessionStorage.getItem(SS_KEY); return raw ? JSON.parse(raw) : null; }
+      catch (e) { return null; }
+    }
+
+    function showResult(data) {
+      document.getElementById("rNo").textContent = data.order_no;
+      document.getElementById("rProduct").textContent = data.product;
+      document.getElementById("rQty").textContent = data.qty + " " + data.unit;
+      document.getElementById("rDate").textContent = data.created_at;
+      var pill = document.getElementById("rStatus");
+      pill.textContent = data.status;
+      pill.className = "status-pill " + statusClass(data.status);
+      // 입금 대기일 때만 입금 안내 노출
+      document.getElementById("bankBox").style.display =
+        (data.status.indexOf("입금 대기") >= 0) ? "block" : "none";
+      document.getElementById("lookupCard").style.display = "none";
+      document.getElementById("result").classList.add("show");
+    }
+
+    // 조회 수행: 성공 시 결과 표시 + 기억. opts.silent면 실패해도 에러 안 띄움.
+    async function doLookup(orderNo, last4, opts) {
+      opts = opts || {};
+      var url = API_BASE + "/api/orders/lookup?order_no=" + encodeURIComponent(orderNo) + "&last4=" + encodeURIComponent(last4);
+      var res = await fetch(url);
+      var data = await res.json();
+      if (!res.ok || !data.ok) {
+        if (!opts.silent) showErr(data.error || "조회 중 문제가 발생했습니다.");
+        return false;
+      }
+      showResult(data);
+      remember(orderNo, last4);
+      return true;
+    }
+
+    btn.addEventListener("click", async function () {
+      hideErr();
+      var orderNo = document.getElementById("orderNo").value.trim().toUpperCase();
+      var last4 = document.getElementById("last4").value.replace(/\D/g, "");
+
+      if (!orderNo || last4.length !== 4) {
+        showErr("주문번호와 전화번호 뒷자리 4자리를 입력해 주세요.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "조회 중…";
+      try {
+        var ok = await doLookup(orderNo, last4);
+        if (ok) window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (e) {
+        showErr("지금 조회가 어렵습니다. 잠시 후 다시 시도해 주세요.");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "주문 조회하기";
+      }
+    });
+
+    document.getElementById("againBtn").addEventListener("click", function () {
+      forget();
+      document.getElementById("result").classList.remove("show");
+      document.getElementById("lookupCard").style.display = "block";
+      document.getElementById("orderNo").value = "";
+      document.getElementById("last4").value = "";
+      btn.disabled = false;
+      btn.textContent = "주문 조회하기";
+      hideErr();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // 새로고침해도 마지막 조회를 유지 — 저장된 값으로 최신 상태를 다시 조회
+    (function init() {
+      var saved = recall();
+      if (saved && saved.o && saved.l) {
+        document.getElementById("orderNo").value = saved.o;
+        document.getElementById("last4").value = saved.l;
+        doLookup(saved.o, saved.l, { silent: true }).catch(function () {});
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>햇 완두콩 주문하기 — 영동에덴원</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #F4EDE0; --cream-light: #FBF7EF; --cream-dark: #E8DFCC;
+      --ink: #2A1F14; --ink-soft: #5A4A38; --ink-mute: #8B7A65;
+      --gold: #8B6F47; --gold-dark: #6B5532;
+      --border: rgba(42, 31, 20, 0.08); --border-strong: rgba(42, 31, 20, 0.15);
+      --font-display: "Gowun Batang", "Noto Serif KR", serif;
+      --font-body: "Noto Sans KR", system-ui, -apple-system, sans-serif;
+      --font-latin: "Cormorant Garamond", serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--cream); color: var(--ink);
+      line-height: 1.7; font-weight: 300; -webkit-font-smoothing: antialiased; }
+
+    .nav { border-bottom: 1px solid var(--border); background: var(--cream); }
+    .nav__inner { max-width: 720px; margin: 0 auto; padding: 1.1rem 1.5rem;
+      display: flex; justify-content: space-between; align-items: center; }
+    .nav__back { font-size: 0.92rem; color: var(--ink-soft); text-decoration: none; }
+    .nav__brand { font-family: var(--font-latin); font-size: 0.85rem;
+      letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); }
+
+    .wrap { max-width: 720px; margin: 0 auto; padding: clamp(2.5rem, 7vh, 4.5rem) 1.5rem 5rem; }
+
+    .eyebrow { font-family: var(--font-latin); font-size: 0.85rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold); text-align: center; margin-bottom: 1rem; }
+    .title { font-family: var(--font-display); font-size: clamp(1.7rem, 4.5vw, 2.3rem);
+      font-weight: 400; text-align: center; line-height: 1.4; margin-bottom: 0.9rem; }
+    .lede { text-align: center; color: var(--ink-soft); font-size: 0.97rem; line-height: 1.9;
+      max-width: 520px; margin: 0 auto 2.6rem; }
+    .divider { width: 40px; height: 1px; background: var(--gold); margin: 0 auto 2.6rem; opacity: 0.6; }
+
+    .card { background: var(--cream-light); border: 1px solid var(--border);
+      padding: clamp(1.8rem, 5vw, 2.6rem); }
+
+    .pickup-note { display: flex; gap: 0.7rem; align-items: flex-start; background: var(--cream-dark);
+      border-left: 3px solid var(--gold); padding: 0.95rem 1.1rem; font-size: 0.88rem;
+      color: var(--ink-soft); line-height: 1.6; margin-bottom: 2rem; }
+    .pickup-note strong { color: var(--ink); font-weight: 700; }
+
+    .field { margin-bottom: 1.5rem; }
+    .field__label { display: block; font-size: 0.9rem; color: var(--ink);
+      margin-bottom: 0.55rem; font-weight: 400; }
+    .field__label .req { color: var(--gold-dark); margin-left: 0.2rem; }
+    .field__hint { font-size: 0.8rem; color: var(--ink-mute); margin-top: 0.4rem; }
+
+    input, textarea { width: 100%; font-family: var(--font-body); font-size: 0.98rem;
+      font-weight: 300; color: var(--ink); background: var(--cream);
+      border: 1px solid var(--border-strong); padding: 0.85rem 1rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+    input:focus, textarea:focus { outline: none; border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(139, 111, 71, 0.12); }
+    textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+    .qty-row { display: flex; gap: 0.7rem; align-items: stretch; }
+    .qty-row input { text-align: center; }
+    .qty-row .qty-unit { display: flex; align-items: center; padding: 0 1.1rem;
+      background: var(--cream-dark); border: 1px solid var(--border-strong);
+      color: var(--ink-soft); font-size: 0.92rem; white-space: nowrap; }
+
+    .field__err { color: #9a3b2e; font-size: 0.82rem; margin-top: 0.4rem; display: none; }
+    .field.invalid input { border-color: #9a3b2e; }
+    .field.invalid .field__err { display: block; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; width: 100%;
+      padding: 1rem 2rem; font-family: var(--font-body); font-size: 0.98rem; font-weight: 400;
+      letter-spacing: 0.05em; cursor: pointer; border: 1px solid var(--ink);
+      background: var(--ink); color: var(--cream); transition: all 0.25s ease; margin-top: 0.6rem; }
+    .btn:hover { background: var(--gold-dark); border-color: var(--gold-dark); transform: translateY(-1px); }
+    .btn[disabled] { opacity: 0.55; cursor: default; transform: none; }
+
+    .form-error { display: none; background: #f6e9e6; border: 1px solid #d9b3aa; color: #7d2c20;
+      font-size: 0.88rem; padding: 0.85rem 1rem; margin-top: 1rem; line-height: 1.6; }
+    .form-error.show { display: block; }
+    .form-error a { color: #7d2c20; font-weight: 700; }
+
+    .privacy { text-align: center; font-size: 0.8rem; color: var(--ink-mute);
+      margin-top: 1.3rem; line-height: 1.6; }
+
+    .done { display: none; }
+    .done.show { display: block; animation: fade 0.5s ease; }
+    .form-stage.hide { display: none; }
+    @keyframes fade { from { opacity: 0; transform: translateY(12px);} to {opacity:1; transform:none;} }
+
+    .done__check { width: 56px; height: 56px; margin: 0 auto 1.4rem; border: 1px solid var(--gold);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: var(--gold-dark); font-size: 1.6rem; }
+    .done__num { text-align: center; font-family: var(--font-display); font-size: 1.45rem;
+      letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+    .done__num-label { text-align: center; font-family: var(--font-latin); font-size: 0.78rem;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.8rem; }
+
+    .summary { border: 1px solid var(--border-strong); margin-bottom: 1.8rem; }
+    .summary__row { display: flex; justify-content: space-between; padding: 0.85rem 1.2rem;
+      font-size: 0.92rem; border-bottom: 1px solid var(--border); }
+    .summary__row:last-child { border-bottom: none; }
+    .summary__row .k { color: var(--ink-mute); }
+    .summary__row .v { color: var(--ink); }
+    .status-pill { background: var(--cream-dark); color: var(--gold-dark);
+      padding: 0.1rem 0.7rem; font-size: 0.8rem; }
+
+    .bank { background: var(--cream-dark); padding: 1.4rem 1.3rem; margin-bottom: 1.6rem; }
+    .bank__title { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 0.9rem; }
+    .bank__row { display: flex; justify-content: space-between; font-size: 0.92rem; padding: 0.3rem 0; }
+    .bank__row .k { color: var(--ink-mute); }
+    .bank__placeholder { color: var(--gold-dark); }
+    .bank__v { color: var(--ink); text-align: right; }
+    .bank__note { font-size: 0.82rem; color: var(--ink-soft); margin-top: 0.9rem; line-height: 1.6; }
+    .bank__note strong { color: var(--ink); }
+
+    .done__hint { text-align: center; font-size: 0.86rem; color: var(--ink-soft); line-height: 1.7;
+      border-top: 1px solid var(--border); padding-top: 1.4rem; }
+    .done__hint strong { color: var(--ink); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="products/pea.html" class="nav__back">← 햇 완두콩</a>
+      <span class="nav__brand">Yeongdong Edenwon</span>
+    </div>
+  </nav>
+
+  <div class="wrap">
+
+    <!-- 1단계: 주문 폼 -->
+    <div class="form-stage" id="formStage">
+      <div class="eyebrow">Order</div>
+      <h1 class="title">햇 완두콩 주문하기</h1>
+      <p class="lede">택배 없이 직접 수령하실 분들을 위한 주문 폼입니다.<br />아래 정보를 남겨 주시면, 입금 안내를 확인하실 수 있습니다.</p>
+      <div class="divider"></div>
+
+      <div class="card">
+        <div class="pickup-note">
+          <span>📍</span>
+          <span><strong>현장 수령 전용</strong> — 이 주문은 택배 발송이 아니라 직접 받으러 오시는 분들을 위한 것입니다. 그래서 주소는 받지 않습니다.</span>
+        </div>
+
+        <div class="field" id="f-name">
+          <label class="field__label">이름 <span class="req">*</span></label>
+          <input type="text" id="name" maxlength="40" placeholder="성함을 입력해 주세요" />
+          <div class="field__err">이름을 입력해 주세요.</div>
+        </div>
+
+        <div class="field" id="f-phone">
+          <label class="field__label">전화번호 <span class="req">*</span></label>
+          <input type="tel" id="phone" inputmode="numeric" placeholder="010-1234-5678" />
+          <div class="field__err">전화번호를 정확히 입력해 주세요.</div>
+          <div class="field__hint">주문 조회 시 본인 확인에 사용됩니다.</div>
+        </div>
+
+        <div class="field" id="f-qty">
+          <label class="field__label">수량 <span class="req">*</span></label>
+          <div class="qty-row">
+            <input type="number" id="qty" min="1" max="999" value="1" />
+            <span class="qty-unit">kg</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label">요청사항 <span style="color:var(--ink-mute);font-size:0.82rem;">(선택)</span></label>
+          <textarea id="memo" maxlength="500" placeholder="수령 희망 시기, 그 밖의 요청을 자유롭게 적어 주세요."></textarea>
+        </div>
+
+        <button class="btn" id="submitBtn">주문 접수하기</button>
+
+        <div class="form-error" id="formError"></div>
+
+        <p class="privacy">입력하신 이름·전화번호는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다.</p>
+      </div>
+    </div>
+
+    <!-- 2단계: 완료 + 입금 안내 -->
+    <div class="done" id="doneStage">
+      <div class="done__check">✓</div>
+      <div class="done__num" id="orderNo">—</div>
+      <div class="done__num-label">Order Number · 주문번호</div>
+
+      <div class="card">
+        <div class="summary">
+          <div class="summary__row"><span class="k">품목</span><span class="v" id="sumProduct">햇 완두콩</span></div>
+          <div class="summary__row"><span class="k">수량</span><span class="v" id="sumQty">—</span></div>
+          <div class="summary__row"><span class="k">주문일</span><span class="v" id="sumDate">—</span></div>
+          <div class="summary__row"><span class="k">상태</span><span class="status-pill" id="sumStatus">입금 대기</span></div>
+        </div>
+
+        <div class="bank">
+          <div class="bank__title">입금 안내</div>
+          <div class="bank__row"><span class="k">은행</span><span class="bank__v">농협</span></div>
+          <div class="bank__row"><span class="k">계좌번호</span><span class="bank__v">3010294897501</span></div>
+          <div class="bank__row"><span class="k">예금주</span><span class="bank__v">농업회사법인 주식회사 에프엔엘바이오푸드</span></div>
+          <p class="bank__note">입금자명을 <strong>주문자 성함</strong>으로 해 주시면 확인이 빠릅니다. 입금이 확인되면 상태가 "입금 확인"으로 바뀝니다.</p>
+        </div>
+
+        <div class="done__hint">
+          주문번호 <strong id="hintNo">—</strong> 를 메모해 두세요.<br />
+          이 번호와 전화번호 뒷자리로 언제든 <a href="order-status.html" style="color:var(--gold-dark);border-bottom:1px solid var(--border-strong);">주문 상태를 조회</a>하실 수 있습니다.<br />
+          <span style="font-size:0.8rem;color:var(--ink-mute);">(조회 화면에는 이름·전화번호 같은 개인정보는 표시되지 않습니다.)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // 운영(웹사이트)에서 열리면 파이 API로, 그 외(로컬/파이 직접 접속)는 같은 출처로 호출
+    var API_BASE = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
+      ? "https://api.yd-edenwon.com" : "";
+
+    var btn = document.getElementById("submitBtn");
+    var errBox = document.getElementById("formError");
+
+    function showError(msg) {
+      errBox.innerHTML = msg;
+      errBox.classList.add("show");
+    }
+
+    btn.addEventListener("click", async function () {
+      errBox.classList.remove("show");
+
+      var nameEl = document.getElementById("name");
+      var phoneEl = document.getElementById("phone");
+      var qtyEl = document.getElementById("qty");
+
+      var name = nameEl.value.trim();
+      var digits = phoneEl.value.replace(/\D/g, "");
+      var qty = Number(qtyEl.value);
+
+      var nameOk = name.length > 0;
+      var phoneOk = digits.length >= 10 && digits.length <= 11;
+      var qtyOk = qty >= 1 && qty <= 999;
+
+      document.getElementById("f-name").classList.toggle("invalid", !nameOk);
+      document.getElementById("f-phone").classList.toggle("invalid", !phoneOk);
+      document.getElementById("f-qty").classList.toggle("invalid", !qtyOk);
+
+      if (!(nameOk && phoneOk && qtyOk)) {
+        var first = document.querySelector(".field.invalid input");
+        if (first) first.focus();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "접수 중…";
+
+      try {
+        var res = await fetch(API_BASE + "/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name,
+            phone: phoneEl.value.trim(),
+            qty: qty,
+            unit: "kg",
+            product: "햇 완두콩",
+            memo: document.getElementById("memo").value.trim()
+          })
+        });
+        var data = await res.json();
+        if (!res.ok || !data.ok) {
+          throw new Error(data.error || "주문 접수 중 문제가 발생했습니다.");
+        }
+
+        document.getElementById("orderNo").textContent = data.order_no;
+        document.getElementById("hintNo").textContent = data.order_no;
+        document.getElementById("sumProduct").textContent = data.product;
+        document.getElementById("sumQty").textContent = data.qty + " " + data.unit;
+        document.getElementById("sumDate").textContent = data.created_at;
+        document.getElementById("sumStatus").textContent = data.status;
+
+        document.getElementById("formStage").classList.add("hide");
+        document.getElementById("doneStage").classList.add("show");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (e) {
+        btn.disabled = false;
+        btn.textContent = "주문 접수하기";
+        showError(
+          "지금 주문 접수가 어렵습니다. 잠시 후 다시 시도하시거나, " +
+          "<a href='contact.html'>카카오톡으로 문의</a>해 주세요."
+        );
+      }
+    });
+  </script>
+</body>
+</html>
