@@ -90,6 +90,11 @@
     .code-chip { font-family: monospace; font-size: 0.82rem; padding: 0.2rem 0.6rem; border: 1px solid var(--border-strong); }
     .code-chip.free { color: var(--ink); background: var(--cream-light); }
     .code-chip.used { color: var(--ink-mute); text-decoration: line-through; background: var(--cream-dark); }
+
+    .del-btn { font-family: var(--font-body); font-size: 0.82rem; color: #7d2c20; background: none;
+      border: 1px solid #d9b3aa; padding: 0.4rem 0.7rem; cursor: pointer; margin-left: auto; }
+    .del-btn:hover:not([disabled]) { background: #f6e9e6; }
+    .del-btn[disabled] { color: var(--ink-mute); border-color: var(--border); cursor: default; opacity: 0.5; }
   </style>
 </head>
 <body>
@@ -140,6 +145,7 @@
       return d;
     }
     function won(n) { return (n == null) ? "—" : Number(n).toLocaleString("ko-KR") + "원"; }
+    function canDelete(status) { return status === "수령 완료" || status === "취소"; }
 
     async function load() {
       var list = document.getElementById("list");
@@ -193,12 +199,16 @@
               '<label>상태 변경</label>' +
               '<select data-no="' + esc(o.order_no) + '">' + opts + '</select>' +
               '<span class="saved">저장됨</span>' +
+              '<button class="del-btn" data-no="' + esc(o.order_no) + '"' + (canDelete(o.status) ? '' : ' disabled') + '>삭제</button>' +
             '</div>' +
           '</div>';
       }).join("");
 
       list.querySelectorAll("select").forEach(function (sel) {
         sel.addEventListener("change", function () { updateStatus(sel); });
+      });
+      list.querySelectorAll(".del-btn").forEach(function (b) {
+        b.addEventListener("click", function () { deleteOrder(b); });
       });
     }
 
@@ -221,6 +231,8 @@
         if (!res.ok || !data.ok) throw new Error();
         pill.textContent = status;
         pill.className = "pill " + pillClass(status);
+        var delBtn = foot.querySelector(".del-btn");
+        if (delBtn) delBtn.disabled = !canDelete(status);
         saved.classList.add("show");
         setTimeout(function () { saved.classList.remove("show"); }, 1500);
       } catch (e) {
@@ -230,6 +242,25 @@
         foot.appendChild(err);
       } finally {
         sel.disabled = false;
+      }
+    }
+
+    async function deleteOrder(btn) {
+      var order_no = btn.getAttribute("data-no");
+      if (!confirm(order_no + " 주문을 기록에서 삭제할까요?\n삭제하면 되돌릴 수 없습니다. (매일 새벽 백업본에는 남아 있습니다.)")) return;
+      btn.disabled = true; btn.textContent = "삭제 중…";
+      try {
+        var res = await fetch("/api/admin/orders/delete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ order_no: order_no })
+        });
+        var data = await res.json();
+        if (!res.ok || !data.ok) throw new Error(data.error || "삭제에 실패했습니다.");
+        load(); // 목록·통계 갱신
+      } catch (e) {
+        btn.disabled = false; btn.textContent = "삭제";
+        alert(e.message || "삭제에 실패했습니다. 다시 시도해 주세요.");
       }
     }
 
