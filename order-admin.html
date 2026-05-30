@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>주문 관리 — 영동에덴원 (관리자)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #F4EDE0; --cream-light: #FBF7EF; --cream-dark: #E8DFCC;
+      --ink: #2A1F14; --ink-soft: #5A4A38; --ink-mute: #8B7A65;
+      --gold: #8B6F47; --gold-dark: #6B5532;
+      --border: rgba(42, 31, 20, 0.08); --border-strong: rgba(42, 31, 20, 0.15);
+      --font-display: "Gowun Batang", "Noto Serif KR", serif;
+      --font-body: "Noto Sans KR", system-ui, -apple-system, sans-serif;
+      --font-latin: "Cormorant Garamond", serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--cream); color: var(--ink);
+      line-height: 1.6; font-weight: 300; -webkit-font-smoothing: antialiased; }
+
+    .top { border-bottom: 1px solid var(--border); background: var(--cream-light); }
+    .top__inner { max-width: 900px; margin: 0 auto; padding: 1.3rem 1.5rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+    .top__title { font-family: var(--font-display); font-size: 1.2rem; }
+    .top__title span { font-family: var(--font-latin); font-size: 0.72rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.15rem; }
+    .refresh { background: var(--ink); color: var(--cream); border: none; cursor: pointer;
+      font-family: var(--font-body); font-size: 0.85rem; padding: 0.55rem 1.1rem; transition: background 0.2s; }
+    .refresh:hover { background: var(--gold-dark); }
+
+    .wrap { max-width: 900px; margin: 0 auto; padding: 1.8rem 1.5rem 5rem; }
+
+    .stats { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 1.8rem; }
+    .stat { background: var(--cream-light); border: 1px solid var(--border); padding: 0.7rem 1.1rem; min-width: 92px; }
+    .stat__n { font-family: var(--font-display); font-size: 1.4rem; line-height: 1.1; }
+    .stat__l { font-size: 0.78rem; color: var(--ink-mute); margin-top: 0.2rem; }
+
+    .empty, .loading { text-align: center; color: var(--ink-mute); padding: 3rem 1rem; font-size: 0.95rem; }
+
+    .order { background: var(--cream-light); border: 1px solid var(--border);
+      padding: 1.2rem 1.3rem; margin-bottom: 1rem; }
+    .order__head { display: flex; justify-content: space-between; align-items: baseline;
+      flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.9rem; padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border); }
+    .order__no { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.02em; }
+    .order__date { font-size: 0.8rem; color: var(--ink-mute); }
+
+    .order__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem 1.4rem; margin-bottom: 1rem; }
+    @media (min-width: 560px) { .order__grid { grid-template-columns: repeat(4, 1fr); } }
+    .cell__l { font-size: 0.74rem; color: var(--ink-mute); margin-bottom: 0.1rem; }
+    .cell__v { font-size: 0.95rem; color: var(--ink); word-break: break-all; }
+    .cell--memo { grid-column: 1 / -1; }
+    .cell--memo .cell__v { font-size: 0.88rem; color: var(--ink-soft); white-space: pre-wrap; }
+
+    .order__foot { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+    .order__foot label { font-size: 0.8rem; color: var(--ink-mute); }
+    select { font-family: var(--font-body); font-size: 0.92rem; color: var(--ink);
+      background: var(--cream); border: 1px solid var(--border-strong); padding: 0.45rem 0.7rem; cursor: pointer; }
+    select:focus { outline: none; border-color: var(--gold); }
+    .saved { font-size: 0.8rem; color: #4a5f3c; opacity: 0; transition: opacity 0.2s; }
+    .saved.show { opacity: 1; }
+    .saveerr { font-size: 0.8rem; color: #7d2c20; }
+
+    .pill { padding: 0.1rem 0.6rem; font-size: 0.76rem; border-radius: 2px; }
+    .st-wait{background:var(--cream-dark);color:var(--gold-dark);}
+    .st-paid{background:#e4ecdf;color:#4a5f3c;}
+    .st-ready{background:#e4ecdf;color:#4a5f3c;}
+    .st-done{background:#dfe6ec;color:#3c5060;}
+    .st-cancel{background:#efe1de;color:#7d2c20;}
+
+    .disc { font-size: 0.7rem; background: var(--cream-dark); color: var(--gold-dark);
+      padding: 0.05rem 0.4rem; border-radius: 2px; margin-left: 0.3rem; }
+
+    .codes { margin-top: 2.5rem; border-top: 1px solid var(--border); padding-top: 1.8rem; }
+    .codes__head { display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1rem; }
+    .codes__title { font-family: var(--font-display); font-size: 1.1rem; }
+    .codes__gen { display: flex; gap: 0.5rem; }
+    .codes__gen input { width: 80px; font-family: var(--font-body); font-size: 0.92rem;
+      padding: 0.45rem 0.6rem; border: 1px solid var(--border-strong); background: var(--cream); text-align: center; }
+    .codes__new { background: var(--cream-dark); padding: 1rem 1.1rem; margin-bottom: 1.2rem; font-size: 0.9rem; }
+    .codes__new b { display: block; margin-bottom: 0.6rem; font-weight: 700; }
+    .codes__new textarea { width: 100%; font-family: monospace; font-size: 0.88rem; line-height: 1.6;
+      border: 1px solid var(--border-strong); background: var(--cream-light); padding: 0.6rem 0.7rem; resize: vertical; }
+    .codes__summary { font-size: 0.85rem; color: var(--ink-mute); margin-bottom: 0.8rem; }
+    .codes__list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .code-chip { font-family: monospace; font-size: 0.82rem; padding: 0.2rem 0.6rem; border: 1px solid var(--border-strong); }
+    .code-chip.free { color: var(--ink); background: var(--cream-light); }
+    .code-chip.used { color: var(--ink-mute); text-decoration: line-through; background: var(--cream-dark); }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="top__inner">
+      <div class="top__title"><span>Admin · 주문 관리</span>영동에덴원</div>
+      <button class="refresh" id="refreshBtn">새로고침</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats" id="stats"></div>
+    <div id="list"><div class="loading">불러오는 중…</div></div>
+
+    <div class="codes">
+      <div class="codes__head">
+        <h2 class="codes__title">할인 코드</h2>
+        <div class="codes__gen">
+          <input type="number" id="codeCount" min="1" max="200" value="10" />
+          <button class="refresh" id="genBtn">발급</button>
+        </div>
+      </div>
+      <div class="codes__new" id="codesNew" style="display:none;"></div>
+      <div class="codes__summary" id="codesSummary">불러오는 중…</div>
+      <div class="codes__list" id="codesList"></div>
+    </div>
+  </div>
+
+  <script>
+    var STATUSES = ["입금 대기", "입금 확인", "준비중", "수령 완료", "취소"];
+
+    function pillClass(s) {
+      if (s.indexOf("입금 확인") >= 0) return "st-paid";
+      if (s.indexOf("준비") >= 0) return "st-ready";
+      if (s.indexOf("수령") >= 0) return "st-done";
+      if (s.indexOf("취소") >= 0) return "st-cancel";
+      return "st-wait";
+    }
+    function esc(t) {
+      return (t == null ? "" : String(t)).replace(/[&<>"]/g, function (c) {
+        return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+      });
+    }
+    function fmtPhone(d) {
+      d = (d || "").replace(/\D/g, "");
+      if (d.length === 11) return d.slice(0,3)+"-"+d.slice(3,7)+"-"+d.slice(7);
+      if (d.length === 10) return d.slice(0,3)+"-"+d.slice(3,6)+"-"+d.slice(6);
+      return d;
+    }
+    function won(n) { return (n == null) ? "—" : Number(n).toLocaleString("ko-KR") + "원"; }
+
+    async function load() {
+      var list = document.getElementById("list");
+      list.innerHTML = '<div class="loading">불러오는 중…</div>';
+      try {
+        var res = await fetch("/api/admin/orders");
+        if (res.status === 403) { list.innerHTML = '<div class="empty">이 화면은 테일넷/로컬에서만 접근할 수 있습니다.</div>'; return; }
+        var data = await res.json();
+        if (!data.ok) throw new Error();
+        render(data.orders);
+      } catch (e) {
+        list.innerHTML = '<div class="empty">목록을 불러오지 못했습니다. 새로고침해 주세요.</div>';
+      }
+    }
+
+    function render(orders) {
+      var stats = document.getElementById("stats");
+      var counts = {};
+      STATUSES.forEach(function (s) { counts[s] = 0; });
+      orders.forEach(function (o) { if (counts[o.status] != null) counts[o.status]++; });
+      var statHtml = '<div class="stat"><div class="stat__n">' + orders.length + '</div><div class="stat__l">전체</div></div>';
+      STATUSES.forEach(function (s) {
+        statHtml += '<div class="stat"><div class="stat__n">' + counts[s] + '</div><div class="stat__l">' + s + '</div></div>';
+      });
+      stats.innerHTML = statHtml;
+
+      var list = document.getElementById("list");
+      if (!orders.length) { list.innerHTML = '<div class="empty">아직 접수된 주문이 없습니다.</div>'; return; }
+
+      list.innerHTML = orders.map(function (o) {
+        var opts = STATUSES.map(function (s) {
+          return '<option value="' + s + '"' + (s === o.status ? " selected" : "") + '>' + s + '</option>';
+        }).join("");
+        var memo = o.memo ? '<div class="cell cell--memo"><div class="cell__l">요청사항</div><div class="cell__v">' + esc(o.memo) + '</div></div>' : "";
+        return '' +
+          '<div class="order">' +
+            '<div class="order__head">' +
+              '<span class="order__no">' + esc(o.order_no) + '</span>' +
+              '<span class="order__date">' + esc(o.created_at) + '</span>' +
+            '</div>' +
+            '<div class="order__grid">' +
+              '<div class="cell"><div class="cell__l">이름</div><div class="cell__v">' + esc(o.name) + '</div></div>' +
+              '<div class="cell"><div class="cell__l">전화번호</div><div class="cell__v">' + esc(fmtPhone(o.phone)) + '</div></div>' +
+              '<div class="cell"><div class="cell__l">품목</div><div class="cell__v">' + esc(o.product) + '</div></div>' +
+              '<div class="cell"><div class="cell__l">수량</div><div class="cell__v">' + esc(o.qty) + ' ' + esc(o.unit) + '</div></div>' +
+              '<div class="cell"><div class="cell__l">금액</div><div class="cell__v">' + won(o.amount) + (o.discount_applied ? '<span class="disc">학교할인</span>' : '') + '</div></div>' +
+              memo +
+            '</div>' +
+            '<div class="order__foot">' +
+              '<span class="pill ' + pillClass(o.status) + '">' + esc(o.status) + '</span>' +
+              '<label>상태 변경</label>' +
+              '<select data-no="' + esc(o.order_no) + '">' + opts + '</select>' +
+              '<span class="saved">저장됨</span>' +
+            '</div>' +
+          '</div>';
+      }).join("");
+
+      list.querySelectorAll("select").forEach(function (sel) {
+        sel.addEventListener("change", function () { updateStatus(sel); });
+      });
+    }
+
+    async function updateStatus(sel) {
+      var order_no = sel.getAttribute("data-no");
+      var status = sel.value;
+      var foot = sel.closest(".order__foot");
+      var pill = foot.querySelector(".pill");
+      var saved = foot.querySelector(".saved");
+      var prevErr = foot.querySelector(".saveerr");
+      if (prevErr) prevErr.remove();
+      sel.disabled = true;
+      try {
+        var res = await fetch("/api/admin/orders/status", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ order_no: order_no, status: status })
+        });
+        var data = await res.json();
+        if (!res.ok || !data.ok) throw new Error();
+        pill.textContent = status;
+        pill.className = "pill " + pillClass(status);
+        saved.classList.add("show");
+        setTimeout(function () { saved.classList.remove("show"); }, 1500);
+      } catch (e) {
+        var err = document.createElement("span");
+        err.className = "saveerr";
+        err.textContent = "저장 실패 — 다시 시도";
+        foot.appendChild(err);
+      } finally {
+        sel.disabled = false;
+      }
+    }
+
+    async function loadCodes() {
+      var summary = document.getElementById("codesSummary");
+      var listEl = document.getElementById("codesList");
+      try {
+        var res = await fetch("/api/admin/codes");
+        if (res.status === 403) { summary.textContent = "테일넷/로컬에서만 접근 가능합니다."; return; }
+        var data = await res.json();
+        if (!data.ok) throw new Error();
+        var codes = data.codes;
+        var free = codes.filter(function (c) { return !c.used; }).length;
+        summary.textContent = "총 " + codes.length + "개 · 미사용 " + free + " · 사용 " + (codes.length - free);
+        listEl.innerHTML = codes.map(function (c) {
+          return '<span class="code-chip ' + (c.used ? "used" : "free") + '">' + esc(c.code) + '</span>';
+        }).join("");
+      } catch (e) {
+        summary.textContent = "코드 목록을 불러오지 못했습니다.";
+      }
+    }
+
+    async function generateCodes() {
+      var count = Number(document.getElementById("codeCount").value);
+      var genBtn = document.getElementById("genBtn");
+      var newBox = document.getElementById("codesNew");
+      if (!(count >= 1 && count <= 200)) { alert("1~200 사이로 입력해 주세요."); return; }
+      genBtn.disabled = true; genBtn.textContent = "발급 중…";
+      try {
+        var res = await fetch("/api/admin/codes/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ count: count })
+        });
+        var data = await res.json();
+        if (!res.ok || !data.ok) throw new Error();
+        var codes = data.generated;
+        newBox.style.display = "block";
+        newBox.innerHTML =
+          '<b>새로 발급된 코드 ' + codes.length + '개 — 복사해서 배포하세요</b>' +
+          '<textarea id="newCodesArea" readonly rows="' + Math.min(Math.max(codes.length, 2), 12) + '">' + esc(codes.join("\n")) + '</textarea>' +
+          '<div style="margin-top:0.6rem;"><button class="refresh" id="copyBtn">전체 복사</button></div>';
+        document.getElementById("copyBtn").addEventListener("click", function () {
+          var ta = document.getElementById("newCodesArea");
+          ta.focus(); ta.select();
+          var done = false;
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(ta.value); done = true; }
+            else { done = document.execCommand("copy"); }
+          } catch (e) { done = false; }
+          this.textContent = done ? "복사됨" : "직접 선택해 복사하세요";
+        });
+        loadCodes();
+      } catch (e) {
+        alert("발급에 실패했습니다. 다시 시도해 주세요.");
+      } finally {
+        genBtn.disabled = false; genBtn.textContent = "발급";
+      }
+    }
+
+    document.getElementById("genBtn").addEventListener("click", generateCodes);
+    document.getElementById("refreshBtn").addEventListener("click", load);
+    load();
+    loadCodes();
+  </script>
+</body>
+</html>
