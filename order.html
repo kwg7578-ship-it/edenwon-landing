@@ -96,6 +96,31 @@
       padding-bottom: 0.8rem; margin-bottom: 0.6rem; border-bottom: 1px solid var(--border-strong); }
     .bank__amount strong { font-family: var(--font-display); font-size: 1.3rem; color: var(--ink); font-weight: 700; }
 
+    /* 옵션 선택 */
+    .opt-list { display: flex; flex-direction: column; gap: 9px; }
+    .opt-btn { display: flex; justify-content: space-between; align-items: center;
+      font-family: var(--font-body); font-size: 0.98rem; color: var(--ink); cursor: pointer;
+      background: var(--cream); border: 1px solid var(--border-strong); border-radius: 8px;
+      padding: 0.85rem 1rem; transition: border-color .15s, box-shadow .15s; }
+    .opt-btn .opt-price { color: var(--ink-soft); }
+    .opt-btn.sel { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(139,111,71,0.12); background: #fff; }
+    .opt-btn.sel .opt-price { color: var(--gold-dark); font-weight: 500; }
+    .opt-note { font-size: 0.8rem; color: var(--gold-dark); margin-top: 0.55rem; line-height: 1.5; }
+
+    /* 개수 스테퍼 */
+    .count-row { display: flex; align-items: center; justify-content: space-between; }
+    .stepper { display: flex; align-items: center; border: 1px solid var(--border-strong); border-radius: 8px; overflow: hidden; }
+    .stepper button { width: 40px; height: 40px; border: none; background: var(--cream); cursor: pointer; font-size: 1.2rem; color: var(--ink); }
+    .stepper button:hover { background: var(--cream-dark); }
+    .stepper span { width: 46px; text-align: center; font-size: 1.05rem; }
+
+    /* 기전대 토글 */
+    .school-toggle { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.92rem; color: var(--ink); }
+    .school-toggle input { width: 18px; height: 18px; accent-color: var(--gold-dark); cursor: pointer; }
+    .school-fields { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-strong); }
+    .school-fields.show { display: block; }
+    .school-fields .field:last-child { margin-bottom: 0; }
+
     .done { display: none; }
     .done.show { display: block; animation: fade 0.5s ease; }
     .form-stage.hide { display: none; }
@@ -153,7 +178,7 @@
       <div class="card">
         <div class="pickup-note">
           <span>📍</span>
-          <span><strong>현장 수령 전용</strong> — 이 주문은 택배 발송이 아니라 직접 받으러 오시는 분들을 위한 것입니다. 그래서 주소는 받지 않습니다.</span>
+          <span><strong>자가 수령 전용</strong> — 이 주문은 택배 발송이 아니라 직접 받으러 오시는 분들을 위한 것입니다. 그래서 주소는 받지 않습니다.</span>
         </div>
 
         <div class="field" id="f-name">
@@ -169,18 +194,49 @@
           <div class="field__hint">주문 조회 시 본인 확인에 사용됩니다.</div>
         </div>
 
-        <div class="field" id="f-qty">
+        <div class="field" id="f-opt">
+          <label class="field__label">옵션 <span class="req">*</span></label>
+          <div class="opt-list">
+            <button type="button" class="opt-btn" data-kg="1" data-regular="10000" data-school="10000">
+              <span>1kg</span><span class="opt-price">10,000원</span>
+            </button>
+            <button type="button" class="opt-btn sel" data-kg="3" data-regular="30000" data-school="25000">
+              <span>3kg</span><span class="opt-price">30,000원</span>
+            </button>
+          </div>
+          <div class="opt-note" id="optNote">· 기전대학교 재학생은 3kg 25,000원 (아래에서 학번·학과 입력)</div>
+        </div>
+
+        <div class="field" id="f-count">
           <label class="field__label">수량 <span class="req">*</span></label>
-          <div class="qty-row">
-            <input type="number" id="qty" min="1" max="999" value="1" />
-            <span class="qty-unit">kg</span>
+          <div class="count-row">
+            <span style="font-size:0.9rem;color:var(--ink-mute);">개수</span>
+            <div class="stepper">
+              <button type="button" id="minus" aria-label="수량 줄이기">−</button>
+              <span id="countVal">1</span>
+              <button type="button" id="plus" aria-label="수량 늘리기">+</button>
+            </div>
           </div>
         </div>
 
-        <div class="field" id="f-code">
-          <label class="field__label">할인 코드 <span style="color:var(--ink-mute);font-size:0.82rem;">(있는 경우)</span></label>
-          <input type="text" id="code" maxlength="20" placeholder="EDU-XXXXX" autocomplete="off" style="text-transform:uppercase;" />
-          <div class="field__hint">학교 할인 코드가 있으면 입력하세요. 없으면 비워 두세요.</div>
+        <div class="field" id="f-school">
+          <label class="school-toggle">
+            <input type="checkbox" id="schoolChk" />
+            <span>기전대학교 재학생이신가요?</span>
+          </label>
+          <div class="school-fields" id="schoolFields">
+            <div class="field" id="f-sid">
+              <label class="field__label">학번 <span class="req">*</span></label>
+              <input type="text" id="studentId" inputmode="numeric" maxlength="9" placeholder="숫자 9자리" autocomplete="off" />
+              <div class="field__err">학번은 숫자 9자리로 입력해 주세요.</div>
+            </div>
+            <div class="field" id="f-dept">
+              <label class="field__label">학과 <span class="req">*</span></label>
+              <input type="text" id="department" maxlength="30" placeholder="예: 치유농업과" autocomplete="off" />
+              <div class="field__err">학과를 입력해 주세요.</div>
+            </div>
+            <div class="field__hint">3kg 주문 시 할인가(25,000원)가 적용됩니다. 1kg은 정가입니다.</div>
+          </div>
         </div>
 
         <div class="field">
@@ -189,16 +245,15 @@
         </div>
 
         <div class="amount-line">
-          <span class="amount-line__k">금액 <span style="font-size:0.78rem;color:var(--ink-mute);">(정가 기준)</span></span>
-          <span class="amount-line__v" id="formAmount">10,000원</span>
+          <span class="amount-line__k">합계</span>
+          <span class="amount-line__v" id="formAmount">30,000원</span>
         </div>
-        <div class="amount-line__note">할인 코드를 적용하면 주문 완료 화면에서 할인가로 안내됩니다.</div>
 
         <button class="btn" id="submitBtn">주문 접수하기</button>
 
         <div class="form-error" id="formError"></div>
 
-        <p class="privacy">입력하신 이름·전화번호는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다.</p>
+        <p class="privacy">입력하신 이름·전화번호(및 학번·학과)는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다.</p>
       </div>
     </div>
 
@@ -211,7 +266,7 @@
       <div class="card">
         <div class="summary">
           <div class="summary__row"><span class="k">품목</span><span class="v" id="sumProduct">햇 완두콩</span></div>
-          <div class="summary__row"><span class="k">수량</span><span class="v" id="sumQty">—</span></div>
+          <div class="summary__row"><span class="k">구성</span><span class="v" id="sumQty">—</span></div>
           <div class="summary__row"><span class="k">주문일</span><span class="v" id="sumDate">—</span></div>
           <div class="summary__row"><span class="k">상태</span><span class="status-pill" id="sumStatus">입금 대기</span></div>
           <div class="summary__row" id="discountRow" style="display:none;"><span class="k">할인</span><span class="v" style="color:var(--gold-dark);">학교 할인 적용</span></div>
@@ -241,47 +296,82 @@
     var API_BASE = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
       ? "https://api.yd-edenwon.com" : "";
 
-    var REGULAR_PRICE = 10000; // 정가(원/kg) — 실시간 표시용. 실제 금액은 서버가 계산.
-
     var btn = document.getElementById("submitBtn");
     var errBox = document.getElementById("formError");
-    var qtyEl = document.getElementById("qty");
     var formAmount = document.getElementById("formAmount");
+    var optBtns = document.querySelectorAll(".opt-btn");
+    var optNote = document.getElementById("optNote");
+    var countVal = document.getElementById("countVal");
+    var schoolChk = document.getElementById("schoolChk");
+    var schoolFields = document.getElementById("schoolFields");
+    var studentId = document.getElementById("studentId");
+    var department = document.getElementById("department");
+
+    var count = 1;
 
     function won(n) { return Number(n).toLocaleString("ko-KR") + "원"; }
+    function showError(msg) { errBox.innerHTML = msg; errBox.classList.add("show"); }
+    function selected() { return document.querySelector(".opt-btn.sel"); }
 
-    function showError(msg) {
-      errBox.innerHTML = msg;
-      errBox.classList.add("show");
+    function recalc() {
+      var sel = selected();
+      var kg = parseInt(sel.getAttribute("data-kg"), 10);
+      var regular = parseInt(sel.getAttribute("data-regular"), 10);
+      var schoolPrice = parseInt(sel.getAttribute("data-school"), 10);
+      var filled = schoolChk.checked && /^\d{9}$/.test(studentId.value.trim()) && department.value.trim();
+      var unit = filled ? schoolPrice : regular;
+      countVal.textContent = count;
+      formAmount.textContent = won(unit * count);
+      optNote.style.display = (kg === 3) ? "block" : "none";
     }
 
-    function updateFormAmount() {
-      var q = Number(qtyEl.value);
-      if (!(q >= 1)) q = 0;
-      formAmount.textContent = won(REGULAR_PRICE * q);
-    }
-    qtyEl.addEventListener("input", updateFormAmount);
-    updateFormAmount();
+    optBtns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        optBtns.forEach(function (x) { x.classList.remove("sel"); });
+        b.classList.add("sel");
+        var p = b.getAttribute("data-regular");
+        b.querySelector(".opt-price").textContent = won(parseInt(p, 10));
+        recalc();
+      });
+    });
+    document.getElementById("plus").addEventListener("click", function () { if (count < 50) { count++; recalc(); } });
+    document.getElementById("minus").addEventListener("click", function () { if (count > 1) { count--; recalc(); } });
+    schoolChk.addEventListener("change", function () {
+      schoolFields.classList.toggle("show", schoolChk.checked);
+      recalc();
+    });
+    studentId.addEventListener("input", function () {
+      var d = studentId.value.replace(/\D/g, "").slice(0, 9);
+      if (studentId.value !== d) studentId.value = d;
+      recalc();
+    });
+    department.addEventListener("input", recalc);
+    recalc();
 
     btn.addEventListener("click", async function () {
       errBox.classList.remove("show");
 
       var nameEl = document.getElementById("name");
       var phoneEl = document.getElementById("phone");
-
       var name = nameEl.value.trim();
       var digits = phoneEl.value.replace(/\D/g, "");
-      var qty = Number(qtyEl.value);
+      var sel = selected();
+      var kg = parseInt(sel.getAttribute("data-kg"), 10);
 
       var nameOk = name.length > 0;
       var phoneOk = digits.length >= 10 && digits.length <= 11;
-      var qtyOk = qty >= 1 && qty <= 999;
-
       document.getElementById("f-name").classList.toggle("invalid", !nameOk);
       document.getElementById("f-phone").classList.toggle("invalid", !phoneOk);
-      document.getElementById("f-qty").classList.toggle("invalid", !qtyOk);
 
-      if (!(nameOk && phoneOk && qtyOk)) {
+      var sidOk = true, deptOk = true;
+      if (schoolChk.checked) {
+        sidOk = /^\d{9}$/.test(studentId.value.trim());
+        deptOk = department.value.trim().length > 0;
+        document.getElementById("f-sid").classList.toggle("invalid", !sidOk);
+        document.getElementById("f-dept").classList.toggle("invalid", !deptOk);
+      }
+
+      if (!(nameOk && phoneOk && sidOk && deptOk)) {
         var first = document.querySelector(".field.invalid input");
         if (first) first.focus();
         return;
@@ -297,16 +387,17 @@
           body: JSON.stringify({
             name: name,
             phone: phoneEl.value.trim(),
-            qty: qty,
+            pkg_kg: kg,
+            count: count,
             unit: "kg",
             product: "햇 완두콩",
-            code: document.getElementById("code").value.trim(),
+            student_id: schoolChk.checked ? studentId.value.trim() : "",
+            department: schoolChk.checked ? department.value.trim() : "",
             memo: document.getElementById("memo").value.trim()
           })
         });
         var data = await res.json();
         if (!res.ok || !data.ok) {
-          // 서버가 돌려준 사유(예: 할인 코드 오류)를 그대로 보여줌
           btn.disabled = false;
           btn.textContent = "주문 접수하기";
           showError(data.error || "주문 접수 중 문제가 발생했습니다.");
@@ -316,7 +407,7 @@
         document.getElementById("orderNo").textContent = data.order_no;
         document.getElementById("hintNo").textContent = data.order_no;
         document.getElementById("sumProduct").textContent = data.product;
-        document.getElementById("sumQty").textContent = data.qty + " " + data.unit;
+        document.getElementById("sumQty").textContent = data.pkg_kg + "kg × " + data.count + "개";
         document.getElementById("sumDate").textContent = data.created_at;
         document.getElementById("sumStatus").textContent = data.status;
         document.getElementById("payAmount").textContent = (data.amount != null) ? won(data.amount) : "—";
