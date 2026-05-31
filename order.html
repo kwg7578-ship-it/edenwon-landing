@@ -161,17 +161,25 @@
 
   <nav class="nav">
     <div class="nav__inner">
-      <a href="products/pea.html" class="nav__back">← 햇 완두콩</a>
+      <a href="products/pea.html" id="navBack" class="nav__back">← 제품 페이지</a>
       <span class="nav__brand">Yeongdong Edenwon</span>
     </div>
   </nav>
 
   <div class="wrap">
 
-    <!-- 1단계: 주문 폼 -->
-    <div class="form-stage" id="formStage">
+    <!-- 준비 중(가격 미설정) 안내 -->
+    <div id="notReady" style="display:none; text-align:center; padding:3rem 0;">
       <div class="eyebrow">Order</div>
-      <h1 class="title">햇 완두콩 주문하기</h1>
+      <h1 class="title" style="margin-bottom:1rem;">준비 중입니다</h1>
+      <p class="lede">이 제품은 아직 자가 수령 주문을 준비 중입니다.<br />
+        <a href="contact.html" style="color:var(--gold-dark);border-bottom:1px solid var(--border-strong);">카카오톡으로 문의</a>해 주세요.</p>
+    </div>
+
+    <!-- 1단계: 주문 폼 -->
+    <div class="form-stage" id="formStage" style="display:none;">
+      <div class="eyebrow">Order</div>
+      <h1 class="title" id="formTitle">주문하기</h1>
       <p class="lede">택배 없이 직접 수령하실 분들을 위한 주문 폼입니다.<br />아래 정보를 남겨 주시면, 입금 안내를 확인하실 수 있습니다.</p>
       <div class="divider"></div>
 
@@ -196,15 +204,8 @@
 
         <div class="field" id="f-opt">
           <label class="field__label">옵션 <span class="req">*</span></label>
-          <div class="opt-list">
-            <button type="button" class="opt-btn" data-kg="1" data-regular="10000" data-school="10000">
-              <span>1kg</span><span class="opt-price">10,000원</span>
-            </button>
-            <button type="button" class="opt-btn sel" data-kg="3" data-regular="30000" data-school="25000">
-              <span>3kg</span><span class="opt-price">30,000원</span>
-            </button>
-          </div>
-          <div class="opt-note" id="optNote">· 기전대학교 재학생은 3kg 25,000원 (아래에서 학번·학과 입력)</div>
+          <div class="opt-list" id="optList"></div>
+          <div class="opt-note" id="optNote" style="display:none;"></div>
         </div>
 
         <div class="field" id="f-count">
@@ -219,7 +220,7 @@
           </div>
         </div>
 
-        <div class="field" id="f-school">
+        <div class="field" id="f-school" style="display:none;">
           <label class="school-toggle">
             <input type="checkbox" id="schoolChk" />
             <span>기전대학교 재학생이신가요?</span>
@@ -235,7 +236,7 @@
               <input type="text" id="department" maxlength="30" placeholder="예: 치유농업과" autocomplete="off" />
               <div class="field__err">학과를 입력해 주세요.</div>
             </div>
-            <div class="field__hint">3kg 주문 시 할인가(25,000원)가 적용됩니다. 1kg은 정가입니다.</div>
+            <div class="field__hint" id="schoolHint">재학생은 할인가가 적용됩니다.</div>
           </div>
         </div>
 
@@ -296,44 +297,88 @@
     var API_BASE = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
       ? "https://api.yd-edenwon.com" : "";
 
+    var PRODUCT_KEY = (new URLSearchParams(location.search).get("product") || "pea").trim();
+
     var btn = document.getElementById("submitBtn");
     var errBox = document.getElementById("formError");
     var formAmount = document.getElementById("formAmount");
-    var optBtns = document.querySelectorAll(".opt-btn");
+    var optList = document.getElementById("optList");
     var optNote = document.getElementById("optNote");
     var countVal = document.getElementById("countVal");
+    var fSchool = document.getElementById("f-school");
     var schoolChk = document.getElementById("schoolChk");
     var schoolFields = document.getElementById("schoolFields");
     var studentId = document.getElementById("studentId");
     var department = document.getElementById("department");
 
     var count = 1;
+    var schoolEnabled = false;
 
     function won(n) { return Number(n).toLocaleString("ko-KR") + "원"; }
     function showError(msg) { errBox.innerHTML = msg; errBox.classList.add("show"); }
     function selected() { return document.querySelector(".opt-btn.sel"); }
 
-    function recalc() {
-      var sel = selected();
-      var kg = parseInt(sel.getAttribute("data-kg"), 10);
-      var regular = parseInt(sel.getAttribute("data-regular"), 10);
-      var schoolPrice = parseInt(sel.getAttribute("data-school"), 10);
-      var filled = schoolChk.checked && /^\d{9}$/.test(studentId.value.trim()) && department.value.trim();
-      var unit = filled ? schoolPrice : regular;
-      countVal.textContent = count;
-      formAmount.textContent = won(unit * count);
-      optNote.style.display = (kg === 3) ? "block" : "none";
+    function schoolFilled() {
+      return schoolEnabled && schoolChk.checked
+        && /^\d{9}$/.test(studentId.value.trim()) && department.value.trim().length > 0;
     }
 
-    optBtns.forEach(function (b) {
-      b.addEventListener("click", function () {
-        optBtns.forEach(function (x) { x.classList.remove("sel"); });
-        b.classList.add("sel");
-        var p = b.getAttribute("data-regular");
-        b.querySelector(".opt-price").textContent = won(parseInt(p, 10));
-        recalc();
+    function recalc() {
+      var sel = selected();
+      if (!sel) return;
+      var regular = parseInt(sel.getAttribute("data-regular"), 10);
+      var schoolPrice = parseInt(sel.getAttribute("data-school"), 10);
+      var unit = schoolFilled() ? schoolPrice : regular;
+      countVal.textContent = count;
+      formAmount.textContent = won(unit * count);
+    }
+
+    function renderOptions(options) {
+      optList.innerHTML = options.map(function (o, i) {
+        return '<button type="button" class="opt-btn' + (i === 0 ? ' sel' : '') + '"'
+          + ' data-id="' + o.id + '" data-regular="' + o.regular + '" data-school="' + o.school + '">'
+          + '<span>' + o.label + '</span><span class="opt-price">' + won(o.regular) + '</span></button>';
+      }).join("");
+      optList.querySelectorAll(".opt-btn").forEach(function (b) {
+        b.addEventListener("click", function () {
+          optList.querySelectorAll(".opt-btn").forEach(function (x) { x.classList.remove("sel"); });
+          b.classList.add("sel");
+          recalc();
+        });
       });
-    });
+    }
+
+    function buildOptNote(options) {
+      var disc = options.filter(function (o) { return o.school < o.regular; });
+      if (!disc.length) { optNote.style.display = "none"; return; }
+      var parts = disc.map(function (o) { return o.label + " " + won(o.school); });
+      optNote.textContent = "· 기전대학교 재학생은 " + parts.join(", ") + " (아래에서 학번·학과 입력)";
+      optNote.style.display = "block";
+    }
+
+    async function init() {
+      try {
+        var res = await fetch(API_BASE + "/api/product?product=" + encodeURIComponent(PRODUCT_KEY));
+        var data = await res.json();
+        if (!res.ok || !data.ok) throw new Error();
+
+        document.getElementById("formTitle").textContent = data.name + " 주문하기";
+        var back = document.getElementById("navBack");
+        back.textContent = "← " + data.name;
+        back.setAttribute("href", "products/" + (data.key || PRODUCT_KEY) + ".html");
+
+        renderOptions(data.options);
+        schoolEnabled = !!data.school;
+        fSchool.style.display = schoolEnabled ? "block" : "none";
+        buildOptNote(data.options);
+
+        document.getElementById("formStage").style.display = "block";
+        recalc();
+      } catch (e) {
+        document.getElementById("notReady").style.display = "block";
+      }
+    }
+
     document.getElementById("plus").addEventListener("click", function () { if (count < 50) { count++; recalc(); } });
     document.getElementById("minus").addEventListener("click", function () { if (count > 1) { count--; recalc(); } });
     schoolChk.addEventListener("change", function () {
@@ -346,17 +391,18 @@
       recalc();
     });
     department.addEventListener("input", recalc);
-    recalc();
+
+    init();
 
     btn.addEventListener("click", async function () {
       errBox.classList.remove("show");
-
       var nameEl = document.getElementById("name");
       var phoneEl = document.getElementById("phone");
       var name = nameEl.value.trim();
       var digits = phoneEl.value.replace(/\D/g, "");
       var sel = selected();
-      var kg = parseInt(sel.getAttribute("data-kg"), 10);
+      if (!sel) return;
+      var optionId = sel.getAttribute("data-id");
 
       var nameOk = name.length > 0;
       var phoneOk = digits.length >= 10 && digits.length <= 11;
@@ -364,7 +410,8 @@
       document.getElementById("f-phone").classList.toggle("invalid", !phoneOk);
 
       var sidOk = true, deptOk = true;
-      if (schoolChk.checked) {
+      var useSchool = schoolEnabled && schoolChk.checked;
+      if (useSchool) {
         sidOk = /^\d{9}$/.test(studentId.value.trim());
         deptOk = department.value.trim().length > 0;
         document.getElementById("f-sid").classList.toggle("invalid", !sidOk);
@@ -379,7 +426,6 @@
 
       btn.disabled = true;
       btn.textContent = "접수 중…";
-
       try {
         var res = await fetch(API_BASE + "/api/orders", {
           method: "POST",
@@ -387,42 +433,34 @@
           body: JSON.stringify({
             name: name,
             phone: phoneEl.value.trim(),
-            pkg_kg: kg,
+            option: optionId,
             count: count,
-            unit: "kg",
-            product: "햇 완두콩",
-            student_id: schoolChk.checked ? studentId.value.trim() : "",
-            department: schoolChk.checked ? department.value.trim() : "",
+            product: PRODUCT_KEY,
+            student_id: useSchool ? studentId.value.trim() : "",
+            department: useSchool ? department.value.trim() : "",
             memo: document.getElementById("memo").value.trim()
           })
         });
         var data = await res.json();
         if (!res.ok || !data.ok) {
-          btn.disabled = false;
-          btn.textContent = "주문 접수하기";
+          btn.disabled = false; btn.textContent = "주문 접수하기";
           showError(data.error || "주문 접수 중 문제가 발생했습니다.");
           return;
         }
-
         document.getElementById("orderNo").textContent = data.order_no;
         document.getElementById("hintNo").textContent = data.order_no;
         document.getElementById("sumProduct").textContent = data.product;
-        document.getElementById("sumQty").textContent = data.pkg_kg + "kg × " + data.count + "개";
+        document.getElementById("sumQty").textContent = data.option_label + " × " + data.count + "개";
         document.getElementById("sumDate").textContent = data.created_at;
         document.getElementById("sumStatus").textContent = data.status;
         document.getElementById("payAmount").textContent = (data.amount != null) ? won(data.amount) : "—";
         document.getElementById("discountRow").style.display = data.discounted ? "flex" : "none";
-
-        document.getElementById("formStage").classList.add("hide");
+        document.getElementById("formStage").style.display = "none";
         document.getElementById("doneStage").classList.add("show");
         window.scrollTo({ top: 0, behavior: "smooth" });
       } catch (e) {
-        btn.disabled = false;
-        btn.textContent = "주문 접수하기";
-        showError(
-          "지금 주문 접수가 어렵습니다. 잠시 후 다시 시도하시거나, " +
-          "<a href='contact.html'>카카오톡으로 문의</a>해 주세요."
-        );
+        btn.disabled = false; btn.textContent = "주문 접수하기";
+        showError("지금 주문 접수가 어렵습니다. 잠시 후 다시 시도하시거나, <a href='contact.html'>카카오톡으로 문의</a>해 주세요.");
       }
     });
   </script>
