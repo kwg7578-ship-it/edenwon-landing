@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>햇 완두콩 주문하기 — 영동에덴원</title>
+  <title>주문하기 — 영동에덴원</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
@@ -53,13 +53,14 @@
     .field__label .req { color: var(--gold-dark); margin-left: 0.2rem; }
     .field__hint { font-size: 0.8rem; color: var(--ink-mute); margin-top: 0.4rem; }
 
-    input, textarea { width: 100%; font-family: var(--font-body); font-size: 0.98rem;
+    input, textarea, select { width: 100%; font-family: var(--font-body); font-size: 0.98rem;
       font-weight: 300; color: var(--ink); background: var(--cream);
       border: 1px solid var(--border-strong); padding: 0.85rem 1rem;
       transition: border-color 0.2s ease, box-shadow 0.2s ease; }
-    input:focus, textarea:focus { outline: none; border-color: var(--gold);
+    input:focus, textarea:focus, select:focus { outline: none; border-color: var(--gold);
       box-shadow: 0 0 0 3px rgba(139, 111, 71, 0.12); }
     textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+    select { cursor: pointer; }
 
     .qty-row { display: flex; gap: 0.7rem; align-items: stretch; }
     .qty-row input { text-align: center; }
@@ -115,11 +116,9 @@
     .stepper span { width: 46px; text-align: center; font-size: 1.05rem; }
 
     /* 기전대 토글 */
-    .school-toggle { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.92rem; color: var(--ink); }
-    .school-toggle input { width: 18px; height: 18px; accent-color: var(--gold-dark); cursor: pointer; }
-    .school-fields { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-strong); }
-    .school-fields.show { display: block; }
-    .school-fields .field:last-child { margin-bottom: 0; }
+    .aff-fields { margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-strong); }
+    .aff-fields.empty { display: none; }
+    .aff-fields .field:last-child { margin-bottom: 0; }
 
     .done { display: none; }
     .done.show { display: block; animation: fade 0.5s ease; }
@@ -220,24 +219,22 @@
           </div>
         </div>
 
-        <div class="field" id="f-school" style="display:none;">
-          <label class="school-toggle">
-            <input type="checkbox" id="schoolChk" />
-            <span>기전대학교 재학생이신가요?</span>
-          </label>
-          <div class="school-fields" id="schoolFields">
-            <div class="field" id="f-sid">
+        <div class="field" id="f-aff">
+          <label class="field__label">소속 <span style="color:var(--ink-mute);font-size:0.82rem;">(해당되시면 선택)</span></label>
+          <select id="affiliation"><option value="">일반</option></select>
+          <div class="aff-fields empty" id="affFields">
+            <div class="field" id="f-sid" style="display:none;">
               <label class="field__label">학번 <span class="req">*</span></label>
               <input type="text" id="studentId" inputmode="numeric" maxlength="9" placeholder="숫자 9자리" autocomplete="off" />
               <div class="field__err">학번은 숫자 9자리로 입력해 주세요.</div>
             </div>
-            <div class="field" id="f-dept">
+            <div class="field" id="f-dept" style="display:none;">
               <label class="field__label">학과 <span class="req">*</span></label>
               <input type="text" id="department" maxlength="30" placeholder="예: 치유농업과" autocomplete="off" />
               <div class="field__err">학과를 입력해 주세요.</div>
             </div>
-            <div class="field__hint" id="schoolHint">재학생은 할인가가 적용됩니다.</div>
           </div>
+          <div class="opt-note" id="affNote" style="display:none;"></div>
         </div>
 
         <div class="field">
@@ -305,55 +302,147 @@
     var optList = document.getElementById("optList");
     var optNote = document.getElementById("optNote");
     var countVal = document.getElementById("countVal");
-    var fSchool = document.getElementById("f-school");
-    var schoolChk = document.getElementById("schoolChk");
-    var schoolFields = document.getElementById("schoolFields");
+    var affSelect = document.getElementById("affiliation");
+    var affFields = document.getElementById("affFields");
+    var affNote = document.getElementById("affNote");
+    var fSid = document.getElementById("f-sid");
+    var fDept = document.getElementById("f-dept");
     var studentId = document.getElementById("studentId");
     var department = document.getElementById("department");
 
     var count = 1;
-    var schoolEnabled = false;
+    var CONFIG = null;          // 서버에서 받은 제품 설정
+    var AFF_NEEDS = {};         // {신분id: [필요항목]}
+    var AFF_LABEL = {};         // {신분id: 표시명}
 
     function won(n) { return Number(n).toLocaleString("ko-KR") + "원"; }
     function showError(msg) { errBox.innerHTML = msg; errBox.classList.add("show"); }
     function selected() { return document.querySelector(".opt-btn.sel"); }
-
-    function schoolFilled() {
-      return schoolEnabled && schoolChk.checked
-        && /^\d{9}$/.test(studentId.value.trim()) && department.value.trim().length > 0;
+    function currentOption() {
+      var sel = selected();
+      if (!sel || !CONFIG) return null;
+      var id = sel.getAttribute("data-id");
+      return CONFIG.options.filter(function (o) { return o.id === id; })[0] || null;
+    }
+    function currentNeeds() {
+      var g = affSelect.value;
+      return g && AFF_NEEDS[g] ? AFF_NEEDS[g] : [];
     }
 
+    // 누적 잔여 상태: { applicable, remaining(null=무제한), reason }
+    var remainState = null;
+
     function recalc() {
-      var sel = selected();
-      if (!sel) return;
-      var regular = parseInt(sel.getAttribute("data-regular"), 10);
-      var schoolPrice = parseInt(sel.getAttribute("data-school"), 10);
-      var unit = schoolFilled() ? schoolPrice : regular;
+      var o = currentOption();
+      if (!o) return;
+      var g = affSelect.value;
+      var regular = o.prices.regular;
+      var hasRule = g && o.prices[g] != null && o.prices[g] < regular;
       countVal.textContent = count;
-      formAmount.textContent = won(unit * count);
+
+      if (!hasRule) {
+        formAmount.textContent = won(regular * count);
+        affNote.style.display = "none";
+        return;
+      }
+
+      var discUnit = o.prices[g];
+
+      // 누적 잔여를 알면 그걸 우선 적용. 모르면(번호 미입력 등) 옵션의 limit만 참고.
+      var remaining;
+      if (remainState && remainState.applicable) {
+        remaining = remainState.remaining;            // null=무제한
+      } else if (remainState && !remainState.applicable) {
+        // 명부 미확인 관계자 등 → 할인 미적용(정가)
+        formAmount.textContent = won(regular * count);
+        if (g === "edenwon" && remainState.reason === "not_member") {
+          affNote.textContent = "· 관계자 명부에서 확인되지 않아 일반가로 접수됩니다. 확인 후 조정될 수 있습니다.";
+          affNote.style.display = "block";
+        } else if (remainState.reason === "phone") {
+          affNote.textContent = "· 전화번호를 입력하시면 할인 적용 여부가 표시됩니다.";
+          affNote.style.display = "block";
+        } else {
+          affNote.style.display = "none";
+        }
+        return;
+      } else {
+        remaining = (o.limits && o.limits[g] != null) ? o.limits[g] : null;
+      }
+
+      var discN = (remaining == null) ? count : Math.min(count, remaining);
+      var over = count - discN;
+      var total = discUnit * discN + regular * over;
+      formAmount.textContent = won(total);
+
+      var msg = "· " + (AFF_LABEL[g] || "") + " 가격 — 개당 " + won(discUnit);
+      if (remaining != null) {
+        msg += " · 할인 잔여 " + remaining + "개";
+        if (over > 0) msg += " · 초과 " + over + "개는 정가 " + won(regular);
+      }
+      affNote.textContent = msg;
+      affNote.style.display = "block";
+    }
+
+    // 전화번호·옵션·신분이 정해지면 서버에서 남은 할인 수량 조회
+    var remainTimer = null;
+    function refreshRemaining() {
+      var o = currentOption();
+      var g = affSelect.value;
+      var digits = (document.getElementById("phone").value || "").replace(/\D/g, "");
+      // 할인 규칙이 있는 신분 + 번호가 그럴듯할 때만 조회
+      var hasRule = o && g && o.prices[g] != null && o.prices[g] < o.prices.regular;
+      if (!hasRule) { remainState = null; recalc(); return; }
+      if (digits.length < 10) { remainState = { applicable: false, reason: "phone" }; recalc(); return; }
+      clearTimeout(remainTimer);
+      remainTimer = setTimeout(async function () {
+        try {
+          var url = API_BASE + "/api/discount-status?product=" + encodeURIComponent(PRODUCT_KEY)
+            + "&option=" + encodeURIComponent(o.id) + "&affiliation=" + encodeURIComponent(g)
+            + "&phone=" + encodeURIComponent(digits);
+          var res = await fetch(url);
+          var data = await res.json();
+          remainState = data.ok ? data : null;
+        } catch (e) { remainState = null; }
+        recalc();
+      }, 300);
     }
 
     function renderOptions(options) {
       optList.innerHTML = options.map(function (o, i) {
-        return '<button type="button" class="opt-btn' + (i === 0 ? ' sel' : '') + '"'
-          + ' data-id="' + o.id + '" data-regular="' + o.regular + '" data-school="' + o.school + '">'
-          + '<span>' + o.label + '</span><span class="opt-price">' + won(o.regular) + '</span></button>';
+        return '<button type="button" class="opt-btn' + (i === 0 ? ' sel' : '') + '" data-id="' + o.id + '">'
+          + '<span>' + o.label + '</span><span class="opt-price">' + won(o.prices.regular) + '</span></button>';
       }).join("");
       optList.querySelectorAll(".opt-btn").forEach(function (b) {
         b.addEventListener("click", function () {
           optList.querySelectorAll(".opt-btn").forEach(function (x) { x.classList.remove("sel"); });
           b.classList.add("sel");
-          recalc();
+          refreshRemaining();
         });
       });
     }
 
-    function buildOptNote(options) {
-      var disc = options.filter(function (o) { return o.school < o.regular; });
-      if (!disc.length) { optNote.style.display = "none"; return; }
-      var parts = disc.map(function (o) { return o.label + " " + won(o.school); });
-      optNote.textContent = "· 기전대학교 재학생은 " + parts.join(", ") + " (아래에서 학번·학과 입력)";
-      optNote.style.display = "block";
+    function renderAffiliations(affs) {
+      // 첫 항목 '일반'(빈 값)은 이미 마크업에 있음
+      affs.forEach(function (a) {
+        AFF_NEEDS[a.id] = a.needs || [];
+        AFF_LABEL[a.id] = a.label;
+        var opt = document.createElement("option");
+        opt.value = a.id;
+        opt.textContent = a.label;
+        affSelect.appendChild(opt);
+      });
+    }
+
+    function applyAffiliationFields() {
+      var needs = currentNeeds();
+      var showSid = needs.indexOf("student_id") >= 0;
+      var showDept = needs.indexOf("department") >= 0;
+      fSid.style.display = showSid ? "block" : "none";
+      fDept.style.display = showDept ? "block" : "none";
+      affFields.classList.toggle("empty", !(showSid || showDept));
+      // 숨겨진 칸의 오류 표시는 해제
+      if (!showSid) fSid.classList.remove("invalid");
+      if (!showDept) fDept.classList.remove("invalid");
     }
 
     async function init() {
@@ -362,15 +451,16 @@
         var data = await res.json();
         if (!res.ok || !data.ok) throw new Error();
 
+        CONFIG = data;
+        document.title = data.name + " 주문하기 — 영동에덴원";
         document.getElementById("formTitle").textContent = data.name + " 주문하기";
         var back = document.getElementById("navBack");
         back.textContent = "← " + data.name;
         back.setAttribute("href", "products/" + (data.key || PRODUCT_KEY) + ".html");
 
         renderOptions(data.options);
-        schoolEnabled = !!data.school;
-        fSchool.style.display = schoolEnabled ? "block" : "none";
-        buildOptNote(data.options);
+        renderAffiliations(data.affiliations || []);
+        applyAffiliationFields();
 
         document.getElementById("formStage").style.display = "block";
         recalc();
@@ -381,10 +471,8 @@
 
     document.getElementById("plus").addEventListener("click", function () { if (count < 50) { count++; recalc(); } });
     document.getElementById("minus").addEventListener("click", function () { if (count > 1) { count--; recalc(); } });
-    schoolChk.addEventListener("change", function () {
-      schoolFields.classList.toggle("show", schoolChk.checked);
-      recalc();
-    });
+    affSelect.addEventListener("change", function () { applyAffiliationFields(); refreshRemaining(); });
+    document.getElementById("phone").addEventListener("input", refreshRemaining);
     studentId.addEventListener("input", function () {
       var d = studentId.value.replace(/\D/g, "").slice(0, 9);
       if (studentId.value !== d) studentId.value = d;
@@ -400,9 +488,11 @@
       var phoneEl = document.getElementById("phone");
       var name = nameEl.value.trim();
       var digits = phoneEl.value.replace(/\D/g, "");
-      var sel = selected();
-      if (!sel) return;
-      var optionId = sel.getAttribute("data-id");
+      var o = currentOption();
+      if (!o) return;
+      var optionId = o.id;
+      var aff = affSelect.value;
+      var needs = currentNeeds();
 
       var nameOk = name.length > 0;
       var phoneOk = digits.length >= 10 && digits.length <= 11;
@@ -410,12 +500,13 @@
       document.getElementById("f-phone").classList.toggle("invalid", !phoneOk);
 
       var sidOk = true, deptOk = true;
-      var useSchool = schoolEnabled && schoolChk.checked;
-      if (useSchool) {
+      if (needs.indexOf("student_id") >= 0) {
         sidOk = /^\d{9}$/.test(studentId.value.trim());
+        fSid.classList.toggle("invalid", !sidOk);
+      }
+      if (needs.indexOf("department") >= 0) {
         deptOk = department.value.trim().length > 0;
-        document.getElementById("f-sid").classList.toggle("invalid", !sidOk);
-        document.getElementById("f-dept").classList.toggle("invalid", !deptOk);
+        fDept.classList.toggle("invalid", !deptOk);
       }
 
       if (!(nameOk && phoneOk && sidOk && deptOk)) {
@@ -436,8 +527,9 @@
             option: optionId,
             count: count,
             product: PRODUCT_KEY,
-            student_id: useSchool ? studentId.value.trim() : "",
-            department: useSchool ? department.value.trim() : "",
+            affiliation: aff,
+            student_id: (needs.indexOf("student_id") >= 0) ? studentId.value.trim() : "",
+            department: (needs.indexOf("department") >= 0) ? department.value.trim() : "",
             memo: document.getElementById("memo").value.trim()
           })
         });
