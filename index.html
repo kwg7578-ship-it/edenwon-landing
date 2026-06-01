@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>영동에덴원 · YEONGDONG EDENWON — 자연이 기다리고, 시간이 빚어낸 진심</title>
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png" />
+  <link rel="apple-touch-icon" href="images/favicon-192.png" />
   <meta name="description" content="충북 영동에서 옹기로 익히는 발효식품. 1년 6개월 이상 옹기 발효한 천연발효식초, 옹기숙성 된장·고추장·어간장, 청국장과 가공식품까지 일곱 가지 진심을 전합니다." />
 
   <!-- Open Graph -->
@@ -1808,12 +1812,102 @@
     border-bottom: 1px solid var(--border-strong);
   }
 
+  /* ===== 상단 고정 헤더 ===== */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 80;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2rem;
+    background: rgba(244, 237, 224, 0); border-bottom: 1px solid transparent;
+    transition: background .3s ease, border-color .3s ease, padding .3s ease, box-shadow .3s ease;
+  }
+  .site-header.scrolled {
+    background: rgba(251, 247, 239, 0.92);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border-bottom-color: var(--border-strong);
+    padding: 0.7rem 2rem; box-shadow: 0 2px 16px rgba(42, 31, 20, 0.06);
+  }
+  .site-header__logo {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;
+    color: var(--ink); text-decoration: none; letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .site-header__symbol { height: 26px; width: auto; display: block; transition: height .3s ease; }
+  .site-header.scrolled .site-header__symbol { height: 23px; }
+  /* 히어로 위(at-top)=흰색 심볼, 스크롤 후=갈색 심볼 */
+  .site-header__symbol--ink { display: none; }
+  .site-header.at-top .site-header__symbol--white { display: block; }
+  .site-header.at-top .site-header__symbol--ink { display: none; }
+  .site-header:not(.at-top) .site-header__symbol--white { display: none; }
+  .site-header:not(.at-top) .site-header__symbol--ink { display: block; }
+  .site-header.at-top .site-header__logo { color: var(--cream); }
+  .site-nav { display: flex; align-items: center; gap: 1.8rem; }
+  .site-nav__links { display: flex; align-items: center; gap: 1.8rem; list-style: none; margin: 0; padding: 0; }
+  .site-nav__links a {
+    font-family: var(--font-body); font-size: 0.92rem; font-weight: 400;
+    color: var(--ink-soft); text-decoration: none; transition: color .2s ease; white-space: nowrap;
+  }
+  .site-nav__links a:hover { color: var(--gold-dark); }
+  .site-header.at-top .site-nav__links a { color: rgba(244, 237, 224, 0.85); }
+  .site-header.at-top .site-nav__links a:hover { color: #fff; }
+
+  /* 햄버거 (모바일) */
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer;
+    width: 30px; height: 30px; padding: 0; position: relative; }
+  .nav-toggle span { display: block; position: absolute; left: 3px; right: 3px; height: 2px;
+    background: var(--ink); transition: transform .3s ease, opacity .2s ease, background .3s ease; }
+  .nav-toggle span:nth-child(1) { top: 8px; }
+  .nav-toggle span:nth-child(2) { top: 14px; }
+  .nav-toggle span:nth-child(3) { top: 20px; }
+  .site-header.at-top .nav-toggle span { background: var(--cream); }
+  body.nav-open .nav-toggle span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  body.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+  body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  body.nav-open .nav-toggle span { background: var(--ink) !important; }
+
+  @media (max-width: 820px) {
+    .site-header, .site-header.scrolled { padding: 0.9rem 1.3rem; }
+    .nav-toggle { display: block; z-index: 82; }
+    .site-nav {
+      position: fixed; inset: 0; z-index: 81;
+      background: var(--cream); flex-direction: column; justify-content: center;
+      gap: 0; opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    }
+    body.nav-open .site-nav { opacity: 1; pointer-events: auto; }
+    .site-nav__links { flex-direction: column; gap: 1.6rem; text-align: center; }
+    .site-nav__links a { font-size: 1.15rem; color: var(--ink) !important; }
+    .site-header.at-top .site-nav__links a { color: var(--ink) !important; }
+  }
+
+  /* 앵커 이동 시 고정 헤더가 제목을 덮지 않도록 */
+  #about, #products, #practice, #gallery, #contact { scroll-margin-top: 80px; }
+
   </style>
 </head>
 <body>
 
+  <!-- ============ 상단 고정 헤더 ============ -->
+  <header class="site-header at-top" id="siteHeader">
+    <a href="#top" class="site-header__logo">
+      <img src="images/logo-symbol-white.png" alt="" class="site-header__symbol site-header__symbol--white" />
+      <img src="images/logo-symbol-ink.png" alt="" class="site-header__symbol site-header__symbol--ink" />
+      <span>영동에덴원</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="siteNav">
+      <ul class="site-nav__links">
+        <li><a href="#about">브랜드 이야기</a></li>
+        <li><a href="#products">제품</a></li>
+        <li><a href="#practice">발효 이야기</a></li>
+        <li><a href="#gallery">갤러리</a></li>
+        <li><a href="#contact">주문·문의</a></li>
+      </ul>
+    </nav>
+  </header>
+
   <!-- ============ HERO ============ -->
-  <section class="hero">
+  <section class="hero" id="top">
     <div class="hero__inner">
       <div class="hero__eyebrow">Yeongdong&nbsp;&nbsp;Edenwon</div>
       <h1 class="hero__title">자연이 기다리고,<br />시간이 빚어낸 진심</h1>
@@ -2010,7 +2104,7 @@
 
 
   <!-- ============ WHY US ============ -->
-  <section class="why">
+  <section class="why" id="practice">
     <div class="container">
       <div class="section-label">Our Practice</div>
       <h2 class="section-title">전통은 지키고,<br />발효는 과학적으로</h2>
@@ -2059,7 +2153,7 @@
 
 
   <!-- ============ GALLERY ============ -->
-  <section class="gallery">
+  <section class="gallery" id="gallery">
     <div class="container">
       <div class="section-label">Four Seasons</div>
       <h2 class="section-title">씨앗부터 식탁까지,<br />땅이 빚은 사계절의 정성</h2>
@@ -2164,6 +2258,39 @@
     });
   </script>
 
+  <script>
+    // 상단 헤더: 스크롤 시 축소/배경, 히어로 벗어나면 색 전환
+    (function () {
+      var header = document.getElementById("siteHeader");
+      var hero = document.getElementById("top");
+      function onScroll() {
+        var y = window.scrollY || window.pageYOffset;
+        header.classList.toggle("scrolled", y > 20);
+        // 히어로 높이의 60% 지나면 어두운 글자(at-top 해제)
+        var threshold = hero ? hero.offsetHeight * 0.6 : 400;
+        header.classList.toggle("at-top", y < threshold);
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // 햄버거 토글
+      var toggle = document.getElementById("navToggle");
+      var nav = document.getElementById("siteNav");
+      function closeNav() {
+        document.body.classList.remove("nav-open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+      toggle.addEventListener("click", function () {
+        var open = document.body.classList.toggle("nav-open");
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      // 메뉴 항목 클릭 시 닫기
+      nav.querySelectorAll("a").forEach(function (a) {
+        a.addEventListener("click", closeNav);
+      });
+    })();
+  </script>
+
 <!-- ===== 영동에덴원 장바구니 위젯 (전 페이지 공통) ===== -->
 <!-- 사용법: 각 페이지 본문 맨 끝(닫는 body 태그 앞)에 이 블록을 그대로 삽입.
      상대경로 주의 — 상세페이지(products/ 안)는 ../ 기준, 루트 페이지는 동일 경로.
@@ -2258,6 +2385,12 @@
   })();
 </script>
 <!-- ===== /장바구니 위젯 ===== -->
+
+<style>
+  /* 인덱스 전용: 헤더(우상단)와 겹치지 않도록 장바구니 독을 우하단으로 */
+  .cart-dock { top: auto !important; bottom: 22px; right: 22px; }
+  @media (max-width: 820px) { .cart-dock { bottom: 16px; right: 16px; } }
+</style>
 
 </body>
 </html>
