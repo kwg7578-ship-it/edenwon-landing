@@ -303,47 +303,32 @@
       margin-bottom: 2.5rem;
       letter-spacing: 0.05em;
     }
-
-    /* ===== 발효 탭 (순수 CSS) ===== */
-    .ferment-tabs__radio {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
+    /* ===== 제품 탭 (순수 CSS, 4개) ===== */
+    .ptabs__radio { position: absolute; opacity: 0; pointer-events: none; }
+    .ptabs__nav {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem;
     }
-    .ferment-tabs__nav {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 2.5rem;
+    .ptabs__label {
+      padding: 0.55rem 1.5rem; font-family: var(--font-body); font-size: 0.9rem;
+      letter-spacing: 0.05em; color: var(--ink-mute); border: 1px solid var(--border);
+      border-radius: 100px; cursor: pointer; transition: all 0.25s ease; background: transparent;
     }
-    .ferment-tabs__label {
-      padding: 0.55rem 1.6rem;
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      letter-spacing: 0.05em;
-      color: var(--ink-mute);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      background: transparent;
+    .ptabs__label:hover { color: var(--ink-soft); border-color: var(--gold); }
+    .ptabs__panel { display: none; }
+    .ptabs__panel-sub {
+      text-align: center; font-family: var(--font-body); font-size: 0.92rem;
+      color: var(--ink-mute); margin: -1rem 0 2rem; line-height: 1.6;
     }
-    .ferment-tabs__label:hover {
-      color: var(--ink-soft);
-      border-color: var(--gold);
+    #ptab-1:checked ~ .ptabs__nav label[for="ptab-1"],
+    #ptab-2:checked ~ .ptabs__nav label[for="ptab-2"],
+    #ptab-3:checked ~ .ptabs__nav label[for="ptab-3"],
+    #ptab-4:checked ~ .ptabs__nav label[for="ptab-4"] {
+      background: var(--ink); color: var(--cream); border-color: var(--ink);
     }
-    .ferment-tabs__panel {
-      display: none;
-    }
-    /* 탭1 선택 → 패널1, 탭2 선택 → 패널2 */
-    #ferment-tab-1:checked ~ .ferment-tabs__nav label[for="ferment-tab-1"],
-    #ferment-tab-2:checked ~ .ferment-tabs__nav label[for="ferment-tab-2"] {
-      background: var(--ink);
-      color: var(--cream);
-      border-color: var(--ink);
-    }
-    #ferment-tab-1:checked ~ .ferment-tabs__panels .ferment-tabs__panel--1,
-    #ferment-tab-2:checked ~ .ferment-tabs__panels .ferment-tabs__panel--2 {
+    #ptab-1:checked ~ .ptabs__panels .ptabs__panel--1,
+    #ptab-2:checked ~ .ptabs__panels .ptabs__panel--2,
+    #ptab-3:checked ~ .ptabs__panels .ptabs__panel--3,
+    #ptab-4:checked ~ .ptabs__panels .ptabs__panel--4 {
       display: block;
     }
 
@@ -1864,24 +1849,25 @@
       <div class="section-label">Products</div>
       <h2 class="section-title">시간이 빚어낸 진심</h2>
 
-      <!-- 발효 식품 (탭: 옹기 발효 / 발효) -->
-      <div class="products__group">
-        <p class="products__group-label">발효 식품</p>
-        <p class="products__group-sub">시간과 미생물이 빚어낸 영동에덴원의 진심</p>
+      <!-- 제품 탭 (옹기발효 / 발효 / 진짜'S 시리즈 / 농산물) -->
+      <input type="radio" name="ptabs" id="ptab-1" class="ptabs__radio" checked />
+      <input type="radio" name="ptabs" id="ptab-2" class="ptabs__radio" />
+      <input type="radio" name="ptabs" id="ptab-3" class="ptabs__radio" />
+      <input type="radio" name="ptabs" id="ptab-4" class="ptabs__radio" />
 
-        <input type="radio" name="ferment-tabs" id="ferment-tab-1" class="ferment-tabs__radio" checked />
-        <input type="radio" name="ferment-tabs" id="ferment-tab-2" class="ferment-tabs__radio" />
+      <div class="ptabs__nav">
+        <label for="ptab-1" class="ptabs__label">옹기발효</label>
+        <label for="ptab-2" class="ptabs__label">발효</label>
+        <label for="ptab-3" class="ptabs__label">진짜'S 시리즈</label>
+        <label for="ptab-4" class="ptabs__label">농산물</label>
+      </div>
 
-        <div class="ferment-tabs__nav">
-          <label for="ferment-tab-1" class="ferment-tabs__label">옹기 발효</label>
-          <label for="ferment-tab-2" class="ferment-tabs__label">발효</label>
-        </div>
+      <div class="ptabs__panels">
 
-        <div class="ferment-tabs__panels">
-
-          <!-- 패널 1: 옹기 발효 -->
-          <div class="ferment-tabs__panel ferment-tabs__panel--1">
-        <div class="product-grid product-grid--ferment">
+        <!-- 패널 1: 옹기발효 -->
+        <div class="ptabs__panel ptabs__panel--1">
+          <p class="ptabs__panel-sub">옹기에서 시간과 미생물이 빚어낸 영동에덴원의 진심</p>
+          <div class="product-grid product-grid--ferment">
 
           <a href="products/vinegar.html" class="product-card">
             <div class="product-card__image"><img src="images/product-vinegar.jpg" alt="발효의 초심 천연발효식초" loading="lazy" /></div>
@@ -1947,35 +1933,31 @@
           </a>
 
         </div>
-          </div>
-          <!-- /패널 1 -->
-
-          <!-- 패널 2: 발효 -->
-          <div class="ferment-tabs__panel ferment-tabs__panel--2">
-            <div class="product-grid product-grid--single">
-
-              <a href="products/meju.html" class="product-card">
-                <div class="product-card__image"><img src="images/product-meju.jpg" alt="명품 메주" loading="lazy" /></div>
-                <h3 class="product-card__name">명품 메주</h3>
-                <p class="product-card__tag">Artisan Meju</p>
-                <p class="product-card__desc">직접 농사 지은 콩으로 빚어, 발효실에서 속까지 완전하게 띄운 명품 메주. 전통 방식과 과학적 관리가 만났습니다.</p>
-                <p class="product-card__time">발효실에서 완전히 발효시킨 메주</p>
-                <span class="product-card__more">자세히 보기 →</span>
-              </a>
-
-            </div>
-          </div>
-          <!-- /패널 2 -->
-
         </div>
-      </div>
+        <!-- /패널 1 -->
 
-      <!-- 가공식품 (진짜'S 시리즈) -->
-      <div class="products__group">
-        <p class="products__group-label">진짜'S 시리즈</p>
-        <p class="products__group-sub">가마솥에서 천천히 달여낸 정직한 가공식품</p>
+        <!-- 패널 2: 발효 -->
+        <div class="ptabs__panel ptabs__panel--2">
+          <p class="ptabs__panel-sub">발효실에서 정성으로 띄운 발효식품</p>
+          <div class="product-grid product-grid--single">
 
-        <div class="product-grid product-grid--craft">
+          <a href="products/meju.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-meju.jpg" alt="명품 메주" loading="lazy" /></div>
+            <h3 class="product-card__name">명품 메주</h3>
+            <p class="product-card__tag">Artisan Meju</p>
+            <p class="product-card__desc">직접 농사 지은 콩으로 빚어, 발효실에서 속까지 완전하게 띄운 명품 메주. 전통 방식과 과학적 관리가 만났습니다.</p>
+            <p class="product-card__time">발효실에서 완전히 발효시킨 메주</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+          </div>
+        </div>
+        <!-- /패널 2 -->
+
+        <!-- 패널 3: 진짜'S 시리즈 -->
+        <div class="ptabs__panel ptabs__panel--3">
+          <p class="ptabs__panel-sub">가마솥에서 천천히 달여낸 정직한 가공식품</p>
+          <div class="product-grid product-grid--craft">
 
           <a href="products/jam.html" class="product-card">
             <div class="product-card__image"><img src="images/product-jam.jpg" alt="진짜'S 잼" loading="lazy" /></div>
@@ -1995,15 +1977,14 @@
             <span class="product-card__more">자세히 보기 →</span>
           </a>
 
+          </div>
         </div>
-      </div>
+        <!-- /패널 3 -->
 
-      <!-- 농산물 -->
-      <div class="products__group">
-        <p class="products__group-label">농산물</p>
-        <p class="products__group-sub">청정 자연에서 자연 농법으로 길러낸 정직한 농산물</p>
-
-        <div class="product-grid product-grid--harvest">
+        <!-- 패널 4: 농산물 -->
+        <div class="ptabs__panel ptabs__panel--4">
+          <p class="ptabs__panel-sub">청정 자연에서 자연 농법으로 길러낸 정직한 농산물</p>
+          <div class="product-grid product-grid--harvest">
 
           <a href="products/pea.html" class="product-card">
             <div class="product-card__image"><img src="images/product-pea.jpg" alt="햇 완두콩" loading="lazy" /></div>
@@ -2014,8 +1995,12 @@
             <span class="product-card__more">자세히 보기 →</span>
           </a>
 
+          </div>
         </div>
+        <!-- /패널 4 -->
+
       </div>
+      <!-- /제품 탭 -->
 
       <div class="products__cta">
         <a href="contact.html" class="btn btn--earth">주문·문의하기</a>
