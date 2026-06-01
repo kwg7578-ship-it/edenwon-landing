@@ -80,6 +80,8 @@
       transition: all 0.25s ease; margin-top: 0.6rem; }
     .btn:hover { background: var(--gold-dark); border-color: var(--gold-dark); }
     .btn[disabled] { opacity: 0.55; cursor: default; }
+    .btn--ghost { background: transparent; color: var(--ink); border-color: var(--border-strong); text-decoration: none; }
+    .btn--ghost:hover { background: var(--cream-dark); color: var(--ink); border-color: var(--gold); }
     .form-error { display: none; background: #f6e9e6; border: 1px solid #d9b3aa; color: #7d2c20;
       font-size: 0.88rem; padding: 0.85rem 1rem; margin-top: 1rem; line-height: 1.6; }
     .form-error.show { display: block; }
@@ -92,7 +94,9 @@
     .done__badge { width: 56px; height: 56px; border-radius: 50%; background: var(--gold); color: #fff;
       display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1.2rem; }
     .done__title { font-family: var(--font-display); font-size: 1.6rem; text-align: center; margin-bottom: 0.5rem; }
-    .done__no { text-align: center; font-size: 1.05rem; color: var(--gold-dark); font-weight: 500; margin-bottom: 1.6rem; }
+    .done__no { text-align: center; font-size: 1.05rem; color: var(--gold-dark); font-weight: 500; margin-bottom: 0.3rem; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border-strong); }
+    .done__no:hover { color: var(--ink); }
+    .copy-hint { text-align: center; font-size: 0.78rem; color: var(--ink-mute); margin-bottom: 1.6rem; transition: color .2s ease; }
     .summary { background: var(--cream-light); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem 1.3rem; margin-bottom: 1.4rem; }
     .summary__row { display: flex; justify-content: space-between; padding: 0.35rem 0; font-size: 0.92rem; }
     .summary__row .k { color: var(--ink-mute); }
@@ -164,6 +168,7 @@
         </div>
 
         <button class="btn" id="submitBtn">주문 접수하기</button>
+        <a href="order-status.html" class="btn btn--ghost">주문 조회</a>
         <div class="form-error" id="formError"></div>
         <p class="privacy">입력하신 이름·전화번호(및 학번·학과)는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다. 신분 할인·관계자 확인은 접수 시 자동 반영됩니다.<br />
           이 기기에 입력 정보가 저장되어 다음에 자동으로 채워집니다. <a href="#" id="clearProfile" style="color:var(--gold-dark);display:none;">저장된 정보 지우기</a></p>
@@ -174,7 +179,8 @@
     <div class="done" id="doneStage">
       <div class="done__badge">✓</div>
       <div class="done__title">주문이 접수되었습니다</div>
-      <div class="done__no" id="doneNo">—</div>
+      <div class="done__no" id="doneNo" title="클릭하면 복사됩니다">—</div>
+      <div class="copy-hint" id="copyHint">주문번호를 눌러 복사하세요</div>
 
       <div class="summary">
         <div class="summary__row"><span class="k">주문 내역</span><span class="v" id="doneItems">—</span></div>
@@ -215,7 +221,7 @@
     function renderCart() {
       var items = window.EdenwonCart.read();
       if (!items.length) {
-        cartList.innerHTML = '<div class="empty-cart">장바구니가 비어 있습니다.<br /><br /><a href="index.html">제품 둘러보기 →</a></div>';
+        cartList.innerHTML = '<div class="empty-cart">장바구니가 비어 있습니다.<br /><br /><a href="index.html">제품 둘러보기 →</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="order-status.html">주문 조회 →</a></div>';
         orderArea.style.display = "none";
         return;
       }
@@ -428,6 +434,36 @@
           if (confirm("이 기기에 저장된 이름·전화번호·소속 정보를 지울까요?")) clearProfile();
         });
       }
+      // 완료 화면 주문번호 클릭 복사
+      var doneNo = document.getElementById("doneNo");
+      if (doneNo) {
+        doneNo.addEventListener("click", function () {
+          var no = doneNo.textContent.trim();
+          if (!no || no === "—") return;
+          copyText(no, document.getElementById("copyHint"));
+        });
+      }
+    }
+
+    function copyText(text, hintEl) {
+      function done() {
+        if (!hintEl) return;
+        var orig = hintEl.textContent;
+        hintEl.textContent = "✓ 복사되었습니다";
+        hintEl.style.color = "var(--gold-dark)";
+        setTimeout(function () { hintEl.textContent = orig; hintEl.style.color = ""; }, 1800);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+      } else { fallbackCopy(text); done(); }
+    }
+    function fallbackCopy(text) {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        document.execCommand("copy"); document.body.removeChild(ta);
+      } catch (e) {}
     }
     // 장바구니 위젯(window.EdenwonCart)이 페이지 끝에서 정의되므로, 준비된 뒤 초기화
     (function waitForCart() {

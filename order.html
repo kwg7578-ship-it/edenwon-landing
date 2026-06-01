@@ -134,9 +134,10 @@
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       color: var(--gold-dark); font-size: 1.6rem; }
     .done__num { text-align: center; font-family: var(--font-display); font-size: 1.45rem;
-      letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+      letter-spacing: 0.04em; margin-bottom: 0.4rem; cursor: pointer; }
+    .done__num:hover { color: var(--gold-dark); }
     .done__num-label { text-align: center; font-family: var(--font-latin); font-size: 0.78rem;
-      letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.8rem; }
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.8rem; transition: color .2s ease; }
 
     .summary { border: 1px solid var(--border-strong); margin-bottom: 1.8rem; }
     .summary__row { display: flex; justify-content: space-between; padding: 0.85rem 1.2rem;
@@ -266,8 +267,8 @@
     <!-- 2단계: 완료 + 입금 안내 -->
     <div class="done" id="doneStage">
       <div class="done__check">✓</div>
-      <div class="done__num" id="orderNo">—</div>
-      <div class="done__num-label">Order Number · 주문번호</div>
+      <div class="done__num" id="orderNo" title="클릭하면 복사됩니다">—</div>
+      <div class="done__num-label" id="copyHint">Order Number · 주문번호 (눌러서 복사)</div>
 
       <div class="card">
         <div class="summary">
@@ -541,6 +542,33 @@
 
     init();
 
+    // 완료 화면 주문번호 클릭 복사
+    var orderNoEl = document.getElementById("orderNo");
+    if (orderNoEl) {
+      orderNoEl.addEventListener("click", function () {
+        var no = orderNoEl.textContent.trim();
+        if (!no || no === "—") return;
+        var hint = document.getElementById("copyHint");
+        function done() {
+          if (!hint) return;
+          var orig = hint.textContent;
+          hint.textContent = "✓ 복사되었습니다";
+          hint.style.color = "var(--gold-dark)";
+          setTimeout(function () { hint.textContent = orig; hint.style.color = ""; }, 1800);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(no).then(done, function () { fbCopy(no); done(); });
+        } else { fbCopy(no); done(); }
+      });
+    }
+    function fbCopy(text) {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        document.execCommand("copy"); document.body.removeChild(ta);
+      } catch (e) {}
+    }
     // 저장된 정보 지우기
     var clearLink = document.getElementById("clearProfile");
     if (clearLink) {
