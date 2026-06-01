@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>장바구니 — 영동에덴원</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream:#F4EDE0; --cream-light:#FBF7EF; --cream-dark:#E8DFCC;
+      --ink:#2A1F14; --ink-soft:#5A4A38; --ink-mute:#8B7A65;
+      --gold:#8B6F47; --gold-dark:#6B5532;
+      --border:rgba(42,31,20,0.12); --border-strong:rgba(42,31,20,0.2);
+      --font-display:"Gowun Batang","Noto Serif KR",serif;
+      --font-body:"Noto Sans KR",system-ui,-apple-system,sans-serif;
+      --font-latin:"Cormorant Garamond",serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--cream); color: var(--ink);
+      line-height: 1.7; font-weight: 300; -webkit-font-smoothing: antialiased; }
+    .nav { border-bottom: 1px solid var(--border); background: var(--cream); }
+    .nav__inner { max-width: 720px; margin: 0 auto; padding: 1.1rem 1.5rem;
+      display: flex; justify-content: space-between; align-items: center; }
+    .nav__back { font-size: 0.92rem; color: var(--ink-soft); text-decoration: none; }
+    .nav__brand { font-family: var(--font-latin); font-size: 0.85rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold); }
+
+    .wrap { max-width: 720px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+    .eyebrow { font-family: var(--font-latin); font-size: 0.85rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+    .title { font-family: var(--font-display); font-size: 1.9rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .lede { color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 2rem; }
+    .divider { height: 1px; background: var(--border); margin: 1.6rem 0; }
+
+    /* 품목 */
+    .empty-cart { text-align: center; padding: 3rem 0; color: var(--ink-mute); }
+    .empty-cart a { color: var(--gold-dark); border-bottom: 1px solid var(--border-strong); text-decoration: none; }
+    .ci { display: flex; align-items: center; gap: 12px; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+    .ci__main { flex: 1; min-width: 0; }
+    .ci__name { font-family: var(--font-display); font-size: 1.05rem; }
+    .ci__opt { font-size: 0.85rem; color: var(--ink-mute); margin-top: 2px; }
+    .ci__price { font-size: 0.9rem; color: var(--ink-soft); margin-top: 4px; }
+    .ci__right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+    .stepper { display: flex; align-items: center; border: 1px solid var(--border-strong); border-radius: 8px; overflow: hidden; }
+    .stepper button { width: 34px; height: 34px; border: none; background: var(--cream); cursor: pointer; font-size: 1.1rem; color: var(--ink); }
+    .stepper button:hover { background: var(--cream-dark); }
+    .stepper span { width: 38px; text-align: center; font-size: 0.98rem; }
+    .ci__del { background: none; border: none; color: var(--ink-mute); cursor: pointer; font-size: 0.82rem; text-decoration: underline; }
+    .ci__del:hover { color: #7d2c20; }
+
+    .subtotal { display: flex; justify-content: space-between; align-items: baseline;
+      padding: 1.2rem 0; font-size: 0.95rem; }
+    .subtotal b { font-family: var(--font-display); font-size: 1.5rem; }
+    .subtotal-note { font-size: 0.8rem; color: var(--ink-mute); text-align: right; margin-top: -0.6rem; margin-bottom: 0.5rem; }
+
+    /* 폼 */
+    .field { margin-bottom: 1.2rem; }
+    .field__label { display: block; font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 0.4rem; }
+    .req { color: var(--gold-dark); }
+    input, select { width: 100%; font-family: var(--font-body); font-size: 0.98rem; font-weight: 300;
+      color: var(--ink); background: var(--cream); border: 1px solid var(--border-strong);
+      padding: 0.85rem 1rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+    input:focus, select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(139,111,71,0.12); }
+    select { cursor: pointer; }
+    textarea { width: 100%; font-family: var(--font-body); font-size: 0.98rem; font-weight: 300;
+      color: var(--ink); background: var(--cream); border: 1px solid var(--border-strong);
+      padding: 0.85rem 1rem; resize: vertical; min-height: 80px; line-height: 1.6; }
+    .field.invalid input { border-color: #c0392b; }
+    .field__err { display: none; color: #c0392b; font-size: 0.82rem; margin-top: 0.35rem; }
+    .field.invalid .field__err { display: block; }
+    .aff-fields { margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-strong); }
+    .aff-fields.empty { display: none; }
+    .aff-note { font-size: 0.8rem; color: var(--gold-dark); margin-top: 0.55rem; line-height: 1.5; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; width: 100%;
+      padding: 1rem 2rem; font-family: var(--font-body); font-size: 0.98rem; letter-spacing: 0.05em;
+      cursor: pointer; border: 1px solid var(--ink); background: var(--ink); color: var(--cream);
+      transition: all 0.25s ease; margin-top: 0.6rem; }
+    .btn:hover { background: var(--gold-dark); border-color: var(--gold-dark); }
+    .btn[disabled] { opacity: 0.55; cursor: default; }
+    .form-error { display: none; background: #f6e9e6; border: 1px solid #d9b3aa; color: #7d2c20;
+      font-size: 0.88rem; padding: 0.85rem 1rem; margin-top: 1rem; line-height: 1.6; }
+    .form-error.show { display: block; }
+    .form-error a { color: #7d2c20; font-weight: 700; }
+    .privacy { font-size: 0.8rem; color: var(--ink-mute); margin-top: 1rem; line-height: 1.6; }
+
+    /* 완료 */
+    .done { display: none; }
+    .done.show { display: block; }
+    .done__badge { width: 56px; height: 56px; border-radius: 50%; background: var(--gold); color: #fff;
+      display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1.2rem; }
+    .done__title { font-family: var(--font-display); font-size: 1.6rem; text-align: center; margin-bottom: 0.5rem; }
+    .done__no { text-align: center; font-size: 1.05rem; color: var(--gold-dark); font-weight: 500; margin-bottom: 1.6rem; }
+    .summary { background: var(--cream-light); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem 1.3rem; margin-bottom: 1.4rem; }
+    .summary__row { display: flex; justify-content: space-between; padding: 0.35rem 0; font-size: 0.92rem; }
+    .summary__row .k { color: var(--ink-mute); }
+    .bank { background: var(--cream-light); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem 1.3rem; }
+    .bank__title { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 0.7rem; }
+    .bank__row { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.92rem; }
+    .bank__row .k { color: var(--ink-mute); }
+    .bank__v { font-weight: 500; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__back">← 영동에덴원</a>
+      <span class="nav__brand">Yeongdong Edenwon</span>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <!-- 1단계: 장바구니 + 주문 폼 -->
+    <div id="cartStage">
+      <div class="eyebrow">Cart</div>
+      <h1 class="title">장바구니</h1>
+      <p class="lede">담으신 제품을 확인하고, 한 번에 자가 수령 주문하실 수 있습니다.</p>
+
+      <div id="cartList"></div>
+
+      <div id="orderArea" style="display:none;">
+        <div class="subtotal">
+          <span>합계 <span style="font-size:0.78rem;color:var(--ink-mute);">(정가 기준)</span></span>
+          <b id="subtotal">0원</b>
+        </div>
+        <div class="subtotal-note" id="discNote">신분 할인은 주문 단계에서 적용됩니다.</div>
+
+        <div class="divider"></div>
+
+        <div class="field" id="f-name">
+          <label class="field__label">받으실 분 성함 <span class="req">*</span></label>
+          <input type="text" id="name" maxlength="40" placeholder="성함" autocomplete="name" />
+          <div class="field__err">성함을 입력해 주세요.</div>
+        </div>
+        <div class="field" id="f-phone">
+          <label class="field__label">연락처 <span class="req">*</span></label>
+          <input type="tel" id="phone" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" autocomplete="tel" />
+          <div class="field__err">연락처를 정확히 입력해 주세요.</div>
+        </div>
+
+        <div class="field" id="f-aff">
+          <label class="field__label">소속 <span style="color:var(--ink-mute);font-size:0.82rem;">(해당되시면 선택)</span></label>
+          <select id="affiliation"><option value="">일반</option></select>
+          <div class="aff-fields empty" id="affFields">
+            <div class="field" id="f-sid" style="display:none;">
+              <label class="field__label">학번 <span class="req">*</span></label>
+              <input type="text" id="studentId" inputmode="numeric" maxlength="9" placeholder="숫자 9자리" autocomplete="off" />
+              <div class="field__err">학번은 숫자 9자리로 입력해 주세요.</div>
+            </div>
+            <div class="field" id="f-dept" style="display:none;">
+              <label class="field__label">학과 <span class="req">*</span></label>
+              <input type="text" id="department" maxlength="30" placeholder="예: 치유농업과" autocomplete="off" />
+              <div class="field__err">학과를 입력해 주세요.</div>
+            </div>
+          </div>
+          <div class="aff-note" id="affNote" style="display:none;"></div>
+        </div>
+
+        <div class="field">
+          <label class="field__label">요청사항 <span style="color:var(--ink-mute);font-size:0.82rem;">(선택)</span></label>
+          <textarea id="memo" maxlength="500" placeholder="수령 희망 시기, 그 밖의 요청을 자유롭게 적어 주세요."></textarea>
+        </div>
+
+        <button class="btn" id="submitBtn">주문 접수하기</button>
+        <div class="form-error" id="formError"></div>
+        <p class="privacy">입력하신 이름·전화번호(및 학번·학과)는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다. 신분 할인·관계자 확인은 접수 시 자동 반영됩니다.</p>
+      </div>
+    </div>
+
+    <!-- 2단계: 완료 -->
+    <div class="done" id="doneStage">
+      <div class="done__badge">✓</div>
+      <div class="done__title">주문이 접수되었습니다</div>
+      <div class="done__no" id="doneNo">—</div>
+
+      <div class="summary">
+        <div class="summary__row"><span class="k">주문 내역</span><span class="v" id="doneItems">—</span></div>
+        <div class="summary__row"><span class="k">주문일</span><span class="v" id="doneDate">—</span></div>
+        <div class="summary__row"><span class="k">상태</span><span class="v" id="doneStatus">—</span></div>
+        <div class="summary__row" id="doneDiscRow" style="display:none;"><span class="k">할인</span><span class="v" style="color:var(--gold-dark);">신분 할인 적용됨</span></div>
+        <div class="summary__row" style="border-top:1px solid var(--border);margin-top:0.4rem;padding-top:0.7rem;"><span class="k">입금하실 금액</span><span class="v" id="donePay" style="font-family:var(--font-display);font-size:1.2rem;">—</span></div>
+      </div>
+
+      <div class="bank">
+        <div class="bank__title">입금 안내</div>
+        <div class="bank__row"><span class="k">은행</span><span class="bank__v">농협</span></div>
+        <div class="bank__row"><span class="k">계좌번호</span><span class="bank__v">3010294897501</span></div>
+        <div class="bank__row"><span class="k">예금주</span><span class="bank__v">농업회사법인 주식회사 에프엔엘바이오푸드</span></div>
+        <p class="privacy">입금이 확인되면 준비 후 수령 안내를 드립니다. 주문번호로 <a href="order-status.html" style="color:var(--gold-dark);">주문 조회</a>가 가능합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var API_BASE = (location.hostname.endsWith("yd-edenwon.com")) ? "https://api.yd-edenwon.com" : "";
+    var AFF_LABEL = { student: "기전대 재학생", professor: "기전대 교수", edenwon: "영동에덴원 관계자" };
+    var AFF_NEEDS = {}, AFF_LIST = [];
+
+    var cartList = document.getElementById("cartList");
+    var orderArea = document.getElementById("orderArea");
+    var subtotalEl = document.getElementById("subtotal");
+    var affSelect = document.getElementById("affiliation");
+    var affFields = document.getElementById("affFields");
+    var affNote = document.getElementById("affNote");
+    var fSid = document.getElementById("f-sid");
+    var fDept = document.getElementById("f-dept");
+    var studentId = document.getElementById("studentId");
+    var department = document.getElementById("department");
+
+    function won(n) { return Number(n).toLocaleString("ko-KR") + "원"; }
+
+    function renderCart() {
+      var items = window.EdenwonCart.read();
+      if (!items.length) {
+        cartList.innerHTML = '<div class="empty-cart">장바구니가 비어 있습니다.<br /><br /><a href="index.html">제품 둘러보기 →</a></div>';
+        orderArea.style.display = "none";
+        return;
+      }
+      cartList.innerHTML = items.map(function (it, i) {
+        return '<div class="ci">'
+          + '<div class="ci__main">'
+          + '<div class="ci__name">' + esc(it.productName) + '</div>'
+          + '<div class="ci__opt">' + esc(it.optionLabel) + '</div>'
+          + '<div class="ci__price">' + won(it.unitRegular) + ' / 개</div>'
+          + '</div>'
+          + '<div class="ci__right">'
+          + '<div class="stepper"><button data-act="minus" data-i="' + i + '">−</button>'
+          + '<span>' + it.count + '</span>'
+          + '<button data-act="plus" data-i="' + i + '">+</button></div>'
+          + '<button class="ci__del" data-act="del" data-i="' + i + '">삭제</button>'
+          + '</div></div>';
+      }).join("");
+      orderArea.style.display = "block";
+
+      cartList.querySelectorAll("button[data-act]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var i = parseInt(b.getAttribute("data-i"), 10);
+          var act = b.getAttribute("data-act");
+          var items = window.EdenwonCart.read();
+          if (!items[i]) return;
+          if (act === "plus") items[i].count = Math.min(50, items[i].count + 1);
+          else if (act === "minus") items[i].count = Math.max(1, items[i].count - 1);
+          else if (act === "del") items.splice(i, 1);
+          window.EdenwonCart.write(items);
+          renderCart();
+          recalcSubtotal();
+        });
+      });
+      recalcSubtotal();
+    }
+
+    function recalcSubtotal() {
+      var items = window.EdenwonCart.read();
+      var sum = items.reduce(function (s, it) { return s + it.unitRegular * it.count; }, 0);
+      subtotalEl.textContent = won(sum);
+    }
+
+    function esc(t) {
+      return (t == null ? "" : String(t)).replace(/[&<>"]/g, function (c) {
+        return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+      });
+    }
+
+    // 신분 목록은 /api/product에서 가져옴(아무 제품이나 — 신분 정의는 공통)
+    async function loadAffiliations() {
+      try {
+        var res = await fetch(API_BASE + "/api/product?product=pea");
+        var data = await res.json();
+        if (data.ok && data.affiliations) {
+          AFF_LIST = data.affiliations;
+          data.affiliations.forEach(function (a) {
+            AFF_NEEDS[a.id] = a.needs || [];
+            var opt = document.createElement("option");
+            opt.value = a.id; opt.textContent = a.label;
+            affSelect.appendChild(opt);
+          });
+        }
+      } catch (e) {}
+    }
+
+    function currentNeeds() {
+      var g = affSelect.value;
+      return g && AFF_NEEDS[g] ? AFF_NEEDS[g] : [];
+    }
+    function applyAffiliationFields() {
+      var needs = currentNeeds();
+      var showSid = needs.indexOf("student_id") >= 0;
+      var showDept = needs.indexOf("department") >= 0;
+      fSid.style.display = showSid ? "block" : "none";
+      fDept.style.display = showDept ? "block" : "none";
+      affFields.classList.toggle("empty", !(showSid || showDept));
+      if (!showSid) fSid.classList.remove("invalid");
+      if (!showDept) fDept.classList.remove("invalid");
+      var g = affSelect.value;
+      if (g === "edenwon") {
+        affNote.textContent = "· 영동에덴원 관계자 할인은 명부 확인 후 적용됩니다(미확인 시 정가).";
+        affNote.style.display = "block";
+      } else { affNote.style.display = "none"; }
+    }
+
+    affSelect.addEventListener("change", applyAffiliationFields);
+    studentId.addEventListener("input", function () {
+      var d = studentId.value.replace(/\D/g, "").slice(0, 9);
+      if (studentId.value !== d) studentId.value = d;
+    });
+
+    // 제출
+    document.getElementById("submitBtn").addEventListener("click", async function () {
+      var errBox = document.getElementById("formError");
+      errBox.classList.remove("show");
+      var items = window.EdenwonCart.read();
+      if (!items.length) { errBox.innerHTML = "장바구니가 비어 있습니다."; errBox.classList.add("show"); return; }
+
+      var nameEl = document.getElementById("name");
+      var phoneEl = document.getElementById("phone");
+      var name = nameEl.value.trim();
+      var digits = phoneEl.value.replace(/\D/g, "");
+      var aff = affSelect.value;
+      var needs = currentNeeds();
+
+      var nameOk = name.length > 0;
+      var phoneOk = digits.length >= 10 && digits.length <= 11;
+      document.getElementById("f-name").classList.toggle("invalid", !nameOk);
+      document.getElementById("f-phone").classList.toggle("invalid", !phoneOk);
+      var sidOk = true, deptOk = true;
+      if (needs.indexOf("student_id") >= 0) { sidOk = /^\d{9}$/.test(studentId.value.trim()); fSid.classList.toggle("invalid", !sidOk); }
+      if (needs.indexOf("department") >= 0) { deptOk = department.value.trim().length > 0; fDept.classList.toggle("invalid", !deptOk); }
+      if (!(nameOk && phoneOk && sidOk && deptOk)) {
+        var first = document.querySelector(".field.invalid input"); if (first) first.focus(); return;
+      }
+
+      var btn = this; btn.disabled = true; btn.textContent = "접수 중…";
+      try {
+        var payload = {
+          name: name, phone: phoneEl.value.trim(), affiliation: aff,
+          student_id: (needs.indexOf("student_id") >= 0) ? studentId.value.trim() : "",
+          department: (needs.indexOf("department") >= 0) ? department.value.trim() : "",
+          memo: document.getElementById("memo").value.trim(),
+          items: items.map(function (it) { return { product: it.product, option: it.option, count: it.count }; })
+        };
+        var res = await fetch(API_BASE + "/api/cart-order", {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+        });
+        var data = await res.json();
+        if (!res.ok || !data.ok) {
+          btn.disabled = false; btn.textContent = "주문 접수하기";
+          errBox.innerHTML = data.error || "주문 접수 중 문제가 발생했습니다."; errBox.classList.add("show"); return;
+        }
+        // 완료
+        document.getElementById("doneNo").textContent = data.order_no;
+        document.getElementById("doneItems").textContent =
+          data.items.map(function (it) { return it.product + " " + it.option_label + " ×" + it.count; }).join(", ");
+        document.getElementById("doneDate").textContent = data.created_at;
+        document.getElementById("doneStatus").textContent = data.status;
+        document.getElementById("donePay").textContent = won(data.amount);
+        document.getElementById("doneDiscRow").style.display = data.discounted ? "flex" : "none";
+        // 장바구니 비우기
+        window.EdenwonCart.write([]);
+        document.getElementById("cartStage").style.display = "none";
+        document.getElementById("doneStage").classList.add("show");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (e) {
+        btn.disabled = false; btn.textContent = "주문 접수하기";
+        errBox.innerHTML = "지금 주문 접수가 어렵습니다. 잠시 후 다시 시도해 주세요."; errBox.classList.add("show");
+      }
+    });
+
+    loadAffiliations();
+    renderCart();
+  </script>
+<!-- ===== 영동에덴원 장바구니 위젯 (전 페이지 공통) ===== -->
+<!-- 사용법: 각 페이지 본문 맨 끝(닫는 body 태그 앞)에 이 블록을 그대로 삽입.
+     상대경로 주의 — 상세페이지(products/ 안)는 CART_HREF를 "../cart.html"로,
+     루트 페이지는 "cart.html"로 자동 판별(현재 경로에 /products/ 포함 여부). -->
+<style>
+  .cart-fab {
+    position: fixed; top: 16px; right: 16px; z-index: 95;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink, #2A1F14); color: var(--cream, #F4EDE0);
+    border: none; border-radius: 100px; padding: 0.6rem 1rem 0.6rem 0.9rem;
+    font-family: var(--font-body, "Noto Sans KR", sans-serif); font-size: 0.9rem;
+    cursor: pointer; text-decoration: none; box-shadow: 0 6px 20px rgba(42,31,20,0.22);
+    transition: background .2s ease, transform .2s ease;
+  }
+  .cart-fab:hover { background: var(--gold-dark, #6B5532); }
+  .cart-fab__icon { font-size: 1.05rem; line-height: 1; }
+  .cart-fab__badge {
+    min-width: 20px; height: 20px; padding: 0 6px; border-radius: 100px;
+    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
+    font-size: 0.78rem; font-weight: 700; display: none;
+    align-items: center; justify-content: center; line-height: 1;
+  }
+  .cart-fab__badge.on { display: inline-flex; }
+  @media (max-width: 600px) {
+    .cart-fab { top: 12px; right: 12px; padding: 0.55rem 0.9rem; }
+    .cart-fab__label { display: none; }
+  }
+</style>
+<a class="cart-fab" id="cartFab" href="#" aria-label="장바구니">
+  <span class="cart-fab__icon">🧺</span>
+  <span class="cart-fab__label">장바구니</span>
+  <span class="cart-fab__badge" id="cartFabBadge">0</span>
+</a>
+<script>
+  (function () {
+    var CART_KEY = "edenwon_cart";
+    // products/ 하위면 상위로, 아니면 동일 경로
+    var inProducts = location.pathname.indexOf("/products/") >= 0;
+    var CART_HREF = inProducts ? "../cart.html" : "cart.html";
+
+    window.EdenwonCart = {
+      key: CART_KEY,
+      read: function () {
+        try { return JSON.parse(localStorage.getItem(CART_KEY) || "[]"); }
+        catch (e) { return []; }
+      },
+      write: function (items) {
+        try { localStorage.setItem(CART_KEY, JSON.stringify(items)); } catch (e) {}
+        this.refreshBadge();
+      },
+      count: function () {
+        return this.read().reduce(function (s, it) { return s + (it.count || 0); }, 0);
+      },
+      // 같은 (product, option)이면 수량 합산
+      add: function (item) {
+        var items = this.read();
+        var found = null;
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].product === item.product && items[i].option === item.option) { found = items[i]; break; }
+        }
+        if (found) found.count += item.count;
+        else items.push(item);
+        this.write(items);
+      },
+      refreshBadge: function () {
+        var b = document.getElementById("cartFabBadge");
+        if (!b) return;
+        var n = this.count();
+        b.textContent = n;
+        b.classList.toggle("on", n > 0);
+      }
+    };
+
+    var fab = document.getElementById("cartFab");
+    if (fab) fab.setAttribute("href", CART_HREF);
+    EdenwonCart.refreshBadge();
+  })();
+</script>
+<!-- ===== /장바구니 위젯 ===== -->
+
+</body>
+</html>
