@@ -165,7 +165,8 @@
 
         <button class="btn" id="submitBtn">주문 접수하기</button>
         <div class="form-error" id="formError"></div>
-        <p class="privacy">입력하신 이름·전화번호(및 학번·학과)는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다. 신분 할인·관계자 확인은 접수 시 자동 반영됩니다.</p>
+        <p class="privacy">입력하신 이름·전화번호(및 학번·학과)는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다. 신분 할인·관계자 확인은 접수 시 자동 반영됩니다.<br />
+          이 기기에 입력 정보가 저장되어 다음에 자동으로 채워집니다. <a href="#" id="clearProfile" style="color:var(--gold-dark);display:none;">저장된 정보 지우기</a></p>
       </div>
     </div>
 
@@ -278,6 +279,8 @@
           });
         }
       } catch (e) {}
+      // 신분 옵션이 채워진 뒤 저장된 인적사항 자동 입력
+      fillProfile();
     }
 
     function currentNeeds() {
@@ -305,6 +308,53 @@
       var d = studentId.value.replace(/\D/g, "").slice(0, 9);
       if (studentId.value !== d) studentId.value = d;
     });
+
+    // ===== 인적사항 기억 (주문 폼과 동일한 키 공유) =====
+    var PROFILE_KEY = "edenwon_profile";
+    function readProfile() {
+      try { return JSON.parse(localStorage.getItem(PROFILE_KEY) || "{}"); }
+      catch (e) { return {}; }
+    }
+    function saveProfile() {
+      var p = {
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        affiliation: affSelect.value,
+        studentId: studentId.value.trim(),
+        department: department.value.trim()
+      };
+      if (!p.name && !p.phone) return;
+      try { localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); } catch (e) {}
+    }
+    function fillProfile() {
+      var p = readProfile();
+      if (!p || (!p.name && !p.phone)) { updateClearLink(); return; }
+      if (p.name) document.getElementById("name").value = p.name;
+      if (p.phone) document.getElementById("phone").value = p.phone;
+      if (p.affiliation && AFF_NEEDS.hasOwnProperty(p.affiliation)) {
+        affSelect.value = p.affiliation;
+        applyAffiliationFields();
+        if (p.studentId) studentId.value = p.studentId;
+        if (p.department) department.value = p.department;
+      }
+      updateClearLink();
+    }
+    function clearProfile() {
+      try { localStorage.removeItem(PROFILE_KEY); } catch (e) {}
+      document.getElementById("name").value = "";
+      document.getElementById("phone").value = "";
+      affSelect.value = "";
+      studentId.value = "";
+      department.value = "";
+      applyAffiliationFields();
+      updateClearLink();
+    }
+    function updateClearLink() {
+      var link = document.getElementById("clearProfile");
+      if (!link) return;
+      var p = readProfile();
+      link.style.display = (p && (p.name || p.phone)) ? "inline" : "none";
+    }
 
     // 제출
     document.getElementById("submitBtn").addEventListener("click", async function () {
@@ -356,6 +406,7 @@
         document.getElementById("doneStatus").textContent = data.status;
         document.getElementById("donePay").textContent = won(data.amount);
         document.getElementById("doneDiscRow").style.display = data.discounted ? "flex" : "none";
+        saveProfile();
         // 장바구니 비우기
         window.EdenwonCart.write([]);
         document.getElementById("cartStage").style.display = "none";
@@ -370,6 +421,13 @@
     function initCart() {
       loadAffiliations();
       renderCart();
+      var clearLink = document.getElementById("clearProfile");
+      if (clearLink) {
+        clearLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          if (confirm("이 기기에 저장된 이름·전화번호·소속 정보를 지울까요?")) clearProfile();
+        });
+      }
     }
     // 장바구니 위젯(window.EdenwonCart)이 페이지 끝에서 정의되므로, 준비된 뒤 초기화
     (function waitForCart() {

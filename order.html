@@ -258,7 +258,8 @@
 
         <div class="form-error" id="formError"></div>
 
-        <p class="privacy">입력하신 이름·전화번호(및 학번·학과)는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다.</p>
+        <p class="privacy">입력하신 이름·전화번호(및 학번·학과)는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다.<br />
+          이 기기에 입력 정보가 저장되어 다음에 자동으로 채워집니다. <a href="#" id="clearProfile" style="color:var(--gold-dark);display:none;">저장된 정보 지우기</a></p>
       </div>
     </div>
 
@@ -452,6 +453,56 @@
       if (!showDept) fDept.classList.remove("invalid");
     }
 
+    // ===== 인적사항 기억 (브라우저 저장) =====
+    var PROFILE_KEY = "edenwon_profile";
+    function readProfile() {
+      try { return JSON.parse(localStorage.getItem(PROFILE_KEY) || "{}"); }
+      catch (e) { return {}; }
+    }
+    function saveProfile() {
+      var p = {
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        affiliation: affSelect.value,
+        studentId: studentId.value.trim(),
+        department: department.value.trim()
+      };
+      // 비어 있으면 저장 안 함(이름·전화 둘 다 없을 때)
+      if (!p.name && !p.phone) return;
+      try { localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); } catch (e) {}
+    }
+    function fillProfile() {
+      var p = readProfile();
+      if (!p || (!p.name && !p.phone)) { updateClearLink(); return; }
+      if (p.name) document.getElementById("name").value = p.name;
+      if (p.phone) document.getElementById("phone").value = p.phone;
+      if (p.affiliation && AFF_NEEDS.hasOwnProperty(p.affiliation)) {
+        affSelect.value = p.affiliation;
+        applyAffiliationFields();
+        if (p.studentId) studentId.value = p.studentId;
+        if (p.department) department.value = p.department;
+      }
+      updateClearLink();
+      refreshRemaining();
+    }
+    function clearProfile() {
+      try { localStorage.removeItem(PROFILE_KEY); } catch (e) {}
+      document.getElementById("name").value = "";
+      document.getElementById("phone").value = "";
+      affSelect.value = "";
+      studentId.value = "";
+      department.value = "";
+      applyAffiliationFields();
+      updateClearLink();
+      recalc();
+    }
+    function updateClearLink() {
+      var link = document.getElementById("clearProfile");
+      if (!link) return;
+      var p = readProfile();
+      link.style.display = (p && (p.name || p.phone)) ? "inline" : "none";
+    }
+
     async function init() {
       try {
         var res = await fetch(API_BASE + "/api/product?product=" + encodeURIComponent(PRODUCT_KEY));
@@ -468,6 +519,7 @@
         renderOptions(data.options);
         renderAffiliations(data.affiliations || []);
         applyAffiliationFields();
+        fillProfile();
 
         document.getElementById("formStage").style.display = "block";
         recalc();
@@ -489,6 +541,15 @@
 
     init();
 
+    // 저장된 정보 지우기
+    var clearLink = document.getElementById("clearProfile");
+    if (clearLink) {
+      clearLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (confirm("이 기기에 저장된 이름·전화번호·소속 정보를 지울까요?")) clearProfile();
+      });
+    }
+
     // 장바구니 담기: 옵션·수량만 담음(신분/할인은 주문 단계에서 확정)
     var addCartBtn = document.getElementById("addCartBtn");
     var cartAdded = document.getElementById("cartAdded");
@@ -507,6 +568,8 @@
           });
           cartAdded.classList.add("show");
           setTimeout(function () { cartAdded.classList.remove("show"); }, 2500);
+          saveProfile();
+          updateClearLink();
         }
       });
     }
@@ -570,6 +633,7 @@
         }
         document.getElementById("orderNo").textContent = data.order_no;
         document.getElementById("hintNo").textContent = data.order_no;
+        saveProfile();
         document.getElementById("sumProduct").textContent = data.product;
         document.getElementById("sumQty").textContent = data.option_label + " × " + data.count + "개";
         document.getElementById("sumDate").textContent = data.created_at;
