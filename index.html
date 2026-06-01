@@ -251,15 +251,31 @@
     .about {
       background: var(--cream);
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+    /* 로고 심볼을 은은한 워터마크로 */
+    .about::before {
+      content: "";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -48%);
+      width: min(420px, 70vw);
+      height: min(420px, 70vw);
+      background: url('images/logo-symbol-ink.png') no-repeat center / contain;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .about .container { position: relative; z-index: 1; }
 
     .about__quote {
       font-family: var(--font-display);
-      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-size: clamp(1.6rem, 3.6vw, 2.35rem);
       font-weight: 400;
-      line-height: 1.7;
+      line-height: 1.65;
       color: var(--ink);
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.8rem;
       letter-spacing: -0.01em;
     }
 
@@ -270,12 +286,13 @@
     }
 
     .about__body {
-      max-width: 580px;
+      max-width: 560px;
       margin: 0 auto;
       color: var(--ink-soft);
-      font-size: 1rem;
-      line-height: 2;
+      font-size: 1.02rem;
+      line-height: 2.1;
     }
+    @media (max-width: 600px) { .about__body .br-pc { display: none; } }
 
     /* ============ PRODUCTS ============ */
     .products {
@@ -1928,10 +1945,8 @@
       <div class="divider"></div>
       <p class="about__quote">"자연이 기다리고,<br />시간이 빚어낸 <em>진심</em>"</p>
       <p class="about__body">
-        영동에덴원은 농산물이 지닌 자연의 생명력을<br />
-        전통 옹기에 고스란히 담습니다.<br /><br />
-        옹기 안에서 발효되고, 숙성되는<br />
-        시간이 빚어낸 진심을 여러분께 전해드립니다.
+        영동에덴원은 농산물이 지닌 자연의 생명력을 전통 옹기에 고스란히 담습니다.<br class="br-pc" />
+        옹기 안에서 발효되고 숙성되는, 시간이 빚어낸 진심을 여러분께 전해드립니다.
       </p>
     </div>
   </section>
