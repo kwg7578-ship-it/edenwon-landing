@@ -1894,5 +1894,85 @@
     })();
   </script>
 
+<!-- ===== 영동에덴원 장바구니 위젯 (전 페이지 공통) ===== -->
+<!-- 사용법: 각 페이지 본문 맨 끝(닫는 body 태그 앞)에 이 블록을 그대로 삽입.
+     상대경로 주의 — 상세페이지(products/ 안)는 CART_HREF를 "../cart.html"로,
+     루트 페이지는 "cart.html"로 자동 판별(현재 경로에 /products/ 포함 여부). -->
+<style>
+  .cart-fab {
+    position: fixed; top: 16px; right: 16px; z-index: 95;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink, #2A1F14); color: var(--cream, #F4EDE0);
+    border: none; border-radius: 100px; padding: 0.6rem 1rem 0.6rem 0.9rem;
+    font-family: var(--font-body, "Noto Sans KR", sans-serif); font-size: 0.9rem;
+    cursor: pointer; text-decoration: none; box-shadow: 0 6px 20px rgba(42,31,20,0.22);
+    transition: background .2s ease, transform .2s ease;
+  }
+  .cart-fab:hover { background: var(--gold-dark, #6B5532); }
+  .cart-fab__icon { font-size: 1.05rem; line-height: 1; }
+  .cart-fab__badge {
+    min-width: 20px; height: 20px; padding: 0 6px; border-radius: 100px;
+    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
+    font-size: 0.78rem; font-weight: 700; display: none;
+    align-items: center; justify-content: center; line-height: 1;
+  }
+  .cart-fab__badge.on { display: inline-flex; }
+  @media (max-width: 600px) {
+    .cart-fab { top: 12px; right: 12px; padding: 0.55rem 0.9rem; }
+    .cart-fab__label { display: none; }
+  }
+</style>
+<a class="cart-fab" id="cartFab" href="#" aria-label="장바구니">
+  <span class="cart-fab__icon">🧺</span>
+  <span class="cart-fab__label">장바구니</span>
+  <span class="cart-fab__badge" id="cartFabBadge">0</span>
+</a>
+<script>
+  (function () {
+    var CART_KEY = "edenwon_cart";
+    // products/ 하위면 상위로, 아니면 동일 경로
+    var inProducts = location.pathname.indexOf("/products/") >= 0;
+    var CART_HREF = inProducts ? "../cart.html" : "cart.html";
+
+    window.EdenwonCart = {
+      key: CART_KEY,
+      read: function () {
+        try { return JSON.parse(localStorage.getItem(CART_KEY) || "[]"); }
+        catch (e) { return []; }
+      },
+      write: function (items) {
+        try { localStorage.setItem(CART_KEY, JSON.stringify(items)); } catch (e) {}
+        this.refreshBadge();
+      },
+      count: function () {
+        return this.read().reduce(function (s, it) { return s + (it.count || 0); }, 0);
+      },
+      // 같은 (product, option)이면 수량 합산
+      add: function (item) {
+        var items = this.read();
+        var found = null;
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].product === item.product && items[i].option === item.option) { found = items[i]; break; }
+        }
+        if (found) found.count += item.count;
+        else items.push(item);
+        this.write(items);
+      },
+      refreshBadge: function () {
+        var b = document.getElementById("cartFabBadge");
+        if (!b) return;
+        var n = this.count();
+        b.textContent = n;
+        b.classList.toggle("on", n > 0);
+      }
+    };
+
+    var fab = document.getElementById("cartFab");
+    if (fab) fab.setAttribute("href", CART_HREF);
+    EdenwonCart.refreshBadge();
+  })();
+</script>
+<!-- ===== /장바구니 위젯 ===== -->
+
 </body>
 </html>
