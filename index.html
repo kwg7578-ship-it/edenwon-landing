@@ -247,52 +247,79 @@
       opacity: 0.6;
     }
 
-    /* ============ ABOUT ============ */
+    /* ============ 브랜드 이야기 (통합) ============ */
     .about {
       background: var(--cream);
       text-align: center;
-      position: relative;
-      overflow: hidden;
     }
-    /* 로고 심볼을 은은한 워터마크로 */
-    .about::before {
-      content: "";
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -48%);
-      width: min(420px, 70vw);
-      height: min(420px, 70vw);
-      background: url('images/logo-symbol-ink.png') no-repeat center / contain;
-      opacity: 0.04;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .about .container { position: relative; z-index: 1; }
 
+    /* 상단 선언 */
     .about__quote {
       font-family: var(--font-display);
       font-size: clamp(1.6rem, 3.6vw, 2.35rem);
       font-weight: 400;
       line-height: 1.65;
       color: var(--ink);
-      margin-bottom: 2.8rem;
+      margin-bottom: 1.6rem;
       letter-spacing: -0.01em;
     }
-
     .about__quote em {
       font-style: normal;
       color: var(--gold-dark);
       font-weight: 700;
     }
-
-    .about__body {
-      max-width: 560px;
+    .about__lead {
+      max-width: 640px;
       margin: 0 auto;
       color: var(--ink-soft);
-      font-size: 1.02rem;
-      line-height: 2.1;
+      font-size: clamp(1rem, 2vw, 1.12rem);
+      line-height: 1.95;
     }
-    @media (max-width: 600px) { .about__body .br-pc { display: none; } }
+    @media (max-width: 600px) { .about__lead .br-pc { display: none; } }
+
+    /* 세 축 (농사·발효·제품) */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.2rem;
+      max-width: 960px;
+      margin: clamp(3.5rem, 7vh, 5rem) auto 0;
+      text-align: left;
+    }
+    .pillar {
+      padding: 2rem 1.8rem;
+      background: var(--cream-light);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .pillar:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(42,31,20,0.07); }
+    .pillar__eyebrow {
+      font-family: var(--font-latin); font-size: 0.78rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.9rem;
+    }
+    .pillar__title {
+      font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 0.8rem; line-height: 1.4;
+    }
+    .pillar__desc { font-size: 0.94rem; color: var(--ink-soft); line-height: 1.85; }
+    .pillar__link {
+      display: inline-block; margin-top: 1rem; font-size: 0.86rem;
+      color: var(--gold-dark); border-bottom: 1px solid var(--border-strong);
+      text-decoration: none; padding-bottom: 2px; transition: border-color .2s ease;
+    }
+    .pillar__link:hover { border-bottom-color: var(--gold); }
+
+    /* 숫자 — 세 축 아래 증거 */
+    .about__stats {
+      max-width: 960px; margin: clamp(3.5rem, 7vh, 5rem) auto 0;
+      padding-top: clamp(2.5rem, 5vh, 3.5rem);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 760px) {
+      .pillars { grid-template-columns: 1fr; gap: 1.2rem; max-width: 460px; }
+    }
 
     /* ============ PRODUCTS ============ */
     .products {
@@ -1896,7 +1923,7 @@
   }
 
   /* 앵커 이동 시 고정 헤더가 제목을 덮지 않도록 */
-  #about, #products, #practice, #gallery, #contact { scroll-margin-top: 80px; }
+  #about, #products, #gallery, #contact { scroll-margin-top: 80px; }
 
   </style>
 </head>
@@ -1916,7 +1943,6 @@
       <ul class="site-nav__links">
         <li><a href="#about">브랜드 이야기</a></li>
         <li><a href="#products">제품</a></li>
-        <li><a href="#practice">발효 이야기</a></li>
         <li><a href="#gallery">갤러리</a></li>
         <li><a href="#contact">주문·문의</a></li>
       </ul>
@@ -1939,15 +1965,74 @@
 
 
   <!-- ============ ABOUT ============ -->
+  <!-- ============ 브랜드 이야기 (통합: 농사·발효·제품) ============ -->
   <section class="about" id="about">
     <div class="container">
-      <div class="section-label">About</div>
+      <div class="section-label">Our Way</div>
       <div class="divider"></div>
+
+      <!-- 선언 -->
       <p class="about__quote">"자연이 기다리고,<br />시간이 빚어낸 <em>진심</em>"</p>
-      <p class="about__body">
-        영동에덴원은 농산물이 지닌 자연의 생명력을 전통 옹기에 고스란히 담습니다.<br class="br-pc" />
-        옹기 안에서 발효되고 숙성되는, 시간이 빚어낸 진심을 여러분께 전해드립니다.
+      <p class="about__lead">
+        씨앗부터 직접 기른 농산물을, 전통 옹기에 담아,<br class="br-pc" />
+        시간이 빚어낸 발효식품으로 전합니다.
       </p>
+
+      <!-- 세 축 -->
+      <div class="pillars">
+        <div class="pillar">
+          <p class="pillar__eyebrow">Farming</p>
+          <h3 class="pillar__title">씨앗부터 우리 손으로</h3>
+          <p class="pillar__desc">무농약 자연 농법으로 가꾼 6ha 자체 토지에서, 농산물을 씨앗부터 직접 기릅니다.</p>
+        </div>
+        <div class="pillar">
+          <p class="pillar__eyebrow">Fermentation</p>
+          <h3 class="pillar__title">옹기에 담아,<br />시간에 맡기다</h3>
+          <p class="pillar__desc">300개의 전통 옹기 안에서 사계절의 흐름을 따라 발효하고 숙성시킵니다. 매일의 기록과 함께.</p>
+        </div>
+        <div class="pillar">
+          <p class="pillar__eyebrow">Products</p>
+          <h3 class="pillar__title">발효가 빚어낸 식탁</h3>
+          <p class="pillar__desc">발효식초부터 옹기숙성 장류, 청국장까지 — 시간이 만든 발효식품을 정성껏 빚어냅니다.</p>
+          <a href="#products" class="pillar__link">제품 보기 →</a>
+        </div>
+      </div>
+
+      <!-- 숫자 (증거) -->
+      <div class="about__stats">
+        <div class="why__grid">
+          <div class="why__item">
+            <div class="why__number">8<span class="why__unit">년</span></div>
+            <p class="why__label">연구의 시간</p>
+            <p class="why__desc">발효에 대한 진심,<br />건강한 발효를 위한 과정</p>
+          </div>
+          <div class="why__item">
+            <div class="why__number">300<span class="why__unit">개</span></div>
+            <p class="why__label">발효 옹기 항아리</p>
+            <p class="why__desc">전통 옹기 안에서 사계절,<br />흐름으로 발효 및 숙성</p>
+          </div>
+          <div class="why__item">
+            <div class="why__number">6<span class="why__unit">ha</span></div>
+            <p class="why__label">무농약 자체 토지</p>
+            <p class="why__desc">무농약 자연 농법으로,<br />씨앗부터 직접 가꾸는 토지</p>
+          </div>
+          <div class="why__item">
+            <div class="why__number">365<span class="why__unit">일</span></div>
+            <p class="why__label">발효 노트</p>
+            <p class="why__desc">매일 발효실의 온·습도와<br />상태를 기록하는 정성</p>
+          </div>
+          <div class="why__item">
+            <div class="why__number">24<span class="why__unit">시간</span></div>
+            <p class="why__label">미생물 활동의 시간</p>
+            <p class="why__desc">옹기 안에서 쉼 없이,<br />대사활동 하는 미생물</p>
+          </div>
+          <div class="why__item">
+            <div class="why__number">6<span class="why__unit">개월</span></div>
+            <p class="why__label">발효퇴비의 시간</p>
+            <p class="why__desc">유기물과 톱밥을 혼합해,<br />6개월간 자연 발효시키는 시간</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2113,55 +2198,6 @@
 
       <div class="products__cta">
         <a href="contact.html" class="btn btn--earth">주문·문의하기</a>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ============ WHY US ============ -->
-  <section class="why" id="practice">
-    <div class="container">
-      <div class="section-label">Our Practice</div>
-      <h2 class="section-title">전통은 지키고,<br />발효는 과학적으로</h2>
-
-      <div class="why__grid">
-
-        <div class="why__item">
-          <div class="why__number">8<span class="why__unit">년</span></div>
-          <p class="why__label">연구의 시간</p>
-          <p class="why__desc">발효에 대한 진심,<br />건강한 발효를 위한 과정</p>
-        </div>
-
-        <div class="why__item">
-          <div class="why__number">300<span class="why__unit">개</span></div>
-          <p class="why__label">발효 옹기 항아리</p>
-          <p class="why__desc">전통 옹기 안에서 사계절,<br />흐름으로 발효 및 숙성</p>
-        </div>
-
-        <div class="why__item">
-          <div class="why__number">6<span class="why__unit">ha</span></div>
-          <p class="why__label">무농약 자체 토지</p>
-          <p class="why__desc">무농약 자연 농법으로,<br />씨앗부터 직접 가꾸는 토지</p>
-        </div>
-
-        <div class="why__item">
-          <div class="why__number">365<span class="why__unit">일</span></div>
-          <p class="why__label">발효 노트</p>
-          <p class="why__desc">매일 발효실의 온·습도와<br />상태를 기록하는 정성</p>
-        </div>
-
-        <div class="why__item">
-          <div class="why__number">24<span class="why__unit">시간</span></div>
-          <p class="why__label">미생물 활동의 시간</p>
-          <p class="why__desc">옹기 안에서 쉼 없이,<br />대사활동 하는 미생물</p>
-        </div>
-
-        <div class="why__item">
-          <div class="why__number">6<span class="why__unit">개월</span></div>
-          <p class="why__label">발효퇴비의 시간</p>
-          <p class="why__desc">유기물과 톱밥을 혼합해,<br />6개월간 자연 발효시키는 시간</p>
-        </div>
-
       </div>
     </div>
   </section>
