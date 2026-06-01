@@ -81,6 +81,12 @@
     .summary__row:last-child { border-bottom: none; }
     .summary__row .k { color: var(--ink-mute); }
     .summary__row .v { color: var(--ink); }
+    .oi-row { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.3rem 0; }
+    .oi-row + .oi-row { border-top: 1px solid var(--border); }
+    .oi-name { flex: 1; font-size: 0.95rem; text-align: left; }
+    .oi-opt { color: var(--ink-mute); font-size: 0.85rem; }
+    .oi-cnt { color: var(--ink-soft); font-size: 0.9rem; }
+    .oi-amt { font-size: 0.92rem; min-width: 80px; text-align: right; }
 
     .status-pill { padding: 0.12rem 0.75rem; font-size: 0.82rem; border-radius: 2px; }
     .st-wait   { background: var(--cream-dark); color: var(--gold-dark); }
@@ -144,8 +150,9 @@
 
       <div class="card">
         <div class="summary">
-          <div class="summary__row"><span class="k">품목</span><span class="v" id="rProduct">—</span></div>
-          <div class="summary__row"><span class="k">구성</span><span class="v" id="rQty">—</span></div>
+          <div class="summary__row" id="rowProduct"><span class="k">품목</span><span class="v" id="rProduct">—</span></div>
+          <div class="summary__row" id="rowQty"><span class="k">구성</span><span class="v" id="rQty">—</span></div>
+          <div id="rItems" style="display:none;"></div>
           <div class="summary__row"><span class="k">금액</span><span class="v" id="rAmount">—</span></div>
           <div class="summary__row"><span class="k">주문일</span><span class="v" id="rDate">—</span></div>
           <div class="summary__row"><span class="k">상태</span><span id="rStatusWrap"><span class="status-pill st-wait" id="rStatus">—</span></span></div>
@@ -200,13 +207,44 @@
 
     function won(n) { return (n == null) ? "—" : Number(n).toLocaleString("ko-KR") + "원"; }
 
+    function esc(t) {
+      return (t == null ? "" : String(t)).replace(/[&<>"]/g, function (c) {
+        return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+      });
+    }
+
     function showResult(data) {
       document.getElementById("rNo").textContent = data.order_no;
-      document.getElementById("rProduct").textContent = data.product;
-      var compo = data.option_label
-        ? (data.option_label + " × " + (data.count || 1) + "개")
-        : (data.pkg_kg ? (data.pkg_kg + "kg × " + (data.count || 1) + "개") : (data.qty + " " + data.unit));
-      document.getElementById("rQty").textContent = compo;
+
+      var rowProduct = document.getElementById("rowProduct");
+      var rowQty = document.getElementById("rowQty");
+      var rItems = document.getElementById("rItems");
+
+      if (data.items && data.items.length > 1) {
+        // 다품목: 품목/구성 두 줄 숨기고 목록으로
+        rowProduct.style.display = "none";
+        rowQty.style.display = "none";
+        var rows = data.items.map(function (it) {
+          return '<div class="oi-row">'
+            + '<span class="oi-name">' + esc(it.product) + ' <span class="oi-opt">' + esc(it.option_label) + '</span></span>'
+            + '<span class="oi-cnt">×' + it.count + '</span>'
+            + '<span class="oi-amt">' + won(it.line_amount) + '</span>'
+            + '</div>';
+        }).join("");
+        rItems.innerHTML = '<div class="summary__row" style="align-items:flex-start;"><span class="k">주문 품목 ' + data.items.length + '건</span><span class="v" style="flex:1;">' + rows + '</span></div>';
+        rItems.style.display = "block";
+      } else {
+        // 단일 주문: 기존 방식
+        rowProduct.style.display = "";
+        rowQty.style.display = "";
+        rItems.style.display = "none";
+        document.getElementById("rProduct").textContent = data.product;
+        var compo = data.option_label
+          ? (data.option_label + " × " + (data.count || 1) + "개")
+          : (data.pkg_kg ? (data.pkg_kg + "kg × " + (data.count || 1) + "개") : (data.qty + " " + data.unit));
+        document.getElementById("rQty").textContent = compo;
+      }
+
       document.getElementById("rAmount").textContent = won(data.amount);
       document.getElementById("rDate").textContent = data.created_at;
       document.getElementById("rPayAmount").textContent = won(data.amount);
