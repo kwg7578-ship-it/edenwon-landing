@@ -367,8 +367,15 @@
       }
     });
 
-    loadAffiliations();
-    renderCart();
+    function initCart() {
+      loadAffiliations();
+      renderCart();
+    }
+    // 장바구니 위젯(window.EdenwonCart)이 페이지 끝에서 정의되므로, 준비된 뒤 초기화
+    (function waitForCart() {
+      if (window.EdenwonCart) { initCart(); }
+      else { setTimeout(waitForCart, 30); }
+    })();
   </script>
 <!-- ===== 영동에덴원 장바구니 위젯 (전 페이지 공통) ===== -->
 <!-- 사용법: 각 페이지 본문 맨 끝(닫는 body 태그 앞)에 이 블록을 그대로 삽입.
