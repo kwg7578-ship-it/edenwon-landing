@@ -149,6 +149,7 @@
   .pick-item__meta { color:var(--ink-mute); font-size:0.82rem; }
   .pick-item__price { color:var(--gold-dark); font-size:0.9rem; }
   .picker__close { display:block; width:100%; margin-top:1rem; padding:0.7rem; background:none; border:1px solid var(--border-strong); border-radius:6px; cursor:pointer; color:var(--ink-soft); }
+  .season-badge { display:inline-block; background:#e3ecd9; color:#5a7345; font-size:0.68rem; padding:0.05rem 0.4rem; border-radius:100px; margin-left:0.35rem; vertical-align:middle; white-space:nowrap; }
 </style>
 </head>
 <body>
@@ -272,7 +273,8 @@
   var won = function(n){ return Number(n).toLocaleString("ko-KR") + "원"; };
   var $ = function(id){ return document.getElementById(id); };
   function optOf(key, opt){ var p=CAT[key]; if(!p) return null; var o=p.options.filter(function(x){return x.id===opt;})[0]; return o||p.options[0]; }
-  function slotInfo(s){ if(!s) return null; var p=CAT[s.key]; var o=optOf(s.key,s.opt); return p&&o?{name:p.name,emoji:p.emoji,label:o.label,price:o.price,id:o.id}:null; }
+  function slotInfo(s){ if(!s) return null; var p=CAT[s.key]; var o=optOf(s.key,s.opt); return p&&o?{name:p.name,emoji:p.emoji,label:o.label,price:o.price,id:o.id,season:(o.season||"")}:null; }
+  function seasonBadge(season){ return season ? ('<span class="season-badge">'+season+' 한정</span>') : ""; }
 
   // ---- 상품 로드 ----
   (async function init(){
@@ -331,7 +333,7 @@
       } else {
         html += '<div class="slot filled"><button class="slot__x" data-rm="'+i+'">×</button>'
           + '<div class="slot__thumb">'+info.emoji+'</div>'
-          + '<div class="slot__name">'+info.name+'</div>'
+          + '<div class="slot__name">'+info.name+seasonBadge(info.season)+'</div>'
           + '<div class="slot__size">'+info.label+' · <span class="slot__price">'+won(info.price)+'</span></div>'
           + '<span class="slot__change" data-slot="'+i+'">변경</span></div>';
       }
@@ -379,7 +381,7 @@
     $("pickTitle").textContent = p.name + " 옵션";
     $("pickList").innerHTML = p.options.map(function(o){
       return '<button class="pick-item" data-opt="'+o.id+'"><span class="pick-item__thumb">'+p.emoji+'</span>'
-        + '<span class="pick-item__name">'+o.label+'</span><span class="pick-item__price">'+won(o.price)+'</span></button>';
+        + '<span class="pick-item__name">'+o.label+seasonBadge(o.season||"")+'</span><span class="pick-item__price">'+won(o.price)+'</span></button>';
     }).join("");
     document.querySelectorAll("[data-opt]").forEach(function(b){
       b.addEventListener("click", function(){ slots[activeSlot]={key:key,opt:b.dataset.opt}; renderBox(); renderTotal(); closePicker(); });
