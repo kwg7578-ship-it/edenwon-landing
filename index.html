@@ -2013,6 +2013,67 @@
   </style>
 </head>
 <body>
+  <!-- ===== 첫 방문 환영 모달 (1회) ===== -->
+  <div class="welcome" id="welcomeModal" role="dialog" aria-modal="true" aria-label="영동에덴원 안내">
+    <div class="welcome__panel">
+      <button class="welcome__close" id="welcomeClose" aria-label="닫기">×</button>
+      <div class="welcome__icon">🫙</div>
+      <div class="welcome__title">영동에덴원에 오신 걸 환영합니다</div>
+      <div class="welcome__sub">충북 영동, 옹기에서 발효·숙성한 정직한 먹거리</div>
+      <div class="welcome__steps">
+        <div class="welcome__steps-title">주문은 이렇게 진행됩니다</div>
+        <div class="welcome__step"><span class="welcome__num">1</span><span>마음에 드는 <b>제품 또는 선물세트</b>를 고릅니다</span></div>
+        <div class="welcome__step"><span class="welcome__num">2</span><span><b>자가수령 · 택배</b> 중 선택하고 정보를 입력합니다</span></div>
+        <div class="welcome__step"><span class="welcome__num">3</span><span>안내된 계좌로 <b>입금</b>합니다 (계좌이체)</span></div>
+        <div class="welcome__step"><span class="welcome__num">4</span><span>입금이 확인되면 <b>준비 후 보내드립니다</b></span></div>
+      </div>
+      <div class="welcome__btns">
+        <a href="products.html" class="welcome__btn welcome__btn--primary">제품 보기</a>
+        <a href="giftset.html" class="welcome__btn welcome__btn--ghost">선물세트</a>
+      </div>
+      <button class="welcome__skip" id="welcomeSkip">닫고 둘러보기</button>
+    </div>
+  </div>
+  <style>
+    .welcome { display:none; position:fixed; inset:0; z-index:200; background:rgba(42,31,20,0.55); align-items:center; justify-content:center; padding:1.2rem; -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px); }
+    .welcome.on { display:flex; animation:wfade .3s ease; }
+    @keyframes wfade { from{opacity:0;} to{opacity:1;} }
+    .welcome__panel { background:var(--cream-light,#FBF7EF); max-width:440px; width:100%; border-radius:16px; padding:2rem 1.8rem 1.8rem; text-align:center; position:relative; box-shadow:0 20px 60px rgba(42,31,20,0.3); animation:wpop .35s cubic-bezier(.2,.8,.2,1); }
+    @keyframes wpop { from{transform:translateY(16px) scale(.98);opacity:0;} to{transform:none;opacity:1;} }
+    .welcome__close { position:absolute; top:0.7rem; right:0.9rem; background:none; border:none; font-size:1.5rem; color:var(--ink-mute,#8B7A65); cursor:pointer; line-height:1; }
+    .welcome__icon { font-size:2.4rem; line-height:1; }
+    .welcome__title { font-family:var(--font-display,"Gowun Batang",serif); font-size:1.35rem; color:var(--ink,#2A1F14); margin:0.5rem 0 0.3rem; }
+    .welcome__sub { font-size:0.9rem; color:var(--ink-soft,#5A4A38); line-height:1.6; margin-bottom:1.3rem; }
+    .welcome__steps { text-align:left; background:var(--cream,#F4EDE0); border-radius:10px; padding:1rem 1.1rem; margin-bottom:1.4rem; }
+    .welcome__steps-title { font-size:0.82rem; color:var(--gold-dark,#6B5532); margin-bottom:0.6rem; font-weight:500; }
+    .welcome__step { display:flex; gap:0.6rem; align-items:flex-start; font-size:0.88rem; color:var(--ink-soft,#5A4A38); line-height:1.5; padding:0.22rem 0; }
+    .welcome__step b { color:var(--ink,#2A1F14); font-weight:500; }
+    .welcome__num { flex:none; width:20px; height:20px; border-radius:50%; background:var(--gold,#8B6F47); color:#fff; font-size:0.72rem; display:flex; align-items:center; justify-content:center; margin-top:0.12rem; }
+    .welcome__btns { display:flex; gap:0.5rem; flex-wrap:wrap; }
+    .welcome__btn { flex:1 1 auto; padding:0.8rem; border-radius:8px; font-family:var(--font-body,"Noto Sans KR",sans-serif); font-size:0.92rem; cursor:pointer; text-decoration:none; text-align:center; border:1px solid var(--ink,#2A1F14); transition:all .2s ease; }
+    .welcome__btn--primary { background:var(--ink,#2A1F14); color:var(--cream,#F4EDE0); }
+    .welcome__btn--primary:hover { background:var(--gold-dark,#6B5532); border-color:var(--gold-dark,#6B5532); }
+    .welcome__btn--ghost { background:transparent; color:var(--ink,#2A1F14); border-color:var(--border-strong,rgba(42,31,20,0.15)); }
+    .welcome__btn--ghost:hover { background:var(--cream-dark,#E8DFCC); }
+    .welcome__skip { display:block; width:100%; margin-top:0.7rem; background:none; border:none; color:var(--ink-mute,#8B7A65); font-size:0.82rem; cursor:pointer; text-decoration:underline; }
+    @media (max-width:480px){ .welcome__btn{ flex:1 1 100%; } }
+  </style>
+  <script>
+    (function(){
+      var KEY="edenwon_welcomed";
+      var m=document.getElementById("welcomeModal"); if(!m) return;
+      var seen=null; try{ seen=localStorage.getItem(KEY); }catch(e){}
+      function done(){ m.classList.remove("on"); document.body.style.overflow=""; try{localStorage.setItem(KEY,"1");}catch(e){} }
+      if(!seen){
+        m.classList.add("on"); document.body.style.overflow="hidden";
+        document.getElementById("welcomeClose").addEventListener("click",done);
+        document.getElementById("welcomeSkip").addEventListener("click",done);
+        m.addEventListener("click",function(e){ if(e.target===m) done(); });
+        document.addEventListener("keydown",function(e){ if(e.key==="Escape" && m.classList.contains("on")) done(); });
+        m.querySelectorAll("a.welcome__btn").forEach(function(a){ a.addEventListener("click",function(){ try{localStorage.setItem(KEY,"1");}catch(e){} }); });
+      }
+    })();
+  </script>
 
   <!-- ============ 상단 고정 헤더 ============ -->
   <header class="site-header at-top" id="siteHeader">
