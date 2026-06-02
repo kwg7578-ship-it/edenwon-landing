@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>발효의 진심 선물세트 — 영동에덴원</title>
-<meta name="description" content="원하는 발효식품 네 가지를 골라 담는 영동에덴원 선물세트. 합산가에서 5,000원 할인." />
+<meta name="description" content="장·잼 선물세트와 식초 선물세트, 두 가지 구성의 영동에덴원 선물세트. 합산가에서 5,000원 할인." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
@@ -37,18 +37,22 @@
   .sec-sub { text-align:center; color:var(--ink-mute); font-size:0.86rem; margin-bottom:1.6rem; }
   .loading { text-align:center; color:var(--ink-mute); padding:3rem 0; }
 
-  /* 추천 세트 */
-  .presets { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-  .preset { background:var(--cream-light); border:1px solid var(--border); border-radius:10px; padding:1.1rem; display:flex; flex-direction:column; }
-  .preset__photo { aspect-ratio:4/3; border-radius:8px; background:repeating-linear-gradient(45deg,var(--cream-dark),var(--cream-dark) 10px,#e2d8c2 10px,#e2d8c2 20px); display:flex; align-items:center; justify-content:center; color:var(--ink-mute); font-size:0.78rem; text-align:center; margin-bottom:0.9rem; }
-  .preset__name { font-family:var(--font-display); font-size:1.08rem; margin-bottom:0.3rem; }
-  .preset__items { font-size:0.82rem; color:var(--ink-soft); line-height:1.7; margin-bottom:0.8rem; flex:1; }
-  .preset__price { font-family:var(--font-display); font-size:1.15rem; margin-bottom:0.7rem; }
-  .preset__price s { color:var(--ink-mute); font-size:0.85rem; font-family:var(--font-body); margin-right:0.4rem; }
-  .btn-ghost { display:block; width:100%; text-align:center; padding:0.7rem; font-family:var(--font-body); font-size:0.9rem; background:var(--cream); color:var(--ink); border:1px solid var(--border-strong); border-radius:6px; cursor:pointer; transition:all .2s; }
-  .btn-ghost:hover { background:var(--cream-dark); border-color:var(--gold); }
+  /* 세트 종류 선택 */
+  .sets { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .set-card { background:var(--cream-light); border:1.5px solid var(--border-strong); border-radius:12px; padding:1.1rem; cursor:pointer; transition:border-color .15s, box-shadow .15s, background .15s; text-align:left; font-family:var(--font-body); }
+  .set-card:hover { border-color:var(--gold); }
+  .set-card.sel { border-color:var(--gold); box-shadow:0 0 0 3px rgba(139,111,71,0.12); background:#fff; }
+  .set-card__photo { aspect-ratio:4/3; border-radius:8px; background:repeating-linear-gradient(45deg,var(--cream-dark),var(--cream-dark) 10px,#e2d8c2 10px,#e2d8c2 20px); display:flex; align-items:center; justify-content:center; color:var(--ink-mute); font-size:0.78rem; text-align:center; margin-bottom:0.9rem; }
+  .set-card__name { font-family:var(--font-display); font-size:1.1rem; margin-bottom:0.3rem; }
+  .set-card__desc { font-size:0.82rem; color:var(--ink-soft); line-height:1.7; }
+  .set-card__pick { display:inline-block; margin-top:0.7rem; font-size:0.82rem; color:var(--gold-dark); }
+  .set-card.sel .set-card__pick::before { content:"✓ 선택됨"; }
+  .set-card:not(.sel) .set-card__pick::before { content:"이 세트 고르기 →"; }
 
   /* 박스 */
+  .box-wrap { display:none; }
+  .box-wrap.on { display:block; animation:fade .4s ease; }
+  @keyframes fade { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:none;} }
   .box { background:var(--cream-light); border:1px solid var(--border); border-radius:12px; padding:1.4rem; }
   .box__grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   .slot { aspect-ratio:1/0.92; border:1.5px dashed var(--border-strong); border-radius:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.35rem; cursor:pointer; background:var(--cream); transition:border-color .15s, background .15s; position:relative; padding:0.6rem; text-align:center; }
@@ -114,7 +118,6 @@
   /* 완료 */
   .done { display:none; }
   .done.on { display:block; animation:fade .5s ease; }
-  @keyframes fade { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:none;} }
   .stage.hide { display:none; }
   .done__check { width:56px; height:56px; margin:0 auto 1.3rem; border:1px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--gold-dark); font-size:1.6rem; }
   .done__num { text-align:center; font-family:var(--font-display); font-size:1.4rem; letter-spacing:0.04em; margin-bottom:0.4rem; }
@@ -135,12 +138,15 @@
   .picker { position:fixed; inset:0; background:rgba(42,31,20,0.45); display:none; align-items:flex-end; justify-content:center; z-index:50; }
   .picker.on { display:flex; }
   .picker__panel { background:var(--cream-light); width:100%; max-width:560px; max-height:80vh; border-radius:14px 14px 0 0; padding:1.3rem 1.2rem 1.6rem; overflow-y:auto; }
-  .picker__title { font-family:var(--font-display); font-size:1.1rem; text-align:center; margin-bottom:1rem; }
+  .picker__head { display:flex; align-items:center; gap:0.6rem; margin-bottom:1rem; }
+  .picker__back { background:none; border:none; cursor:pointer; color:var(--ink-soft); font-size:1rem; padding:0.2rem 0.4rem; display:none; }
+  .picker__back.on { display:inline; }
+  .picker__title { font-family:var(--font-display); font-size:1.1rem; flex:1; text-align:center; }
   .pick-item { display:flex; align-items:center; gap:0.8rem; width:100%; text-align:left; padding:0.7rem 0.6rem; background:none; border:none; border-bottom:1px solid var(--border); cursor:pointer; font-family:var(--font-body); }
   .pick-item:hover { background:var(--cream-dark); }
   .pick-item__thumb { width:38px; height:38px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; font-size:1.15rem; flex:none; }
   .pick-item__name { flex:1; font-size:0.92rem; color:var(--ink); }
-  .pick-item__size { color:var(--ink-mute); font-size:0.8rem; }
+  .pick-item__meta { color:var(--ink-mute); font-size:0.82rem; }
   .pick-item__price { color:var(--gold-dark); font-size:0.9rem; }
   .picker__close { display:block; width:100%; margin-top:1rem; padding:0.7rem; background:none; border:1px solid var(--border-strong); border-radius:6px; cursor:pointer; color:var(--ink-soft); }
 </style>
@@ -152,81 +158,69 @@
   </div></div>
 
   <div class="wrap">
-    <!-- 1단계: 구성 + 주문 -->
     <div class="stage" id="buildStage">
       <div class="eyebrow">Gift Set</div>
       <h1 class="title">발효의 진심 선물세트</h1>
-      <p class="lede">추천 세트를 그대로, 또는 원하는 제품 네 가지를 직접 담아 보내실 수 있습니다.<br />선물세트는 합산 가격에서 <strong>5,000원 할인</strong>됩니다.</p>
+      <p class="lede">두 가지 선물세트 중 하나를 고르고, 구성을 원하는 대로 바꿔 보내실 수 있습니다.<br />선물세트는 합산 가격에서 <strong>5,000원 할인</strong>됩니다.</p>
 
       <div id="loading" class="loading">상품을 불러오는 중…</div>
 
       <div id="content" style="display:none;">
-        <div class="sec-title">추천 세트</div>
-        <div class="sec-sub">그대로 담거나, 담은 뒤 자유롭게 바꿀 수 있어요</div>
-        <div class="presets" id="presets"></div>
+        <div class="sec-title">선물세트 고르기</div>
+        <div class="sec-sub">세트를 고르면 기본 구성으로 담깁니다 · 한 세트 4종</div>
+        <div class="sets" id="sets"></div>
 
-        <div class="divider"></div>
-
-        <div class="sec-title">직접 구성</div>
-        <div class="sec-sub">빈 칸을 눌러 제품을 담아 주세요 · 한 세트 4종</div>
-        <div class="box">
-          <div class="box__grid" id="boxGrid"></div>
-          <div class="totals">
-            <div class="totals__row"><span>상품 합계</span><span class="v" id="amtSum">—</span></div>
-            <div class="totals__row disc"><span>선물 할인</span><span class="v">−5,000원</span></div>
-            <div class="totals__sum"><span class="k">세트 가격</span><span class="v" id="amtTotal">—</span></div>
-            <div class="hint" id="hint">제품 4종을 모두 담아 주세요 (0/4)</div>
-            <button class="btn btn--start" id="toOrderBtn" disabled>주문 정보 입력</button>
-          </div>
-
-          <!-- 주문 폼 -->
-          <div class="order-form" id="orderForm">
-            <div class="divider"></div>
-            <label class="field__label">수령 방법 <span class="req">*</span></label>
-            <div class="method-toggle">
-              <button type="button" class="method-opt sel" data-method="pickup"><span class="method-opt__icon">🤲</span><span class="method-opt__main">자가수령</span><small>직접 받으러 오기</small></button>
-              <button type="button" class="method-opt" data-method="delivery"><span class="method-opt__icon">📦</span><span class="method-opt__main">택배</span><small>집으로 받기</small></button>
-            </div>
-            <div class="pickup-note" id="notePickup"><span>📍</span><span><strong>자가 수령</strong> — 직접 받으러 오시는 분들을 위한 주문입니다. 주소는 받지 않으며, 배송비도 없습니다.</span></div>
-            <div class="pickup-note" id="noteDelivery" style="display:none;"><span>📦</span><span><strong>택배 발송</strong> — 입금 확인 후 보내 드립니다. 배송비 5,000원, <strong>상품 10만원 이상 무료</strong>. (제주·도서산간은 추가될 수 있습니다.)</span></div>
-
-            <div class="field" id="f-name">
-              <label class="field__label">주문자 성함 <span class="req">*</span></label>
-              <input type="text" id="name" maxlength="40" placeholder="성함" autocomplete="name" />
-              <div class="field__err">성함을 입력해 주세요.</div>
-            </div>
-            <div class="field" id="f-phone">
-              <label class="field__label">주문자 전화번호 <span class="req">*</span></label>
-              <input type="tel" id="phone" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" autocomplete="tel" />
-              <div class="field__err">전화번호를 정확히 입력해 주세요.</div>
-              <div class="field__hint">주문 조회 시 본인 확인에 사용됩니다.</div>
+        <!-- 박스 (세트 선택 후) -->
+        <div class="box-wrap" id="boxWrap">
+          <div class="divider"></div>
+          <div class="sec-title" id="boxTitle">구성</div>
+          <div class="sec-sub">칸을 눌러 제품을 바꿀 수 있어요</div>
+          <div class="box">
+            <div class="box__grid" id="boxGrid"></div>
+            <div class="totals">
+              <div class="totals__row"><span>상품 합계</span><span class="v" id="amtSum">—</span></div>
+              <div class="totals__row disc"><span>선물 할인</span><span class="v">−5,000원</span></div>
+              <div class="totals__sum"><span class="k">세트 가격</span><span class="v" id="amtTotal">—</span></div>
+              <div class="hint" id="hint"></div>
+              <button class="btn btn--start" id="toOrderBtn" disabled>주문 정보 입력</button>
             </div>
 
-            <div class="ship-block" id="shipBlock" style="display:none;">
-              <label class="same-check"><input type="checkbox" id="sameAsOrderer" checked /> 받는 분이 주문자와 동일합니다</label>
-              <div id="recipFields" style="display:none;">
-                <div class="field" id="f-rname"><label class="field__label">받는 분 성함 <span class="req">*</span></label><input type="text" id="recipName" maxlength="40" placeholder="선물 받는 분 성함" /><div class="field__err">받는 분 성함을 입력해 주세요.</div></div>
-                <div class="field" id="f-rphone"><label class="field__label">받는 분 연락처 <span class="req">*</span></label><input type="tel" id="recipPhone" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" /><div class="field__err">받는 분 연락처를 정확히 입력해 주세요.</div></div>
+            <!-- 주문 폼 -->
+            <div class="order-form" id="orderForm">
+              <div class="divider"></div>
+              <label class="field__label">수령 방법 <span class="req">*</span></label>
+              <div class="method-toggle">
+                <button type="button" class="method-opt sel" data-method="pickup"><span class="method-opt__icon">🤲</span><span class="method-opt__main">자가수령</span><small>직접 받으러 오기</small></button>
+                <button type="button" class="method-opt" data-method="delivery"><span class="method-opt__icon">📦</span><span class="method-opt__main">택배</span><small>집으로 받기</small></button>
               </div>
-              <div class="field" id="f-zip"><label class="field__label">우편번호 <span class="req">*</span></label><div class="addr-row"><input type="text" id="zip" readonly placeholder="주소 찾기를 눌러 주세요" /><button type="button" class="btn-find" id="findAddr">주소 찾기</button></div><div class="field__err">우편번호를 입력해 주세요.</div></div>
-              <div class="field" id="f-addr1"><label class="field__label">주소 <span class="req">*</span></label><input type="text" id="addr1" readonly placeholder="기본 주소" /><div class="field__err">주소를 입력해 주세요.</div></div>
-              <div class="field" id="f-addr2"><label class="field__label">상세주소 <span class="req">*</span></label><input type="text" id="addr2" maxlength="60" placeholder="동·호수 등 상세주소" /><div class="field__err">상세주소를 입력해 주세요.</div></div>
-            </div>
+              <div class="pickup-note" id="notePickup"><span>📍</span><span><strong>자가 수령</strong> — 직접 받으러 오시는 분들을 위한 주문입니다. 주소는 받지 않으며, 배송비도 없습니다.</span></div>
+              <div class="pickup-note" id="noteDelivery" style="display:none;"><span>📦</span><span><strong>택배 발송</strong> — 입금 확인 후 보내 드립니다. 배송비 5,000원, <strong>상품 10만원 이상 무료</strong>. (제주·도서산간은 추가될 수 있습니다.)</span></div>
 
-            <div class="field" style="margin-bottom:0;">
-              <label class="field__label">요청사항 <span class="field__sub">(선택)</span></label>
-              <textarea id="memo" maxlength="500" placeholder="수령 희망 시기, 선물 메시지 등을 자유롭게 적어 주세요."></textarea>
-            </div>
+              <div class="field" id="f-name"><label class="field__label">주문자 성함 <span class="req">*</span></label><input type="text" id="name" maxlength="40" placeholder="성함" autocomplete="name" /><div class="field__err">성함을 입력해 주세요.</div></div>
+              <div class="field" id="f-phone"><label class="field__label">주문자 전화번호 <span class="req">*</span></label><input type="tel" id="phone" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" autocomplete="tel" /><div class="field__err">전화번호를 정확히 입력해 주세요.</div><div class="field__hint">주문 조회 시 본인 확인에 사용됩니다.</div></div>
 
-            <button class="btn" id="submitBtn">주문 접수하기</button>
-            <div class="form-error" id="formError"></div>
-            <p class="privacy">입력 정보는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다. 입력 정보는 이 기기에 저장되어 다음에 자동으로 채워집니다.</p>
+              <div class="ship-block" id="shipBlock" style="display:none;">
+                <label class="same-check"><input type="checkbox" id="sameAsOrderer" checked /> 받는 분이 주문자와 동일합니다</label>
+                <div id="recipFields" style="display:none;">
+                  <div class="field" id="f-rname"><label class="field__label">받는 분 성함 <span class="req">*</span></label><input type="text" id="recipName" maxlength="40" placeholder="선물 받는 분 성함" /><div class="field__err">받는 분 성함을 입력해 주세요.</div></div>
+                  <div class="field" id="f-rphone"><label class="field__label">받는 분 연락처 <span class="req">*</span></label><input type="tel" id="recipPhone" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" /><div class="field__err">받는 분 연락처를 정확히 입력해 주세요.</div></div>
+                </div>
+                <div class="field" id="f-zip"><label class="field__label">우편번호 <span class="req">*</span></label><div class="addr-row"><input type="text" id="zip" readonly placeholder="주소 찾기를 눌러 주세요" /><button type="button" class="btn-find" id="findAddr">주소 찾기</button></div><div class="field__err">우편번호를 입력해 주세요.</div></div>
+                <div class="field" id="f-addr1"><label class="field__label">주소 <span class="req">*</span></label><input type="text" id="addr1" readonly placeholder="기본 주소" /><div class="field__err">주소를 입력해 주세요.</div></div>
+                <div class="field" id="f-addr2"><label class="field__label">상세주소 <span class="req">*</span></label><input type="text" id="addr2" maxlength="60" placeholder="동·호수 등 상세주소" /><div class="field__err">상세주소를 입력해 주세요.</div></div>
+              </div>
+
+              <div class="field" style="margin-bottom:0;"><label class="field__label">요청사항 <span class="field__sub">(선택)</span></label><textarea id="memo" maxlength="500" placeholder="수령 희망 시기, 선물 메시지 등을 자유롭게 적어 주세요."></textarea></div>
+              <button class="btn" id="submitBtn">주문 접수하기</button>
+              <div class="form-error" id="formError"></div>
+              <p class="privacy">입력 정보는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다. 입력 정보는 이 기기에 저장되어 다음에 자동으로 채워집니다.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 2단계: 완료 -->
+    <!-- 완료 -->
     <div class="done" id="doneStage">
       <div class="done__check">✓</div>
       <div class="done__num" id="orderNo">—</div>
@@ -243,33 +237,42 @@
     </div>
   </div>
 
-  <!-- 제품 선택 모달 -->
+  <!-- 제품 선택 모달 (세트 허용 제품만, 옵션 2단계) -->
   <div class="picker" id="picker"><div class="picker__panel">
-    <div class="picker__title">제품 선택</div>
+    <div class="picker__head">
+      <button class="picker__back" id="pickBack">←</button>
+      <div class="picker__title" id="pickTitle">제품 선택</div>
+    </div>
     <div id="pickList"></div>
     <button class="picker__close" id="pickClose">닫기</button>
   </div></div>
 
 <script>
   var API_BASE = (location.hostname.endsWith("yd-edenwon.com")) ? "https://api.yd-edenwon.com" : "";
-  var GIFT_DISCOUNT = 5000, SHIP_FEE = 5000, SHIP_FREE_OVER = 100000;
-  var EXCLUDE = ["jocheong","pea","cheonggukjang","meju"];   // 선물세트 제외: 조청·완두콩·청국장·메주
-  // 추천 세트: 제품 key 4개. 옵션은 첫 옵션으로 자동, 실제 사진은 준비되면 교체.
-  var PRESETS = [
-    { name:"장·잼 선물세트", keys:["gochujang","doenjang","jam","bibim-gochujang"] },
-    { name:"식초 선물세트", keys:["vinegar","gochujang","doenjang","eoganjang"] }
-  ];
-  var EMOJI = { vinegar:"🫗", doenjang:"🟤", gochujang:"🌶️", eoganjang:"🐟", cheonggukjang:"🫘",
-    "bibim-doenjang":"🥢", "bibim-gochujang":"🥢", jam:"🍓", pea:"🌱", meju:"🧱" };
+  var GIFT_DISCOUNT = 5000;
 
-  var CATALOG = [];     // [{key,name,emoji,options:[{id,label,price}]}]
-  var FLAT = [];        // 선택 가능한 (제품-옵션) 평탄화 목록
-  var slots = [null,null,null,null];  // FLAT 인덱스
+  // 선물세트 2종: allow=담을 수 있는 제품 / def=기본 구성 4칸 (제품 key)
+  var SETS = [
+    { id:"jam", name:"장·잼 선물세트", desc:"장류와 잼으로 구성하는 선물세트",
+      allow:["gochujang","doenjang","jam","bibim-gochujang","bibim-doenjang"],
+      def:["gochujang","doenjang","jam","bibim-gochujang"] },
+    { id:"vinegar", name:"식초 선물세트", desc:"발효의 초심(식초)을 중심으로 한 선물세트",
+      allow:["vinegar","eoganjang","gochujang","doenjang","jam","bibim-gochujang","bibim-doenjang"],
+      def:["vinegar","gochujang","doenjang","eoganjang"] }
+  ];
+  var EMOJI = { vinegar:"🫗", doenjang:"🟤", gochujang:"🌶️", eoganjang:"🐟",
+    "bibim-doenjang":"🥢", "bibim-gochujang":"🥢", jam:"🍓" };
+
+  var CAT = {};          // key -> {key, name, emoji, options:[{id,label,price}]}
+  var selSet = null;     // 선택된 세트
+  var slots = [null,null,null,null];   // 각 칸: {key, opt} (opt=optionId)
   var activeSlot = -1;
   var orderMethod = "pickup";
 
   var won = function(n){ return Number(n).toLocaleString("ko-KR") + "원"; };
   var $ = function(id){ return document.getElementById(id); };
+  function optOf(key, opt){ var p=CAT[key]; if(!p) return null; var o=p.options.filter(function(x){return x.id===opt;})[0]; return o||p.options[0]; }
+  function slotInfo(s){ if(!s) return null; var p=CAT[s.key]; var o=optOf(s.key,s.opt); return p&&o?{name:p.name,emoji:p.emoji,label:o.label,price:o.price,id:o.id}:null; }
 
   // ---- 상품 로드 ----
   (async function init(){
@@ -277,61 +280,59 @@
       var res = await fetch(API_BASE + "/api/products");
       var data = await res.json();
       if (!res.ok || !data.ok) throw new Error();
-      CATALOG = data.products
-        .filter(function(p){ return EXCLUDE.indexOf(p.key) < 0; })
-        .map(function(p){ return { key:p.key, name:p.name, emoji:(EMOJI[p.key]||"🫙"), options:p.options }; });
-      FLAT = [];
-      CATALOG.forEach(function(p){
-        p.options.forEach(function(o){ FLAT.push({ key:p.key, name:p.name, emoji:p.emoji, option:o.id, label:o.label, price:o.price }); });
-      });
+      data.products.forEach(function(p){ CAT[p.key] = { key:p.key, name:p.name, emoji:(EMOJI[p.key]||"🫙"), options:p.options }; });
       $("loading").style.display = "none";
       $("content").style.display = "block";
-      renderPresets(); renderBox(); renderTotal(); renderPicker(); fillProfile();
+      renderSets(); fillProfile();
     } catch(e) {
       $("loading").textContent = "상품을 불러오지 못했습니다. 잠시 후 다시 시도하시거나 카카오톡으로 문의해 주세요.";
     }
   })();
 
-  function firstFlatIndexOfKey(key){
-    for (var i=0;i<FLAT.length;i++){ if (FLAT[i].key===key) return i; }
-    return -1;
+  // ---- 세트 카드 ----
+  function setDefaultSum(set){ return set.def.reduce(function(s,k){ var o=CAT[k]?CAT[k].options[0]:null; return s+(o?o.price:0); },0); }
+  function renderSets(){
+    $("sets").innerHTML = SETS.map(function(set){
+      var avail = set.def.every(function(k){ return CAT[k]; });
+      if (!avail) return "";
+      var names = set.def.map(function(k){ return CAT[k].name; }).join(" · ");
+      var sum = setDefaultSum(set);
+      return '<button type="button" class="set-card'+(selSet&&selSet.id===set.id?' sel':'')+'" data-set="'+set.id+'">'
+        + '<div class="set-card__photo">실제 세트 사진<br />(준비되면 교체)</div>'
+        + '<div class="set-card__name">'+set.name+'</div>'
+        + '<div class="set-card__desc">기본 구성: '+names+'<br />'+won(Math.max(0,sum-GIFT_DISCOUNT))+' <span style="color:var(--ink-mute);">(5천원 할인 적용)</span></div>'
+        + '<span class="set-card__pick"></span></button>';
+    }).join("");
+    document.querySelectorAll("[data-set]").forEach(function(b){
+      b.addEventListener("click", function(){ chooseSet(b.dataset.set); });
+    });
   }
 
-  // ---- 추천 세트 ----
-  function renderPresets(){
-    $("presets").innerHTML = PRESETS.map(function(p, pi){
-      var idxs = p.keys.map(firstFlatIndexOfKey).filter(function(i){ return i>=0; });
-      var sum = idxs.reduce(function(s,i){ return s+FLAT[i].price; },0);
-      var items = idxs.map(function(i){ return FLAT[i].name + " " + FLAT[i].label; }).join("<br />");
-      return '<div class="preset">'
-        + '<div class="preset__photo">실제 세트 사진<br />(준비되면 교체)</div>'
-        + '<div class="preset__name">'+p.name+'</div>'
-        + '<div class="preset__items">'+items+'</div>'
-        + '<div class="preset__price"><s>'+won(sum)+'</s>'+won(Math.max(0,sum-GIFT_DISCOUNT))+'</div>'
-        + '<button class="btn-ghost" data-preset="'+pi+'">이 구성으로 담기</button></div>';
-    }).join("");
-    document.querySelectorAll("[data-preset]").forEach(function(b){
-      b.addEventListener("click", function(){
-        var idxs = PRESETS[+b.dataset.preset].keys.map(firstFlatIndexOfKey).filter(function(i){ return i>=0; });
-        for (var i=0;i<4;i++){ slots[i] = idxs[i]!=null ? idxs[i] : null; }
-        renderBox(); renderTotal();
-        $("boxGrid").scrollIntoView({behavior:"smooth"});
-      });
-    });
+  function chooseSet(id){
+    var set = SETS.filter(function(s){ return s.id===id; })[0];
+    if (!set) return;
+    selSet = set;
+    slots = [0,1,2,3].map(function(i){ var k=set.def[i]; return (k&&CAT[k])?{key:k,opt:CAT[k].options[0].id}:null; });
+    document.querySelectorAll(".set-card").forEach(function(c){ c.classList.toggle("sel", c.dataset.set===id); });
+    $("boxTitle").textContent = set.name + " 구성";
+    $("boxWrap").classList.add("on");
+    renderBox(); renderTotal();
+    $("orderForm").classList.remove("on"); $("toOrderBtn").style.display = "block";
+    $("boxWrap").scrollIntoView({behavior:"smooth"});
   }
 
   // ---- 박스 ----
   function renderBox(){
     var html="";
     for (var i=0;i<4;i++){
-      if (slots[i]==null){
+      var info = slotInfo(slots[i]);
+      if (!info){
         html += '<div class="slot" data-slot="'+i+'"><span class="slot__plus">+</span><span class="slot__add">제품 담기</span></div>';
       } else {
-        var p = FLAT[slots[i]];
         html += '<div class="slot filled"><button class="slot__x" data-rm="'+i+'">×</button>'
-          + '<div class="slot__thumb">'+p.emoji+'</div>'
-          + '<div class="slot__name">'+p.name+'</div>'
-          + '<div class="slot__size">'+p.label+' · <span class="slot__price">'+won(p.price)+'</span></div>'
+          + '<div class="slot__thumb">'+info.emoji+'</div>'
+          + '<div class="slot__name">'+info.name+'</div>'
+          + '<div class="slot__size">'+info.label+' · <span class="slot__price">'+won(info.price)+'</span></div>'
           + '<span class="slot__change" data-slot="'+i+'">변경</span></div>';
       }
     }
@@ -339,8 +340,8 @@
     document.querySelectorAll("[data-slot]").forEach(function(el){ el.addEventListener("click", function(e){ e.stopPropagation(); openPicker(+el.dataset.slot); }); });
     document.querySelectorAll("[data-rm]").forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); slots[+b.dataset.rm]=null; renderBox(); renderTotal(); }); });
   }
-  function filledCount(){ return slots.filter(function(s){ return s!=null; }).length; }
-  function productSum(){ return slots.reduce(function(s,i){ return s + (i!=null?FLAT[i].price:0); },0); }
+  function filledCount(){ return slots.filter(function(s){ return s; }).length; }
+  function productSum(){ return slots.reduce(function(s,sl){ var i=slotInfo(sl); return s+(i?i.price:0); },0); }
   function renderTotal(){
     var n=filledCount(), sum=productSum(), ready=(n===4);
     $("amtSum").textContent = n? won(sum):"—";
@@ -350,30 +351,47 @@
     $("toOrderBtn").disabled = !ready;
   }
 
-  // ---- 제품 선택 모달 ----
-  function renderPicker(){
-    $("pickList").innerHTML = FLAT.map(function(p,i){
-      return '<button class="pick-item" data-pick="'+i+'"><span class="pick-item__thumb">'+p.emoji+'</span>'
-        + '<span class="pick-item__name">'+p.name+'</span><span class="pick-item__size">'+p.label+'</span>'
-        + '<span class="pick-item__price">'+won(p.price)+'</span></button>';
+  // ---- 제품 선택 모달 (세트 허용 제품 → 옵션 2단계) ----
+  function openPicker(i){ activeSlot=i; showProductList(); $("picker").classList.add("on"); }
+  function closePicker(){ $("picker").classList.remove("on"); activeSlot=-1; }
+  function showProductList(){
+    $("pickBack").classList.remove("on");
+    $("pickTitle").textContent = "제품 선택";
+    var keys = selSet.allow.filter(function(k){ return CAT[k]; });
+    $("pickList").innerHTML = keys.map(function(k){
+      var p = CAT[k];
+      var meta = (p.options.length>1) ? ('<span class="pick-item__meta">옵션 '+p.options.length+'개 →</span>')
+        : ('<span class="pick-item__price">'+won(p.options[0].price)+'</span>');
+      return '<button class="pick-item" data-prod="'+k+'"><span class="pick-item__thumb">'+p.emoji+'</span>'
+        + '<span class="pick-item__name">'+p.name+'</span>'+meta+'</button>';
     }).join("");
-    document.querySelectorAll("[data-pick]").forEach(function(b){
-      b.addEventListener("click", function(){ if (activeSlot>=0){ slots[activeSlot]=+b.dataset.pick; renderBox(); renderTotal(); } closePicker(); });
+    document.querySelectorAll("[data-prod]").forEach(function(b){
+      b.addEventListener("click", function(){
+        var p = CAT[b.dataset.prod];
+        if (p.options.length === 1){ slots[activeSlot]={key:p.key,opt:p.options[0].id}; renderBox(); renderTotal(); closePicker(); }
+        else { showOptionList(p.key); }
+      });
     });
   }
-  function openPicker(i){ activeSlot=i; $("picker").classList.add("on"); }
-  function closePicker(){ $("picker").classList.remove("on"); activeSlot=-1; }
+  function showOptionList(key){
+    var p = CAT[key];
+    $("pickBack").classList.add("on");
+    $("pickTitle").textContent = p.name + " 옵션";
+    $("pickList").innerHTML = p.options.map(function(o){
+      return '<button class="pick-item" data-opt="'+o.id+'"><span class="pick-item__thumb">'+p.emoji+'</span>'
+        + '<span class="pick-item__name">'+o.label+'</span><span class="pick-item__price">'+won(o.price)+'</span></button>';
+    }).join("");
+    document.querySelectorAll("[data-opt]").forEach(function(b){
+      b.addEventListener("click", function(){ slots[activeSlot]={key:key,opt:b.dataset.opt}; renderBox(); renderTotal(); closePicker(); });
+    });
+  }
+  $("pickBack").addEventListener("click", showProductList);
   $("pickClose").addEventListener("click", closePicker);
   $("picker").addEventListener("click", function(e){ if (e.target===$("picker")) closePicker(); });
 
-  // ---- 주문 정보 입력 단계 ----
-  $("toOrderBtn").addEventListener("click", function(){
-    $("orderForm").classList.add("on");
-    this.style.display = "none";
-    $("orderForm").scrollIntoView({behavior:"smooth"});
-  });
+  // ---- 주문 정보 입력 ----
+  $("toOrderBtn").addEventListener("click", function(){ $("orderForm").classList.add("on"); this.style.display="none"; $("orderForm").scrollIntoView({behavior:"smooth"}); });
 
-  // 수령 방법
   document.querySelectorAll(".method-opt").forEach(function(b){
     b.addEventListener("click", function(){
       orderMethod = b.getAttribute("data-method");
@@ -432,7 +450,7 @@
     }
     if (!(nameOk&&phoneOk&&delivOk)){ var f=document.querySelector(".field.invalid input"); if(f)f.focus(); return; }
 
-    var items = slots.map(function(i){ return { product:FLAT[i].key, option:FLAT[i].option, count:1 }; });
+    var items = slots.map(function(s){ return { product:s.key, option:s.opt, count:1 }; });
     var btn=this; btn.disabled=true; btn.textContent="접수 중…";
     try {
       var res = await fetch(API_BASE + "/api/cart-order", {
@@ -444,9 +462,9 @@
       var data = await res.json();
       if (!res.ok || !data.ok){ btn.disabled=false; btn.textContent="주문 접수하기"; err.innerHTML=data.error||"주문 접수 중 문제가 발생했습니다."; err.classList.add("show"); return; }
       saveProfile();
-      // 완료 화면
       var isDeliv = data.method==="delivery";
-      var rows = slots.map(function(i){ var p=FLAT[i]; return '<div class="summary__row"><span class="k">'+p.name+'</span><span class="v">'+p.label+'</span></div>'; });
+      var rows = slots.map(function(s){ var i=slotInfo(s); return '<div class="summary__row"><span class="k">'+i.name+'</span><span class="v">'+i.label+'</span></div>'; });
+      rows.unshift('<div class="summary__row"><span class="k">선물세트</span><span class="v">'+selSet.name+'</span></div>');
       rows.push('<div class="summary__row"><span class="k">수령 방법</span><span class="v">'+(isDeliv?"📦 택배":"🤲 자가수령")+'</span></div>');
       if (isDeliv){
         var recip = deliv.recipient_name + ((deliv.recipient_phone && deliv.recipient_phone!==digits)?(" · "+deliv.recipient_phone):"");
