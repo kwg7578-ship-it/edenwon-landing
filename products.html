@@ -378,19 +378,22 @@
     #ptab-1:checked ~ .ptabs__nav label[for="ptab-1"],
     #ptab-2:checked ~ .ptabs__nav label[for="ptab-2"],
     #ptab-3:checked ~ .ptabs__nav label[for="ptab-3"],
-    #ptab-4:checked ~ .ptabs__nav label[for="ptab-4"] {
+    #ptab-4:checked ~ .ptabs__nav label[for="ptab-4"],
+    #ptab-5:checked ~ .ptabs__nav label[for="ptab-5"] {
       color: var(--ink); font-weight: 700;
     }
     #ptab-1:checked ~ .ptabs__nav label[for="ptab-1"]::after,
     #ptab-2:checked ~ .ptabs__nav label[for="ptab-2"]::after,
     #ptab-3:checked ~ .ptabs__nav label[for="ptab-3"]::after,
-    #ptab-4:checked ~ .ptabs__nav label[for="ptab-4"]::after {
+    #ptab-4:checked ~ .ptabs__nav label[for="ptab-4"]::after,
+    #ptab-5:checked ~ .ptabs__nav label[for="ptab-5"]::after {
       transform: scaleX(1);
     }
     #ptab-1:checked ~ .ptabs__panels .ptabs__panel--1,
     #ptab-2:checked ~ .ptabs__panels .ptabs__panel--2,
     #ptab-3:checked ~ .ptabs__panels .ptabs__panel--3,
-    #ptab-4:checked ~ .ptabs__panels .ptabs__panel--4 {
+    #ptab-4:checked ~ .ptabs__panels .ptabs__panel--4,
+    #ptab-5:checked ~ .ptabs__panels .ptabs__panel--5 {
       display: block;
     }
     @media (max-width: 600px) {
@@ -2005,12 +2008,14 @@
       <input type="radio" name="ptabs" id="ptab-2" class="ptabs__radio" />
       <input type="radio" name="ptabs" id="ptab-3" class="ptabs__radio" />
       <input type="radio" name="ptabs" id="ptab-4" class="ptabs__radio" />
+      <input type="radio" name="ptabs" id="ptab-5" class="ptabs__radio" />
 
       <div class="ptabs__nav">
         <label for="ptab-1" class="ptabs__label">옹기발효</label>
         <label for="ptab-2" class="ptabs__label">발효</label>
         <label for="ptab-3" class="ptabs__label">진짜'S 시리즈</label>
         <label for="ptab-4" class="ptabs__label">농산물</label>
+        <label for="ptab-5" class="ptabs__label">선물세트</label>
       </div>
 
       <div class="ptabs__panels">
@@ -2149,6 +2154,33 @@
           </div>
         </div>
         <!-- /패널 4 -->
+
+        <!-- 패널 5: 선물세트 -->
+        <div class="ptabs__panel ptabs__panel--5">
+          <p class="ptabs__panel-sub">발효식품 네 가지를 담아 전하는 선물세트 · 합산가에서 5,000원 할인</p>
+          <div class="product-grid product-grid--craft">
+
+          <a href="giftset.html?set=jam" class="product-card">
+            <div class="product-card__image" style="font-size:2.6rem;">🎁</div>
+            <h3 class="product-card__name">장·잼 선물세트</h3>
+            <p class="product-card__tag">Gift Set</p>
+            <p class="product-card__desc">고추장·된장·잼·비빔장 등 장류와 잼으로 구성하는 선물세트. 원하는 네 가지를 직접 담아 보내실 수 있습니다.</p>
+            <p class="product-card__time">4종 구성 · 합산가에서 5,000원 할인</p>
+            <span class="product-card__more">선물세트 구성하기 →</span>
+          </a>
+
+          <a href="giftset.html?set=vinegar" class="product-card">
+            <div class="product-card__image" style="font-size:2.6rem;">🎁</div>
+            <h3 class="product-card__name">식초 선물세트</h3>
+            <p class="product-card__tag">Gift Set</p>
+            <p class="product-card__desc">발효의 초심(식초)과 어간장, 장류·잼까지 — 식초를 중심으로 구성하는 선물세트.</p>
+            <p class="product-card__time">4종 구성 · 합산가에서 5,000원 할인</p>
+            <span class="product-card__more">선물세트 구성하기 →</span>
+          </a>
+
+          </div>
+        </div>
+        <!-- /패널 5 -->
 
       </div>
       <!-- /제품 탭 -->

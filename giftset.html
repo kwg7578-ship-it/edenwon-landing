@@ -286,6 +286,8 @@
       $("loading").style.display = "none";
       $("content").style.display = "block";
       renderSets(); fillProfile();
+      var pre = new URLSearchParams(location.search).get("set");
+      if (pre && SETS.some(function(s){ return s.id===pre; })) chooseSet(pre);
     } catch(e) {
       $("loading").textContent = "상품을 불러오지 못했습니다. 잠시 후 다시 시도하시거나 카카오톡으로 문의해 주세요.";
     }
