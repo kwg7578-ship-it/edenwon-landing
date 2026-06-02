@@ -61,7 +61,7 @@
   .slot.filled { border-style:solid; cursor:default; }
   .slot__plus { font-size:1.5rem; color:var(--gold); line-height:1; }
   .slot__add { color:var(--ink-mute); font-size:0.86rem; }
-  .slot__thumb { width:42px; height:42px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; font-size:1.25rem; }
+  .slot__thumb { width:42px; height:42px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; font-size:1.25rem; position:relative; overflow:hidden; }
   .slot__name { font-size:0.84rem; color:var(--ink); line-height:1.3; }
   .slot__size { font-size:0.75rem; color:var(--ink-mute); }
   .slot__price { font-size:0.8rem; color:var(--gold-dark); }
@@ -145,7 +145,8 @@
   .picker__title { font-family:var(--font-display); font-size:1.1rem; flex:1; text-align:center; }
   .pick-item { display:flex; align-items:center; gap:0.8rem; width:100%; text-align:left; padding:0.7rem 0.6rem; background:none; border:none; border-bottom:1px solid var(--border); cursor:pointer; font-family:var(--font-body); }
   .pick-item:hover { background:var(--cream-dark); }
-  .pick-item__thumb { width:38px; height:38px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; font-size:1.15rem; flex:none; }
+  .pick-item__thumb { width:38px; height:38px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; font-size:1.15rem; flex:none; position:relative; overflow:hidden; }
+  .slot__thumb img, .pick-item__thumb img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; }
   .pick-item__name { flex:1; font-size:0.92rem; color:var(--ink); }
   .pick-item__meta { color:var(--ink-mute); font-size:0.82rem; }
   .pick-item__price { color:var(--gold-dark); font-size:0.9rem; }
@@ -274,8 +275,9 @@
   var won = function(n){ return Number(n).toLocaleString("ko-KR") + "원"; };
   var $ = function(id){ return document.getElementById(id); };
   function optOf(key, opt){ var p=CAT[key]; if(!p) return null; var o=p.options.filter(function(x){return x.id===opt;})[0]; return o||p.options[0]; }
-  function slotInfo(s){ if(!s) return null; var p=CAT[s.key]; var o=optOf(s.key,s.opt); return p&&o?{name:p.name,emoji:p.emoji,label:o.label,price:o.price,id:o.id,season:(o.season||"")}:null; }
+  function slotInfo(s){ if(!s) return null; var p=CAT[s.key]; var o=optOf(s.key,s.opt); return p&&o?{name:p.name,emoji:p.emoji,img:p.img,label:o.label,price:o.price,id:o.id,season:(o.season||"")}:null; }
   function seasonBadge(season){ return season ? ('<span class="season-badge">'+season+' 한정</span>') : ""; }
+  function thumbHtml(img, emoji){ return '<img src="'+img+'" alt="" loading="lazy" onerror="this.remove()">'+(emoji||""); }
 
   // ---- 상품 로드 ----
   (async function init(){
@@ -283,7 +285,7 @@
       var res = await fetch(API_BASE + "/api/products");
       var data = await res.json();
       if (!res.ok || !data.ok) throw new Error();
-      data.products.forEach(function(p){ CAT[p.key] = { key:p.key, name:p.name, emoji:(EMOJI[p.key]||"🫙"), options:p.options }; });
+      data.products.forEach(function(p){ CAT[p.key] = { key:p.key, name:p.name, emoji:(EMOJI[p.key]||"🫙"), img:"images/product-"+p.key+".jpg", options:p.options }; });
       $("loading").style.display = "none";
       $("content").style.display = "block";
       renderSets(); fillProfile();
@@ -335,7 +337,7 @@
         html += '<div class="slot" data-slot="'+i+'"><span class="slot__plus">+</span><span class="slot__add">제품 담기</span></div>';
       } else {
         html += '<div class="slot filled"><button class="slot__x" data-rm="'+i+'">×</button>'
-          + '<div class="slot__thumb">'+info.emoji+'</div>'
+          + '<div class="slot__thumb">'+thumbHtml(info.img,info.emoji)+'</div>'
           + '<div class="slot__name">'+info.name+seasonBadge(info.season)+'</div>'
           + '<div class="slot__size">'+info.label+' · <span class="slot__price">'+won(info.price)+'</span></div>'
           + '<span class="slot__change" data-slot="'+i+'">변경</span></div>';
@@ -367,7 +369,7 @@
       var p = CAT[k];
       var meta = (p.options.length>1) ? ('<span class="pick-item__meta">옵션 '+p.options.length+'개 →</span>')
         : ('<span class="pick-item__price">'+won(p.options[0].price)+'</span>');
-      return '<button class="pick-item" data-prod="'+k+'"><span class="pick-item__thumb">'+p.emoji+'</span>'
+      return '<button class="pick-item" data-prod="'+k+'"><span class="pick-item__thumb">'+thumbHtml(p.img,p.emoji)+'</span>'
         + '<span class="pick-item__name">'+p.name+'</span>'+meta+'</button>';
     }).join("");
     document.querySelectorAll("[data-prod]").forEach(function(b){
@@ -383,7 +385,7 @@
     $("pickBack").classList.add("on");
     $("pickTitle").textContent = p.name + " 옵션";
     $("pickList").innerHTML = p.options.map(function(o){
-      return '<button class="pick-item" data-opt="'+o.id+'"><span class="pick-item__thumb">'+p.emoji+'</span>'
+      return '<button class="pick-item" data-opt="'+o.id+'"><span class="pick-item__thumb">'+thumbHtml(p.img,p.emoji)+'</span>'
         + '<span class="pick-item__name">'+o.label+seasonBadge(o.season||"")+'</span><span class="pick-item__price">'+won(o.price)+'</span></button>';
     }).join("");
     document.querySelectorAll("[data-opt]").forEach(function(b){
