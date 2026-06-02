@@ -2017,7 +2017,7 @@
   <div class="welcome" id="welcomeModal" role="dialog" aria-modal="true" aria-label="영동에덴원 안내">
     <div class="welcome__panel">
       <button class="welcome__close" id="welcomeClose" aria-label="닫기">×</button>
-      <div class="welcome__icon">🫙</div>
+      <div class="welcome__icon"><img src="images/logo-symbol-ink.png" alt="영동에덴원" /></div>
       <div class="welcome__title">영동에덴원에 오신 걸 환영합니다</div>
       <div class="welcome__sub">충북 영동, 옹기에서 발효·숙성한 정직한 먹거리</div>
       <div class="welcome__steps">
@@ -2041,7 +2041,8 @@
     .welcome__panel { background:var(--cream-light,#FBF7EF); max-width:440px; width:100%; border-radius:16px; padding:2rem 1.8rem 1.8rem; text-align:center; position:relative; box-shadow:0 20px 60px rgba(42,31,20,0.3); animation:wpop .35s cubic-bezier(.2,.8,.2,1); }
     @keyframes wpop { from{transform:translateY(16px) scale(.98);opacity:0;} to{transform:none;opacity:1;} }
     .welcome__close { position:absolute; top:0.7rem; right:0.9rem; background:none; border:none; font-size:1.5rem; color:var(--ink-mute,#8B7A65); cursor:pointer; line-height:1; }
-    .welcome__icon { font-size:2.4rem; line-height:1; }
+    .welcome__icon { line-height:1; margin-bottom:0.2rem; }
+    .welcome__icon img { height:46px; width:auto; display:inline-block; }
     .welcome__title { font-family:var(--font-display,"Gowun Batang",serif); font-size:1.35rem; color:var(--ink,#2A1F14); margin:0.5rem 0 0.3rem; }
     .welcome__sub { font-size:0.9rem; color:var(--ink-soft,#5A4A38); line-height:1.6; margin-bottom:1.3rem; }
     .welcome__steps { text-align:left; background:var(--cream,#F4EDE0); border-radius:10px; padding:1rem 1.1rem; margin-bottom:1.4rem; }
