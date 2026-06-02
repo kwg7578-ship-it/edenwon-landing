@@ -1932,15 +1932,6 @@
   @media (prefers-reduced-motion: reduce) {
     .page-enter { animation: none; }
   
-  /* ===== 통일 푸터 ===== */
-  footer { background: var(--ink); color: rgba(244,237,224,0.5); padding: 2.8rem 1.5rem; text-align: center; font-size: 0.8rem; line-height: 2; border-top: 1px solid rgba(244,237,224,0.08); }
-  footer .footer__brand { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-bottom: 1.1rem; }
-  footer .footer__symbol { height: 36px; width: auto; opacity: 0.92; }
-  footer .footer__mark { font-family: var(--font-display); color: rgba(244,237,224,0.78); letter-spacing: 0.06em; font-size: 0.98rem; }
-  footer .footer__legal { font-size: 0.75rem; letter-spacing: 0.02em; }
-  footer .footer__legal a { color: inherit; opacity: 0.7; text-decoration: none; border-bottom: 1px solid rgba(244,237,224,0.2); }
-  footer .footer__legal a:hover { opacity: 1; }
-  footer .footer__sep { opacity: 0.35; }
   </style>
 
 </head>
@@ -2435,5 +2426,16 @@
       });
     })();
   </script>
+<style>
+  /* ===== 통일 푸터 (독립 블록) ===== */
+  footer { background: var(--ink); color: rgba(244,237,224,0.5); padding: 2.8rem 1.5rem; text-align: center; font-size: 0.8rem; line-height: 2; border-top: 1px solid rgba(244,237,224,0.08); }
+  footer .footer__brand { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-bottom: 1.1rem; }
+  footer .footer__symbol { height: 36px !important; width: auto !important; opacity: 0.92; margin: 0 auto; display: block; }
+  footer .footer__mark { font-family: var(--font-display); color: rgba(244,237,224,0.78); letter-spacing: 0.06em; font-size: 0.98rem; margin: 0; }
+  footer .footer__legal { font-size: 0.75rem; letter-spacing: 0.02em; }
+  footer .footer__legal a { color: inherit; opacity: 0.7; text-decoration: none; border-bottom: 1px solid rgba(244,237,224,0.2); }
+  footer .footer__legal a:hover { opacity: 1; }
+  footer .footer__sep { opacity: 0.35; }
+</style>
 </body>
 </html>
