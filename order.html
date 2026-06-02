@@ -606,9 +606,6 @@
         CONFIG = data;
         document.title = data.name + " 주문하기 — 영동에덴원";
         document.getElementById("formTitle").textContent = data.name + " 주문하기";
-        var back = document.getElementById("navBack");
-        back.textContent = "← " + data.name;
-        back.setAttribute("href", "products/" + (data.key || PRODUCT_KEY) + ".html");
 
         renderOptions(data.options);
         renderAffiliations(data.affiliations || []);
