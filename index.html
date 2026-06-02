@@ -316,6 +316,7 @@
       padding-top: clamp(2.5rem, 5vh, 3.5rem);
       border-top: 1px solid var(--border);
     }
+    .about__more { margin-top: clamp(3rem, 6vh, 4rem); }
 
     @media (max-width: 760px) {
       .pillars { grid-template-columns: 1fr; gap: 1.2rem; max-width: 460px; }
@@ -513,6 +514,51 @@
     a.product-card:hover .product-card__more {
       color: var(--gold-dark);
       gap: 0.7rem;
+    }
+
+    .products__intro {
+      text-align: center; font-size: 0.95rem; color: var(--ink-mute);
+      margin: -1rem 0 2.6rem; line-height: 1.6;
+    }
+
+    /* 시그니처 카드 (발효식초) */
+    .signature-card {
+      display: grid; grid-template-columns: 1.05fr 1fr;
+      background: var(--cream); border: 1px solid var(--border);
+      text-decoration: none; overflow: hidden; margin-bottom: 1.8rem;
+      transition: transform .4s ease, box-shadow .4s ease, border-color .4s ease;
+    }
+    .signature-card:hover {
+      transform: translateY(-5px); box-shadow: 0 18px 44px rgba(42,31,20,0.12);
+      border-color: var(--border-strong);
+    }
+    .signature-card__image { overflow: hidden; aspect-ratio: 16 / 11; background: var(--cream-dark); }
+    .signature-card__image img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .6s cubic-bezier(0.2,0,0.2,1);
+    }
+    .signature-card:hover .signature-card__image img { transform: scale(1.05); }
+    .signature-card__body { padding: clamp(1.8rem, 4vw, 3rem); display: flex; flex-direction: column; justify-content: center; }
+    .signature-card__badge {
+      font-family: var(--font-latin); font-size: 0.75rem; letter-spacing: 0.28em;
+      text-transform: uppercase; color: #fff; background: var(--gold);
+      align-self: flex-start; padding: 0.25rem 0.7rem; margin-bottom: 1rem;
+    }
+    .signature-card__name { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--ink); margin-bottom: 0.3rem; }
+    .signature-card__tag { font-family: var(--font-latin); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .signature-card__desc { font-size: 0.96rem; color: var(--ink-soft); line-height: 1.85; margin-bottom: 1.4rem; }
+    .signature-card__more { font-size: 0.9rem; color: var(--gold-dark); letter-spacing: 0.03em; }
+
+    /* 대표 장류 3종 미리보기 그리드 */
+    .preview-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem;
+    }
+    @media (max-width: 860px) {
+      .signature-card { grid-template-columns: 1fr; }
+      .signature-card__image { aspect-ratio: 16 / 9; }
+    }
+    @media (max-width: 720px) {
+      .preview-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
     }
 
     .products__cta {
@@ -1947,6 +1993,18 @@
   /* 앵커 이동 시 고정 헤더가 제목을 덮지 않도록 */
   #about, #products, #gallery, #contact { scroll-margin-top: 80px; }
 
+  /* ===== 페이지 전환 효과 (페이드인 + 라이즈) ===== */
+  body.page-leaving { opacity: 0; transition: opacity .28s ease; }
+  .page-enter { animation: pageEnter .5s ease both; }
+  @keyframes pageEnter {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .page-enter { animation: none; }
+    body.page-leaving { opacity: 1 !important; }
+  }
+
   </style>
 </head>
 <body>
@@ -1963,10 +2021,10 @@
     </button>
     <nav class="site-nav" id="siteNav">
       <ul class="site-nav__links">
-        <li><a href="#about">브랜드 이야기</a></li>
-        <li><a href="#products">제품</a></li>
-        <li><a href="#gallery">갤러리</a></li>
-        <li><a href="#contact">주문·문의</a></li>
+        <li><a href="story.html">브랜드 이야기</a></li>
+        <li><a href="products.html">제품</a></li>
+        <li><a href="gallery.html">갤러리</a></li>
+        <li><a href="contact.html">주문·문의</a></li>
       </ul>
     </nav>
   </header>
@@ -2020,206 +2078,62 @@
         </div>
       </div>
 
-      <!-- 숫자 (증거) -->
-      <div class="about__stats">
-        <div class="why__grid">
-          <div class="why__item">
-            <div class="why__number">8<span class="why__unit">년</span></div>
-            <p class="why__label">연구의 시간</p>
-            <p class="why__desc">발효에 대한 진심,<br />건강한 발효를 위한 과정</p>
-          </div>
-          <div class="why__item">
-            <div class="why__number">300<span class="why__unit">개</span></div>
-            <p class="why__label">발효 옹기 항아리</p>
-            <p class="why__desc">전통 옹기 안에서 사계절,<br />흐름으로 발효 및 숙성</p>
-          </div>
-          <div class="why__item">
-            <div class="why__number">6<span class="why__unit">ha</span></div>
-            <p class="why__label">무농약 자체 토지</p>
-            <p class="why__desc">무농약 자연 농법으로,<br />씨앗부터 직접 가꾸는 토지</p>
-          </div>
-          <div class="why__item">
-            <div class="why__number">365<span class="why__unit">일</span></div>
-            <p class="why__label">발효 노트</p>
-            <p class="why__desc">매일 발효실의 온·습도와<br />상태를 기록하는 정성</p>
-          </div>
-          <div class="why__item">
-            <div class="why__number">24<span class="why__unit">시간</span></div>
-            <p class="why__label">미생물 활동의 시간</p>
-            <p class="why__desc">옹기 안에서 쉼 없이,<br />대사활동 하는 미생물</p>
-          </div>
-          <div class="why__item">
-            <div class="why__number">6<span class="why__unit">개월</span></div>
-            <p class="why__label">발효퇴비의 시간</p>
-            <p class="why__desc">유기물과 톱밥을 혼합해,<br />6개월간 자연 발효시키는 시간</p>
-          </div>
-        </div>
+      <!-- 더 보기 → 브랜드 이야기 페이지(숫자 등 전체) -->
+      <div class="about__more">
+        <a href="story.html" class="btn btn--ghost">브랜드 이야기 더 보기 →</a>
       </div>
     </div>
   </section>
 
 
-  <!-- ============ PRODUCTS ============ -->
+    <!-- ============ PRODUCTS (홈 미리보기: 대표 제품) ============ -->
   <section class="products" id="products">
     <div class="container">
       <div class="section-label">Products</div>
       <h2 class="section-title">시간이 빚어낸 진심</h2>
+      <p class="products__intro">옹기에서 빚어낸 영동에덴원의 대표 제품을 소개합니다.</p>
 
-      <!-- 제품 탭 (옹기발효 / 발효 / 진짜'S 시리즈 / 농산물) -->
-      <input type="radio" name="ptabs" id="ptab-1" class="ptabs__radio" checked />
-      <input type="radio" name="ptabs" id="ptab-2" class="ptabs__radio" />
-      <input type="radio" name="ptabs" id="ptab-3" class="ptabs__radio" />
-      <input type="radio" name="ptabs" id="ptab-4" class="ptabs__radio" />
+      <!-- 시그니처: 발효식초 -->
+      <a href="products/vinegar.html" class="signature-card">
+        <div class="signature-card__image">
+          <img src="images/product-vinegar.jpg" alt="발효의 초심 천연발효식초" loading="lazy" />
+        </div>
+        <div class="signature-card__body">
+          <p class="signature-card__badge">Signature</p>
+          <h3 class="signature-card__name">발효의 초심</h3>
+          <p class="signature-card__tag">Natural Vinegar</p>
+          <p class="signature-card__desc">누룩도 종초도 더하지 않고, 옹기에서 자연 미생물이 복합 발효한 천연발효식초. 1년 6개월 이상의 시간이 빚어낸 영동에덴원의 시그니처입니다.</p>
+          <span class="signature-card__more">식초 종류 자세히 보기 →</span>
+        </div>
+      </a>
 
-      <div class="ptabs__nav">
-        <label for="ptab-1" class="ptabs__label">옹기발효</label>
-        <label for="ptab-2" class="ptabs__label">발효</label>
-        <label for="ptab-3" class="ptabs__label">진짜'S 시리즈</label>
-        <label for="ptab-4" class="ptabs__label">농산물</label>
+      <!-- 대표 장류 3종 -->
+      <div class="preview-grid">
+        <a href="products/doenjang.html" class="product-card">
+          <div class="product-card__image"><img src="images/product-doenjang.jpg" alt="옹기숙성 된장" loading="lazy" /></div>
+          <h3 class="product-card__name">옹기숙성 된장</h3>
+          <p class="product-card__tag">Aged Soybean Paste</p>
+          <p class="product-card__desc">직접 농사 지은 콩으로 완전히 띄운 메주와 국내산 천일염으로 복합 발효·숙성.</p>
+          <span class="product-card__more">자세히 보기 →</span>
+        </a>
+        <a href="products/eoganjang.html" class="product-card">
+          <div class="product-card__image"><img src="images/product-eoganjang.jpg" alt="옹기숙성 어간장" loading="lazy" /></div>
+          <h3 class="product-card__name">옹기숙성 어간장</h3>
+          <p class="product-card__tag">Aged Fish Sauce</p>
+          <p class="product-card__desc">국내산 멸치와 디포리를 옹기에서 오래 발효시켜 깊은 감칠맛을 낸 어간장.</p>
+          <span class="product-card__more">자세히 보기 →</span>
+        </a>
+        <a href="products/gochujang.html" class="product-card">
+          <div class="product-card__image"><img src="images/product-gochujang.jpg" alt="옹기숙성 고추장" loading="lazy" /></div>
+          <h3 class="product-card__name">옹기숙성 고추장</h3>
+          <p class="product-card__tag">Aged Red Pepper Paste</p>
+          <p class="product-card__desc">직접 기른 엿기름 당화액과 메주 가루, 찰개떡 가루를 혼합해 복합 발효·숙성.</p>
+          <span class="product-card__more">자세히 보기 →</span>
+        </a>
       </div>
-
-      <div class="ptabs__panels">
-
-        <!-- 패널 1: 옹기발효 -->
-        <div class="ptabs__panel ptabs__panel--1">
-          <p class="ptabs__panel-sub">옹기에서 시간과 미생물이 빚어낸 영동에덴원의 진심</p>
-          <div class="product-grid product-grid--ferment">
-
-          <a href="products/vinegar.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-vinegar.jpg" alt="발효의 초심 천연발효식초" loading="lazy" /></div>
-            <h3 class="product-card__name">발효의 초심</h3>
-            <p class="product-card__tag">Natural Vinegar</p>
-            <p class="product-card__desc">누룩도 종초도 더하지 않고 옹기에서 자연 미생물이 복합 발효한 천연발효식초. 여러 종류로 만나보실 수 있습니다.</p>
-            <p class="product-card__time">1년 6개월 이상 발효한 천연발효식초</p>
-            <span class="product-card__more">식초 종류 자세히 보기 →</span>
-          </a>
-
-          <a href="products/doenjang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-doenjang.jpg" alt="옹기숙성 된장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기숙성 된장</h3>
-            <p class="product-card__tag">Aged Soybean Paste</p>
-            <p class="product-card__desc">직접 농사 지은 콩으로 완전히 띄운 메주와 국내산 천일염으로 복합 발효·숙성.</p>
-            <p class="product-card__time">2년 이상 발효 및 숙성시킨 한식된장</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/gochujang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-gochujang.jpg" alt="옹기숙성 고추장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기숙성 고추장</h3>
-            <p class="product-card__tag">Aged Red Pepper Paste</p>
-            <p class="product-card__desc">직접 기른 엿기름 당화액, 메주 가루, 찰개떡 가루, 표고 가루를 혼합해 복합 발효·숙성.</p>
-            <p class="product-card__time">1년 이상 발효 및 숙성시킨 고추장</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/eoganjang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-eoganjang.jpg" alt="옹기숙성 어간장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기숙성 어간장</h3>
-            <p class="product-card__tag">Aged Fish Soy Sauce</p>
-            <p class="product-card__desc">3년 숙성 대멸 액젓과 2년 숙성 간장을 혼합해 다시 숙성시킨 깊은 감칠맛.</p>
-            <p class="product-card__time">2년 이상 추가 숙성시킨 어간장</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/cheonggukjang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-cheonggukjang.jpg" alt="옹기발효 청국장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기발효 청국장</h3>
-            <p class="product-card__tag">Fermented Soybean</p>
-            <p class="product-card__desc">직접 농사 지은 콩으로 옹기단지에서 최적의 환경으로 냄새 없이 띄운 청국장.</p>
-            <p class="product-card__time">옹기 단지에서 발효시킨 청국장</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/bibim-doenjang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-bibim-doenjang.jpg" alt="옹기숙성 비빔된장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기숙성 비빔된장</h3>
-            <p class="product-card__tag">Seasoned Soybean Paste</p>
-            <p class="product-card__desc">밥에 비벼 먹고, 쌈장으로도 즐기는 — 누구나 맛있게 먹는 옹기숙성 비빔된장.</p>
-            <p class="product-card__time">토마토잼과 된장의 콜라보</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/bibim-gochujang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-bibim-gochujang.jpg" alt="옹기숙성 비빔고추장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기숙성 비빔고추장</h3>
-            <p class="product-card__tag">Seasoned Red Pepper Paste</p>
-            <p class="product-card__desc">밥에 비벼 먹고, 쌈장으로도 즐기는 — 누구나 맛있게 먹는 옹기숙성 비빔고추장.</p>
-            <p class="product-card__time">토마토잼과 고추장의 콜라보</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-        </div>
-        </div>
-        <!-- /패널 1 -->
-
-        <!-- 패널 2: 발효 -->
-        <div class="ptabs__panel ptabs__panel--2">
-          <p class="ptabs__panel-sub">발효실에서 정성으로 띄운 발효식품</p>
-          <div class="product-grid product-grid--single">
-
-          <a href="products/meju.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-meju.jpg" alt="명품 메주" loading="lazy" /></div>
-            <h3 class="product-card__name">명품 메주</h3>
-            <p class="product-card__tag">Artisan Meju</p>
-            <p class="product-card__desc">직접 농사 지은 콩으로 빚어, 발효실에서 속까지 완전하게 띄운 명품 메주. 전통 방식과 과학적 관리가 만났습니다.</p>
-            <p class="product-card__time">발효실에서 완전히 발효시킨 메주</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          </div>
-        </div>
-        <!-- /패널 2 -->
-
-        <!-- 패널 3: 진짜'S 시리즈 -->
-        <div class="ptabs__panel ptabs__panel--3">
-          <p class="ptabs__panel-sub">가마솥에서 천천히 달여낸 정직한 가공식품</p>
-          <div class="product-grid product-grid--craft">
-
-          <a href="products/jam.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-jam.jpg" alt="진짜'S 잼" loading="lazy" /></div>
-            <h3 class="product-card__name">진짜'S 잼</h3>
-            <p class="product-card__tag">Real Jam</p>
-            <p class="product-card__desc">젤라틴·펙틴 없이 원물만으로 풍미를 높이기 위해 가마솥에서 천천히 달여낸 잼.</p>
-            <p class="product-card__time">3시간 이상 달여 만든 잼</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/jocheong.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-jocheong.jpg" alt="진짜'S 조청" loading="lazy" /></div>
-            <h3 class="product-card__name">진짜'S 조청</h3>
-            <p class="product-card__tag">Real Rice Syrup</p>
-            <p class="product-card__desc">직접 기른 엿기름과 다양한 농산물을 사용해 가마솥에서 천천히 달여낸 조청.</p>
-            <p class="product-card__time">6시간 이상 달여 만든 조청</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          </div>
-        </div>
-        <!-- /패널 3 -->
-
-        <!-- 패널 4: 농산물 -->
-        <div class="ptabs__panel ptabs__panel--4">
-          <p class="ptabs__panel-sub">청정 자연에서 자연 농법으로 길러낸 정직한 농산물</p>
-          <div class="product-grid product-grid--harvest">
-
-          <a href="products/pea.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-pea.jpg" alt="햇 완두콩" loading="lazy" /></div>
-            <h3 class="product-card__name">햇 완두콩</h3>
-            <p class="product-card__tag">Fresh Green Peas</p>
-            <p class="product-card__desc">화학 비료와 제초제 없이, 직접 만든 발효퇴비와 유기농업자재로 길러낸 맛있고 건강한 햇 완두콩.</p>
-            <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          </div>
-        </div>
-        <!-- /패널 4 -->
-
-      </div>
-      <!-- /제품 탭 -->
 
       <div class="products__cta">
-        <a href="contact.html" class="btn btn--earth">주문·문의하기</a>
+        <a href="products.html" class="btn btn--earth">전체 제품 보기 →</a>
       </div>
     </div>
   </section>
@@ -2360,6 +2274,38 @@
       // 메뉴 항목 클릭 시 닫기
       nav.querySelectorAll("a").forEach(function (a) {
         a.addEventListener("click", closeNav);
+      });
+    })();
+  </script>
+
+  <script>
+    // ===== 페이지 전환 효과 =====
+    (function () {
+      // 진입: 본문 페이드인
+      document.body.classList.add("page-enter");
+      // 이탈: 같은 사이트 내부 링크 클릭 시 페이드아웃 후 이동
+      var sameOriginLink = function (a) {
+        if (!a) return false;
+        if (a.target === "_blank") return false;
+        if (a.hasAttribute("download")) return false;
+        var href = a.getAttribute("href") || "";
+        if (!href || href.charAt(0) === "#") return false;          // 앵커는 제외
+        if (/^(mailto:|tel:|javascript:)/i.test(href)) return false;
+        // 외부 도메인 제외
+        if (/^https?:\/\//i.test(href) && a.host !== location.host) return false;
+        return true;
+      };
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest ? e.target.closest("a") : null;
+        if (!sameOriginLink(a)) return;
+        var url = a.href;
+        e.preventDefault();
+        document.body.classList.add("page-leaving");
+        setTimeout(function () { window.location.href = url; }, 260);
+      });
+      // 뒤로가기로 돌아왔을 때 페이드 잔상 제거
+      window.addEventListener("pageshow", function (ev) {
+        if (ev.persisted) document.body.classList.remove("page-leaving");
       });
     })();
   </script>

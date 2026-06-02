@@ -1756,17 +1756,110 @@
     border-bottom: 1px solid var(--border-strong);
   }
 
+  
+  /* ===== 상단 고정 헤더 ===== */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 80;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2rem;
+    background: rgba(244, 237, 224, 0); border-bottom: 1px solid transparent;
+    transition: background .3s ease, border-color .3s ease, padding .3s ease, box-shadow .3s ease;
+  }
+  .site-header.scrolled {
+    background: rgba(251, 247, 239, 0.92);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border-bottom-color: var(--border-strong);
+    padding: 0.7rem 2rem; box-shadow: 0 2px 16px rgba(42, 31, 20, 0.06);
+  }
+  .site-header__logo {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;
+    color: var(--ink); text-decoration: none; letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .site-header__symbol { height: 26px; width: auto; display: block; transition: height .3s ease; }
+  .site-header.scrolled .site-header__symbol { height: 23px; }
+  /* 히어로 위(at-top)=흰색 심볼, 스크롤 후=갈색 심볼 */
+  .site-header__symbol--ink { display: none; }
+  .site-header.at-top .site-header__symbol--white { display: block; }
+  .site-header.at-top .site-header__symbol--ink { display: none; }
+  .site-header:not(.at-top) .site-header__symbol--white { display: none; }
+  .site-header:not(.at-top) .site-header__symbol--ink { display: block; }
+  .site-header.at-top .site-header__logo { color: var(--cream); }
+  .site-nav { display: flex; align-items: center; gap: 1.8rem; }
+  .site-nav__links { display: flex; align-items: center; gap: 1.8rem; list-style: none; margin: 0; padding: 0; }
+  .site-nav__links a {
+    font-family: var(--font-body); font-size: 0.92rem; font-weight: 400;
+    color: var(--ink-soft); text-decoration: none; transition: color .2s ease; white-space: nowrap;
+  }
+  .site-nav__links a:hover { color: var(--gold-dark); }
+  .site-header.at-top .site-nav__links a { color: rgba(244, 237, 224, 0.85); }
+  .site-header.at-top .site-nav__links a:hover { color: #fff; }
+
+  /* 햄버거 (모바일) */
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer;
+    width: 30px; height: 30px; padding: 0; position: relative; }
+  .nav-toggle span { display: block; position: absolute; left: 3px; right: 3px; height: 2px;
+    background: var(--ink); transition: transform .3s ease, opacity .2s ease, background .3s ease; }
+  .nav-toggle span:nth-child(1) { top: 8px; }
+  .nav-toggle span:nth-child(2) { top: 14px; }
+  .nav-toggle span:nth-child(3) { top: 20px; }
+  .site-header.at-top .nav-toggle span { background: var(--cream); }
+  body.nav-open .nav-toggle span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  body.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+  body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  body.nav-open .nav-toggle span { background: var(--ink) !important; }
+
+  @media (max-width: 820px) {
+    .site-header, .site-header.scrolled { padding: 0.9rem 1.3rem; }
+    .nav-toggle { display: block; z-index: 82; }
+    .site-nav {
+      position: fixed; inset: 0; z-index: 81;
+      background: var(--cream); flex-direction: column; justify-content: center;
+      gap: 0; opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    }
+    body.nav-open .site-nav { opacity: 1; pointer-events: auto; }
+    .site-nav__links { flex-direction: column; gap: 1.6rem; text-align: center; }
+    .site-nav__links a { font-size: 1.15rem; color: var(--ink) !important; }
+    .site-header.at-top .site-nav__links a { color: var(--ink) !important; }
+  }
+
+  /* ===== 서브페이지 공통 ===== */
+  body.subpage { padding-top: 64px; }
+  body.subpage .about { padding-top: clamp(2.5rem, 6vh, 4rem); }
+
+  /* ===== 페이지 전환 효과 (페이드인 + 라이즈) ===== */
+  body.page-leaving { opacity: 0; transition: opacity .28s ease; }
+  .page-enter { animation: pageEnter .5s ease both; }
+  @keyframes pageEnter {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .page-enter { animation: none; }
   </style>
 </head>
-<body class="contact-page">
+<body class="contact-page subpage">
 
   <!-- ============ NAV ============ -->
-  <nav class="detail-nav">
-    <div class="detail-nav__inner">
-      <a href="index.html" class="detail-nav__back">← 영동에덴원</a>
-      <span class="detail-nav__brand">Yeongdong Edenwon</span>
-    </div>
-  </nav>
+  <!-- ============ 상단 고정 헤더 ============ -->
+  <header class="site-header scrolled" id="siteHeader">
+    <a href="index.html" class="site-header__logo">
+      <img src="images/logo-symbol-white.png" alt="" class="site-header__symbol site-header__symbol--white" />
+      <img src="images/logo-symbol-ink.png" alt="" class="site-header__symbol site-header__symbol--ink" />
+      <span>영동에덴원</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="siteNav">
+      <ul class="site-nav__links">
+        <li><a href="story.html">브랜드 이야기</a></li>
+        <li><a href="products.html">제품</a></li>
+        <li><a href="gallery.html">갤러리</a></li>
+        <li><a href="contact.html">주문·문의</a></li>
+      </ul>
+    </nav>
+  </header>
 
 
   <!-- ============ HERO ============ -->
@@ -1860,5 +1953,44 @@
     </div>
   </footer>
 
+  <script>
+    (function () {
+      var toggle = document.getElementById("navToggle");
+      var nav = document.getElementById("siteNav");
+      if (toggle && nav) {
+        function closeNav() { document.body.classList.remove("nav-open"); toggle.setAttribute("aria-expanded","false"); }
+        toggle.addEventListener("click", function () {
+          var open = document.body.classList.toggle("nav-open");
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+        nav.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", closeNav); });
+      }
+    })();
+  </script>
+  <script>
+    (function () {
+      document.body.classList.add("page-enter");
+      var sameOriginLink = function (a) {
+        if (!a) return false;
+        if (a.target === "_blank") return false;
+        if (a.hasAttribute("download")) return false;
+        var href = a.getAttribute("href") || "";
+        if (!href || href.charAt(0) === "#") return false;
+        if (/^(mailto:|tel:|javascript:)/i.test(href)) return false;
+        if (/^https?:\/\//i.test(href) && a.host !== location.host) return false;
+        return true;
+      };
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest ? e.target.closest("a") : null;
+        if (!sameOriginLink(a)) return;
+        var url = a.href; e.preventDefault();
+        document.body.classList.add("page-leaving");
+        setTimeout(function () { window.location.href = url; }, 260);
+      });
+      window.addEventListener("pageshow", function (ev) {
+        if (ev.persisted) document.body.classList.remove("page-leaving");
+      });
+    })();
+  </script>
 </body>
 </html>

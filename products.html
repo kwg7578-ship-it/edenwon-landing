@@ -3,16 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>사계절 갤러리 — 영동에덴원</title>
-  <meta name="description" content="봄에 싹이 트고, 여름에 열매가 익고, 가을에 거두고, 겨울에 익어가는 — 영동에덴원이 살아가는 일 년." />
+  <title>제품 — 영동에덴원</title>
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png" />
+  <link rel="apple-touch-icon" href="images/favicon-192.png" />
+  <meta name="description" content="충북 영동에서 옹기로 익히는 발효식품. 1년 6개월 이상 옹기 발효한 천연발효식초, 옹기숙성 된장·고추장·어간장, 청국장과 가공식품까지 일곱 가지 진심을 전합니다." />
 
-  <meta property="og:title" content="사계절 갤러리 — 영동에덴원" />
-  <meta property="og:description" content="영동에덴원이 살아가는 일 년의 기록" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="영동에덴원 · 자연이 기다리고, 시간이 빚어낸 진심" />
+  <meta property="og:description" content="충북 영동, 옹기로 익히는 발효식품 — 영동에덴원의 일곱 가지 진심" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://yd-edenwon.com/gallery.html" />
-  <meta property="og:image" content="https://yd-edenwon.com/images/season-summer.jpg" />
+  <meta property="og:url" content="https://yd-edenwon.com" />
+  <meta property="og:image" content="https://yd-edenwon.com/images/hero-snow-pots.jpg" />
   <meta property="og:locale" content="ko_KR" />
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
@@ -40,7 +46,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; font-size: 17.5px; }
 
     body {
       font-family: var(--font-body);
@@ -241,34 +247,78 @@
       opacity: 0.6;
     }
 
-    /* ============ ABOUT ============ */
+    /* ============ 브랜드 이야기 (통합) ============ */
     .about {
       background: var(--cream);
       text-align: center;
     }
 
+    /* 상단 선언 */
     .about__quote {
       font-family: var(--font-display);
-      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-size: clamp(1.6rem, 3.6vw, 2.35rem);
       font-weight: 400;
-      line-height: 1.7;
+      line-height: 1.65;
       color: var(--ink);
-      margin-bottom: 2.5rem;
+      margin-bottom: 1.6rem;
       letter-spacing: -0.01em;
     }
-
     .about__quote em {
       font-style: normal;
       color: var(--gold-dark);
       font-weight: 700;
     }
-
-    .about__body {
-      max-width: 580px;
+    .about__lead {
+      max-width: 640px;
       margin: 0 auto;
       color: var(--ink-soft);
-      font-size: 1rem;
-      line-height: 2;
+      font-size: clamp(1rem, 2vw, 1.12rem);
+      line-height: 1.95;
+    }
+    @media (max-width: 600px) { .about__lead .br-pc { display: none; } }
+
+    /* 세 축 (농사·발효·제품) */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.2rem;
+      max-width: 960px;
+      margin: clamp(3.5rem, 7vh, 5rem) auto 0;
+      text-align: left;
+    }
+    .pillar {
+      padding: 2rem 1.8rem;
+      background: var(--cream-light);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .pillar:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(42,31,20,0.07); }
+    .pillar__eyebrow {
+      font-family: var(--font-latin); font-size: 0.78rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.9rem;
+    }
+    .pillar__title {
+      font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
+      color: var(--ink); margin-bottom: 0.8rem; line-height: 1.4;
+    }
+    .pillar__desc { font-size: 0.94rem; color: var(--ink-soft); line-height: 1.85; }
+    .pillar__link {
+      display: inline-block; margin-top: 1rem; font-size: 0.86rem;
+      color: var(--gold-dark); border-bottom: 1px solid var(--border-strong);
+      text-decoration: none; padding-bottom: 2px; transition: border-color .2s ease;
+    }
+    .pillar__link:hover { border-bottom-color: var(--gold); }
+
+    /* 숫자 — 세 축 아래 증거 */
+    .about__stats {
+      max-width: 960px; margin: clamp(3.5rem, 7vh, 5rem) auto 0;
+      padding-top: clamp(2.5rem, 5vh, 3.5rem);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 760px) {
+      .pillars { grid-template-columns: 1fr; gap: 1.2rem; max-width: 460px; }
     }
 
     /* ============ PRODUCTS ============ */
@@ -301,11 +351,57 @@
       margin-bottom: 2.5rem;
       letter-spacing: 0.05em;
     }
+    /* ===== 제품 탭 (순수 CSS, 4개) ===== */
+    .ptabs__radio { position: absolute; opacity: 0; pointer-events: none; }
+    .ptabs__nav {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 2.4rem;
+      margin-bottom: 2.8rem; border-bottom: 1px solid var(--border);
+      padding-bottom: 0;
+    }
+    .ptabs__label {
+      position: relative; padding: 0 0 0.9rem; font-family: var(--font-body);
+      font-size: 0.98rem; letter-spacing: 0.04em; color: var(--ink-mute);
+      cursor: pointer; transition: color 0.25s ease; background: transparent;
+      margin-bottom: -1px;
+    }
+    .ptabs__label::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+      height: 2px; background: var(--gold); transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .ptabs__label:hover { color: var(--ink-soft); }
+    .ptabs__panel { display: none; }
+    .ptabs__panel-sub {
+      text-align: center; font-family: var(--font-body); font-size: 0.92rem;
+      color: var(--ink-mute); margin: 0 0 2.2rem; line-height: 1.6;
+    }
+    #ptab-1:checked ~ .ptabs__nav label[for="ptab-1"],
+    #ptab-2:checked ~ .ptabs__nav label[for="ptab-2"],
+    #ptab-3:checked ~ .ptabs__nav label[for="ptab-3"],
+    #ptab-4:checked ~ .ptabs__nav label[for="ptab-4"] {
+      color: var(--ink); font-weight: 700;
+    }
+    #ptab-1:checked ~ .ptabs__nav label[for="ptab-1"]::after,
+    #ptab-2:checked ~ .ptabs__nav label[for="ptab-2"]::after,
+    #ptab-3:checked ~ .ptabs__nav label[for="ptab-3"]::after,
+    #ptab-4:checked ~ .ptabs__nav label[for="ptab-4"]::after {
+      transform: scaleX(1);
+    }
+    #ptab-1:checked ~ .ptabs__panels .ptabs__panel--1,
+    #ptab-2:checked ~ .ptabs__panels .ptabs__panel--2,
+    #ptab-3:checked ~ .ptabs__panels .ptabs__panel--3,
+    #ptab-4:checked ~ .ptabs__panels .ptabs__panel--4 {
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .ptabs__nav { gap: 1.3rem; }
+      .ptabs__label { font-size: 0.9rem; }
+    }
 
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
+      gap: 1.8rem;
     }
 
     .product-grid--ferment {
@@ -318,26 +414,38 @@
       margin: 0 auto;
     }
 
+    .product-grid--harvest {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    .product-grid--single {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
     .product-card {
       background: var(--cream);
       border: 1px solid var(--border);
-      padding: 2rem 1.8rem;
-      transition: all 0.4s ease;
+      padding: 1.6rem 1.6rem 1.8rem;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
       position: relative;
       display: flex;
       flex-direction: column;
     }
 
     .product-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(42, 31, 20, 0.08);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(42, 31, 20, 0.1);
       border-color: var(--border-strong);
     }
 
     .product-card__image {
       width: 100%;
       aspect-ratio: 4 / 3;
-      background: var(--cream);
+      background: var(--cream-dark);
       margin-bottom: 1.5rem;
       overflow: hidden;
       display: flex;
@@ -349,6 +457,10 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.2, 0, 0.2, 1);
+    }
+    .product-card:hover .product-card__image img {
+      transform: scale(1.06);
     }
 
     .product-card__name {
@@ -444,6 +556,15 @@
       color: var(--gold);
       line-height: 1;
       margin-bottom: 0.8rem;
+    }
+
+    .why__unit {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--gold);
+      margin-left: 0.15rem;
+      letter-spacing: 0.02em;
     }
 
     .why__label {
@@ -1393,59 +1514,6 @@
 
   .lightbox__close:hover { opacity: 1; }
 
-  /* prev/next 버튼 */
-  .lightbox__nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.25);
-    color: var(--cream);
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    line-height: 1;
-    transition: background 0.2s, opacity 0.2s;
-    z-index: 2;
-    padding: 0;
-  }
-  .lightbox__nav:hover { background: rgba(255,255,255,0.18); }
-  .lightbox__nav:disabled {
-    opacity: 0.25;
-    cursor: not-allowed;
-  }
-  .lightbox__nav--prev { left: 1rem; }
-  .lightbox__nav--next { right: 1rem; }
-
-  @media (max-width: 640px) {
-    .lightbox__nav {
-      width: 40px;
-      height: 40px;
-      font-size: 1.2rem;
-    }
-    .lightbox__nav--prev { left: 0.5rem; }
-    .lightbox__nav--next { right: 0.5rem; }
-  }
-
-  /* 카운터 */
-  .lightbox__counter {
-    position: absolute;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--cream);
-    font-size: 0.82rem;
-    letter-spacing: 0.18em;
-    opacity: 0.65;
-    font-family: var(--font-latin, serif);
-    user-select: none;
-  }
-
   /* 메인 갤러리 미리보기 — "전체 보기" 링크 */
   .gallery__cta {
     text-align: center;
@@ -1810,7 +1878,6 @@
     border-bottom: 1px solid var(--border-strong);
   }
 
-  
   /* ===== 상단 고정 헤더 ===== */
   .site-header {
     position: fixed; top: 0; left: 0; right: 0; z-index: 80;
@@ -1877,9 +1944,12 @@
     .site-header.at-top .site-nav__links a { color: var(--ink) !important; }
   }
 
+  /* 앵커 이동 시 고정 헤더가 제목을 덮지 않도록 */
+  #about, #products, #gallery, #contact { scroll-margin-top: 80px; }
+
   /* ===== 서브페이지 공통 ===== */
-  body.subpage { padding-top: 64px; }
-  body.subpage .about { padding-top: clamp(2.5rem, 6vh, 4rem); }
+  body.subpage { padding-top: 64px; }   /* 고정 헤더 높이만큼 본문 내림 */
+  body.subpage .products { padding-top: clamp(2.5rem, 6vh, 4rem); }
 
   /* ===== 페이지 전환 효과 (페이드인 + 라이즈) ===== */
   body.page-leaving { opacity: 0; transition: opacity .28s ease; }
@@ -1890,11 +1960,13 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .page-enter { animation: none; }
+    body.page-leaving { opacity: 1 !important; }
+  }
+
   </style>
 </head>
-<body class="gallery-page subpage">
+<body class="subpage">
 
-  <!-- ============ NAV ============ -->
   <!-- ============ 상단 고정 헤더 ============ -->
   <header class="site-header scrolled" id="siteHeader">
     <a href="index.html" class="site-header__logo">
@@ -1915,255 +1987,188 @@
     </nav>
   </header>
 
+  
 
-  <!-- ============ HERO ============ -->
-  <header class="gallery-page__hero">
-    <div class="gallery-page__eyebrow">Gallery</div>
-    <h1 class="gallery-page__title">영동에덴원의 사계절</h1>
-    <p class="gallery-page__sub">
-      봄에 싹이 트고, 여름에 열매가 익고,<br />
-      가을에 거두고, 겨울에 익어갑니다.<br />
-      자연이 기다리고, 시간이 빚어낸 일 년의 기록입니다.
-    </p>
-  </header>
+  <!-- ============ PRODUCTS ============ -->
+  <section class="products" id="products">
+    <div class="container">
+      <div class="section-label">Products</div>
+      <h2 class="section-title">시간이 빚어낸 진심</h2>
 
+      <!-- 제품 탭 (옹기발효 / 발효 / 진짜'S 시리즈 / 농산물) -->
+      <input type="radio" name="ptabs" id="ptab-1" class="ptabs__radio" checked />
+      <input type="radio" name="ptabs" id="ptab-2" class="ptabs__radio" />
+      <input type="radio" name="ptabs" id="ptab-3" class="ptabs__radio" />
+      <input type="radio" name="ptabs" id="ptab-4" class="ptabs__radio" />
 
-  <!-- ============ TABS ============ -->
-  <div class="gallery-tabs" role="tablist">
-    <button class="gallery-tab gallery-tab--active" data-season="spring" role="tab" aria-selected="true">
-      봄<span class="gallery-tab__count">09</span>
-    </button>
-    <button class="gallery-tab" data-season="summer" role="tab" aria-selected="false">
-      여름<span class="gallery-tab__count">14</span>
-    </button>
-    <button class="gallery-tab" data-season="autumn" role="tab" aria-selected="false">
-      가을<span class="gallery-tab__count">13</span>
-    </button>
-    <button class="gallery-tab" data-season="winter" role="tab" aria-selected="false">
-      겨울<span class="gallery-tab__count">10</span>
-    </button>
-  </div>
+      <div class="ptabs__nav">
+        <label for="ptab-1" class="ptabs__label">옹기발효</label>
+        <label for="ptab-2" class="ptabs__label">발효</label>
+        <label for="ptab-3" class="ptabs__label">진짜'S 시리즈</label>
+        <label for="ptab-4" class="ptabs__label">농산물</label>
+      </div>
 
+      <div class="ptabs__panels">
 
-  <!-- ============ PANELS ============ -->
-  <div class="gallery-panels">
+        <!-- 패널 1: 옹기발효 -->
+        <div class="ptabs__panel ptabs__panel--1">
+          <p class="ptabs__panel-sub">옹기에서 시간과 미생물이 빚어낸 영동에덴원의 진심</p>
+          <div class="product-grid product-grid--ferment">
 
-    <!-- 봄 -->
-    <div class="gallery-panel gallery-panel--active" data-panel="spring" role="tabpanel">
-      <div class="gallery-grid">
-        <div class="gallery-item"><img src="images/season-spring.jpg" alt="봄의 새싹" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/season-spring-01.jpg" alt="봄 — 두둑을 덮은 밭" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/season-spring-02.jpg" alt="봄 — 밭갈이" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/season-spring-03.jpg" alt="봄 — 자라는 작물" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/season-spring-04.jpg" alt="봄 — 배추밭" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/season-spring-05.jpg" alt="봄 — 발효퇴비" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/spring-field.jpg" alt="봄 완두 꽃밭" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/spring-pepper.jpg" alt="봄 고추 모종" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/spring-tilling.jpg" alt="봄 밭갈이" loading="lazy" /></div>
+          <a href="products/vinegar.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-vinegar.jpg" alt="발효의 초심 천연발효식초" loading="lazy" /></div>
+            <h3 class="product-card__name">발효의 초심</h3>
+            <p class="product-card__tag">Natural Vinegar</p>
+            <p class="product-card__desc">누룩도 종초도 더하지 않고 옹기에서 자연 미생물이 복합 발효한 천연발효식초. 여러 종류로 만나보실 수 있습니다.</p>
+            <p class="product-card__time">1년 6개월 이상 발효한 천연발효식초</p>
+            <span class="product-card__more">식초 종류 자세히 보기 →</span>
+          </a>
+
+          <a href="products/doenjang.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-doenjang.jpg" alt="옹기숙성 된장" loading="lazy" /></div>
+            <h3 class="product-card__name">옹기숙성 된장</h3>
+            <p class="product-card__tag">Aged Soybean Paste</p>
+            <p class="product-card__desc">직접 농사 지은 콩으로 완전히 띄운 메주와 국내산 천일염으로 복합 발효·숙성.</p>
+            <p class="product-card__time">2년 이상 발효 및 숙성시킨 한식된장</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+          <a href="products/gochujang.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-gochujang.jpg" alt="옹기숙성 고추장" loading="lazy" /></div>
+            <h3 class="product-card__name">옹기숙성 고추장</h3>
+            <p class="product-card__tag">Aged Red Pepper Paste</p>
+            <p class="product-card__desc">직접 기른 엿기름 당화액, 메주 가루, 찰개떡 가루, 표고 가루를 혼합해 복합 발효·숙성.</p>
+            <p class="product-card__time">1년 이상 발효 및 숙성시킨 고추장</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+          <a href="products/eoganjang.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-eoganjang.jpg" alt="옹기숙성 어간장" loading="lazy" /></div>
+            <h3 class="product-card__name">옹기숙성 어간장</h3>
+            <p class="product-card__tag">Aged Fish Soy Sauce</p>
+            <p class="product-card__desc">3년 숙성 대멸 액젓과 2년 숙성 간장을 혼합해 다시 숙성시킨 깊은 감칠맛.</p>
+            <p class="product-card__time">2년 이상 추가 숙성시킨 어간장</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+          <a href="products/cheonggukjang.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-cheonggukjang.jpg" alt="옹기발효 청국장" loading="lazy" /></div>
+            <h3 class="product-card__name">옹기발효 청국장</h3>
+            <p class="product-card__tag">Fermented Soybean</p>
+            <p class="product-card__desc">직접 농사 지은 콩으로 옹기단지에서 최적의 환경으로 냄새 없이 띄운 청국장.</p>
+            <p class="product-card__time">옹기 단지에서 발효시킨 청국장</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+          <a href="products/bibim-doenjang.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-bibim-doenjang.jpg" alt="옹기숙성 비빔된장" loading="lazy" /></div>
+            <h3 class="product-card__name">옹기숙성 비빔된장</h3>
+            <p class="product-card__tag">Seasoned Soybean Paste</p>
+            <p class="product-card__desc">밥에 비벼 먹고, 쌈장으로도 즐기는 — 누구나 맛있게 먹는 옹기숙성 비빔된장.</p>
+            <p class="product-card__time">토마토잼과 된장의 콜라보</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+          <a href="products/bibim-gochujang.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-bibim-gochujang.jpg" alt="옹기숙성 비빔고추장" loading="lazy" /></div>
+            <h3 class="product-card__name">옹기숙성 비빔고추장</h3>
+            <p class="product-card__tag">Seasoned Red Pepper Paste</p>
+            <p class="product-card__desc">밥에 비벼 먹고, 쌈장으로도 즐기는 — 누구나 맛있게 먹는 옹기숙성 비빔고추장.</p>
+            <p class="product-card__time">토마토잼과 고추장의 콜라보</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+        </div>
+        </div>
+        <!-- /패널 1 -->
+
+        <!-- 패널 2: 발효 -->
+        <div class="ptabs__panel ptabs__panel--2">
+          <p class="ptabs__panel-sub">발효실에서 정성으로 띄운 발효식품</p>
+          <div class="product-grid product-grid--single">
+
+          <a href="products/meju.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-meju.jpg" alt="명품 메주" loading="lazy" /></div>
+            <h3 class="product-card__name">명품 메주</h3>
+            <p class="product-card__tag">Artisan Meju</p>
+            <p class="product-card__desc">직접 농사 지은 콩으로 빚어, 발효실에서 속까지 완전하게 띄운 명품 메주. 전통 방식과 과학적 관리가 만났습니다.</p>
+            <p class="product-card__time">발효실에서 완전히 발효시킨 메주</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+          </div>
+        </div>
+        <!-- /패널 2 -->
+
+        <!-- 패널 3: 진짜'S 시리즈 -->
+        <div class="ptabs__panel ptabs__panel--3">
+          <p class="ptabs__panel-sub">가마솥에서 천천히 달여낸 정직한 가공식품</p>
+          <div class="product-grid product-grid--craft">
+
+          <a href="products/jam.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-jam.jpg" alt="진짜'S 잼" loading="lazy" /></div>
+            <h3 class="product-card__name">진짜'S 잼</h3>
+            <p class="product-card__tag">Real Jam</p>
+            <p class="product-card__desc">젤라틴·펙틴 없이 원물만으로 풍미를 높이기 위해 가마솥에서 천천히 달여낸 잼.</p>
+            <p class="product-card__time">3시간 이상 달여 만든 잼</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+          <a href="products/jocheong.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-jocheong.jpg" alt="진짜'S 조청" loading="lazy" /></div>
+            <h3 class="product-card__name">진짜'S 조청</h3>
+            <p class="product-card__tag">Real Rice Syrup</p>
+            <p class="product-card__desc">직접 기른 엿기름과 다양한 농산물을 사용해 가마솥에서 천천히 달여낸 조청.</p>
+            <p class="product-card__time">6시간 이상 달여 만든 조청</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+          </div>
+        </div>
+        <!-- /패널 3 -->
+
+        <!-- 패널 4: 농산물 -->
+        <div class="ptabs__panel ptabs__panel--4">
+          <p class="ptabs__panel-sub">청정 자연에서 자연 농법으로 길러낸 정직한 농산물</p>
+          <div class="product-grid product-grid--harvest">
+
+          <a href="products/pea.html" class="product-card">
+            <div class="product-card__image"><img src="images/product-pea.jpg" alt="햇 완두콩" loading="lazy" /></div>
+            <h3 class="product-card__name">햇 완두콩</h3>
+            <p class="product-card__tag">Fresh Green Peas</p>
+            <p class="product-card__desc">화학 비료와 제초제 없이, 직접 만든 발효퇴비와 유기농업자재로 길러낸 맛있고 건강한 햇 완두콩.</p>
+            <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+          </div>
+        </div>
+        <!-- /패널 4 -->
+
+      </div>
+      <!-- /제품 탭 -->
+
+      <div class="products__cta">
+        <a href="contact.html" class="btn btn--earth">주문·문의하기</a>
       </div>
     </div>
-
-    <!-- 여름 -->
-    <div class="gallery-panel" data-panel="summer" role="tabpanel">
-      <div class="gallery-grid">
-        <div class="gallery-item"><img src="images/season-summer.jpg" alt="여름 청포도" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-vineyard.jpg" alt="포도밭 전경" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-work-vineyard.jpg" alt="포도밭 작업" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-bean-field.jpg" alt="콩밭" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-pepper-field.jpg" alt="고추밭" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-peppers-plant.jpg" alt="고추 익어가는 모습" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-pepper-harvest.jpg" alt="고추 수확" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-sesame-field.jpg" alt="들깨밭" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-sesame-dusk.jpg" alt="석양의 들깨밭" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-buckwheat-field.jpg" alt="메밀밭" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-buckwheat-flower.jpg" alt="메밀꽃" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-potato-harvest.jpg" alt="감자 수확" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-work-1.jpg" alt="여름 농작업" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/summer-work-corn.jpg" alt="옥수수밭 작업" loading="lazy" /></div>
-      </div>
-    </div>
-
-    <!-- 가을 -->
-    <div class="gallery-panel" data-panel="autumn" role="tabpanel">
-      <div class="gallery-grid">
-        <div class="gallery-item"><img src="images/season-autumn.jpg" alt="가을 콩 수확" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-rice-harvest.jpg" alt="벼 수확" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-rice-grain.jpg" alt="벼 알갱이 갈무리" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-harvest-fog.jpg" alt="안개 낀 가을 수확" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-perilla.jpg" alt="가을 들깨" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-perilla-drying.jpg" alt="들깨 말리기" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-perilla-seeds.jpg" alt="갈무리한 들깨 씨앗" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-pea-threshing.jpg" alt="완두콩 갈무리" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-sweet-potato.jpg" alt="고구마" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-sweet-potato-harvest.jpg" alt="고구마 수확" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-ginger-harvest.jpg" alt="생강 수확" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-compost.jpg" alt="가을 거름" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/autumn-soil-mound.jpg" alt="가을 토양 준비" loading="lazy" /></div>
-      </div>
-    </div>
-
-    <!-- 겨울 -->
-    <div class="gallery-panel" data-panel="winter" role="tabpanel">
-      <div class="gallery-grid">
-        <div class="gallery-item"><img src="images/season-winter.jpg" alt="눈 덮인 옹기" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/hero-snow-pots.jpg" alt="눈 내리는 옹기밭" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/winter-pots-storage.jpg" alt="옹기 보관 창고" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/winter-meju-drying.jpg" alt="메주 바람치기" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/winter-meju-room.jpg" alt="발효실 메주" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/winter-cheonggukjang.jpg" alt="청국장 띄우기" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/winter-meju-rack-01.jpg" alt="발효실 메주" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/winter-meju-rack-02.jpg" alt="발효실 메주" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/winter-meju-rack-03.jpg" alt="발효실 메주" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/winter-meju-room-wide.jpg" alt="발효실 전경" loading="lazy" /></div>
-      </div>
-    </div>
-
-  </div>
+  </section>
 
 
-  <!-- ============ LIGHTBOX ============ -->
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox__close" aria-label="닫기">×</button>
-    <button class="lightbox__nav lightbox__nav--prev" id="lightbox-prev" aria-label="이전 사진">‹</button>
-    <img class="lightbox__img" id="lightbox-img" src="" alt="" />
-    <button class="lightbox__nav lightbox__nav--next" id="lightbox-next" aria-label="다음 사진">›</button>
-    <div class="lightbox__counter" id="lightbox-counter"></div>
-  </div>
+  
 
 
-  <!-- ============ FOOTER ============ -->
-  <footer>
-    <div class="footer__mark">영동에덴원</div>
-    <div class="footer__legal">
-      (주)농업회사법인 에프엔엘바이오푸드 &nbsp;|&nbsp; 대표 길우관<br />
-      사업자등록번호 550-87-01994 &nbsp;|&nbsp; 통신판매업 신고 2021-충북영동-0123<br />
-      충북 영동군 학산면 모리2길 3-2 &nbsp;|&nbsp; 010-5126-7578<br />
-      <span style="opacity: 0.5;">ⓒ 2026 영동에덴원 · All rights reserved.</span>
-    </div>
-  </footer>
-
-
-  <!-- ============ SCRIPT ============ -->
-  <script>
-    // 탭 전환
-    const tabs = document.querySelectorAll('.gallery-tab');
-    const panels = document.querySelectorAll('.gallery-panel');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const season = tab.dataset.season;
-        tabs.forEach(t => {
-          t.classList.toggle('gallery-tab--active', t === tab);
-          t.setAttribute('aria-selected', t === tab);
-        });
-        panels.forEach(p => {
-          p.classList.toggle('gallery-panel--active', p.dataset.panel === season);
-        });
-      });
-    });
-
-    // URL 해시로 탭 직접 진입 (예: gallery.html#summer)
-    const initialHash = window.location.hash.replace('#', '');
-    if (['spring','summer','autumn','winter'].includes(initialHash)) {
-      document.querySelector(`.gallery-tab[data-season="${initialHash}"]`)?.click();
-    }
-
-    // 라이트박스 + 이전/다음 + 스와이프 + 키보드
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxPrev = document.getElementById('lightbox-prev');
-    const lightboxNext = document.getElementById('lightbox-next');
-    const lightboxCounter = document.getElementById('lightbox-counter');
-
-    let currentDeck = [];
-    let currentIndex = 0;
-
-    function updateLightboxImg() {
-      const img = currentDeck[currentIndex];
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-      lightboxCounter.textContent = (currentIndex + 1) + ' / ' + currentDeck.length;
-      lightboxPrev.disabled = currentIndex === 0;
-      lightboxNext.disabled = currentIndex === currentDeck.length - 1;
-    }
-
-    function openLightbox(deck, index) {
-      currentDeck = deck;
-      currentIndex = index;
-      updateLightboxImg();
-      lightbox.classList.add('lightbox--open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove('lightbox--open');
-      document.body.style.overflow = '';
-    }
-
-    function nextLightbox() {
-      if (currentIndex < currentDeck.length - 1) {
-        currentIndex++;
-        updateLightboxImg();
-      }
-    }
-
-    function prevLightbox() {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateLightboxImg();
-      }
-    }
-
-    // 패널별 클릭 핸들러 — 같은 패널 내에서만 넘김
-    document.querySelectorAll('.gallery-panel').forEach((panel) => {
-      const imgs = Array.from(panel.querySelectorAll('.gallery-item img'));
-      imgs.forEach((img, idx) => {
-        img.addEventListener('click', () => openLightbox(imgs, idx));
-      });
-    });
-
-    // 버튼 클릭 (배경 클릭으로 닫히지 않도록 stopPropagation)
-    lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); prevLightbox(); });
-    lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); nextLightbox(); });
-
-    // 배경 클릭 또는 X 버튼으로 닫기
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox || e.target.classList.contains('lightbox__close')) {
-        closeLightbox();
-      }
-    });
-
-    // 키보드: ←/→ 넘김, Esc 닫기
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('lightbox--open')) return;
-      if (e.key === 'ArrowRight') nextLightbox();
-      else if (e.key === 'ArrowLeft') prevLightbox();
-      else if (e.key === 'Escape') closeLightbox();
-    });
-
-    // 모바일 터치 스와이프
-    let touchStartX = 0;
-    let touchStartY = 0;
-    lightbox.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-    lightbox.addEventListener('touchend', (e) => {
-      const dx = e.changedTouches[0].screenX - touchStartX;
-      const dy = e.changedTouches[0].screenY - touchStartY;
-      // 수평 이동이 수직보다 클 때만 스와이프로 인식
-      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-        if (dx < 0) nextLightbox();
-        else prevLightbox();
-      }
-    }, { passive: true });
-  </script>
 
   <script>
+    // 서브페이지 헤더: 항상 scrolled 유지(히어로 없음), 햄버거만 동작
     (function () {
       var toggle = document.getElementById("navToggle");
       var nav = document.getElementById("siteNav");
       if (toggle && nav) {
-        function closeNav() { document.body.classList.remove("nav-open"); toggle.setAttribute("aria-expanded","false"); }
+        function closeNav() {
+          document.body.classList.remove("nav-open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
         toggle.addEventListener("click", function () {
           var open = document.body.classList.toggle("nav-open");
           toggle.setAttribute("aria-expanded", open ? "true" : "false");
@@ -2172,7 +2177,9 @@
       }
     })();
   </script>
+
   <script>
+    // ===== 페이지 전환 효과 =====
     (function () {
       document.body.classList.add("page-enter");
       var sameOriginLink = function (a) {
@@ -2188,7 +2195,8 @@
       document.addEventListener("click", function (e) {
         var a = e.target.closest ? e.target.closest("a") : null;
         if (!sameOriginLink(a)) return;
-        var url = a.href; e.preventDefault();
+        var url = a.href;
+        e.preventDefault();
         document.body.classList.add("page-leaving");
         setTimeout(function () { window.location.href = url; }, 260);
       });
@@ -2197,5 +2205,107 @@
       });
     })();
   </script>
+
+<!-- ===== 영동에덴원 장바구니 위젯 (전 페이지 공통) ===== -->
+<!-- 사용법: 각 페이지 본문 맨 끝(닫는 body 태그 앞)에 이 블록을 그대로 삽입.
+     상대경로 주의 — 상세페이지(products/ 안)는 ../ 기준, 루트 페이지는 동일 경로.
+     현재 경로에 /products/ 포함 여부로 자동 판별. -->
+<style>
+  .cart-dock { position: fixed; top: 16px; right: 16px; z-index: 95;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .cart-fab {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--ink, #2A1F14); color: var(--cream, #F4EDE0);
+    border: none; border-radius: 100px; padding: 0.6rem 1rem 0.6rem 0.9rem;
+    font-family: var(--font-body, "Noto Sans KR", sans-serif); font-size: 0.9rem;
+    cursor: pointer; text-decoration: none; box-shadow: 0 6px 20px rgba(42,31,20,0.22);
+    transition: background .2s ease;
+  }
+  .cart-fab:hover { background: var(--gold-dark, #6B5532); }
+  .cart-fab__icon { font-size: 1.05rem; line-height: 1; }
+  .cart-fab__badge {
+    min-width: 20px; height: 20px; padding: 0 6px; border-radius: 100px;
+    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
+    font-size: 0.78rem; font-weight: 700; display: none;
+    align-items: center; justify-content: center; line-height: 1;
+  }
+  .cart-fab__badge.on { display: inline-flex; }
+  .status-fab {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
+    border: 1px solid var(--border-strong, rgba(42,31,20,0.2)); border-radius: 100px;
+    padding: 0.45rem 0.9rem; font-family: var(--font-body, "Noto Sans KR", sans-serif);
+    font-size: 0.82rem; cursor: pointer; text-decoration: none;
+    box-shadow: 0 4px 14px rgba(42,31,20,0.14); transition: background .2s ease;
+  }
+  .status-fab:hover { background: var(--cream-dark, #E8DFCC); }
+  @media (max-width: 600px) {
+    .cart-dock { top: 12px; right: 12px; }
+    .cart-fab { padding: 0.55rem 0.9rem; }
+    .cart-fab__label { display: none; }
+  }
+</style>
+<div class="cart-dock">
+  <a class="cart-fab" id="cartFab" href="#" aria-label="장바구니">
+    <span class="cart-fab__icon">🧺</span>
+    <span class="cart-fab__label">장바구니</span>
+    <span class="cart-fab__badge" id="cartFabBadge">0</span>
+  </a>
+  <a class="status-fab" id="statusFab" href="#" aria-label="주문 조회">주문 조회</a>
+</div>
+<script>
+  (function () {
+    var CART_KEY = "edenwon_cart";
+    var inProducts = location.pathname.indexOf("/products/") >= 0;
+    var CART_HREF = inProducts ? "../cart.html" : "cart.html";
+    var STATUS_HREF = inProducts ? "../order-status.html" : "order-status.html";
+
+    window.EdenwonCart = {
+      key: CART_KEY,
+      read: function () {
+        try { return JSON.parse(localStorage.getItem(CART_KEY) || "[]"); }
+        catch (e) { return []; }
+      },
+      write: function (items) {
+        try { localStorage.setItem(CART_KEY, JSON.stringify(items)); } catch (e) {}
+        this.refreshBadge();
+      },
+      count: function () {
+        return this.read().reduce(function (s, it) { return s + (it.count || 0); }, 0);
+      },
+      add: function (item) {
+        var items = this.read();
+        var found = null;
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].product === item.product && items[i].option === item.option) { found = items[i]; break; }
+        }
+        if (found) found.count += item.count;
+        else items.push(item);
+        this.write(items);
+      },
+      refreshBadge: function () {
+        var b = document.getElementById("cartFabBadge");
+        if (!b) return;
+        var n = this.count();
+        b.textContent = n;
+        b.classList.toggle("on", n > 0);
+      }
+    };
+
+    var fab = document.getElementById("cartFab");
+    if (fab) fab.setAttribute("href", CART_HREF);
+    var sfab = document.getElementById("statusFab");
+    if (sfab) sfab.setAttribute("href", STATUS_HREF);
+    EdenwonCart.refreshBadge();
+  })();
+</script>
+<!-- ===== /장바구니 위젯 ===== -->
+
+<style>
+  /* 인덱스 전용: 헤더(우상단)와 겹치지 않도록 장바구니 독을 우하단으로 */
+  .cart-dock { top: auto !important; bottom: 22px; right: 22px; }
+  @media (max-width: 820px) { .cart-dock { bottom: 16px; right: 16px; } }
+</style>
+
 </body>
 </html>
