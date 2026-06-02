@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>발효의 진심 선물세트 — 영동에덴원</title>
-<meta name="description" content="장·잼 선물세트와 식초 선물세트, 두 가지 구성의 영동에덴원 선물세트. 합산가에서 5,000원 할인." />
+<meta name="description" content="장류 선물세트와 식초 선물세트, 두 가지 구성의 영동에덴원 선물세트. 합산가에서 5,000원 할인." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
@@ -42,7 +42,8 @@
   .set-card { background:var(--cream-light); border:1.5px solid var(--border-strong); border-radius:12px; padding:1.1rem; cursor:pointer; transition:border-color .15s, box-shadow .15s, background .15s; text-align:left; font-family:var(--font-body); }
   .set-card:hover { border-color:var(--gold); }
   .set-card.sel { border-color:var(--gold); box-shadow:0 0 0 3px rgba(139,111,71,0.12); background:#fff; }
-  .set-card__photo { aspect-ratio:4/3; border-radius:8px; background:repeating-linear-gradient(45deg,var(--cream-dark),var(--cream-dark) 10px,#e2d8c2 10px,#e2d8c2 20px); display:flex; align-items:center; justify-content:center; color:var(--ink-mute); font-size:0.78rem; text-align:center; margin-bottom:0.9rem; }
+  .set-card__photo { aspect-ratio:4/3; border-radius:8px; overflow:hidden; background:repeating-linear-gradient(45deg,var(--cream-dark),var(--cream-dark) 10px,#e2d8c2 10px,#e2d8c2 20px); display:flex; align-items:center; justify-content:center; color:var(--ink-mute); font-size:0.78rem; text-align:center; margin-bottom:0.9rem; }
+  .set-card__photo img { width:100%; height:100%; object-fit:cover; }
   .set-card__name { font-family:var(--font-display); font-size:1.1rem; margin-bottom:0.3rem; }
   .set-card__desc { font-size:0.82rem; color:var(--ink-soft); line-height:1.7; }
   .set-card__pick { display:inline-block; margin-top:0.7rem; font-size:0.82rem; color:var(--gold-dark); }
@@ -254,10 +255,10 @@
 
   // 선물세트 2종: allow=담을 수 있는 제품 / def=기본 구성 4칸 (제품 key)
   var SETS = [
-    { id:"jam", name:"장·잼 선물세트", desc:"장류와 잼으로 구성하는 선물세트",
+    { id:"jam", name:"장류 선물세트", desc:"장류와 잼으로 구성하는 선물세트", photo:"images/giftset-jam.jpg",
       allow:["gochujang","doenjang","jam","bibim-gochujang","bibim-doenjang"],
       def:["gochujang","doenjang","jam","bibim-gochujang"] },
-    { id:"vinegar", name:"식초 선물세트", desc:"발효의 초심(식초)을 중심으로 한 선물세트",
+    { id:"vinegar", name:"식초 선물세트", desc:"발효의 초심(식초)을 중심으로 한 선물세트", photo:"images/giftset-vinegar.jpg",
       allow:["vinegar","eoganjang","gochujang","doenjang","jam","bibim-gochujang","bibim-doenjang"],
       def:["vinegar","gochujang","doenjang","eoganjang"] }
   ];
@@ -302,7 +303,7 @@
       var names = set.def.map(function(k){ return CAT[k].name; }).join(" · ");
       var sum = setDefaultSum(set);
       return '<button type="button" class="set-card'+(selSet&&selSet.id===set.id?' sel':'')+'" data-set="'+set.id+'">'
-        + '<div class="set-card__photo">실제 세트 사진<br />(준비되면 교체)</div>'
+        + '<div class="set-card__photo">'+(set.photo?('<img src="'+set.photo+'" alt="'+set.name+'" loading="lazy" />'):'실제 세트 사진<br />(준비되면 교체)')+'</div>'
         + '<div class="set-card__name">'+set.name+'</div>'
         + '<div class="set-card__desc">기본 구성: '+names+'<br />'+won(Math.max(0,sum-GIFT_DISCOUNT))+' <span style="color:var(--ink-mute);">(5천원 할인 적용)</span></div>'
         + '<span class="set-card__pick"></span></button>';
