@@ -1249,8 +1249,27 @@
   }
 
   /* 탭 */
-  .gallery-tabs {
+  /* 상위 그룹 탭 (사계절 / 발효) */
+  .gallery-groups {
     display: flex;
+    justify-content: center;
+    gap: 2.6rem;
+    margin: 0 auto clamp(1.4rem, 3vh, 2rem);
+  }
+  .gallery-group {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--font-display); font-size: 1.2rem; font-weight: 400;
+    color: var(--ink-mute); letter-spacing: 0.06em; padding: 0.3rem 0.2rem;
+    position: relative; transition: color 0.25s ease;
+  }
+  .gallery-group:hover { color: var(--ink-soft); }
+  .gallery-group--active { color: var(--ink); font-weight: 700; }
+
+  /* 하위 탭: 활성 그룹의 것만 표시 */
+  .gallery-tabs { display: none; }
+  .gallery-tabs--active { display: flex; }
+
+  .gallery-tabs {
     justify-content: center;
     flex-wrap: wrap;
     gap: 0;
@@ -1885,8 +1904,8 @@
   body.page-leaving { opacity: 0; transition: opacity .28s ease; }
   .page-enter { animation: pageEnter .5s ease both; }
   @keyframes pageEnter {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
   @media (prefers-reduced-motion: reduce) {
     .page-enter { animation: none; }
@@ -1928,20 +1947,24 @@
   </header>
 
 
-  <!-- ============ TABS ============ -->
-  <div class="gallery-tabs" role="tablist">
-    <button class="gallery-tab gallery-tab--active" data-season="spring" role="tab" aria-selected="true">
-      봄<span class="gallery-tab__count">09</span>
-    </button>
-    <button class="gallery-tab" data-season="summer" role="tab" aria-selected="false">
-      여름<span class="gallery-tab__count">14</span>
-    </button>
-    <button class="gallery-tab" data-season="autumn" role="tab" aria-selected="false">
-      가을<span class="gallery-tab__count">13</span>
-    </button>
-    <button class="gallery-tab" data-season="winter" role="tab" aria-selected="false">
-      겨울<span class="gallery-tab__count">10</span>
-    </button>
+    <!-- ============ TABS (2단계: 사계절 / 발효) ============ -->
+  <div class="gallery-groups" role="tablist" aria-label="갤러리 분류">
+    <button class="gallery-group gallery-group--active" data-group="seasons" role="tab" aria-selected="true">사계절</button>
+    <button class="gallery-group" data-group="ferment" role="tab" aria-selected="false">발효</button>
+  </div>
+
+  <!-- 하위 탭: 사계절 -->
+  <div class="gallery-tabs gallery-tabs--active" data-subtabs="seasons" role="tablist">
+    <button class="gallery-tab gallery-tab--active" data-panel="spring" role="tab" aria-selected="true">봄<span class="gallery-tab__count">09</span></button>
+    <button class="gallery-tab" data-panel="summer" role="tab" aria-selected="false">여름<span class="gallery-tab__count">14</span></button>
+    <button class="gallery-tab" data-panel="autumn" role="tab" aria-selected="false">가을<span class="gallery-tab__count">13</span></button>
+    <button class="gallery-tab" data-panel="winter" role="tab" aria-selected="false">겨울<span class="gallery-tab__count">03</span></button>
+  </div>
+
+  <!-- 하위 탭: 발효 -->
+  <div class="gallery-tabs" data-subtabs="ferment" role="tablist">
+    <button class="gallery-tab gallery-tab--active" data-panel="ferment-meju" role="tab" aria-selected="true">메주<span class="gallery-tab__count">10</span></button>
+    <button class="gallery-tab" data-panel="ferment-cheonggukjang" role="tab" aria-selected="false">청국장<span class="gallery-tab__count">01</span></button>
   </div>
 
 
@@ -2002,19 +2025,35 @@
       </div>
     </div>
 
-    <!-- 겨울 -->
+    <!-- 겨울 (눈·옹기만) -->
     <div class="gallery-panel" data-panel="winter" role="tabpanel">
       <div class="gallery-grid">
         <div class="gallery-item"><img src="images/season-winter.jpg" alt="눈 덮인 옹기" loading="lazy" /></div>
         <div class="gallery-item"><img src="images/hero-snow-pots.jpg" alt="눈 내리는 옹기밭" loading="lazy" /></div>
         <div class="gallery-item"><img src="images/winter-pots-storage.jpg" alt="옹기 보관 창고" loading="lazy" /></div>
+      </div>
+    </div>
+
+    <!-- 발효 > 메주 -->
+    <div class="gallery-panel" data-panel="ferment-meju" role="tabpanel">
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="images/winter-meju-room.jpg" alt="발효실에서 익어가는 메주" loading="lazy" /></div>
         <div class="gallery-item"><img src="images/winter-meju-drying.jpg" alt="메주 바람치기" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/winter-meju-room.jpg" alt="발효실 메주" loading="lazy" /></div>
-        <div class="gallery-item"><img src="images/winter-cheonggukjang.jpg" alt="청국장 띄우기" loading="lazy" /></div>
         <div class="gallery-item"><img src="images/winter-meju-rack-01.jpg" alt="발효실 메주" loading="lazy" /></div>
         <div class="gallery-item"><img src="images/winter-meju-rack-02.jpg" alt="발효실 메주" loading="lazy" /></div>
         <div class="gallery-item"><img src="images/winter-meju-rack-03.jpg" alt="발효실 메주" loading="lazy" /></div>
         <div class="gallery-item"><img src="images/winter-meju-room-wide.jpg" alt="발효실 전경" loading="lazy" /></div>
+        <div class="gallery-item"><img src="images/meju-shaping-closeup.jpg" alt="메주 만들기" loading="lazy" /></div>
+        <div class="gallery-item"><img src="images/meju-room-side.jpg" alt="발효실 메주" loading="lazy" /></div>
+        <div class="gallery-item"><img src="images/meju-inside.jpg" alt="메주 속" loading="lazy" /></div>
+        <div class="gallery-item"><img src="images/meju-pot-brine-sunlit.jpg" alt="메주 입항 후 염수" loading="lazy" /></div>
+      </div>
+    </div>
+
+    <!-- 발효 > 청국장 -->
+    <div class="gallery-panel" data-panel="ferment-cheonggukjang" role="tabpanel">
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="images/winter-cheonggukjang.jpg" alt="청국장 띄우기" loading="lazy" /></div>
       </div>
     </div>
 
@@ -2045,26 +2084,60 @@
 
   <!-- ============ SCRIPT ============ -->
   <script>
-    // 탭 전환
+    // ===== 2단계 탭: 상위 그룹(사계절/발효) + 하위 탭 =====
+    const groups = document.querySelectorAll('.gallery-group');
+    const subtabSets = document.querySelectorAll('.gallery-tabs');
     const tabs = document.querySelectorAll('.gallery-tab');
     const panels = document.querySelectorAll('.gallery-panel');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const season = tab.dataset.season;
-        tabs.forEach(t => {
-          t.classList.toggle('gallery-tab--active', t === tab);
-          t.setAttribute('aria-selected', t === tab);
-        });
-        panels.forEach(p => {
-          p.classList.toggle('gallery-panel--active', p.dataset.panel === season);
-        });
+
+    // 패널 → 그룹 매핑(해시 진입 시 그룹 자동 판별)
+    function groupOfPanel(panel) {
+      return panel.indexOf('ferment-') === 0 ? 'ferment' : 'seasons';
+    }
+
+    function activateGroup(group) {
+      groups.forEach(g => {
+        const on = g.dataset.group === group;
+        g.classList.toggle('gallery-group--active', on);
+        g.setAttribute('aria-selected', on);
+      });
+      subtabSets.forEach(s => {
+        s.classList.toggle('gallery-tabs--active', s.dataset.subtabs === group);
+      });
+    }
+
+    function activatePanel(panel) {
+      tabs.forEach(t => {
+        const on = t.dataset.panel === panel;
+        t.classList.toggle('gallery-tab--active', on);
+        t.setAttribute('aria-selected', on);
+      });
+      panels.forEach(p => {
+        p.classList.toggle('gallery-panel--active', p.dataset.panel === panel);
+      });
+    }
+
+    // 상위 그룹 클릭 → 그룹 전환 + 그 그룹의 첫 하위 탭 활성
+    groups.forEach(g => {
+      g.addEventListener('click', () => {
+        const group = g.dataset.group;
+        activateGroup(group);
+        const firstTab = document.querySelector(`.gallery-tabs[data-subtabs="${group}"] .gallery-tab`);
+        if (firstTab) activatePanel(firstTab.dataset.panel);
       });
     });
 
-    // URL 해시로 탭 직접 진입 (예: gallery.html#summer)
+    // 하위 탭 클릭 → 패널 전환
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => activatePanel(tab.dataset.panel));
+    });
+
+    // URL 해시 진입 (예: #summer, #ferment-meju)
     const initialHash = window.location.hash.replace('#', '');
-    if (['spring','summer','autumn','winter'].includes(initialHash)) {
-      document.querySelector(`.gallery-tab[data-season="${initialHash}"]`)?.click();
+    const validPanels = Array.from(panels).map(p => p.dataset.panel);
+    if (validPanels.includes(initialHash)) {
+      activateGroup(groupOfPanel(initialHash));
+      activatePanel(initialHash);
     }
 
     // 라이트박스 + 이전/다음 + 스와이프 + 키보드

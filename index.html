@@ -664,6 +664,12 @@
       gap: 0.6rem;
       margin-bottom: 0;
     }
+    /* 발효(품목 묶음): 카드가 적을 때 너무 커지지 않게 */
+    .gallery__seasons--ferment {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 280px));
+      justify-content: center;
+    }
+    .gallery__seasons--ferment .gallery__season { aspect-ratio: 4 / 3; }
 
     @media (min-width: 768px) {
       .gallery__seasons {
@@ -2174,11 +2180,11 @@
 
         <!-- 발효 -->
         <div class="gtabs__panel gtabs__panel--2">
-          <div class="gallery__process">
-            <div class="gallery__process-item"><img src="images/meju-shaping-closeup.jpg" alt="메주 만들기" loading="lazy" /></div>
-            <div class="gallery__process-item"><img src="images/meju-room-side.jpg" alt="발효실 메주" loading="lazy" /></div>
-            <div class="gallery__process-item"><img src="images/meju-inside.jpg" alt="메주 속" loading="lazy" /></div>
-            <div class="gallery__process-item"><img src="images/meju-pot-brine-sunlit.jpg" alt="메주 입항 후 염수" loading="lazy" /></div>
+          <div class="gallery__seasons gallery__seasons--ferment">
+            <a href="gallery.html#ferment-meju" class="gallery__season">
+              <img src="images/meju-room-side.jpg" alt="발효실에서 익어가는 메주" loading="lazy" />
+              <div class="gallery__season-label">메주</div>
+            </a>
           </div>
         </div>
       </div>
