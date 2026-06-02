@@ -1845,6 +1845,16 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .page-enter { animation: none; }
+  
+  /* ===== 통일 푸터 ===== */
+  footer { background: var(--ink); color: rgba(244,237,224,0.5); padding: 2.8rem 1.5rem; text-align: center; font-size: 0.8rem; line-height: 2; border-top: 1px solid rgba(244,237,224,0.08); }
+  footer .footer__brand { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-bottom: 1.1rem; }
+  footer .footer__symbol { height: 36px; width: auto; opacity: 0.92; }
+  footer .footer__mark { font-family: var(--font-display); color: rgba(244,237,224,0.78); letter-spacing: 0.06em; font-size: 0.98rem; }
+  footer .footer__legal { font-size: 0.75rem; letter-spacing: 0.02em; }
+  footer .footer__legal a { color: inherit; opacity: 0.7; text-decoration: none; border-bottom: 1px solid rgba(244,237,224,0.2); }
+  footer .footer__legal a:hover { opacity: 1; }
+  footer .footer__sep { opacity: 0.35; }
   </style>
 </head>
 <body class="subpage">
@@ -1973,12 +1983,17 @@
 
   <!-- ============ FOOTER ============ -->
   <footer>
-    <div class="footer__mark">영동에덴원</div>
+    <div class="footer__brand">
+      <img src="../images/logo-symbol-white.png" alt="" class="footer__symbol" />
+      <div class="footer__mark">영동에덴원</div>
+    </div>
     <div class="footer__legal">
-      (주)농업회사법인 에프엔엘바이오푸드 &nbsp;|&nbsp; 대표 길우관<br />
-      사업자등록번호 550-87-01994 &nbsp;|&nbsp; 통신판매업 신고 2021-충북영동-0123<br />
-      충북 영동군 학산면 모리2길 3-2 &nbsp;|&nbsp; 010-5126-7578<br />
-      <span style="opacity: 0.5;">ⓒ 2026 영동에덴원 · All rights reserved.</span>
+      (주)농업회사법인 에프엔엘바이오푸드 <span class="footer__sep">|</span> 대표 길우관<br />
+      사업자등록번호 550-87-01994 <span class="footer__sep">|</span> 통신판매업 2021-충북영동-0123<br />
+      충북 영동군 학산면 모리2길 3-2<br />
+      010-5126-7578 <span class="footer__sep">|</span> kwg7978@naver.com<br />
+      <a href="../privacy.html">개인정보 처리방침</a> <span class="footer__sep">|</span>
+      <span style="opacity:0.5;">ⓒ 2026 영동에덴원 · All rights reserved.</span>
     </div>
   </footer>
 
