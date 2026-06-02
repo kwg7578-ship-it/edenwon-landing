@@ -168,3 +168,4 @@ https://yd-edenwon.com/?src=expo2026
 - 영문 페이지 (수출 대응)
 
 "테스트"
+<- 이전 관계 결이 있으면 — 그 결과 *지금 결*의 차이를 deploy test Tue  2 Jun 11:31:18 KST 2026 -->
