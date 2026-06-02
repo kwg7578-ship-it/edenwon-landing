@@ -536,7 +536,14 @@
         phone: document.getElementById("phone").value.trim(),
         affiliation: affSelect.value,
         studentId: studentId.value.trim(),
-        department: department.value.trim()
+        department: department.value.trim(),
+        method: orderMethod,
+        recipSame: document.getElementById("sameAsOrderer").checked,
+        recipName: document.getElementById("recipName").value.trim(),
+        recipPhone: document.getElementById("recipPhone").value.trim(),
+        zip: document.getElementById("zip").value.trim(),
+        addr1: document.getElementById("addr1").value.trim(),
+        addr2: document.getElementById("addr2").value.trim()
       };
       if (!p.name && !p.phone) return;
       try { localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); } catch (e) {}
@@ -552,6 +559,20 @@
         if (p.studentId) studentId.value = p.studentId;
         if (p.department) department.value = p.department;
       }
+      // 배송 정보 복원 — 한 번 입력하면 다음 주문에도 자동으로 채워짐
+      if (p.recipSame === false) {
+        document.getElementById("sameAsOrderer").checked = false;
+        document.getElementById("recipFields").style.display = "block";
+        if (p.recipName) document.getElementById("recipName").value = p.recipName;
+        if (p.recipPhone) document.getElementById("recipPhone").value = p.recipPhone;
+      }
+      if (p.zip) document.getElementById("zip").value = p.zip;
+      if (p.addr1) document.getElementById("addr1").value = p.addr1;
+      if (p.addr2) document.getElementById("addr2").value = p.addr2;
+      if (p.method === "delivery") {
+        var dbtn = document.querySelector('.method-opt[data-method="delivery"]');
+        if (dbtn) dbtn.click();
+      }
       updateClearLink();
     }
     function clearProfile() {
@@ -561,6 +582,12 @@
       affSelect.value = "";
       studentId.value = "";
       department.value = "";
+      // 배송 정보도 초기화 + 자가수령으로 복귀
+      ["recipName", "recipPhone", "zip", "addr1", "addr2"].forEach(function (id) { document.getElementById(id).value = ""; });
+      document.getElementById("sameAsOrderer").checked = true;
+      document.getElementById("recipFields").style.display = "none";
+      var pbtn = document.querySelector('.method-opt[data-method="pickup"]');
+      if (pbtn) pbtn.click();
       applyAffiliationFields();
       updateClearLink();
     }
