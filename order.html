@@ -129,6 +129,12 @@
     .bank__amount strong { font-family: var(--font-display); font-size: 1.3rem; color: var(--ink); font-weight: 700; }
 
     /* 옵션 선택 */
+    .opt-cats { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .opt-cat { font-family: var(--font-body); font-size: 0.92rem; color: var(--ink-mute);
+      background: #fff; border: 1px solid var(--border-strong); border-radius: 100px;
+      padding: 0.5rem 1.05rem; cursor: pointer; transition: border-color .15s, background .15s, color .15s; }
+    .opt-cat:hover { border-color: var(--gold); color: var(--ink); }
+    .opt-cat.sel { background: var(--gold); color: #fff; border-color: var(--gold); }
     .opt-list { display: flex; flex-direction: column; gap: 9px; }
     .opt-btn { display: flex; justify-content: space-between; align-items: center;
       font-family: var(--font-body); font-size: 0.98rem; color: var(--ink); cursor: pointer;
@@ -386,6 +392,7 @@
 
         <div class="field" id="f-opt">
           <label class="field__label">옵션 <span class="req">*</span></label>
+          <div class="opt-cats" id="optCats" style="display:none;"></div>
           <div class="opt-list" id="optList"></div>
           <div class="opt-note" id="optNote" style="display:none;"></div>
         </div>
@@ -500,6 +507,7 @@
     var formAmount = document.getElementById("formAmount");
     var optList = document.getElementById("optList");
     var optNote = document.getElementById("optNote");
+    var optCats = document.getElementById("optCats");
     var countVal = document.getElementById("countVal");
     var affSelect = document.getElementById("affiliation");
     var affFields = document.getElementById("affFields");
@@ -555,6 +563,7 @@
 
     // 누적 잔여 상태: { applicable, remaining(null=무제한), reason }
     var remainState = null;
+    var activeCat = null;
 
     function recalc() {
       var o = currentOption();
@@ -635,24 +644,59 @@
       }, 300);
     }
 
+    function optBtnHtml(o, g, selId) {
+      var disc = g && o.prices[g] != null && o.prices[g] < o.prices.regular;
+      var badge = "", priceHtml;
+      if (disc) {
+        var blab = (g === "edenwon") ? "관계자 할인" : "기전대 할인";
+        badge = ' <span class="opt-badge">' + blab + '</span>';
+        priceHtml = '<span class="opt-price"><s>' + won(o.prices.regular) + '</s>' + won(o.prices[g]) + '</span>';
+      } else {
+        priceHtml = '<span class="opt-price">' + won(o.prices.regular) + '</span>';
+      }
+      return '<button type="button" class="opt-btn' + (o.id === selId ? ' sel' : '') + '" data-id="' + o.id + '">'
+        + '<span>' + o.label + badge + '</span>' + priceHtml + '</button>';
+    }
+
     function renderOptions() {
       var opts = (CONFIG && CONFIG.options) || [];
       var g = affSelect.value;
+
+      // 옵션에 카테고리(예: 식초 산야초/과일/프리미엄)가 있으면 2단(카테고리 → 품목)
+      var cats = [];
+      opts.forEach(function (o) { var c = o.category || ""; if (c && cats.indexOf(c) < 0) cats.push(c); });
+      var hasCats = cats.length > 0;
+
       var selEl = selected();
-      var selId = (selEl && selEl.getAttribute("data-id")) || (opts[0] && opts[0].id);
-      optList.innerHTML = opts.map(function (o) {
-        var disc = g && o.prices[g] != null && o.prices[g] < o.prices.regular;
-        var badge = "", priceHtml;
-        if (disc) {
-          var blab = (g === "edenwon") ? "관계자 할인" : "기전대 할인";
-          badge = ' <span class="opt-badge">' + blab + '</span>';
-          priceHtml = '<span class="opt-price"><s>' + won(o.prices.regular) + '</s>' + won(o.prices[g]) + '</span>';
-        } else {
-          priceHtml = '<span class="opt-price">' + won(o.prices.regular) + '</span>';
+      var selId = (selEl && selEl.getAttribute("data-id")) || null;
+
+      if (hasCats) {
+        if (!activeCat || cats.indexOf(activeCat) < 0) {
+          var cur = selId ? opts.filter(function (o) { return o.id === selId; })[0] : null;
+          activeCat = (cur && cur.category) || cats[0];
         }
-        return '<button type="button" class="opt-btn' + (o.id === selId ? ' sel' : '') + '" data-id="' + o.id + '">'
-          + '<span>' + o.label + badge + '</span>' + priceHtml + '</button>';
-      }).join("");
+        optCats.style.display = "flex";
+        optCats.innerHTML = cats.map(function (c) {
+          return '<button type="button" class="opt-cat' + (c === activeCat ? ' sel' : '') + '" data-cat="' + c + '">' + c + '</button>';
+        }).join("");
+        optCats.querySelectorAll(".opt-cat").forEach(function (b) {
+          b.addEventListener("click", function () {
+            activeCat = b.getAttribute("data-cat");
+            renderOptions();
+            recalc();
+            refreshRemaining();
+          });
+        });
+      } else {
+        optCats.style.display = "none";
+        optCats.innerHTML = "";
+      }
+
+      var shown = hasCats ? opts.filter(function (o) { return (o.category || "") === activeCat; }) : opts;
+      var keep = selId && shown.some(function (o) { return o.id === selId; });
+      var curSel = keep ? selId : (shown[0] && shown[0].id);
+
+      optList.innerHTML = shown.map(function (o) { return optBtnHtml(o, g, curSel); }).join("");
       optList.querySelectorAll(".opt-btn").forEach(function (b) {
         b.addEventListener("click", function () {
           optList.querySelectorAll(".opt-btn").forEach(function (x) { x.classList.remove("sel"); });
