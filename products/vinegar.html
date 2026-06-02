@@ -1947,8 +1947,8 @@
   body.page-leaving { opacity: 0; transition: opacity .28s ease; }
   .page-enter { animation: pageEnter .5s ease both; }
   @keyframes pageEnter {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
   @media (prefers-reduced-motion: reduce) {
     .page-enter { animation: none; }
@@ -2264,18 +2264,30 @@
      상대경로 주의 — 상세페이지(products/ 안)는 ../ 기준, 루트 페이지는 동일 경로.
      현재 경로에 /products/ 포함 여부로 자동 판별. -->
 <style>
-  .cart-dock { position: fixed; top: 16px; right: 16px; z-index: 95;
-    display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-  .cart-fab {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--ink, #2A1F14); color: var(--cream, #F4EDE0);
-    border: none; border-radius: 100px; padding: 0.6rem 1rem 0.6rem 0.9rem;
-    font-family: var(--font-body, "Noto Sans KR", sans-serif); font-size: 0.9rem;
-    cursor: pointer; text-decoration: none; box-shadow: 0 6px 20px rgba(42,31,20,0.22);
-    transition: background .2s ease;
+  .cart-dock {
+    position: fixed; top: 42%; right: 0; z-index: 95;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
   }
-  .cart-fab:hover { background: var(--gold-dark, #6B5532); }
-  .cart-fab__icon { font-size: 1.05rem; line-height: 1; }
+  .cart-fab, .status-fab {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-body, "Noto Sans KR", sans-serif);
+    cursor: pointer; text-decoration: none;
+    border-radius: 100px 0 0 100px;       /* 오른쪽 화면에 붙는 배너 */
+    padding: 0.7rem 1.1rem 0.7rem 1rem;
+    box-shadow: -4px 6px 20px rgba(42,31,20,0.18);
+    transition: background .2s ease, transform .2s ease, padding-right .2s ease;
+    transform: translateX(0);
+  }
+  .cart-fab { background: var(--ink, #2A1F14); color: var(--cream, #F4EDE0); font-size: 0.9rem; }
+  .cart-fab:hover { background: var(--gold-dark, #6B5532); transform: translateX(-2px); }
+  .status-fab {
+    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
+    border: 1px solid var(--border-strong, rgba(42,31,20,0.2)); border-right: none;
+    font-size: 0.84rem;
+  }
+  .status-fab:hover { background: var(--cream-dark, #E8DFCC); transform: translateX(-2px); }
+  .cart-fab__icon, .status-fab__icon { font-size: 1.02rem; line-height: 1; }
+  .cart-fab__label, .status-fab__label { white-space: nowrap; }
   .cart-fab__badge {
     min-width: 20px; height: 20px; padding: 0 6px; border-radius: 100px;
     background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
@@ -2283,19 +2295,11 @@
     align-items: center; justify-content: center; line-height: 1;
   }
   .cart-fab__badge.on { display: inline-flex; }
-  .status-fab {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
-    border: 1px solid var(--border-strong, rgba(42,31,20,0.2)); border-radius: 100px;
-    padding: 0.45rem 0.9rem; font-family: var(--font-body, "Noto Sans KR", sans-serif);
-    font-size: 0.82rem; cursor: pointer; text-decoration: none;
-    box-shadow: 0 4px 14px rgba(42,31,20,0.14); transition: background .2s ease;
-  }
-  .status-fab:hover { background: var(--cream-dark, #E8DFCC); }
-  @media (max-width: 600px) {
-    .cart-dock { top: 12px; right: 12px; }
-    .cart-fab { padding: 0.55rem 0.9rem; }
-    .cart-fab__label { display: none; }
+  /* 모바일: 우하단 작은 아이콘만 */
+  @media (max-width: 640px) {
+    .cart-dock { top: auto; bottom: 16px; right: 16px; gap: 8px; align-items: flex-end; }
+    .cart-fab, .status-fab { border-radius: 100px; padding: 0.6rem 0.7rem; box-shadow: 0 4px 14px rgba(42,31,20,0.2); }
+    .cart-fab__label, .status-fab__label { display: none; }
   }
 </style>
 <div class="cart-dock">
@@ -2304,7 +2308,10 @@
     <span class="cart-fab__label">장바구니</span>
     <span class="cart-fab__badge" id="cartFabBadge">0</span>
   </a>
-  <a class="status-fab" id="statusFab" href="#" aria-label="주문 조회">주문 조회</a>
+  <a class="status-fab" id="statusFab" href="#" aria-label="주문 조회">
+    <span class="status-fab__icon">🔍</span>
+    <span class="status-fab__label">주문 조회</span>
+  </a>
 </div>
 <script>
   (function () {
@@ -2353,11 +2360,7 @@
   })();
 </script>
 <!-- ===== /장바구니 위젯 ===== -->
-<style>
-  /* 상세페이지: 헤더(우상단)와 겹치지 않도록 장바구니 독을 우하단으로 */
-  .cart-dock { top: auto !important; bottom: 22px; right: 22px; }
-  @media (max-width: 600px) { .cart-dock { bottom: 16px; right: 16px; } }
-</style>
+
 
 
   <script>
