@@ -138,6 +138,8 @@
     .opt-btn.sel { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(139,111,71,0.12); background: #fff; }
     .opt-btn.sel .opt-price { color: var(--gold-dark); font-weight: 500; }
     .opt-note { font-size: 0.8rem; color: var(--gold-dark); margin-top: 0.55rem; line-height: 1.5; }
+    .opt-badge { display:inline-block; background:#e3ecd9; color:#5a7345; font-size:0.7rem; padding:0.03rem 0.45rem; border-radius:100px; margin-left:0.4rem; vertical-align:middle; white-space:nowrap; }
+    .opt-price s { color:var(--ink-mute); font-weight:300; font-size:0.85em; margin-right:0.25rem; }
 
     /* 개수 스테퍼 */
     .count-row { display: flex; align-items: center; justify-content: space-between; }
@@ -581,7 +583,11 @@
           affNote.textContent = "· 관계자 명부에서 확인되지 않아 일반가로 접수됩니다. 확인 후 조정될 수 있습니다.";
           affNote.style.display = "block";
         } else if (remainState.reason === "phone") {
-          affNote.textContent = "· 전화번호를 입력하시면 할인 적용 여부가 표시됩니다.";
+          if (g === "edenwon") {
+            affNote.textContent = "· 영동에덴원 관계자가 " + won(discUnit) + " (정가 " + won(regular) + ") — 전화번호를 입력하시면 명부 확인 후 적용됩니다.";
+          } else {
+            affNote.textContent = "· " + (AFF_LABEL[g] || "") + " 할인가 " + won(discUnit) + " (정가 " + won(regular) + ") — 전화번호를 입력하시면 적용됩니다.";
+          }
           affNote.style.display = "block";
         } else {
           affNote.style.display = "none";
@@ -629,10 +635,23 @@
       }, 300);
     }
 
-    function renderOptions(options) {
-      optList.innerHTML = options.map(function (o, i) {
-        return '<button type="button" class="opt-btn' + (i === 0 ? ' sel' : '') + '" data-id="' + o.id + '">'
-          + '<span>' + o.label + '</span><span class="opt-price">' + won(o.prices.regular) + '</span></button>';
+    function renderOptions() {
+      var opts = (CONFIG && CONFIG.options) || [];
+      var g = affSelect.value;
+      var selEl = selected();
+      var selId = (selEl && selEl.getAttribute("data-id")) || (opts[0] && opts[0].id);
+      optList.innerHTML = opts.map(function (o) {
+        var disc = g && o.prices[g] != null && o.prices[g] < o.prices.regular;
+        var badge = "", priceHtml;
+        if (disc) {
+          var blab = (g === "edenwon") ? "관계자 할인" : "기전대 할인";
+          badge = ' <span class="opt-badge">' + blab + '</span>';
+          priceHtml = '<span class="opt-price"><s>' + won(o.prices.regular) + '</s>' + won(o.prices[g]) + '</span>';
+        } else {
+          priceHtml = '<span class="opt-price">' + won(o.prices.regular) + '</span>';
+        }
+        return '<button type="button" class="opt-btn' + (o.id === selId ? ' sel' : '') + '" data-id="' + o.id + '">'
+          + '<span>' + o.label + badge + '</span>' + priceHtml + '</button>';
       }).join("");
       optList.querySelectorAll(".opt-btn").forEach(function (b) {
         b.addEventListener("click", function () {
@@ -754,7 +773,7 @@
         document.title = data.name + " 주문하기 — 영동에덴원";
         document.getElementById("formTitle").textContent = data.name + " 주문하기";
 
-        renderOptions(data.options);
+        renderOptions();
         renderAffiliations(data.affiliations || []);
         applyAffiliationFields();
         fillProfile();
@@ -768,7 +787,7 @@
 
     document.getElementById("plus").addEventListener("click", function () { if (count < 50) { count++; recalc(); } });
     document.getElementById("minus").addEventListener("click", function () { if (count > 1) { count--; recalc(); } });
-    affSelect.addEventListener("change", function () { applyAffiliationFields(); refreshRemaining(); });
+    affSelect.addEventListener("change", function () { applyAffiliationFields(); renderOptions(); refreshRemaining(); });
     document.getElementById("phone").addEventListener("input", refreshRemaining);
     studentId.addEventListener("input", function () {
       var d = studentId.value.replace(/\D/g, "").slice(0, 9);
