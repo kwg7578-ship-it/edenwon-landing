@@ -2006,22 +2006,7 @@
 
 
   <!-- 우하단 떠있는 주문 배너 -->
-  <div class="order-cta" id="orderCta">
-    <div class="order-cta__head">
-      <div class="order-cta__title">옹기숙성 고추장 주문<small>자가 수령</small></div>
-      <button class="order-cta__close" id="orderCtaClose" aria-label="주문 배너 닫기">×</button>
-    </div>
-    <div class="order-cta__btns">
-      <a href="../order.html?product=gochujang" class="order-cta__btn order-cta__btn--self">자가 수령 주문</a>
-    </div>
-  </div>
-  <script>
-    (function () {
-      var el = document.getElementById("orderCta");
-      var close = document.getElementById("orderCtaClose");
-      if (close) close.addEventListener("click", function () { el.classList.add("is-hidden"); });
-    })();
-  </script>
+  
 
 <!-- ===== 영동에덴원 장바구니 위젯 (전 페이지 공통) ===== -->
 <!-- 사용법: 각 페이지 본문 맨 끝(닫는 body 태그 앞)에 이 블록을 그대로 삽입.
@@ -2050,6 +2035,26 @@
     font-size: 0.84rem;
   }
   .status-fab:hover { background: var(--cream-dark, #E8DFCC); transform: translateX(-2px); }
+  .order-fab {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-body, "Noto Sans KR", sans-serif);
+    cursor: pointer; text-decoration: none;
+    border-radius: 100px 0 0 100px;
+    padding: 0.7rem 1.1rem 0.7rem 1rem;
+    box-shadow: -4px 6px 20px rgba(42,31,20,0.18);
+    transition: background .2s ease, transform .2s ease;
+    white-space: nowrap;
+  }
+  .order-fab__icon { font-size: 1.02rem; line-height: 1; }
+  .order-fab--self { background: var(--gold, #8B6F47); color: #fff; font-size: 0.92rem; font-weight: 500; }
+  .order-fab--self:hover { background: var(--gold-dark, #6B5532); transform: translateX(-2px); }
+  .order-fab--store { background: var(--ink, #2A1F14); color: var(--cream, #F4EDE0); font-size: 0.88rem; }
+  .order-fab--store:hover { background: var(--gold-dark, #6B5532); transform: translateX(-2px); }
+  @media (max-width: 640px) {
+    .order-fab { border-radius: 100px; padding: 0.6rem 0.7rem; box-shadow: 0 4px 14px rgba(42,31,20,0.2); }
+    .order-fab__label { display: none; }
+  }
+
   .cart-fab__icon, .status-fab__icon { font-size: 1.02rem; line-height: 1; }
   .cart-fab__label, .status-fab__label { white-space: nowrap; }
   .cart-fab__badge {
@@ -2067,6 +2072,10 @@
   }
 </style>
 <div class="cart-dock">
+  <a class="order-fab order-fab--self" href="../order.html?product=gochujang" aria-label="자가 수령 주문">
+    <span class="order-fab__icon">🤲</span>
+    <span class="order-fab__label">자가수령 주문</span>
+  </a>
   <a class="cart-fab" id="cartFab" href="#" aria-label="장바구니">
     <span class="cart-fab__icon">🧺</span>
     <span class="cart-fab__label">장바구니</span>
