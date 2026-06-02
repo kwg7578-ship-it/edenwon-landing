@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>발효의 진심 선물세트 — 영동에덴원</title>
+<meta name="description" content="원하는 발효식품 네 가지를 골라 담는 영동에덴원 선물세트. 합산가에서 5,000원 할인." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<style>
+  :root {
+    --cream:#F4EDE0; --cream-light:#FBF7EF; --cream-dark:#E8DFCC;
+    --ink:#2A1F14; --ink-soft:#5A4A38; --ink-mute:#8B7A65;
+    --gold:#8B6F47; --gold-dark:#6B5532;
+    --border:rgba(42,31,20,0.08); --border-strong:rgba(42,31,20,0.15);
+    --font-display:"Gowun Batang","Noto Serif KR",serif;
+    --font-body:"Noto Sans KR",system-ui,sans-serif;
+    --font-latin:"Cormorant Garamond",serif;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { font-family:var(--font-body); background:var(--cream); color:var(--ink); line-height:1.7; font-weight:300; -webkit-font-smoothing:antialiased; }
+
+  .nav { border-bottom:1px solid var(--border); background:var(--cream); }
+  .nav__inner { max-width:760px; margin:0 auto; padding:1.1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
+  .nav__back { font-size:0.92rem; color:var(--ink-soft); text-decoration:none; }
+  .nav__brand { font-family:var(--font-latin); font-size:0.85rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); text-decoration:none; }
+
+  .wrap { max-width:760px; margin:0 auto; padding:clamp(2rem,6vh,3.4rem) 1.4rem 5rem; }
+  .eyebrow { font-family:var(--font-latin); font-size:0.85rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); text-align:center; margin-bottom:1rem; }
+  .title { font-family:var(--font-display); font-size:clamp(1.8rem,5vw,2.4rem); font-weight:400; text-align:center; line-height:1.4; margin-bottom:0.9rem; }
+  .lede { text-align:center; color:var(--ink-soft); font-size:0.97rem; line-height:1.9; max-width:540px; margin:0 auto 2rem; }
+  .divider { width:40px; height:1px; background:var(--gold); margin:2.4rem auto; opacity:0.6; }
+  .sec-title { font-family:var(--font-display); font-size:1.3rem; text-align:center; margin-bottom:0.4rem; }
+  .sec-sub { text-align:center; color:var(--ink-mute); font-size:0.86rem; margin-bottom:1.6rem; }
+  .loading { text-align:center; color:var(--ink-mute); padding:3rem 0; }
+
+  /* 추천 세트 */
+  .presets { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .preset { background:var(--cream-light); border:1px solid var(--border); border-radius:10px; padding:1.1rem; display:flex; flex-direction:column; }
+  .preset__photo { aspect-ratio:4/3; border-radius:8px; background:repeating-linear-gradient(45deg,var(--cream-dark),var(--cream-dark) 10px,#e2d8c2 10px,#e2d8c2 20px); display:flex; align-items:center; justify-content:center; color:var(--ink-mute); font-size:0.78rem; text-align:center; margin-bottom:0.9rem; }
+  .preset__name { font-family:var(--font-display); font-size:1.08rem; margin-bottom:0.3rem; }
+  .preset__items { font-size:0.82rem; color:var(--ink-soft); line-height:1.7; margin-bottom:0.8rem; flex:1; }
+  .preset__price { font-family:var(--font-display); font-size:1.15rem; margin-bottom:0.7rem; }
+  .preset__price s { color:var(--ink-mute); font-size:0.85rem; font-family:var(--font-body); margin-right:0.4rem; }
+  .btn-ghost { display:block; width:100%; text-align:center; padding:0.7rem; font-family:var(--font-body); font-size:0.9rem; background:var(--cream); color:var(--ink); border:1px solid var(--border-strong); border-radius:6px; cursor:pointer; transition:all .2s; }
+  .btn-ghost:hover { background:var(--cream-dark); border-color:var(--gold); }
+
+  /* 박스 */
+  .box { background:var(--cream-light); border:1px solid var(--border); border-radius:12px; padding:1.4rem; }
+  .box__grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .slot { aspect-ratio:1/0.92; border:1.5px dashed var(--border-strong); border-radius:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.35rem; cursor:pointer; background:var(--cream); transition:border-color .15s, background .15s; position:relative; padding:0.6rem; text-align:center; }
+  .slot:hover { border-color:var(--gold); background:#fff; }
+  .slot.filled { border-style:solid; cursor:default; }
+  .slot__plus { font-size:1.5rem; color:var(--gold); line-height:1; }
+  .slot__add { color:var(--ink-mute); font-size:0.86rem; }
+  .slot__thumb { width:42px; height:42px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; font-size:1.25rem; }
+  .slot__name { font-size:0.84rem; color:var(--ink); line-height:1.3; }
+  .slot__size { font-size:0.75rem; color:var(--ink-mute); }
+  .slot__price { font-size:0.8rem; color:var(--gold-dark); }
+  .slot__x { position:absolute; top:6px; right:8px; width:22px; height:22px; border-radius:50%; border:none; background:var(--cream-dark); color:var(--ink-soft); cursor:pointer; font-size:0.9rem; line-height:1; }
+  .slot__change { font-size:0.72rem; color:var(--gold-dark); text-decoration:underline; cursor:pointer; }
+
+  .totals { margin-top:1.4rem; border-top:1px solid var(--border); padding-top:1.1rem; }
+  .totals__row { display:flex; justify-content:space-between; align-items:baseline; font-size:0.92rem; color:var(--ink-soft); padding:0.25rem 0; }
+  .totals__row .v { color:var(--ink); }
+  .totals__row.disc .v { color:var(--gold-dark); }
+  .totals__sum { display:flex; justify-content:space-between; align-items:baseline; border-top:1px solid var(--border); margin-top:0.6rem; padding-top:0.8rem; }
+  .totals__sum .k { font-size:0.98rem; } .totals__sum .v { font-family:var(--font-display); font-size:1.4rem; }
+  .hint { text-align:center; font-size:0.84rem; color:var(--ink-mute); margin-top:0.6rem; }
+
+  /* 주문 폼 */
+  .order-form { margin-top:1.4rem; display:none; }
+  .order-form.on { display:block; }
+  .field { margin-bottom:1.3rem; }
+  .field__label { display:block; font-size:0.9rem; color:var(--ink); margin-bottom:0.5rem; }
+  .field__label .req { color:var(--gold-dark); }
+  .field__sub { color:var(--ink-mute); font-size:0.82rem; }
+  .field__hint { font-size:0.8rem; color:var(--ink-mute); margin-top:0.4rem; }
+  input, textarea { width:100%; font-family:var(--font-body); font-size:0.98rem; font-weight:300; color:var(--ink); background:var(--cream); border:1px solid var(--border-strong); padding:0.85rem 1rem; }
+  input:focus, textarea:focus { outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(139,111,71,0.12); }
+  input[readonly] { background:var(--cream-dark); color:var(--ink-soft); }
+  textarea { resize:vertical; min-height:80px; line-height:1.6; }
+  .field__err { display:none; color:#9a3b2e; font-size:0.82rem; margin-top:0.35rem; }
+  .field.invalid input { border-color:#9a3b2e; }
+  .field.invalid .field__err { display:block; }
+
+  .method-toggle { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:1.4rem; }
+  .method-opt { display:flex; flex-direction:column; align-items:center; gap:0.18rem; cursor:pointer; background:var(--cream); border:1px solid var(--border-strong); border-radius:10px; padding:0.9rem 0.7rem; transition:all .15s; }
+  .method-opt__icon { font-size:1.3rem; line-height:1; }
+  .method-opt__main { font-size:0.98rem; color:var(--ink); margin-top:0.22rem; }
+  .method-opt small { font-size:0.76rem; color:var(--ink-mute); }
+  .method-opt.sel { border-color:var(--gold); box-shadow:0 0 0 3px rgba(139,111,71,0.12); background:#fff; }
+  .method-opt.sel .method-opt__main { color:var(--gold-dark); font-weight:500; }
+  .pickup-note { display:flex; gap:0.7rem; align-items:flex-start; background:var(--cream-dark); border-left:3px solid var(--gold); padding:0.95rem 1.1rem; font-size:0.87rem; color:var(--ink-soft); line-height:1.6; margin-bottom:1.4rem; }
+  .pickup-note strong { color:var(--ink); }
+  .ship-block { border-top:1px dashed var(--border-strong); padding-top:1.4rem; margin-bottom:0.4rem; }
+  .same-check { display:flex; align-items:center; gap:0.55rem; margin-bottom:1.2rem; font-size:0.92rem; cursor:pointer; }
+  .same-check input { width:auto; margin:0; }
+  .addr-row { display:grid; grid-template-columns:1fr auto; gap:8px; }
+  .addr-row .btn-find { white-space:nowrap; padding:0 1.1rem; font-size:0.9rem; background:var(--ink); color:var(--cream); border:1px solid var(--ink); cursor:pointer; transition:all .2s; }
+  .addr-row .btn-find:hover { background:var(--gold-dark); border-color:var(--gold-dark); }
+
+  .btn { display:block; width:100%; padding:1rem; font-family:var(--font-body); font-size:0.98rem; letter-spacing:0.05em; background:var(--ink); color:var(--cream); border:1px solid var(--ink); border-radius:6px; cursor:pointer; transition:all .2s; margin-top:0.6rem; }
+  .btn:hover:not(:disabled) { background:var(--gold-dark); border-color:var(--gold-dark); }
+  .btn:disabled { opacity:0.45; cursor:default; }
+  .btn--start { margin-top:1rem; }
+  .privacy { text-align:center; font-size:0.8rem; color:var(--ink-mute); margin-top:1.2rem; line-height:1.6; }
+  .form-error { display:none; background:#f6e9e6; border:1px solid #d9b3aa; color:#7d2c20; font-size:0.88rem; padding:0.85rem 1rem; margin-top:1rem; }
+  .form-error.show { display:block; }
+
+  /* 완료 */
+  .done { display:none; }
+  .done.on { display:block; animation:fade .5s ease; }
+  @keyframes fade { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:none;} }
+  .stage.hide { display:none; }
+  .done__check { width:56px; height:56px; margin:0 auto 1.3rem; border:1px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--gold-dark); font-size:1.6rem; }
+  .done__num { text-align:center; font-family:var(--font-display); font-size:1.4rem; letter-spacing:0.04em; margin-bottom:0.4rem; }
+  .done__label { text-align:center; font-family:var(--font-latin); font-size:0.76rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:1.7rem; }
+  .summary { border:1px solid var(--border-strong); margin-bottom:1.6rem; }
+  .summary__row { display:flex; justify-content:space-between; gap:1rem; padding:0.8rem 1.2rem; font-size:0.9rem; border-bottom:1px solid var(--border); }
+  .summary__row:last-child { border-bottom:none; }
+  .summary__row .k { color:var(--ink-mute); white-space:nowrap; } .summary__row .v { color:var(--ink); text-align:right; }
+  .bank { background:var(--cream-dark); padding:1.3rem; margin-bottom:1.4rem; }
+  .bank__title { font-family:var(--font-display); font-size:1.05rem; margin-bottom:0.9rem; }
+  .bank__amount { display:flex; justify-content:space-between; align-items:baseline; padding-bottom:0.8rem; margin-bottom:0.6rem; border-bottom:1px solid var(--border-strong); }
+  .bank__amount strong { font-family:var(--font-display); font-size:1.3rem; color:var(--ink); }
+  .bank__row { display:flex; justify-content:space-between; font-size:0.9rem; padding:0.3rem 0; }
+  .bank__row .k { color:var(--ink-mute); } .bank__v { color:var(--ink); }
+  .bank__note { font-size:0.82rem; color:var(--ink-soft); margin-top:0.9rem; line-height:1.6; }
+
+  /* 모달 */
+  .picker { position:fixed; inset:0; background:rgba(42,31,20,0.45); display:none; align-items:flex-end; justify-content:center; z-index:50; }
+  .picker.on { display:flex; }
+  .picker__panel { background:var(--cream-light); width:100%; max-width:560px; max-height:80vh; border-radius:14px 14px 0 0; padding:1.3rem 1.2rem 1.6rem; overflow-y:auto; }
+  .picker__title { font-family:var(--font-display); font-size:1.1rem; text-align:center; margin-bottom:1rem; }
+  .pick-item { display:flex; align-items:center; gap:0.8rem; width:100%; text-align:left; padding:0.7rem 0.6rem; background:none; border:none; border-bottom:1px solid var(--border); cursor:pointer; font-family:var(--font-body); }
+  .pick-item:hover { background:var(--cream-dark); }
+  .pick-item__thumb { width:38px; height:38px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; font-size:1.15rem; flex:none; }
+  .pick-item__name { flex:1; font-size:0.92rem; color:var(--ink); }
+  .pick-item__size { color:var(--ink-mute); font-size:0.8rem; }
+  .pick-item__price { color:var(--gold-dark); font-size:0.9rem; }
+  .picker__close { display:block; width:100%; margin-top:1rem; padding:0.7rem; background:none; border:1px solid var(--border-strong); border-radius:6px; cursor:pointer; color:var(--ink-soft); }
+</style>
+</head>
+<body>
+  <div class="nav"><div class="nav__inner">
+    <a href="index.html" class="nav__back">← 영동에덴원</a>
+    <a href="index.html" class="nav__brand">Yeongdong Edenwon</a>
+  </div></div>
+
+  <div class="wrap">
+    <!-- 1단계: 구성 + 주문 -->
+    <div class="stage" id="buildStage">
+      <div class="eyebrow">Gift Set</div>
+      <h1 class="title">발효의 진심 선물세트</h1>
+      <p class="lede">추천 세트를 그대로, 또는 원하는 제품 네 가지를 직접 담아 보내실 수 있습니다.<br />선물세트는 합산 가격에서 <strong>5,000원 할인</strong>됩니다.</p>
+
+      <div id="loading" class="loading">상품을 불러오는 중…</div>
+
+      <div id="content" style="display:none;">
+        <div class="sec-title">추천 세트</div>
+        <div class="sec-sub">그대로 담거나, 담은 뒤 자유롭게 바꿀 수 있어요</div>
+        <div class="presets" id="presets"></div>
+
+        <div class="divider"></div>
+
+        <div class="sec-title">직접 구성</div>
+        <div class="sec-sub">빈 칸을 눌러 제품을 담아 주세요 · 한 세트 4종</div>
+        <div class="box">
+          <div class="box__grid" id="boxGrid"></div>
+          <div class="totals">
+            <div class="totals__row"><span>상품 합계</span><span class="v" id="amtSum">—</span></div>
+            <div class="totals__row disc"><span>선물 할인</span><span class="v">−5,000원</span></div>
+            <div class="totals__sum"><span class="k">세트 가격</span><span class="v" id="amtTotal">—</span></div>
+            <div class="hint" id="hint">제품 4종을 모두 담아 주세요 (0/4)</div>
+            <button class="btn btn--start" id="toOrderBtn" disabled>주문 정보 입력</button>
+          </div>
+
+          <!-- 주문 폼 -->
+          <div class="order-form" id="orderForm">
+            <div class="divider"></div>
+            <label class="field__label">수령 방법 <span class="req">*</span></label>
+            <div class="method-toggle">
+              <button type="button" class="method-opt sel" data-method="pickup"><span class="method-opt__icon">🤲</span><span class="method-opt__main">자가수령</span><small>직접 받으러 오기</small></button>
+              <button type="button" class="method-opt" data-method="delivery"><span class="method-opt__icon">📦</span><span class="method-opt__main">택배</span><small>집으로 받기</small></button>
+            </div>
+            <div class="pickup-note" id="notePickup"><span>📍</span><span><strong>자가 수령</strong> — 직접 받으러 오시는 분들을 위한 주문입니다. 주소는 받지 않으며, 배송비도 없습니다.</span></div>
+            <div class="pickup-note" id="noteDelivery" style="display:none;"><span>📦</span><span><strong>택배 발송</strong> — 입금 확인 후 보내 드립니다. 배송비 5,000원, <strong>상품 10만원 이상 무료</strong>. (제주·도서산간은 추가될 수 있습니다.)</span></div>
+
+            <div class="field" id="f-name">
+              <label class="field__label">주문자 성함 <span class="req">*</span></label>
+              <input type="text" id="name" maxlength="40" placeholder="성함" autocomplete="name" />
+              <div class="field__err">성함을 입력해 주세요.</div>
+            </div>
+            <div class="field" id="f-phone">
+              <label class="field__label">주문자 전화번호 <span class="req">*</span></label>
+              <input type="tel" id="phone" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" autocomplete="tel" />
+              <div class="field__err">전화번호를 정확히 입력해 주세요.</div>
+              <div class="field__hint">주문 조회 시 본인 확인에 사용됩니다.</div>
+            </div>
+
+            <div class="ship-block" id="shipBlock" style="display:none;">
+              <label class="same-check"><input type="checkbox" id="sameAsOrderer" checked /> 받는 분이 주문자와 동일합니다</label>
+              <div id="recipFields" style="display:none;">
+                <div class="field" id="f-rname"><label class="field__label">받는 분 성함 <span class="req">*</span></label><input type="text" id="recipName" maxlength="40" placeholder="선물 받는 분 성함" /><div class="field__err">받는 분 성함을 입력해 주세요.</div></div>
+                <div class="field" id="f-rphone"><label class="field__label">받는 분 연락처 <span class="req">*</span></label><input type="tel" id="recipPhone" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" /><div class="field__err">받는 분 연락처를 정확히 입력해 주세요.</div></div>
+              </div>
+              <div class="field" id="f-zip"><label class="field__label">우편번호 <span class="req">*</span></label><div class="addr-row"><input type="text" id="zip" readonly placeholder="주소 찾기를 눌러 주세요" /><button type="button" class="btn-find" id="findAddr">주소 찾기</button></div><div class="field__err">우편번호를 입력해 주세요.</div></div>
+              <div class="field" id="f-addr1"><label class="field__label">주소 <span class="req">*</span></label><input type="text" id="addr1" readonly placeholder="기본 주소" /><div class="field__err">주소를 입력해 주세요.</div></div>
+              <div class="field" id="f-addr2"><label class="field__label">상세주소 <span class="req">*</span></label><input type="text" id="addr2" maxlength="60" placeholder="동·호수 등 상세주소" /><div class="field__err">상세주소를 입력해 주세요.</div></div>
+            </div>
+
+            <div class="field" style="margin-bottom:0;">
+              <label class="field__label">요청사항 <span class="field__sub">(선택)</span></label>
+              <textarea id="memo" maxlength="500" placeholder="수령 희망 시기, 선물 메시지 등을 자유롭게 적어 주세요."></textarea>
+            </div>
+
+            <button class="btn" id="submitBtn">주문 접수하기</button>
+            <div class="form-error" id="formError"></div>
+            <p class="privacy">입력 정보는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다. 입력 정보는 이 기기에 저장되어 다음에 자동으로 채워집니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2단계: 완료 -->
+    <div class="done" id="doneStage">
+      <div class="done__check">✓</div>
+      <div class="done__num" id="orderNo">—</div>
+      <div class="done__label">Order Number · 주문번호</div>
+      <div class="summary" id="summaryBox"></div>
+      <div class="bank">
+        <div class="bank__title">입금 안내</div>
+        <div class="bank__amount"><span>입금하실 금액</span><strong id="payAmount">—</strong></div>
+        <div class="bank__row"><span class="k">은행</span><span class="bank__v">농협</span></div>
+        <div class="bank__row"><span class="k">계좌번호</span><span class="bank__v">3010294897501</span></div>
+        <div class="bank__row"><span class="k">예금주</span><span class="bank__v">농업회사법인 주식회사 에프엔엘바이오푸드</span></div>
+        <p class="bank__note">입금자명을 <strong>주문자 성함</strong>으로 해 주시면 확인이 빠릅니다. 입금이 확인되면 준비 후 <span id="fulfillWord">안내</span>를 드립니다. 주문번호로 <a href="order-status.html" style="color:var(--gold-dark);">주문 조회</a> 가능합니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제품 선택 모달 -->
+  <div class="picker" id="picker"><div class="picker__panel">
+    <div class="picker__title">제품 선택</div>
+    <div id="pickList"></div>
+    <button class="picker__close" id="pickClose">닫기</button>
+  </div></div>
+
+<script>
+  var API_BASE = (location.hostname.endsWith("yd-edenwon.com")) ? "https://api.yd-edenwon.com" : "";
+  var GIFT_DISCOUNT = 5000, SHIP_FEE = 5000, SHIP_FREE_OVER = 100000;
+  var EXCLUDE = ["jocheong"];                 // 선물세트에서 제외할 제품 (조청)
+  // 추천 세트: 제품 key 4개. 옵션은 첫 옵션으로 자동, 실제 사진은 준비되면 교체.
+  var PRESETS = [
+    { name:"장·잼 세트", keys:["gochujang","doenjang","jam","bibim-gochujang"] },
+    { name:"발효 장인 세트", keys:["vinegar","gochujang","doenjang","eoganjang"] }
+  ];
+  var EMOJI = { vinegar:"🫗", doenjang:"🟤", gochujang:"🌶️", eoganjang:"🐟", cheonggukjang:"🫘",
+    "bibim-doenjang":"🥢", "bibim-gochujang":"🥢", jam:"🍓", pea:"🌱", meju:"🧱" };
+
+  var CATALOG = [];     // [{key,name,emoji,options:[{id,label,price}]}]
+  var FLAT = [];        // 선택 가능한 (제품-옵션) 평탄화 목록
+  var slots = [null,null,null,null];  // FLAT 인덱스
+  var activeSlot = -1;
+  var orderMethod = "pickup";
+
+  var won = function(n){ return Number(n).toLocaleString("ko-KR") + "원"; };
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- 상품 로드 ----
+  (async function init(){
+    try {
+      var res = await fetch(API_BASE + "/api/products");
+      var data = await res.json();
+      if (!res.ok || !data.ok) throw new Error();
+      CATALOG = data.products
+        .filter(function(p){ return EXCLUDE.indexOf(p.key) < 0; })
+        .map(function(p){ return { key:p.key, name:p.name, emoji:(EMOJI[p.key]||"🫙"), options:p.options }; });
+      FLAT = [];
+      CATALOG.forEach(function(p){
+        p.options.forEach(function(o){ FLAT.push({ key:p.key, name:p.name, emoji:p.emoji, option:o.id, label:o.label, price:o.price }); });
+      });
+      $("loading").style.display = "none";
+      $("content").style.display = "block";
+      renderPresets(); renderBox(); renderTotal(); renderPicker(); fillProfile();
+    } catch(e) {
+      $("loading").textContent = "상품을 불러오지 못했습니다. 잠시 후 다시 시도하시거나 카카오톡으로 문의해 주세요.";
+    }
+  })();
+
+  function firstFlatIndexOfKey(key){
+    for (var i=0;i<FLAT.length;i++){ if (FLAT[i].key===key) return i; }
+    return -1;
+  }
+
+  // ---- 추천 세트 ----
+  function renderPresets(){
+    $("presets").innerHTML = PRESETS.map(function(p, pi){
+      var idxs = p.keys.map(firstFlatIndexOfKey).filter(function(i){ return i>=0; });
+      var sum = idxs.reduce(function(s,i){ return s+FLAT[i].price; },0);
+      var items = idxs.map(function(i){ return FLAT[i].name + " " + FLAT[i].label; }).join("<br />");
+      return '<div class="preset">'
+        + '<div class="preset__photo">실제 세트 사진<br />(준비되면 교체)</div>'
+        + '<div class="preset__name">'+p.name+'</div>'
+        + '<div class="preset__items">'+items+'</div>'
+        + '<div class="preset__price"><s>'+won(sum)+'</s>'+won(Math.max(0,sum-GIFT_DISCOUNT))+'</div>'
+        + '<button class="btn-ghost" data-preset="'+pi+'">이 구성으로 담기</button></div>';
+    }).join("");
+    document.querySelectorAll("[data-preset]").forEach(function(b){
+      b.addEventListener("click", function(){
+        var idxs = PRESETS[+b.dataset.preset].keys.map(firstFlatIndexOfKey).filter(function(i){ return i>=0; });
+        for (var i=0;i<4;i++){ slots[i] = idxs[i]!=null ? idxs[i] : null; }
+        renderBox(); renderTotal();
+        $("boxGrid").scrollIntoView({behavior:"smooth"});
+      });
+    });
+  }
+
+  // ---- 박스 ----
+  function renderBox(){
+    var html="";
+    for (var i=0;i<4;i++){
+      if (slots[i]==null){
+        html += '<div class="slot" data-slot="'+i+'"><span class="slot__plus">+</span><span class="slot__add">제품 담기</span></div>';
+      } else {
+        var p = FLAT[slots[i]];
+        html += '<div class="slot filled"><button class="slot__x" data-rm="'+i+'">×</button>'
+          + '<div class="slot__thumb">'+p.emoji+'</div>'
+          + '<div class="slot__name">'+p.name+'</div>'
+          + '<div class="slot__size">'+p.label+' · <span class="slot__price">'+won(p.price)+'</span></div>'
+          + '<span class="slot__change" data-slot="'+i+'">변경</span></div>';
+      }
+    }
+    $("boxGrid").innerHTML = html;
+    document.querySelectorAll("[data-slot]").forEach(function(el){ el.addEventListener("click", function(e){ e.stopPropagation(); openPicker(+el.dataset.slot); }); });
+    document.querySelectorAll("[data-rm]").forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); slots[+b.dataset.rm]=null; renderBox(); renderTotal(); }); });
+  }
+  function filledCount(){ return slots.filter(function(s){ return s!=null; }).length; }
+  function productSum(){ return slots.reduce(function(s,i){ return s + (i!=null?FLAT[i].price:0); },0); }
+  function renderTotal(){
+    var n=filledCount(), sum=productSum(), ready=(n===4);
+    $("amtSum").textContent = n? won(sum):"—";
+    $("amtTotal").textContent = ready? won(Math.max(0,sum-GIFT_DISCOUNT)):"—";
+    $("hint").style.display = ready? "none":"block";
+    $("hint").textContent = "제품 4종을 모두 담아 주세요 ("+n+"/4)";
+    $("toOrderBtn").disabled = !ready;
+  }
+
+  // ---- 제품 선택 모달 ----
+  function renderPicker(){
+    $("pickList").innerHTML = FLAT.map(function(p,i){
+      return '<button class="pick-item" data-pick="'+i+'"><span class="pick-item__thumb">'+p.emoji+'</span>'
+        + '<span class="pick-item__name">'+p.name+'</span><span class="pick-item__size">'+p.label+'</span>'
+        + '<span class="pick-item__price">'+won(p.price)+'</span></button>';
+    }).join("");
+    document.querySelectorAll("[data-pick]").forEach(function(b){
+      b.addEventListener("click", function(){ if (activeSlot>=0){ slots[activeSlot]=+b.dataset.pick; renderBox(); renderTotal(); } closePicker(); });
+    });
+  }
+  function openPicker(i){ activeSlot=i; $("picker").classList.add("on"); }
+  function closePicker(){ $("picker").classList.remove("on"); activeSlot=-1; }
+  $("pickClose").addEventListener("click", closePicker);
+  $("picker").addEventListener("click", function(e){ if (e.target===$("picker")) closePicker(); });
+
+  // ---- 주문 정보 입력 단계 ----
+  $("toOrderBtn").addEventListener("click", function(){
+    $("orderForm").classList.add("on");
+    this.style.display = "none";
+    $("orderForm").scrollIntoView({behavior:"smooth"});
+  });
+
+  // 수령 방법
+  document.querySelectorAll(".method-opt").forEach(function(b){
+    b.addEventListener("click", function(){
+      orderMethod = b.getAttribute("data-method");
+      document.querySelectorAll(".method-opt").forEach(function(x){ x.classList.remove("sel"); });
+      b.classList.add("sel");
+      var d = orderMethod==="delivery";
+      $("shipBlock").style.display = d?"block":"none";
+      $("notePickup").style.display = d?"none":"flex";
+      $("noteDelivery").style.display = d?"flex":"none";
+    });
+  });
+  $("sameAsOrderer").addEventListener("change", function(){ $("recipFields").style.display = this.checked?"none":"block"; });
+  $("findAddr").addEventListener("click", function(){
+    var zip=$("zip"), a1=$("addr1"), a2=$("addr2");
+    if (typeof daum==="undefined" || !daum.Postcode){ zip.removeAttribute("readonly"); a1.removeAttribute("readonly"); zip.placeholder="우편번호 직접 입력"; a1.placeholder="주소 직접 입력"; zip.focus(); return; }
+    new daum.Postcode({ oncomplete:function(d){ zip.value=d.zonecode; a1.value=d.roadAddress||d.jibunAddress; a2.focus(); } }).open();
+  });
+
+  // 인적사항 기억 (order/cart와 동일 저장소)
+  var PROFILE_KEY = "edenwon_profile";
+  function fillProfile(){
+    try { var p = JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"); } catch(e){ return; }
+    if (!p) return;
+    if (p.name) $("name").value = p.name;
+    if (p.phone) $("phone").value = p.phone;
+    if (p.recipSame === false){ $("sameAsOrderer").checked=false; $("recipFields").style.display="block"; if(p.recipName)$("recipName").value=p.recipName; if(p.recipPhone)$("recipPhone").value=p.recipPhone; }
+    if (p.zip) $("zip").value=p.zip; if (p.addr1) $("addr1").value=p.addr1; if (p.addr2) $("addr2").value=p.addr2;
+    if (p.method==="delivery"){ var db=document.querySelector('.method-opt[data-method="delivery"]'); if(db) db.click(); }
+  }
+  function saveProfile(){
+    var p = { name:$("name").value.trim(), phone:$("phone").value.trim(), method:orderMethod,
+      recipSame:$("sameAsOrderer").checked, recipName:$("recipName").value.trim(), recipPhone:$("recipPhone").value.trim(),
+      zip:$("zip").value.trim(), addr1:$("addr1").value.trim(), addr2:$("addr2").value.trim() };
+    if (!p.name && !p.phone) return;
+    try { localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); } catch(e){}
+  }
+
+  // ---- 제출 ----
+  $("submitBtn").addEventListener("click", async function(){
+    var err=$("formError"); err.classList.remove("show");
+    if (filledCount()!==4){ err.innerHTML="제품 4종을 모두 담아 주세요."; err.classList.add("show"); return; }
+    var name=$("name").value.trim(), digits=$("phone").value.replace(/\D/g,"");
+    var nameOk=name.length>0, phoneOk=digits.length>=10 && digits.length<=11;
+    $("f-name").classList.toggle("invalid", !nameOk);
+    $("f-phone").classList.toggle("invalid", !phoneOk);
+    var delivOk=true, deliv={ method:orderMethod, recipient_name:"", recipient_phone:"", zip:"", address1:"", address2:"" };
+    if (orderMethod==="delivery"){
+      var same=$("sameAsOrderer").checked;
+      var rName=same?name:$("recipName").value.trim(), rPhone=same?digits:$("recipPhone").value.replace(/\D/g,"");
+      var zipv=$("zip").value.trim(), a1=$("addr1").value.trim(), a2=$("addr2").value.trim();
+      var rNameOk=rName.length>0, rPhoneOk=rPhone.length>=10&&rPhone.length<=11, zipOk=zipv.length>0, a1Ok=a1.length>0, a2Ok=a2.length>0;
+      if (!same){ $("f-rname").classList.toggle("invalid",!rNameOk); $("f-rphone").classList.toggle("invalid",!rPhoneOk); }
+      $("f-zip").classList.toggle("invalid",!zipOk); $("f-addr1").classList.toggle("invalid",!a1Ok); $("f-addr2").classList.toggle("invalid",!a2Ok);
+      delivOk = rNameOk&&rPhoneOk&&zipOk&&a1Ok&&a2Ok;
+      deliv = { method:"delivery", recipient_name:rName, recipient_phone:rPhone, zip:zipv, address1:a1, address2:a2 };
+    }
+    if (!(nameOk&&phoneOk&&delivOk)){ var f=document.querySelector(".field.invalid input"); if(f)f.focus(); return; }
+
+    var items = slots.map(function(i){ return { product:FLAT[i].key, option:FLAT[i].option, count:1 }; });
+    var btn=this; btn.disabled=true; btn.textContent="접수 중…";
+    try {
+      var res = await fetch(API_BASE + "/api/cart-order", {
+        method:"POST", headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ name:name, phone:$("phone").value.trim(), memo:$("memo").value.trim(),
+          gift:true, items:items, method:deliv.method, recipient_name:deliv.recipient_name,
+          recipient_phone:deliv.recipient_phone, zip:deliv.zip, address1:deliv.address1, address2:deliv.address2 })
+      });
+      var data = await res.json();
+      if (!res.ok || !data.ok){ btn.disabled=false; btn.textContent="주문 접수하기"; err.innerHTML=data.error||"주문 접수 중 문제가 발생했습니다."; err.classList.add("show"); return; }
+      saveProfile();
+      // 완료 화면
+      var isDeliv = data.method==="delivery";
+      var rows = slots.map(function(i){ var p=FLAT[i]; return '<div class="summary__row"><span class="k">'+p.name+'</span><span class="v">'+p.label+'</span></div>'; });
+      rows.push('<div class="summary__row"><span class="k">수령 방법</span><span class="v">'+(isDeliv?"📦 택배":"🤲 자가수령")+'</span></div>');
+      if (isDeliv){
+        var recip = deliv.recipient_name + ((deliv.recipient_phone && deliv.recipient_phone!==digits)?(" · "+deliv.recipient_phone):"");
+        rows.push('<div class="summary__row"><span class="k">받는 분</span><span class="v">'+recip+'</span></div>');
+        rows.push('<div class="summary__row"><span class="k">배송지</span><span class="v">('+deliv.zip+') '+deliv.address1+' '+deliv.address2+'</span></div>');
+        rows.push('<div class="summary__row"><span class="k">배송비</span><span class="v">'+(data.shipping_fee?won(data.shipping_fee):"무료")+'</span></div>');
+      }
+      rows.push('<div class="summary__row"><span class="k" style="color:var(--gold-dark);">선물 할인</span><span class="v" style="color:var(--gold-dark);">−'+won(data.gift_discount||GIFT_DISCOUNT)+'</span></div>');
+      $("summaryBox").innerHTML = rows.join("");
+      $("orderNo").textContent = data.order_no;
+      $("payAmount").textContent = won(data.pay_amount!=null?data.pay_amount:data.amount);
+      $("fulfillWord").textContent = isDeliv?"택배 발송":"수령 안내";
+      $("buildStage").classList.add("hide");
+      $("doneStage").classList.add("on");
+      window.scrollTo({top:0,behavior:"smooth"});
+    } catch(e){ btn.disabled=false; btn.textContent="주문 접수하기"; err.innerHTML="지금 주문 접수가 어렵습니다. 잠시 후 다시 시도해 주세요."; err.classList.add("show"); }
+  });
+</script>
+</body>
+</html>
