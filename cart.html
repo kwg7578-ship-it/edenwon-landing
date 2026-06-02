@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <!-- 카카오(다음) 우편번호 서비스 — 택배 주소 입력용 -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <style>
     :root {
       --cream:#F4EDE0; --cream-light:#FBF7EF; --cream-dark:#E8DFCC;
@@ -70,6 +72,32 @@
     .field.invalid input { border-color: #c0392b; }
     .field__err { display: none; color: #c0392b; font-size: 0.82rem; margin-top: 0.35rem; }
     .field.invalid .field__err { display: block; }
+
+    /* 수령 방법 토글 */
+    .method-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 1.4rem; }
+    .method-opt { display: flex; flex-direction: column; align-items: center; gap: 0.18rem;
+      font-family: var(--font-body); cursor: pointer; background: var(--cream);
+      border: 1px solid var(--border-strong); border-radius: 10px; padding: 0.9rem 0.7rem;
+      transition: border-color .15s, box-shadow .15s, background .15s; }
+    .method-opt__icon { font-size: 1.3rem; line-height: 1; }
+    .method-opt__main { font-size: 0.98rem; color: var(--ink); margin-top: 0.22rem; }
+    .method-opt small { font-size: 0.76rem; color: var(--ink-mute); }
+    .method-opt.sel { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(139,111,71,0.12); background: #fff; }
+    .method-opt.sel .method-opt__main { color: var(--gold-dark); font-weight: 500; }
+    .pickup-note { display: flex; gap: 0.7rem; align-items: flex-start; background: var(--cream-dark);
+      border-left: 3px solid var(--gold); padding: 0.95rem 1.1rem; font-size: 0.87rem;
+      color: var(--ink-soft); line-height: 1.6; margin-bottom: 1.5rem; }
+    .pickup-note strong { color: var(--ink); font-weight: 700; }
+    .ship-block { border-top: 1px dashed var(--border-strong); padding-top: 1.4rem; margin-bottom: 0.4rem; }
+    .ship-block__title { font-family: var(--font-display); font-size: 1.02rem; margin-bottom: 1.05rem; }
+    .same-check { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 1.2rem;
+      font-size: 0.92rem; color: var(--ink); cursor: pointer; }
+    .same-check input { width: auto; margin: 0; }
+    .addr-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+    .addr-row .btn-find { white-space: nowrap; padding: 0 1.1rem; font-size: 0.9rem;
+      background: var(--ink); color: var(--cream); border: 1px solid var(--ink); cursor: pointer; transition: all .2s ease; }
+    .addr-row .btn-find:hover { background: var(--gold-dark); border-color: var(--gold-dark); }
+    .ship-hint { font-size: 0.8rem; color: var(--gold-dark); margin-top: 0.5rem; margin-bottom: 0.5rem; line-height: 1.5; text-align: right; }
     .aff-fields { margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-strong); }
     .aff-fields.empty { display: none; }
     .aff-note { font-size: 0.8rem; color: var(--gold-dark); margin-top: 0.55rem; line-height: 1.5; }
@@ -203,7 +231,7 @@
     </button>
     <nav class="site-nav" id="siteNav">
       <ul class="site-nav__links">
-        <li><a href="story.html">영동에덴원 이야기</a></li>
+        <li><a href="story.html">브랜드 이야기</a></li>
         <li><a href="products.html">제품</a></li>
         <li><a href="gallery.html">갤러리</a></li>
         <li><a href="products.html">주문</a></li>
@@ -222,11 +250,34 @@
       <div id="cartList"></div>
 
       <div id="orderArea" style="display:none;">
+        <label class="field__label">수령 방법 <span class="req">*</span></label>
+        <div class="method-toggle">
+          <button type="button" class="method-opt sel" data-method="pickup">
+            <span class="method-opt__icon">🤲</span><span class="method-opt__main">자가수령</span><small>직접 받으러 오기</small>
+          </button>
+          <button type="button" class="method-opt" data-method="delivery">
+            <span class="method-opt__icon">📦</span><span class="method-opt__main">택배</span><small>집으로 받기</small>
+          </button>
+        </div>
+        <div class="pickup-note" id="notePickup">
+          <span>📍</span>
+          <span><strong>자가 수령</strong> — 직접 받으러 오시는 분들을 위한 주문입니다. 주소는 받지 않으며, 배송비도 없습니다.</span>
+        </div>
+        <div class="pickup-note" id="noteDelivery" style="display:none;">
+          <span>📦</span>
+          <span><strong>택배 발송</strong> — 입금 확인 후 보내 드립니다. 배송비 5,000원, <strong>상품 10만원 이상 무료</strong>. (제주·도서산간은 추가될 수 있습니다.)</span>
+        </div>
+
         <div class="subtotal">
           <span>합계 <span style="font-size:0.78rem;color:var(--ink-mute);">(정가 기준)</span></span>
           <b id="subtotal">0원</b>
         </div>
         <div class="subtotal-note" id="discNote">신분 할인은 주문 단계에서 적용됩니다.</div>
+        <div class="subtotal" id="shipLine" style="display:none;">
+          <span>배송비 <span style="font-size:0.78rem;color:var(--ink-mute);">(예상)</span></span>
+          <b id="shipAmt" style="font-size:1.1rem;">—</b>
+        </div>
+        <div class="ship-hint" id="shipHint" style="display:none;"></div>
 
         <div class="divider"></div>
 
@@ -239,6 +290,44 @@
           <label class="field__label">연락처 <span class="req">*</span></label>
           <input type="tel" id="phone" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" autocomplete="tel" />
           <div class="field__err">연락처를 정확히 입력해 주세요.</div>
+        </div>
+
+        <!-- 배송 정보 (택배 선택 시에만) -->
+        <div class="ship-block" id="shipBlock" style="display:none;">
+          <div class="ship-block__title">배송 정보</div>
+          <label class="same-check">
+            <input type="checkbox" id="sameAsOrderer" checked /> 받는 분이 주문자와 동일합니다
+          </label>
+          <div id="recipFields" style="display:none;">
+            <div class="field" id="f-rname">
+              <label class="field__label">받는 분 성함 <span class="req">*</span></label>
+              <input type="text" id="recipName" maxlength="40" placeholder="선물 받는 분 성함" />
+              <div class="field__err">받는 분 성함을 입력해 주세요.</div>
+            </div>
+            <div class="field" id="f-rphone">
+              <label class="field__label">받는 분 연락처 <span class="req">*</span></label>
+              <input type="tel" id="recipPhone" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" />
+              <div class="field__err">받는 분 연락처를 정확히 입력해 주세요.</div>
+            </div>
+          </div>
+          <div class="field" id="f-zip">
+            <label class="field__label">우편번호 <span class="req">*</span></label>
+            <div class="addr-row">
+              <input type="text" id="zip" readonly placeholder="주소 찾기를 눌러 주세요" />
+              <button type="button" class="btn-find" id="findAddr">주소 찾기</button>
+            </div>
+            <div class="field__err">우편번호를 입력해 주세요.</div>
+          </div>
+          <div class="field" id="f-addr1">
+            <label class="field__label">주소 <span class="req">*</span></label>
+            <input type="text" id="addr1" readonly placeholder="기본 주소" />
+            <div class="field__err">주소를 입력해 주세요.</div>
+          </div>
+          <div class="field" id="f-addr2">
+            <label class="field__label">상세주소 <span class="req">*</span></label>
+            <input type="text" id="addr2" maxlength="60" placeholder="동·호수 등 상세주소" />
+            <div class="field__err">상세주소를 입력해 주세요.</div>
+          </div>
         </div>
 
         <div class="field" id="f-aff">
@@ -282,6 +371,10 @@
         <div class="summary__row"><span class="k">주문 내역</span><span class="v" id="doneItems">—</span></div>
         <div class="summary__row"><span class="k">주문일</span><span class="v" id="doneDate">—</span></div>
         <div class="summary__row"><span class="k">상태</span><span class="v" id="doneStatus">—</span></div>
+        <div class="summary__row"><span class="k">수령 방법</span><span class="v" id="doneMethod">—</span></div>
+        <div class="summary__row" id="doneRecipRow" style="display:none;"><span class="k">받는 분</span><span class="v" id="doneRecip">—</span></div>
+        <div class="summary__row" id="doneAddrRow" style="display:none;"><span class="k">배송지</span><span class="v" id="doneAddr">—</span></div>
+        <div class="summary__row" id="doneShipRow" style="display:none;"><span class="k">배송비</span><span class="v" id="doneShip">—</span></div>
         <div class="summary__row" id="doneDiscRow" style="display:none;"><span class="k">할인</span><span class="v" style="color:var(--gold-dark);">신분 할인 적용됨</span></div>
         <div class="summary__row" style="border-top:1px solid var(--border);margin-top:0.4rem;padding-top:0.7rem;"><span class="k">입금하실 금액</span><span class="v" id="donePay" style="font-family:var(--font-display);font-size:1.2rem;">—</span></div>
       </div>
@@ -354,10 +447,30 @@
       recalcSubtotal();
     }
 
+    // 수령 방법 / 배송비 (정가 기준 추정 — 최종 금액은 서버가 확정)
+    var SHIP_FEE = 5000, SHIP_FREE_OVER = 100000;
+    var orderMethod = "pickup";
+    var subtotalNum = 0;
+    function renderShip() {
+      var deliver = orderMethod === "delivery";
+      var ship = deliver ? (subtotalNum >= SHIP_FREE_OVER ? 0 : SHIP_FEE) : 0;
+      var sl = document.getElementById("shipLine"), sh = document.getElementById("shipHint");
+      if (deliver) {
+        sl.style.display = "flex";
+        document.getElementById("shipAmt").innerHTML = ship ? won(ship) : '<span style="color:var(--gold-dark)">무료</span>';
+        if (subtotalNum > 0 && subtotalNum < SHIP_FREE_OVER) {
+          sh.style.display = "block";
+          sh.textContent = "10만원 이상 무료배송 · " + won(SHIP_FREE_OVER - subtotalNum) + " 더 담으면 무료";
+        } else { sh.style.display = "none"; }
+      } else {
+        sl.style.display = "none"; sh.style.display = "none";
+      }
+    }
     function recalcSubtotal() {
       var items = window.EdenwonCart.read();
-      var sum = items.reduce(function (s, it) { return s + it.unitRegular * it.count; }, 0);
-      subtotalEl.textContent = won(sum);
+      subtotalNum = items.reduce(function (s, it) { return s + it.unitRegular * it.count; }, 0);
+      subtotalEl.textContent = won(subtotalNum);
+      renderShip();
     }
 
     function esc(t) {
@@ -458,6 +571,39 @@
       link.style.display = (p && (p.name || p.phone)) ? "inline" : "none";
     }
 
+    // ===== 수령 방법 / 배송(택배) =====
+    (function () {
+      var shipBlock = document.getElementById("shipBlock");
+      var notePickup = document.getElementById("notePickup");
+      var noteDelivery = document.getElementById("noteDelivery");
+      document.querySelectorAll(".method-opt").forEach(function (b) {
+        b.addEventListener("click", function () {
+          orderMethod = b.getAttribute("data-method");
+          document.querySelectorAll(".method-opt").forEach(function (x) { x.classList.remove("sel"); });
+          b.classList.add("sel");
+          var deliver = orderMethod === "delivery";
+          shipBlock.style.display = deliver ? "block" : "none";
+          notePickup.style.display = deliver ? "none" : "flex";
+          noteDelivery.style.display = deliver ? "flex" : "none";
+          renderShip();
+        });
+      });
+      document.getElementById("sameAsOrderer").addEventListener("change", function () {
+        document.getElementById("recipFields").style.display = this.checked ? "none" : "block";
+      });
+      document.getElementById("findAddr").addEventListener("click", function () {
+        var zip = document.getElementById("zip"), a1 = document.getElementById("addr1"), a2 = document.getElementById("addr2");
+        if (typeof daum === "undefined" || !daum.Postcode) {
+          zip.removeAttribute("readonly"); a1.removeAttribute("readonly");
+          zip.placeholder = "우편번호 직접 입력"; a1.placeholder = "주소 직접 입력"; zip.focus();
+          return;
+        }
+        new daum.Postcode({ oncomplete: function (d) {
+          zip.value = d.zonecode; a1.value = d.roadAddress || d.jibunAddress; a2.focus();
+        }}).open();
+      });
+    })();
+
     // 제출
     document.getElementById("submitBtn").addEventListener("click", async function () {
       var errBox = document.getElementById("formError");
@@ -479,7 +625,32 @@
       var sidOk = true, deptOk = true;
       if (needs.indexOf("student_id") >= 0) { sidOk = /^\d{9}$/.test(studentId.value.trim()); fSid.classList.toggle("invalid", !sidOk); }
       if (needs.indexOf("department") >= 0) { deptOk = department.value.trim().length > 0; fDept.classList.toggle("invalid", !deptOk); }
-      if (!(nameOk && phoneOk && sidOk && deptOk)) {
+
+      // 배송(택배) 검증
+      var delivOk = true;
+      var deliv = { method: orderMethod, recipient_name: "", recipient_phone: "", zip: "", address1: "", address2: "" };
+      if (orderMethod === "delivery") {
+        var same = document.getElementById("sameAsOrderer").checked;
+        var rName = same ? name : document.getElementById("recipName").value.trim();
+        var rPhone = same ? digits : document.getElementById("recipPhone").value.replace(/\D/g, "");
+        var zipv = document.getElementById("zip").value.trim();
+        var a1 = document.getElementById("addr1").value.trim();
+        var a2 = document.getElementById("addr2").value.trim();
+        var rNameOk = rName.length > 0;
+        var rPhoneOk = rPhone.length >= 10 && rPhone.length <= 11;
+        var zipOk = zipv.length > 0, a1Ok = a1.length > 0, a2Ok = a2.length > 0;
+        if (!same) {
+          document.getElementById("f-rname").classList.toggle("invalid", !rNameOk);
+          document.getElementById("f-rphone").classList.toggle("invalid", !rPhoneOk);
+        }
+        document.getElementById("f-zip").classList.toggle("invalid", !zipOk);
+        document.getElementById("f-addr1").classList.toggle("invalid", !a1Ok);
+        document.getElementById("f-addr2").classList.toggle("invalid", !a2Ok);
+        delivOk = rNameOk && rPhoneOk && zipOk && a1Ok && a2Ok;
+        deliv = { method: "delivery", recipient_name: rName, recipient_phone: rPhone, zip: zipv, address1: a1, address2: a2 };
+      }
+
+      if (!(nameOk && phoneOk && sidOk && deptOk && delivOk)) {
         var first = document.querySelector(".field.invalid input"); if (first) first.focus(); return;
       }
 
@@ -490,6 +661,12 @@
           student_id: (needs.indexOf("student_id") >= 0) ? studentId.value.trim() : "",
           department: (needs.indexOf("department") >= 0) ? department.value.trim() : "",
           memo: document.getElementById("memo").value.trim(),
+          method: deliv.method,
+          recipient_name: deliv.recipient_name,
+          recipient_phone: deliv.recipient_phone,
+          zip: deliv.zip,
+          address1: deliv.address1,
+          address2: deliv.address2,
           items: items.map(function (it) { return { product: it.product, option: it.option, count: it.count }; })
         };
         var res = await fetch(API_BASE + "/api/cart-order", {
@@ -506,8 +683,21 @@
           data.items.map(function (it) { return it.product + " " + it.option_label + " ×" + it.count; }).join(", ");
         document.getElementById("doneDate").textContent = data.created_at;
         document.getElementById("doneStatus").textContent = data.status;
-        document.getElementById("donePay").textContent = won(data.amount);
+        document.getElementById("donePay").textContent =
+          won(data.pay_amount != null ? data.pay_amount : data.amount);
         document.getElementById("doneDiscRow").style.display = data.discounted ? "flex" : "none";
+        // 수령 방법 / 배송 정보
+        var isDeliv = data.method === "delivery";
+        document.getElementById("doneMethod").textContent = isDeliv ? "📦 택배" : "🤲 자가수령";
+        if (isDeliv) {
+          document.getElementById("doneRecipRow").style.display = "flex";
+          document.getElementById("doneRecip").textContent =
+            deliv.recipient_name + ((deliv.recipient_phone && deliv.recipient_phone !== digits) ? (" · " + deliv.recipient_phone) : "");
+          document.getElementById("doneAddrRow").style.display = "flex";
+          document.getElementById("doneAddr").textContent = "(" + deliv.zip + ") " + deliv.address1 + " " + deliv.address2;
+          document.getElementById("doneShipRow").style.display = "flex";
+          document.getElementById("doneShip").textContent = data.shipping_fee ? won(data.shipping_fee) : "무료";
+        }
         saveProfile();
         // 장바구니 비우기
         window.EdenwonCart.write([]);
