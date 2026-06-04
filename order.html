@@ -1342,6 +1342,10 @@
         if (!j || j.ok === false || !j.order_no) return;
         var total = (j.pay_amount != null) ? j.pay_amount
                   : ((j.amount || 0) + (j.shipping_fee || 0));
+        var ph = (document.getElementById("phone") || {}).value || "";
+        _f(PAY_API + "/api/payment/intent", { method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ order_no: j.order_no, phone: ph }) }).catch(function () {});
         try {
           var bank = document.querySelector("#doneStage .bank");
           if (bank) {
@@ -1363,13 +1367,27 @@
             failUrl: PAY_API + "/payment/fail"
           })
           .catch(function () {
-            try {
+            _f(PAY_API + "/api/payment/abandon", { method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ order_no: j.order_no, phone: ph }) })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
               var go = document.getElementById("cardGoing");
               var bank = document.querySelector("#doneStage .bank");
-              if (go) go.textContent =
-                "카드 결제가 취소되었습니다. 아래 무통장 입금으로 진행하시거나, 페이지를 새로고침해 다시 시도해 주세요.";
+              if (res && res.ok) {
+                if (go) go.innerHTML = "카드 결제가 취소되어 <b>주문도 함께 취소</b>되었습니다."
+                  + "<br><a href='javascript:location.reload()' style='display:inline-block;margin-top:12px;"
+                  + "padding:11px 20px;background:#2A1F14;color:#F4EDE0;border-radius:9px;"
+                  + "text-decoration:none;font-weight:700;'>다시 주문하기</a>";
+              } else {
+                if (go) go.textContent = "카드 결제가 취소되었습니다. 아래 무통장 입금으로 진행해 주세요.";
+                if (bank) bank.style.display = "";
+              }
+            })
+            .catch(function () {
+              var bank = document.querySelector("#doneStage .bank");
               if (bank) bank.style.display = "";
-            } catch (e) {}
+            });
           });
       }).catch(function () {});
     }
