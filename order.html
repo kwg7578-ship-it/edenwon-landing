@@ -1224,19 +1224,26 @@
 <!-- 사용법: 닫는 body 태그 바로 앞(장바구니 위젯 뒤)에 그대로 삽입.
      기능: 1) 주문 전송에 회원 세션 자동 동반  2) 주문 성공 시 회원 주문 자동 연결(적립 대상)
            3) 좌하단 회원 상태 칩 -->
-<style>
-  .member-chip { position:fixed; left:14px; bottom:14px; z-index:9000;
-    background:#2A1F14; color:#F4EDE0; padding:9px 14px; border-radius:999px;
-    font-size:.85rem; text-decoration:none; box-shadow:0 3px 10px rgba(42,31,20,.25);
-    display:none; align-items:center; gap:6px; }
-  .member-chip.show { display:flex; }
-</style>
-<a class="member-chip" id="memberChip" href="#"></a>
+
 <script>
 (function () {
   var MEMBER_API = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
     ? "https://api.yd-edenwon.com" : "";
-  var chip = document.getElementById("memberChip");
+  var dock = document.querySelector(".cart-dock");
+  var fab = document.createElement("a");
+  fab.className = "status-fab member-fab";
+  fab.id = "memberFab";
+  fab.style.display = "none";
+  fab.innerHTML = '<span class="status-fab__icon">\uD83C\uDF31</span>'
+    + '<span class="status-fab__label"></span>';
+  if (dock) { dock.appendChild(fab); }
+  else {
+    var dk = document.createElement("div");
+    dk.className = "cart-dock";
+    dk.appendChild(fab);
+    document.body.appendChild(dk);
+  }
+  var fabLabel = fab.querySelector(".status-fab__label");
 
   // 1) 주문 전송에 세션 동반 + 성공 시 회원 주문 자동 연결
   var _fetch = window.fetch;
@@ -1272,14 +1279,16 @@
     .then(function (r) { return r.json(); })
     .then(function (j) {
       if (j && j.ok) {
-        chip.textContent = "\uD83C\uDF31 " + j.account.name + "님 · 주문 시 " + rate + "% 적립";
-        chip.href = MEMBER_API + "/mypage";
+        fabLabel.textContent = "적립 " + rate + "%";
+        fab.title = j.account.name + "님 · 마이페이지";
+        fab.href = MEMBER_API + "/mypage";
       } else {
-        chip.textContent = "로그인하고 주문하면 " + rate + "% 적립";
-        chip.href = MEMBER_API + "/login?next="
+        fabLabel.textContent = "로그인";
+        fab.title = "로그인하고 주문하면 " + rate + "% 적립";
+        fab.href = MEMBER_API + "/login?next="
           + encodeURIComponent("https://yd-edenwon.com" + location.pathname + location.search);
       }
-      chip.classList.add("show");
+      fab.style.display = "";
     })
     .catch(function () {});
 })();
