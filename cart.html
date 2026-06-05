@@ -1034,5 +1034,220 @@
 </script>
 <!-- ===== 회원 위젯 끝 ===== -->
 
+<!-- ===== 영동에덴원 카드결제 위젯 (토스페이먼츠) ===== -->
+<script src="https://js.tosspayments.com/v2/standard"></script>
+<style>
+  .pay-method { margin:18px 0 6px; padding:14px; background:#fffdf9;
+    border:1.5px solid #d9cfc0; border-radius:12px; }
+  .pay-method .pm-title { font-weight:700; font-size:.95rem; margin-bottom:8px; color:#2A1F14; }
+  .pay-method label { display:flex; align-items:center; gap:9px; padding:7px 2px;
+    font-size:.95rem; cursor:pointer; color:#2A1F14; }
+  .pay-method input { width:19px; height:19px; accent-color:#8B6F47; }
+  .pay-method .pm-note { font-size:.8rem; color:#8a7a64; margin-top:6px; }
+  .card-going { text-align:center; padding:16px 0 4px; font-size:.95rem; color:#2A1F14; }
+</style>
+<script>
+(function () {
+  var PAY_API = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
+    ? "https://api.yd-edenwon.com" : "";
+  var btn = document.getElementById("submitBtn");
+  if (!btn) return;
+
+  var box = document.createElement("div");
+  box.className = "pay-method";
+  box.innerHTML = '<div class="pm-title">결제 방법</div>'
+    + '<label><input type="radio" name="payMethod" value="bank" checked> 무통장 입금 (계좌이체)</label>'
+    + '<label id="pmCard"><input type="radio" name="payMethod" value="card"> 카드 결제 '
+    + '<span style="font-size:.78rem;color:#8B6F47;">(신용·체크카드)</span></label>'
+    + '<div class="pm-note" id="pmNote"></div>';
+  btn.parentNode.insertBefore(box, btn);
+
+  var tossPayments = null;
+  fetch(PAY_API + "/api/payment/config")
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      if (j.ok && window.TossPayments) {
+        tossPayments = TossPayments(j.client_key);
+        if (j.mode === "test")
+          document.getElementById("pmNote").textContent =
+            "카드 결제는 현재 테스트 모드입니다 (실제 청구 없음).";
+      } else { document.getElementById("pmCard").style.display = "none"; }
+    })
+    .catch(function () { document.getElementById("pmCard").style.display = "none"; });
+
+  function payMethod() {
+    var el = document.querySelector('input[name="payMethod"]:checked');
+    return el ? el.value : "bank";
+  }
+
+  var _f = window.fetch;
+  window.fetch = function (url, init) {
+    var u = String(url);
+    var isOrder = u.indexOf("/api/orders") > -1 || u.indexOf("/api/cart-order") > -1;
+    var p = _f(url, init);
+    if (isOrder && payMethod() === "card" && tossPayments) {
+      p.then(function (r) { return r.clone().json(); }).then(function (j) {
+        if (!j || j.ok === false || !j.order_no) return;
+        var total = (j.pay_amount != null) ? j.pay_amount
+                  : ((j.amount || 0) + (j.shipping_fee || 0));
+        var ph = (document.getElementById("phone") || {}).value || "";
+        _f(PAY_API + "/api/payment/intent", { method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ order_no: j.order_no, phone: ph }) }).catch(function () {});
+        try {
+          var bank = document.querySelector("#doneStage .bank");
+          if (bank) {
+            bank.style.display = "none";
+            var go = document.createElement("div");
+            go.className = "card-going";
+            go.id = "cardGoing";
+            go.textContent = "카드 결제창으로 이동합니다… 결제를 완료해 주세요.";
+            bank.parentNode.insertBefore(go, bank);
+          }
+        } catch (e) {}
+        (window.__edenPointsRequest
+          ? window.__edenPointsRequest(j.order_no, total)
+          : Promise.resolve(total)).then(function (finalTotal) {
+        tossPayments.payment({ customerKey: TossPayments.ANONYMOUS })
+          .requestPayment({
+            method: "CARD",
+            amount: { currency: "KRW", value: finalTotal },
+            orderId: j.order_no,
+            orderName: (j.product || "영동에덴원") + " 주문",
+            successUrl: PAY_API + "/payment/success",
+            failUrl: PAY_API + "/payment/fail"
+          })
+          .catch(function () {
+            _f(PAY_API + "/api/payment/abandon", { method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ order_no: j.order_no, phone: ph }) })
+            .then(function (r) { return r.json(); })
+            .then(function (res) {
+              var go = document.getElementById("cardGoing");
+              var bank = document.querySelector("#doneStage .bank");
+              if (res && res.ok) {
+                if (go) go.innerHTML = "카드 결제가 취소되어 <b>주문도 함께 취소</b>되었습니다."
+                  + "<br><a href='javascript:location.reload()' style='display:inline-block;margin-top:12px;"
+                  + "padding:11px 20px;background:#2A1F14;color:#F4EDE0;border-radius:9px;"
+                  + "text-decoration:none;font-weight:700;'>다시 주문하기</a>";
+              } else {
+                if (go) go.textContent = "카드 결제가 취소되었습니다. 아래 무통장 입금으로 진행해 주세요.";
+                if (bank) bank.style.display = "";
+              }
+            })
+            .catch(function () {
+              var bank = document.querySelector("#doneStage .bank");
+              if (bank) bank.style.display = "";
+            });
+          });
+        });
+      }).catch(function () {});
+    }
+    return p;
+  };
+})();
+</script>
+<!-- ===== 카드결제 위젯 끝 ===== -->
+
+<!-- ===== 영동에덴원 적립금 사용 위젯 ===== -->
+<style>
+  .points-box { margin:14px 0 6px; padding:13px 14px; background:#fffdf9;
+    border:1.5px solid #d9cfc0; border-radius:12px; display:none; }
+  .points-box .pb-top { display:flex; align-items:center; gap:8px; font-size:.95rem; }
+  .points-box .pb-top b { color:#8B6F47; }
+  .points-box .pb-use { display:none; margin-top:10px; align-items:center; gap:8px; }
+  .points-box .pb-use.show { display:flex; }
+  .points-box input[type=number] { width:110px; padding:9px 10px; font-size:1rem;
+    border:1.5px solid #d9cfc0; border-radius:8px; background:#fff; }
+  .points-box .pb-all { padding:8px 12px; font-size:.85rem; border:1.5px solid #8B6F47;
+    background:#fff; color:#8B6F47; border-radius:8px; cursor:pointer; }
+  .points-box .pb-note { font-size:.78rem; color:#8a7a64; margin-top:8px; }
+</style>
+<script>
+(function () {
+  var API = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
+    ? "https://api.yd-edenwon.com" : "";
+  var balance = 0;
+  var box = document.createElement("div");
+  box.className = "points-box";
+  box.innerHTML = '<div class="pb-top"><span>\uD83C\uDF31 \uC801\uB9BD\uAE08</span>'
+    + '<b><span id="pbBal">0</span>\uC6D0</b>'
+    + '<label style="margin-left:auto;display:flex;align-items:center;gap:6px;cursor:pointer;">'
+    + '<input type="checkbox" id="pbChk" style="width:19px;height:19px;accent-color:#8B6F47;"> \uC0AC\uC6A9</label></div>'
+    + '<div class="pb-use" id="pbUse"><input type="number" id="pbAmt" min="0" step="10">'
+    + '<span>\uC6D0</span><button type="button" class="pb-all" id="pbAll">\uC804\uC561</button></div>'
+    + '<div class="pb-note">\uACB0\uC81C \uAE08\uC561(\uBC30\uC1A1\uBE44 \uD3EC\uD568)\uC5D0\uC11C \uCC28\uAC10\uB429\uB2C8\uB2E4.</div>';
+  var anchor = document.querySelector(".pay-method") || document.getElementById("submitBtn");
+  if (anchor) anchor.parentNode.insertBefore(box, anchor);
+
+  function won(n) { return (n || 0).toLocaleString("ko-KR"); }
+  fetch(API + "/api/account/me", { credentials: "include" })
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      if (j && j.ok && j.account && j.account.points > 0) {
+        balance = j.account.points;
+        document.getElementById("pbBal").textContent = won(balance);
+        document.getElementById("pbAmt").value = balance;
+        document.getElementById("pbAmt").max = balance;
+        box.style.display = "block";
+      }
+    }).catch(function () {});
+  document.getElementById("pbChk").addEventListener("change", function () {
+    document.getElementById("pbUse").classList.toggle("show", this.checked);
+  });
+  document.getElementById("pbAll").addEventListener("click", function () {
+    document.getElementById("pbAmt").value = balance;
+  });
+
+  function chosenUse() {
+    if (!document.getElementById("pbChk").checked) return 0;
+    var v = parseInt(document.getElementById("pbAmt").value, 10) || 0;
+    return Math.max(0, Math.min(v, balance));
+  }
+
+  window.__edenPointsRequest = function (order_no, total) {
+    var use = chosenUse();
+    if (!use) return Promise.resolve(total);
+    return fetch(API + "/api/account/apply-points", {
+      method: "POST", credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ order_no: order_no, use_amount: use })
+    }).then(function (r) { return r.json(); })
+      .then(function (res) {
+        if (!res || !res.ok) return total;
+        var pa = document.getElementById("payAmount");
+        if (pa) pa.textContent = won(res.pay_amount);
+        var bank = document.querySelector("#doneStage .bank");
+        if (bank && !document.getElementById("pbApplied")) {
+          var note = document.createElement("p");
+          note.id = "pbApplied";
+          note.style.cssText = "font-size:.85rem;color:#8B6F47;margin-top:8px;";
+          note.textContent = "\uC801\uB9BD\uAE08 " + won(res.points_used)
+            + "\uC6D0\uC774 \uCC28\uAC10\uB418\uC5C8\uC2B5\uB2C8\uB2E4.";
+          bank.appendChild(note);
+        }
+        return res.pay_amount;
+      }).catch(function () { return total; });
+  };
+
+  // 무통장 흐름: 주문 성공 시 직접 적용
+  var _pf = window.fetch;
+  window.fetch = function (url, init) {
+    var u = String(url);
+    var isOrder = u.indexOf("/api/orders") > -1 || u.indexOf("/api/cart-order") > -1;
+    var p = _pf(url, init);
+    if (isOrder && chosenUse() > 0) {
+      p.then(function (r) { return r.clone().json(); }).then(function (j) {
+        if (!j || j.ok === false || !j.order_no) return;
+        var sel = document.querySelector('input[name="payMethod"]:checked');
+        if (!sel || sel.value !== "card") window.__edenPointsRequest(j.order_no, null);
+      }).catch(function () {});
+    }
+    return p;
+  };
+})();
+</script>
+<!-- ===== 적립금 위젯 끝 ===== -->
+
 </body>
 </html>
