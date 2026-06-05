@@ -1976,5 +1976,79 @@
     </div>
   </footer>
 
+<!-- ===== 영동에덴원 회원 위젯 (주문 페이지 공통: order/cart/giftset) ===== -->
+<!-- 사용법: 닫는 body 태그 바로 앞(장바구니 위젯 뒤)에 그대로 삽입.
+     기능: 1) 주문 전송에 회원 세션 자동 동반  2) 주문 성공 시 회원 주문 자동 연결(적립 대상)
+           3) 좌하단 회원 상태 칩 -->
+
+<script>
+(function () {
+  var MEMBER_API = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
+    ? "https://api.yd-edenwon.com" : "";
+  var dock = document.querySelector(".cart-dock");
+  var fab = document.createElement("a");
+  fab.className = "status-fab member-fab";
+  fab.id = "memberFab";
+  fab.style.display = "none";
+  fab.innerHTML = '<span class="status-fab__icon">\uD83C\uDF31</span>'
+    + '<span class="status-fab__label"></span>';
+  if (dock) { dock.appendChild(fab); }
+  else {
+    var dk = document.createElement("div");
+    dk.className = "cart-dock";
+    dk.appendChild(fab);
+    document.body.appendChild(dk);
+  }
+  var fabLabel = fab.querySelector(".status-fab__label");
+
+  // 1) 주문 전송에 세션 동반 + 성공 시 회원 주문 자동 연결
+  var _fetch = window.fetch;
+  window.fetch = function (url, init) {
+    var u = String(url);
+    var isOrder = u.indexOf("/api/orders") > -1 || u.indexOf("/api/cart-order") > -1;
+    if (isOrder) { init = init || {}; init.credentials = "include"; }
+    var p = _fetch(url, init);
+    if (isOrder) {
+      p.then(function (r) { return r.clone().json(); }).then(function (j) {
+        if (!j || j.ok === false) return;
+        var no = j.order_no || (JSON.stringify(j).match(/ED-[0-9]{8}-[A-Z0-9]+/) || [])[0];
+        if (!no) return;
+        _fetch(MEMBER_API + "/api/account/claim-order", {
+          method: "POST", credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ order_no: no })
+        }).catch(function () {});
+      }).catch(function () {});
+    }
+    return p;
+  };
+
+  // 2) 회원 상태 칩
+  var rate = "2";
+  _fetch(MEMBER_API + "/api/account/points-rate")
+    .then(function (r) { return r.json(); })
+    .then(function (j) { if (j.ok) rate = j.rate; })
+    .catch(function () {})
+    .then(function () {
+      return _fetch(MEMBER_API + "/api/account/me", { credentials: "include" });
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      if (j && j.ok) {
+        fabLabel.textContent = "적립 " + rate + "%";
+        fab.title = j.account.name + "님 · 마이페이지";
+        fab.href = MEMBER_API + "/mypage";
+      } else {
+        fabLabel.textContent = "로그인";
+        fab.title = "로그인하고 주문하면 " + rate + "% 적립";
+        fab.href = MEMBER_API + "/login?next="
+          + encodeURIComponent("https://yd-edenwon.com" + location.pathname + location.search);
+      }
+      fab.style.display = "";
+    })
+    .catch(function () {});
+})();
+</script>
+<!-- ===== 회원 위젯 끝 ===== -->
 </body>
 </html>
