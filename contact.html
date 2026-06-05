@@ -2137,6 +2137,14 @@
     document.body.appendChild(dk);
   }
   var fabLabel = fab.querySelector(".status-fab__label");
+  if (!document.getElementById("memberFabCss")) {
+    var st = document.createElement("style");
+    st.id = "memberFabCss";
+    st.textContent = "@media (max-width:640px){"
+      + ".member-fab .status-fab__label{display:inline !important;}"
+      + ".member-fab{border-radius:100px !important;padding:0.6rem 0.95rem !important;}}";
+    document.head.appendChild(st);
+  }
 
   // 1) 주문 전송에 세션 동반 + 성공 시 회원 주문 자동 연결
   var _fetch = window.fetch;
