@@ -692,11 +692,17 @@
               } else {
                 if (go) go.textContent = "카드 결제가 취소되었습니다. 아래 무통장 입금으로 진행해 주세요.";
                 if (bank) bank.style.display = "";
+                _f(PAY_API + "/api/payment/to-bank", { method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ order_no: j.order_no, phone: ph }) }).catch(function () {});
               }
             })
             .catch(function () {
               var bank = document.querySelector("#doneStage .bank");
               if (bank) bank.style.display = "";
+                _f(PAY_API + "/api/payment/to-bank", { method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ order_no: j.order_no, phone: ph }) }).catch(function () {});
             });
           });
         });
