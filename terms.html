@@ -1891,6 +1891,46 @@
      기능: 1) 주문 전송에 회원 세션 자동 동반  2) 주문 성공 시 회원 주문 자동 연결(적립 대상)
            3) 좌하단 회원 상태 칩 -->
 
+<style>
+  .cart-dock {
+    position: fixed; top: 50%; transform: translateY(-50%); right: 0; z-index: 95;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+  }
+  .cart-fab, .status-fab {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-body, "Noto Sans KR", sans-serif);
+    cursor: pointer; text-decoration: none;
+    border-radius: 100px 0 0 100px;       /* 오른쪽 화면에 붙는 배너 */
+    padding: 0.7rem 1.1rem 0.7rem 1rem;
+    box-shadow: -4px 6px 20px rgba(42,31,20,0.18);
+    transition: background .2s ease, transform .2s ease, padding-right .2s ease;
+    transform: translateX(0);
+  }
+  .cart-fab { background: var(--ink, #2A1F14); color: var(--cream, #F4EDE0); font-size: 0.9rem; }
+  .cart-fab:hover { background: var(--gold-dark, #6B5532); transform: translateX(-2px); }
+  .status-fab {
+    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
+    border: 1px solid var(--border-strong, rgba(42,31,20,0.2)); border-right: none;
+    font-size: 0.84rem;
+  }
+  .status-fab:hover { background: var(--cream-dark, #E8DFCC); transform: translateX(-2px); }
+  .cart-fab__icon, .status-fab__icon { font-size: 1.02rem; line-height: 1; }
+  .cart-fab__label, .status-fab__label { white-space: nowrap; }
+  .cart-fab__badge {
+    min-width: 20px; height: 20px; padding: 0 6px; border-radius: 100px;
+    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
+    font-size: 0.78rem; font-weight: 700; display: none;
+    align-items: center; justify-content: center; line-height: 1;
+  }
+  .cart-fab__badge.on { display: inline-flex; }
+  /* 모바일: 우하단 작은 아이콘만 */
+  @media (max-width: 640px) {
+    .cart-dock { top: auto; transform: none; bottom: 16px; right: 16px; gap: 8px; align-items: flex-end; }
+    .cart-fab, .status-fab { border-radius: 100px; padding: 0.6rem 0.7rem; box-shadow: 0 4px 14px rgba(42,31,20,0.2); }
+    .cart-fab__label, .status-fab__label { display: none; }
+  }
+
+  </style>
 <script>
 (function () {
   var MEMBER_API = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
