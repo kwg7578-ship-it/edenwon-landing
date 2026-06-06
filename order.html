@@ -1353,6 +1353,13 @@
   window.fetch = function (url, init) {
     var u = String(url);
     var isOrder = u.indexOf("/api/orders") > -1 || u.indexOf("/api/cart-order") > -1;
+    if (isOrder && init && init.body && payMethod() === "card") {
+      try {
+        var ob = JSON.parse(init.body);
+        ob.payment_method = "카드";
+        init.body = JSON.stringify(ob);
+      } catch (e) {}
+    }
     var p = _f(url, init);
     if (isOrder && payMethod() === "card" && tossPayments) {
       p.then(function (r) { return r.clone().json(); }).then(function (j) {
