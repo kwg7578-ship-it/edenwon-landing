@@ -1395,6 +1395,10 @@
               var go = document.getElementById("cardGoing");
               var bank = document.querySelector("#doneStage .bank");
               if (res && res.ok) {
+                var chk = document.querySelector("#doneStage .done__check");
+                if (chk) { chk.textContent = "\u2715"; chk.style.background = "#8a7a64"; }
+                var st = document.getElementById("sumStatus");
+                if (st) st.textContent = "취소됨";
                 if (go) go.innerHTML = "카드 결제가 취소되어 <b>주문도 함께 취소</b>되었습니다."
                   + "<br><a href='javascript:location.reload()' style='display:inline-block;margin-top:12px;"
                   + "padding:11px 20px;background:#2A1F14;color:#F4EDE0;border-radius:9px;"
