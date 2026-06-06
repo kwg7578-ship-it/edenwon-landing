@@ -1966,7 +1966,7 @@
      현재 경로에 /products/ 포함 여부로 자동 판별. -->
 <style>
   .cart-dock {
-    position: fixed; top: 42%; right: 0; z-index: 95;
+    position: fixed; top: 50%; transform: translateY(-50%); right: 0; z-index: 95;
     display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
   }
   .cart-fab, .status-fab {
@@ -2018,7 +2018,7 @@
   .cart-fab__badge.on { display: inline-flex; }
   /* 모바일: 우하단 작은 아이콘만 */
   @media (max-width: 640px) {
-    .cart-dock { top: auto; bottom: 16px; right: 16px; gap: 8px; align-items: flex-end; }
+    .cart-dock { top: auto; transform: none; bottom: 16px; right: 16px; gap: 8px; align-items: flex-end; }
     .cart-dock .order-fab { display: none; }   /* 모바일: 자가수령·택배는 하단 바로 이동 */
     .cart-fab, .status-fab { border-radius: 100px; padding: 0.6rem 0.7rem; box-shadow: 0 4px 14px rgba(42,31,20,0.2); }
     .cart-fab__label, .status-fab__label { display: none; }
