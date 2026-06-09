@@ -348,8 +348,8 @@
           <div class="aff-note" id="affNote" style="display:none;"></div>
         </div>
 
-        <div class="field" id="affHint" style="padding:11px 13px;background:#fbf7ef;border:1px solid #ece3d2;border-radius:8px;">
-          <span style="font-size:0.86rem;color:#6b5a44;line-height:1.5;">🎫 관계자·기전대 회원 할인은 <b>로그인 후 자동 적용</b>됩니다. (좌측 하단 회원 버튼으로 로그인)</span>
+        <div class="field" id="affHint" style="display:none;padding:11px 13px;background:#fbf7ef;border:1px solid #ece3d2;border-radius:8px;">
+          
         </div>
 
         <div class="field">
@@ -1026,7 +1026,7 @@
         if (_aff && j.account.segment) {
           _aff.value = j.account.segment;
           _aff.dispatchEvent(new Event("change"));
-          var _h = document.getElementById("affHint");
+          var _h = document.getElementById("affHint"); if (_h) _h.style.display = "block";
           if (_h) _h.innerHTML = '<span style="color:#1a7f37;font-size:0.86rem;font-weight:600;">✓ 회원 할인가가 적용되었습니다.</span>';
         }
       } else {

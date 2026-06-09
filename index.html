@@ -2095,6 +2095,18 @@
       </ul>
     </nav>
   </header>
+  <!-- ===== 관계자·기전대 회원 안내 배너 (첫 접속 1회) ===== -->
+  <div id="affBanner" style="display:none;background:#FBF7EF;border-bottom:1px solid #E6DCC8;">
+    <div style="max-width:1080px;margin:0 auto;padding:11px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <span style="flex:1;min-width:220px;font-size:0.9rem;color:#5A4A36;line-height:1.55;">🎫 기전대 학생·교직원 또는 영동에덴원 관계자라면, <b style="color:#8B6F47;">로그인 후 주문</b> 시 회원 할인가가 자동 적용됩니다.</span>
+      <a href="https://api.yd-edenwon.com/login" style="background:#8B6F47;color:#fff;padding:7px 17px;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;white-space:nowrap;">로그인</a>
+      <button type="button" onclick="dismissAffBanner()" aria-label="닫기" style="background:none;border:none;color:#9B8A72;font-size:1.3rem;line-height:1;cursor:pointer;padding:2px 4px;">&times;</button>
+    </div>
+  </div>
+  <script>
+    (function(){try{if(!localStorage.getItem("edenwon_aff_banner_dismissed")){var b=document.getElementById("affBanner");if(b)b.style.display="block";}}catch(e){}})();
+    function dismissAffBanner(){try{localStorage.setItem("edenwon_aff_banner_dismissed","1");}catch(e){}var b=document.getElementById("affBanner");if(b)b.style.display="none";}
+  </script>
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="top">
