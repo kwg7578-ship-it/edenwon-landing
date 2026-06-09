@@ -561,6 +561,8 @@
       return CONFIG.options.filter(function (o) { return o.id === id; })[0] || null;
     }
     function currentNeeds() {
+      var _af = document.getElementById("affiliation");
+      if (_af && _af.offsetParent === null) return [];  // ⓔ: 소속 UI 숨김(ⓒ)이면 needs 미수집 — 서버 segment가 권위
       var g = affSelect.value;
       return g && AFF_NEEDS[g] ? AFF_NEEDS[g] : [];
     }
