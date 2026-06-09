@@ -2027,6 +2027,7 @@
         <div class="welcome__step"><span class="welcome__num">3</span><span>안내된 계좌로 <b>입금</b>합니다 (계좌이체)</span></div>
         <div class="welcome__step"><span class="welcome__num">4</span><span>입금이 확인되면 <b>준비 후 보내드립니다</b></span></div>
       </div>
+      <div class="welcome__note" style="margin-top:1rem;padding:11px 14px;background:#F4EDE0;border:1px solid #E6DCC8;border-radius:10px;font-size:0.86rem;color:#5A4A36;line-height:1.55;">🎫 <b style="color:#8B6F47;">기전대 학생·교직원</b> 또는 <b style="color:#8B6F47;">영동에덴원 관계자</b>는 로그인 후 주문 시 회원 할인가가 자동 적용됩니다.</div>
       <div class="welcome__btns">
         <a href="products.html" class="welcome__btn welcome__btn--primary">제품 보기</a>
         <a href="giftset.html" class="welcome__btn welcome__btn--ghost">선물세트</a>
@@ -2095,23 +2096,6 @@
       </ul>
     </nav>
   </header>
-  <!-- ===== 관계자·기전대 회원 안내 배너 (첫 접속 1회) ===== -->
-  <style>
-    #affBanner{position:fixed;top:3.9rem;left:0;right:0;z-index:79;box-shadow:0 6px 14px rgba(42,31,20,0.08);transition:top .3s ease;}
-    #siteHeader.scrolled ~ #affBanner{top:2.9rem;}
-    @media(max-width:820px){#affBanner{top:3.55rem;}#siteHeader.scrolled ~ #affBanner{top:3.35rem;}}
-  </style>
-  <div id="affBanner" style="display:none;background:#FBF7EF;border-bottom:1px solid #E6DCC8;">
-    <div style="max-width:1080px;margin:0 auto;padding:11px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-      <span style="flex:1;min-width:220px;font-size:0.9rem;color:#5A4A36;line-height:1.55;">🎫 기전대 학생·교직원 또는 영동에덴원 관계자라면, <b style="color:#8B6F47;">로그인 후 주문</b> 시 회원 할인가가 자동 적용됩니다.</span>
-      <a href="https://api.yd-edenwon.com/login" style="background:#8B6F47;color:#fff;padding:7px 17px;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;white-space:nowrap;">로그인</a>
-      <button type="button" onclick="dismissAffBanner()" aria-label="닫기" style="background:none;border:none;color:#9B8A72;font-size:1.3rem;line-height:1;cursor:pointer;padding:2px 4px;">&times;</button>
-    </div>
-  </div>
-  <script>
-    (function(){try{if(!localStorage.getItem("edenwon_aff_banner_dismissed")){var b=document.getElementById("affBanner");if(b)b.style.display="block";}}catch(e){}})();
-    function dismissAffBanner(){try{localStorage.setItem("edenwon_aff_banner_dismissed","1");}catch(e){}var b=document.getElementById("affBanner");if(b)b.style.display="none";}
-  </script>
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="top">
