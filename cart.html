@@ -330,7 +330,7 @@
           </div>
         </div>
 
-        <div class="field" id="f-aff">
+        <div class="field" id="f-aff" style="display:none;">
           <label class="field__label">소속 <span style="color:var(--ink-mute);font-size:0.82rem;">(해당되시면 선택)</span></label>
           <select id="affiliation"><option value="">일반</option></select>
           <div class="aff-fields empty" id="affFields">
@@ -346,6 +346,10 @@
             </div>
           </div>
           <div class="aff-note" id="affNote" style="display:none;"></div>
+        </div>
+
+        <div class="field" style="padding:11px 13px;background:#fbf7ef;border:1px solid #ece3d2;border-radius:8px;">
+          <span style="font-size:0.86rem;color:#6b5a44;line-height:1.5;">🎫 관계자·기전대 회원 할인은 <b>로그인 후 자동 적용</b>됩니다. (좌측 하단 회원 버튼으로 로그인)</span>
         </div>
 
         <div class="field">
@@ -554,12 +558,7 @@
       if (!p || (!p.name && !p.phone)) { updateClearLink(); return; }
       if (p.name) document.getElementById("name").value = p.name;
       if (p.phone) document.getElementById("phone").value = p.phone;
-      if (p.affiliation && AFF_NEEDS.hasOwnProperty(p.affiliation)) {
-        affSelect.value = p.affiliation;
-        applyAffiliationFields();
-        if (p.studentId) studentId.value = p.studentId;
-        if (p.department) department.value = p.department;
-      }
+      // ⓒ: 신분 복원 안 함 — 할인은 로그인 segment로 서버가 결정
       // 배송 정보 복원 — 한 번 입력하면 다음 주문에도 자동으로 채워짐
       if (p.recipSame === false) {
         document.getElementById("sameAsOrderer").checked = false;
