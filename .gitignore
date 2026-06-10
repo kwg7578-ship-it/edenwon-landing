@@ -1,0 +1,15 @@
+# 사이트 자산만 배포 — 잡파일/스크립트/비밀 자동커밋 방지 (site-deploy.sh git add -A 대비)
+*.py
+*.sh
+*.bak
+*.bak-*
+*.pre-*
+*~
+*.swp
+*.tmp
+*.log
+.DS_Store
+*.env
+*config*.sh
+*.key
+*.pem
