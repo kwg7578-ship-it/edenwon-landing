@@ -1349,7 +1349,7 @@
         tossPayments = TossPayments(j.client_key);
         if (j.mode === "test")
           document.getElementById("pmNote").textContent =
-            "카드 결제는 현재 테스트 모드입니다 (실제 청구 없음).";
+            "카드 결제 도입을 위해 준비중입니다.";
       } else { document.getElementById("pmCard").style.display = "none"; }
     })
     .catch(function () { document.getElementById("pmCard").style.display = "none"; });
