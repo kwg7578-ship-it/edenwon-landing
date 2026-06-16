@@ -2459,5 +2459,37 @@
 })();
 </script>
 <!-- ===== 회원 위젯 끝 ===== -->
+  <style>
+    .product-card.card-sold{opacity:.62}
+    .product-card.card-sold .product-card__more{color:#c0392b}
+    .product-card__image{position:relative}
+    .card-sold-badge{position:absolute;top:12px;left:12px;background:#c0392b;color:#fff;font-size:0.82rem;font-weight:700;padding:0.22rem 0.8rem;border-radius:100px;z-index:3;letter-spacing:0.02em;box-shadow:0 1px 4px rgba(0,0,0,0.18)}
+  </style>
+  <script>
+  (function(){
+    var API = "https://api.yd-edenwon.com";
+    fetch(API + "/api/products").then(function(r){ return r.json(); }).then(function(d){
+      if (!d || !d.ok || !d.products) return;
+      var sold = {};
+      d.products.forEach(function(p){
+        var o = p.options || [];
+        if (o.length && o.every(function(x){ return x.sold_out; })) sold[p.key] = true;
+      });
+      document.querySelectorAll("a.product-card").forEach(function(c){
+        var m = (c.getAttribute("href") || "").match(/products\/([^\/]+)\.html/);
+        if (m && sold[m[1]]) {
+          c.classList.add("card-sold");
+          var im = c.querySelector(".product-card__image");
+          if (im && !im.querySelector(".card-sold-badge")) {
+            var b = document.createElement("span");
+            b.className = "card-sold-badge";
+            b.textContent = "품절";
+            im.appendChild(b);
+          }
+        }
+      });
+    }).catch(function(){});
+  })();
+  </script>
 </body>
 </html>
