@@ -145,6 +145,9 @@
     .opt-btn.sel .opt-price { color: var(--gold-dark); font-weight: 500; }
     .opt-note { font-size: 0.8rem; color: var(--gold-dark); margin-top: 0.55rem; line-height: 1.5; }
     .opt-badge { display:inline-block; background:#e3ecd9; color:#5a7345; font-size:0.7rem; padding:0.03rem 0.45rem; border-radius:100px; margin-left:0.4rem; vertical-align:middle; white-space:nowrap; }
+    .opt-btn.sold{opacity:.55;cursor:not-allowed;background:#f0ece4}
+    .opt-btn.sold:hover{border-color:var(--border-strong);box-shadow:none}
+    .opt-btn .sold-badge{display:inline-block;background:#c0392b;color:#fff;font-size:0.7rem;padding:0.03rem 0.5rem;border-radius:100px;margin-left:0.4rem;vertical-align:middle;white-space:nowrap;font-weight:700}
     .opt-price s { color:var(--ink-mute); font-weight:300; font-size:0.85em; margin-right:0.25rem; }
 
     /* 개수 스테퍼 */
@@ -651,16 +654,20 @@
     }
 
     function optBtnHtml(o, g, selId) {
-      var disc = g && o.prices[g] != null && o.prices[g] < o.prices.regular;
+      var sold = !!o.sold_out;
+      var disc = !sold && g && o.prices[g] != null && o.prices[g] < o.prices.regular;
       var badge = "", priceHtml;
-      if (disc) {
+      if (sold) {
+        badge = ' <span class="sold-badge">품절</span>';
+        priceHtml = '<span class="opt-price">' + won(o.prices.regular) + '</span>';
+      } else if (disc) {
         var blab = (g === "edenwon") ? "관계자 할인" : "기전대 할인";
         badge = ' <span class="opt-badge">' + blab + '</span>';
         priceHtml = '<span class="opt-price"><s>' + won(o.prices.regular) + '</s>' + won(o.prices[g]) + '</span>';
       } else {
         priceHtml = '<span class="opt-price">' + won(o.prices.regular) + '</span>';
       }
-      return '<button type="button" class="opt-btn' + (o.id === selId ? ' sel' : '') + '" data-id="' + o.id + '">'
+      return '<button type="button" class="opt-btn' + (o.id === selId ? ' sel' : '') + (sold ? ' sold' : '') + '" data-id="' + o.id + '"' + (sold ? ' disabled' : '') + '>'
         + '<span>' + o.label + badge + '</span>' + priceHtml + '</button>';
     }
 
@@ -699,12 +706,14 @@
       }
 
       var shown = hasCats ? opts.filter(function (o) { return (o.category || "") === activeCat; }) : opts;
-      var keep = selId && shown.some(function (o) { return o.id === selId; });
-      var curSel = keep ? selId : (shown[0] && shown[0].id);
+      var keep = selId && shown.some(function (o) { return o.id === selId && !o.sold_out; });
+      var firstAvail = shown.filter(function (o) { return !o.sold_out; })[0];
+      var curSel = keep ? selId : (firstAvail ? firstAvail.id : (shown[0] && shown[0].id));
 
       optList.innerHTML = shown.map(function (o) { return optBtnHtml(o, g, curSel); }).join("");
       optList.querySelectorAll(".opt-btn").forEach(function (b) {
         b.addEventListener("click", function () {
+          if (b.disabled || b.classList.contains("sold")) return;
           optList.querySelectorAll(".opt-btn").forEach(function (x) { x.classList.remove("sel"); });
           b.classList.add("sel");
           refreshRemaining();
