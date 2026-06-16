@@ -2242,5 +2242,31 @@
 })();
 </script>
 <!-- ===== 회원 위젯 끝 ===== -->
+  <style>
+    .is-soldout{opacity:.5;cursor:not-allowed;pointer-events:none}
+  </style>
+  <script>
+  (function(){
+    var API = "https://api.yd-edenwon.com";
+    var link = document.querySelector('a[href*="order.html?product="]');
+    if (!link) return;
+    var mk = (link.getAttribute("href") || "").match(/product=([^&]+)/);
+    if (!mk) return;
+    var key = decodeURIComponent(mk[1]);
+    fetch(API + "/api/products").then(function(r){ return r.json(); }).then(function(d){
+      if (!d || !d.ok || !d.products) return;
+      var p = d.products.filter(function(x){ return x.key === key; })[0];
+      var allSold = p && (p.options || []).length && p.options.every(function(o){ return o.sold_out; });
+      if (!allSold) return;
+      document.querySelectorAll('a[href*="order.html?product="]').forEach(function(a){
+        a.classList.add("is-soldout");
+        a.setAttribute("aria-disabled", "true");
+        var lab = a.querySelector(".order-fab__label");
+        if (lab) { lab.textContent = "품절"; }
+        else { a.innerHTML = a.innerHTML.replace(/주문하기/g, "품절"); }
+      });
+    }).catch(function(){});
+  })();
+  </script>
 </body>
 </html>
