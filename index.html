@@ -318,6 +318,39 @@
     }
     .about__more { margin-top: clamp(3rem, 6vh, 4rem); }
 
+    /* ============ USP 핵심 숫자 띠 (히어로 아래) ============ */
+    .usp {
+      background: var(--cream-light);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .usp__inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: clamp(1.6rem, 3.5vh, 2.4rem) 1.5rem;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+    }
+    .usp__item { text-align: center; padding: 1rem 0.6rem; }
+    .usp__item:not(:nth-child(3n+1)) { border-left: 1px solid var(--border); }
+    .usp__item:nth-child(n+4) { border-top: 1px solid var(--border); }
+    .usp__eyebrow {
+      font-family: var(--font-latin); font-size: 0.78rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .usp__num {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.15rem); color: var(--ink); line-height: 1.02;
+    }
+    .usp__num span { font-size: 0.5em; font-weight: 400; color: var(--ink-soft); margin-left: 2px; }
+    .usp__label { font-family: var(--font-body); font-size: 0.82rem; color: var(--ink-soft); margin-top: 0.45rem; }
+    @media (max-width: 760px) {
+      .usp__inner { grid-template-columns: repeat(2, 1fr); }
+      .usp__item:not(:nth-child(3n+1)) { border-left: none; }
+      .usp__item:nth-child(n+4) { border-top: none; }
+      .usp__item:not(:nth-child(2n+1)) { border-left: 1px solid var(--border); }
+      .usp__item:nth-child(n+3) { border-top: 1px solid var(--border); }
+    }
+
     @media (max-width: 760px) {
       .pillars { grid-template-columns: 1fr; gap: 1.2rem; max-width: 460px; }
     }
@@ -2109,6 +2142,43 @@
       </div>
     </div>
     <div class="hero__scroll">Scroll</div>
+  </section>
+
+
+  <!-- ============ USP 핵심 숫자 (히어로 아래 신뢰 띠) ============ -->
+  <section class="usp" aria-label="영동에덴원 핵심 지표">
+    <div class="usp__inner">
+      <div class="usp__item">
+        <p class="usp__eyebrow">Farmland</p>
+        <p class="usp__num">6<span>ha</span></p>
+        <p class="usp__label">무농약 자가 농지</p>
+      </div>
+      <div class="usp__item">
+        <p class="usp__eyebrow">Seeds</p>
+        <p class="usp__num">4<span>품종</span></p>
+        <p class="usp__label">자가재배 콩</p>
+      </div>
+      <div class="usp__item">
+        <p class="usp__eyebrow">Onggi</p>
+        <p class="usp__num">300<span>개</span></p>
+        <p class="usp__label">전통 옹기</p>
+      </div>
+      <div class="usp__item">
+        <p class="usp__eyebrow">Aging</p>
+        <p class="usp__num">18<span>개월+</span></p>
+        <p class="usp__label">옹기 숙성</p>
+      </div>
+      <div class="usp__item">
+        <p class="usp__eyebrow">Vinegar</p>
+        <p class="usp__num">22<span>종</span></p>
+        <p class="usp__label">발효식초 · 특허</p>
+      </div>
+      <div class="usp__item">
+        <p class="usp__eyebrow">Heritage</p>
+        <p class="usp__num">21<span>년</span></p>
+        <p class="usp__label">공동체 역사</p>
+      </div>
+    </div>
   </section>
 
 
