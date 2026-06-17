@@ -2690,8 +2690,8 @@
         if (!p || !p.options || !p.options.length) return;
         var avail = p.options.filter(function(o){ return !o.sold_out; });
         var pool = avail.length ? avail : p.options;
-        var prices = pool.map(function(o){ return o.prices && o.prices.regular; })
-                         .filter(function(v){ return typeof v === "number" && v > 0; });
+        var prices = pool.map(function(o){ return o.prices ? Number(o.prices.regular) : NaN; })
+                         .filter(function(v){ return !isNaN(v) && v > 0; });
         if (!prices.length) return;
         el.textContent = won(Math.min.apply(null, prices)) + (pool.length > 1 ? "부터" : "");
       });
