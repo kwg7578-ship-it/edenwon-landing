@@ -23,6 +23,7 @@
       + ".rvw-card .rvw-star{color:var(--amber,#B97B2D);letter-spacing:2px;font-size:1.05rem;}"
       + ".rvw-card .rvw-body{color:var(--ink,#2A1F14);margin:8px 0 8px;line-height:1.65;white-space:pre-wrap;}"
       + ".rvw-card .rvw-who{font-size:.82rem;color:#8a7a64;}"
+      + ".rvw-card .rvw-buy{color:#a99a86;}"
       + ".rvw-card .rvw-reply{background:rgba(139,111,71,.08);border-radius:8px;padding:9px 11px;margin-top:10px;font-size:.88rem;color:#6d5d49;}"
       + ".rvw-note{font-size:.78rem;color:#9a8d78;margin-top:20px;}";
     var st = document.createElement("style");
@@ -33,10 +34,12 @@
 
   function cardHTML(v) {
     var reply = v.reply ? '<div class="rvw-reply">' + esc(v.reply) + "</div>" : "";
+    var who = esc(v.author_name || "");
+    if (v.products) who += ' <span class="rvw-buy">· ' + esc(v.products.split(",").join(", ")) + "</span>";
     return '<div class="rvw-card">'
       + '<div class="rvw-star">' + stars(v.rating) + "</div>"
       + '<div class="rvw-body">' + esc(v.body || "") + "</div>"
-      + '<div class="rvw-who">' + esc(v.author_name || "") + "</div>"
+      + '<div class="rvw-who">' + who + "</div>"
       + reply + "</div>";
   }
 
