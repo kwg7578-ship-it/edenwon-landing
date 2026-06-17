@@ -582,10 +582,6 @@
     .signature-card__desc { font-size: 0.96rem; color: var(--ink-soft); line-height: 1.85; margin-bottom: 1.4rem; }
     .signature-card__more { font-size: 0.9rem; color: var(--gold-dark); letter-spacing: 0.03em; }
 
-    /* 제품 카드 정가 (주문 시스템 API에서 자동 표시) */
-    .card-price { font-family: var(--font-body); font-size: 1.05rem; font-weight: 500; color: var(--ink); margin-top: 0.55rem; min-height: 1.35em; }
-    .signature-card__price.card-price { font-size: 1.15rem; }
-
     /* 대표 장류 3종 미리보기 그리드 */
     .preview-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem;
@@ -2245,7 +2241,6 @@
           <h3 class="signature-card__name">발효의 초심</h3>
           <p class="signature-card__tag">Natural Vinegar</p>
           <p class="signature-card__desc">누룩도 종초도 더하지 않고, 옹기에서 자연 미생물이 복합 발효한 천연발효식초. 1년 6개월 이상의 시간이 빚어낸 영동에덴원의 시그니처입니다.</p>
-          <p class="signature-card__price card-price" data-pk="vinegar" aria-live="polite"></p>
           <span class="signature-card__more">식초 종류 자세히 보기 →</span>
         </div>
       </a>
@@ -2257,7 +2252,6 @@
           <h3 class="product-card__name">옹기숙성 된장</h3>
           <p class="product-card__tag">Aged Soybean Paste</p>
           <p class="product-card__desc">직접 농사 지은 콩으로 완전히 띄운 메주와 국내산 천일염으로 복합 발효·숙성.</p>
-          <p class="card-price" data-pk="doenjang" aria-live="polite"></p>
           <span class="product-card__more">자세히 보기 →</span>
         </a>
         <a href="products/eoganjang.html" class="product-card">
@@ -2265,7 +2259,6 @@
           <h3 class="product-card__name">옹기숙성 어간장</h3>
           <p class="product-card__tag">Aged Fish Sauce</p>
           <p class="product-card__desc">국내산 멸치와 디포리를 옹기에서 오래 발효시켜 깊은 감칠맛을 낸 어간장.</p>
-          <p class="card-price" data-pk="eoganjang" aria-live="polite"></p>
           <span class="product-card__more">자세히 보기 →</span>
         </a>
         <a href="products/gochujang.html" class="product-card">
@@ -2273,7 +2266,6 @@
           <h3 class="product-card__name">옹기숙성 고추장</h3>
           <p class="product-card__tag">Aged Red Pepper Paste</p>
           <p class="product-card__desc">직접 기른 엿기름 당화액과 메주 가루, 찰개떡 가루를 혼합해 복합 발효·숙성.</p>
-          <p class="card-price" data-pk="gochujang" aria-live="polite"></p>
           <span class="product-card__more">자세히 보기 →</span>
         </a>
       </div>
@@ -2676,27 +2668,5 @@
 </script>
 <!-- ===== 회원 위젯 끝 ===== -->
   <script src="/reviews-widget.js" defer></script>
-  <script>
-  (function(){
-    var nodes = document.querySelectorAll(".card-price[data-pk]");
-    if (!nodes.length) return;
-    fetch("https://api.yd-edenwon.com/api/products").then(function(r){ return r.json(); }).then(function(d){
-      if (!d || !d.ok || !d.products) return;
-      var byKey = {};
-      d.products.forEach(function(p){ byKey[p.key] = p; });
-      function won(n){ return Number(n).toLocaleString("ko-KR") + "원"; }
-      nodes.forEach(function(el){
-        var p = byKey[el.getAttribute("data-pk")];
-        if (!p || !p.options || !p.options.length) return;
-        var avail = p.options.filter(function(o){ return !o.sold_out; });
-        var pool = avail.length ? avail : p.options;
-        var prices = pool.map(function(o){ return o.prices ? Number(o.prices.regular) : NaN; })
-                         .filter(function(v){ return !isNaN(v) && v > 0; });
-        if (!prices.length) return;
-        el.textContent = won(Math.min.apply(null, prices)) + (pool.length > 1 ? "부터" : "");
-      });
-    }).catch(function(){});
-  })();
-  </script>
 </body>
 </html>
