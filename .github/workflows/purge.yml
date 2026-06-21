@@ -1,0 +1,19 @@
+name: Purge Cloudflare cache
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Cloudflare Pages deploy
+        run: sleep 90
+      - name: Purge cache
+        run: |
+          resp=$(curl -s -X POST \
+            "https://api.cloudflare.com/client/v4/zones/738a1ebe5168bd9776759755c4fe32e1/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CF_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}')
+          echo "$resp"
+          echo "$resp" | grep -q '"success":true' || { echo "Purge failed"; exit 1; }
