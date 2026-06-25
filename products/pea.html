@@ -1859,6 +1859,94 @@
     .page-enter { animation: none; }
   
   </style>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style id="pdx-css">
+/* 히어로 배경: 사이트 크림(헤더) → 콘텐츠 배경(아래 섹션)으로 자연스럽게 전환 */
+.pdx .hero{background:linear-gradient(180deg, var(--cream) 0%, var(--cream) 8%, var(--bg) 88%);display:block;min-height:0;overflow:visible;isolation:auto;color:var(--ink)}
+.pdx .hero::before,.pdx .hero::after{display:none}
+.pdx .gallery{background:transparent}
+
+.pdx{
+  --bg:#EDF1E0;
+  --bg-alt:#DEE4CC;
+  --ink:#2B2E20;
+  --muted:#5C6747;
+  --accent:#748D3B;
+  --frame:#C2C9A3;
+  --paper:#F6F8EE;
+  --head:'Noto Sans KR', sans-serif;
+  --body:'Noto Sans KR', sans-serif;
+  --eyebrow:'Cormorant Garamond', serif;
+}
+
+.pdx{
+  --bg:#EDF1E0; --bg-alt:#DEE4CC; --ink:#2B2E20; --muted:#5C6747;
+  --accent:#748D3B; --frame:#C2C9A3; --paper:#F6F8EE;
+  --head:'Noto Sans KR', sans-serif;
+  --body:'Noto Sans KR', sans-serif;
+  --eyebrow:'Cormorant Garamond', serif;
+}
+.pdx,.pdx *{box-sizing:border-box}
+.pdx{font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.pdx img{max-width:100%;display:block}
+.pdx p{margin:0}
+.pdx h1,.pdx h2,.pdx h3{font-family:var(--head);color:var(--ink);font-weight:700;margin:0;letter-spacing:-.01em}
+
+.blk{padding:clamp(46px,8.5vw,86px) 20px}
+.blk.alt{background:var(--bg-alt)}
+.wrap{max-width:760px;margin:0 auto}
+.wrap.wide{max-width:880px}
+
+.eyebrow{font-family:var(--eyebrow);letter-spacing:.34em;text-transform:uppercase;color:var(--accent);font-size:clamp(13px,2.3vw,15px);font-weight:600;text-align:center;margin:0 0 16px}
+.pdx .divider{width:54px;height:1.5px;background:var(--accent);opacity:.55;margin:18px auto;border:0}
+.title{font-size:clamp(23px,5.1vw,33px);text-align:center;line-height:1.45}
+.title .hl{color:var(--accent)}
+.lead{color:var(--muted);text-align:center;line-height:1.95;font-size:clamp(14.5px,2.4vw,16.5px);margin:0 auto;max-width:42em}
+.lead + .lead{margin-top:18px}
+
+.slot{position:relative;background:#e7ebda;overflow:hidden}
+.slot.framed{border:1px dashed var(--frame);padding:9px;background:var(--paper)}
+.slot.r-portrait{aspect-ratio:4/5}
+.slot.r-43{aspect-ratio:4/3}
+.slot.r-1{aspect-ratio:1/1}
+.slot img{width:100%;height:100%;object-fit:cover;display:block}
+
+.s-eyebrow{font-family:var(--eyebrow);letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-size:13px;font-weight:600;margin:0}
+.s-title{font-family:var(--head);font-weight:700;font-size:clamp(18px,3.2vw,22px);margin:9px 0 11px}
+.s-body{color:var(--muted);line-height:1.85;font-size:clamp(14px,2.3vw,15.5px);margin:0}
+
+/* two-column rows (stage / card / textimg) */
+.row{display:flex;gap:30px;align-items:center;margin-top:36px}
+.row.rev{flex-direction:row-reverse}
+.row .txt{flex:1 1 0;min-width:0}
+.row .slot{flex:1 1 0;min-width:0}
+.row.compact .slot{flex:0 0 42%;max-width:42%}
+@media(max-width:640px){.row,.row.rev{flex-direction:column;gap:18px;margin-top:30px}.row .slot,.row.compact .slot{width:100%;max-width:100%}}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+.grid2 .cell{min-width:0}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+
+.stack{margin-top:6px}
+
+/* faq */
+.qas{display:flex;flex-direction:column;gap:28px;margin-top:32px}
+.qa{max-width:560px}
+.qa.right{margin-left:auto;text-align:right}
+.qa .q{display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--head);font-weight:700;font-size:clamp(14.5px,2.6vw,17px);padding:9px 16px;border-radius:8px;line-height:1.4}
+.qa .a{color:var(--muted);line-height:1.85;font-size:clamp(14px,2.3vw,15.5px);margin-top:13px}
+
+/* notice + footer */
+.noticebox{border:1px solid var(--frame);border-radius:14px;padding:clamp(26px,5vw,36px) clamp(20px,4vw,32px);background:var(--paper)}
+.n-line{color:var(--muted);line-height:1.8;font-size:clamp(14px,2.3vw,15.5px)}
+.n-line + .n-line{margin-top:14px}
+.foot{text-align:center}
+.foot .title{font-size:clamp(20px,4vw,24px)}
+.f-line{color:var(--muted);margin-top:13px;font-size:clamp(13.5px,2.2vw,15px)}
+.f-line:first-of-type{margin-top:20px}
+
+
+</style>
 </head>
 <body class="subpage">
 
@@ -1886,149 +1974,173 @@
 
 
   <!-- ============ DETAIL HERO ============ -->
-  <header class="detail-hero">
-    <div class="detail-hero__inner">
-      <div class="detail-hero__eyebrow">Fresh Green Peas</div>
-      <h1 class="detail-hero__title">영동에덴원 초생재배 햇 완두콩</h1>
-      <p class="detail-hero__tagline">영동의 청정 자연에서 자연 농법으로 길러낸<br />맛있고 정직한 햇 완두콩.</p>
+  <div class="pdx">
+<section class="blk hero" data-block="hero">
+    <div class="wrap">
+      <p class="eyebrow" data-t="">YEONGDONG EDENWON</p>
+      <h1 class="title" data-t="">영동의 청정 자연이 길러낸,<br>맛있고 건강한 <span class="hl">초생재배 햇 완두콩</span></h1>
+      <p class="lead" data-t="" style="margin-top:18px">영동에덴원의 자연 농법과 영동 자연의 햇살이 만나,<br>햇 완두콩의 고유의 맛을 극대화했습니다.</p>
+      <div class="slot framed r-portrait" data-img="" style="margin:32px auto 0;max-width:540px"><img src="../images/pea-detail-01.jpg"></div>
+      <h2 class="title" data-t="" style="margin-top:46px">농사에 진심이기에 가능한 정직한 완두콩</h2>
+      <hr class="divider">
+      <p class="lead" data-t="">영동에덴원의 이름을 걸고, 씨앗부터 수확까지<br>모든 과정을 직접 책임집니다.</p>
     </div>
-    <div class="detail-hero__image">
-      <img src="../images/product-pea.jpg" alt="영동에덴원 햇 완두콩" />
-    </div>
-  </header>
-
-
-  <!-- ============ STORY ============ -->
-  <section class="detail-section">
-    <div class="detail-section__inner">
-      <div class="detail-section__label">Story</div>
-      <h2 class="detail-section__title">씨앗부터 수확까지 자연농법으로</h2>
-      <div class="detail-section__body">
-        <p>화학 비료와 제초제를 사용하지 않고,<br />직접 만든 발효퇴비와 유기질 비료로 비옥하게 만든 토양에서 길렀습니다.</p>
-        <p>영동에덴원의 이름을 걸고 씨앗부터 수확까지<br />모든 과정을 직접 책임진 완두콩입니다.</p>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ============ 재배 과정 ============ -->
-  <section class="detail-section">
-    <div class="detail-section__inner">
-      <div class="detail-section__label">How We Grow</div>
-      <h2 class="detail-section__title">자연은 따르고, 재배는 과학적으로</h2>
-
-      <div class="detail-uses">
-        <div class="detail-uses__item">
-          <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">발효퇴비를 넣고 풀을 키워 비옥하게 만든 토양에 완두콩을 심어 새싹을 틔웁니다</span>
+  </section><section class="blk growth" data-block="growth">
+    <div class="wrap wide">
+      <h2 class="title" data-t="">자연과 함께, 재배는 과학적으로</h2>
+      <hr class="divider">
+      <p class="lead" data-t="">화학 비료와 제초제를 사용하지 않고 — 직접 유기질 재료로 만든 발효퇴비와<br>유기질 비료, 유기농업자재를 활용해 균일하고 높은 품질을 유지합니다.</p>
+      <p class="lead" data-t="">발효퇴비와 풀을 키워 만든 비옥한 토양과 미생물 재배 시스템이 만나<br>속까지 단단하게 영근 건강하고 맛있는 완두콩이 자랍니다.</p>
+      <div class="stack">
+        <div class="row" data-row="">
+          <div class="txt"><p class="s-eyebrow" data-t="">STAGE 01</p><h3 class="s-title" data-t="">재배 — 초기</h3><p class="s-body" data-t="">발효퇴비를 넣고 풀을 키워 비옥하게 만든 토양에 완두콩을 심어 새싹이 올라오는 단계입니다.</p></div>
+          <div class="slot framed r-43" data-img=""><img src="../images/pea-detail-02.jpg" loading="lazy"></div>
         </div>
-        <div class="detail-uses__item">
-          <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">비옥한 토양에서 줄기와 잎이 무성하게 자라며 밭 전체가 푸르게 채워집니다</span>
+        <div class="row rev" data-row="">
+          <div class="txt"><p class="s-eyebrow" data-t="">STAGE 02</p><h3 class="s-title" data-t="">재배 — 중기</h3><p class="s-body" data-t="">줄기와 잎이 무성하게 자라며, 밭 전체가 푸르게 채워지는 시기입니다.</p></div>
+          <div class="slot framed r-43" data-img=""><img src="../images/pea-detail-03.jpg" loading="lazy"></div>
         </div>
-        <div class="detail-uses__item">
-          <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">꽃이 피고 어린 꼬투리가 맺혀, 꼬투리 안으로 완두콩 고유의 단맛이 채워집니다</span>
+        <div class="row" data-row="">
+          <div class="txt"><p class="s-eyebrow" data-t="">STAGE 03</p><h3 class="s-title" data-t="">재배 — 말기</h3><p class="s-body" data-t="">꽃이 피고 어린 꼬투리가 맺히기 시작하며, 꼬투리 안으로 완두콩 고유의 단맛이 차곡차곡 채워집니다.</p></div>
+          <div class="slot framed r-43" data-img=""><img src="../images/pea-detail-04.jpg" loading="lazy"></div>
         </div>
-        <div class="detail-uses__item">
-          <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">통통하게 영근 꼬투리를 가족이 먹는 마음으로 꼼꼼히 선별해 수확합니다</span>
+        <div class="row rev" data-row="">
+          <div class="txt"><p class="s-eyebrow" data-t="">STAGE 04</p><h3 class="s-title" data-t="">재배 — 최종</h3><p class="s-body" data-t="">꼬투리가 통통하게 영글어, 알맹이의 단단함과 고유의 맛이 가장 좋은 상태로 수확을 기다리는 단계입니다.</p></div>
+          <div class="slot framed r-43" data-img=""><img src="../images/pea-detail-05.jpg" loading="lazy"></div>
         </div>
       </div>
     </div>
-  </section>
-
-
-  <!-- ============ 미생물의 힘 ============ -->
-  <section class="detail-section detail-section--alt">
-    <div class="detail-section__inner">
-      <div class="detail-section__label">Living Soil</div>
-      <h2 class="detail-section__title">흙을 살리는 미생물의 힘</h2>
-      <div class="detail-section__body">
-        <p>영동에덴원은 토양을 살리고 정직한 먹거리를 만드는 발효식품 전문 공동체입니다.<br />그 발효의 기술을 토양에도 적용하여 미생물이 잘 활동할 수 있는 최적의 환경을 만듭니다.</p>
-        <p>직접 발효시킨 퇴비와 유기질 비료로 토양을 가꾸고 건강한 토양을 위해 풀을 키웁니다.<br />미생물이 살아 숨 쉬는 이 땅에서 완두콩은 뿌리를 내리고, 고유의 단맛이 채워집니다.</p>
-      </div>
-
-      <!-- 메인: 발효 퇴비 · 유기질 비료 (라벨) -->
-      <div class="detail-photos">
-        <figure style="margin:0;">
-          <div class="detail-photos__item"><img src="../images/pea-compost.jpg" alt="직접 발효시킨 퇴비" /></div>
-          <figcaption style="text-align:center;margin-top:0.7rem;font-size:0.92rem;letter-spacing:0.05em;color:var(--gold-dark);">발효 톱밥 퇴비</figcaption>
+  </section><section class="blk living alt" data-block="living">
+    <div class="wrap">
+      <p class="eyebrow" data-t="">LIVING SOIL</p>
+      <h2 class="title" data-t="">흙을 살리는 미생물의 힘</h2>
+      <hr class="divider">
+      <p class="lead" data-t="">영동에덴원은 토양을 살리고 정직한 먹거리를 만드는 발효식품 전문 공동체입니다.<br>그 발효의 기술을 토양에도 적용하여 미생물이 잘 활동할 수 있는 최적의 환경을 만듭니다.</p>
+      <p class="lead" data-t="">직접 발효시킨 퇴비와 유기질 비료로 토양을 가꾸고 건강한 토양을 위해 풀을 키웁니다.<br>미생물이 살아 숨 쉬는 이 땅에서 완두콩은 뿌리를 내리고, 고유의 단맛이 채워집니다.</p>
+      <div class="labelpair">
+        <figure class="lp-item" data-row="">
+          <div class="slot framed r-43" data-img=""><img src="../images/pea-detail-06.jpg" loading="lazy"></div>
+          <figcaption class="lp-cap" data-t="">발효 톱밥 퇴비</figcaption>
         </figure>
-        <figure style="margin:0;">
-          <div class="detail-photos__item"><img src="../images/pea-soil-mound.jpg" alt="유기질 비료" /></div>
-          <figcaption style="text-align:center;margin-top:0.7rem;font-size:0.92rem;letter-spacing:0.05em;color:var(--gold-dark);">유기질 비료</figcaption>
+        <figure class="lp-item" data-row="">
+          <div class="slot framed r-43" data-img=""><img src="../images/pea-detail-07.jpg" loading="lazy"></div>
+          <figcaption class="lp-cap" data-t="">유기질 비료</figcaption>
         </figure>
       </div>
-
-      <!-- 밭과 결실 -->
-      <div class="detail-photos" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:1.2rem;">
-        <div class="detail-photos__item"><img src="../images/pea-field-1.jpg" alt="완두콩 밭 전경" /></div>
-        <div class="detail-photos__item"><img src="../images/pea-field-2.jpg" alt="완두콩 밭 전경" /></div>
-        <div class="detail-photos__item"><img src="../images/pea-pods-trellis.jpg" alt="줄기에 매달린 완두콩 꼬투리" /></div>
-        <div class="detail-photos__item"><img src="../images/pea-pods-closeup.jpg" alt="통통하게 영근 완두콩 꼬투리" /></div>
-      </div>
-      <p class="detail-photos__caption">직접 발효시킨 퇴비로 가꾼 토양에서 자란 영동에덴원의 완두콩</p>
     </div>
-  </section>
-
-
-  <!-- ============ 활용법 ============ -->
-  <section class="detail-section">
-    <div class="detail-section__inner">
-      <div class="detail-section__label">How to Enjoy</div>
-      <h2 class="detail-section__title">이렇게 즐기세요</h2>
-
-      <div class="detail-uses">
-        <div class="detail-uses__item">
-          <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">쌀과 함께 밥을 지어 고소함과 단맛이 어우러지는 완두콩밥</span>
-        </div>
-        <div class="detail-uses__item">
-          <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">완두콩 수프·카레 등 다양한 한식·양식 요리에 활용</span>
-        </div>
-        <div class="detail-uses__item">
-          <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">찌거나 삶기만 해도 고유의 고소함과 단맛을 그대로</span>
-        </div>
+  </section><section class="blk gallery" data-block="gallery">
+    <div class="wrap wide">
+      <p class="lead" data-t="">자연 친화적 환경과 자연 농법으로 쌓아온 데이터로,<br>가장 맛있는 완두콩을 위해 최적의 토양과 재배 조건을 맞춥니다.</p>
+      <p class="lead" data-t="">영동에덴원은 단순히 완두콩을 파는 것이 아닌,<br>고객의 소중한 식탁에 올라갈 건강하고 맛있는 완두콩을 제공한다는 마음으로 농사를 짓습니다.</p>
+      <div class="grid2">
+        <div class="cell" data-row=""><div class="slot framed r-1" data-img=""><img src="../images/pea-detail-08.jpg" loading="lazy"></div></div>
+        <div class="cell" data-row=""><div class="slot framed r-1" data-img=""><img src="../images/pea-detail-09.jpg" loading="lazy"></div></div>
+        <div class="cell" data-row=""><div class="slot framed r-1" data-img=""><img src="../images/pea-detail-10.jpg" loading="lazy"></div></div>
+        <div class="cell" data-row=""><div class="slot framed r-1" data-img=""><img src="../images/pea-detail-11.jpg" loading="lazy"></div></div>
       </div>
     </div>
-  </section>
-
-
-  <!-- ============ 보관법 ============ -->
-  <section class="detail-section">
-    <div class="detail-section__inner">
-      <div class="detail-section__label">Storage</div>
-      <h2 class="detail-section__title">보관 방법</h2>
-
-      <div class="detail-uses">
-        <div class="detail-uses__item">
-          <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">깍지 채 씻지 않고 냉장 보관하면 신선함을 비교적 오래 유지</span>
+  </section><section class="blk intro alt" data-block="intro">
+    <div class="wrap">
+      <h2 class="title" data-t="">완두콩 고유의 맛을 느낄 수 있는<br>영동에덴원 햇 완두콩</h2>
+      <hr class="divider">
+      <p class="lead" data-t="">씨앗부터 수확까지, 영동에덴원의 자부심으로 키워낸<br>햇 완두콩의 고유의 맛을 경험할 수 있습니다.</p>
+      <p class="lead" data-t="">청정 자연과 영동에덴원의 정성을 담은 완두콩으로,<br>건강하고 깊은 고유의 맛을 여러분께 제공합니다.</p>
+    </div>
+  </section><section class="blk recipe" data-block="recipe">
+    <div class="wrap wide">
+      <h2 class="title" data-t="">완두콩을 활용하는 다양한 방법</h2>
+      <hr class="divider">
+      <div class="stack">
+        <div class="row rev compact" data-row="">
+          <div class="txt"><h3 class="s-title" data-t="">완두콩밥</h3><p class="s-body" data-t="">한국인의 한 끼를 채우는 밥심. 쌀과 함께 지어 고소함과 단맛이 어우러집니다.</p></div>
+          <div class="slot framed r-1" data-img=""><img src="../images/pea-detail-12.jpg" loading="lazy"></div>
         </div>
-        <div class="detail-uses__item">
-          <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">깐 후 씻지 않은 상태로 지퍼백에 밀봉해 냉동하면 최대 1년 보관</span>
+        <div class="row rev compact" data-row="">
+          <div class="txt"><h3 class="s-title" data-t="">완두콩 수프</h3><p class="s-body" data-t="">따뜻하고 달콤한 한 그릇. 햇 완두콩의 단맛이 진하게 우러나는 부드러운 수프입니다.</p></div>
+          <div class="slot framed r-1" data-img=""><img src="../images/pea-detail-13.jpg" loading="lazy"></div>
         </div>
-        <div class="detail-uses__item">
-          <span class="detail-uses__bullet">●</span>
-          <span class="detail-uses__text">수확 후 시간이 지날수록 단맛이 줄어, 빨리 드시거나 냉동 보관 권장</span>
+        <div class="row rev compact" data-row="">
+          <div class="txt"><h3 class="s-title" data-t="">완두콩 카레</h3><p class="s-body" data-t="">깊은 풍미에 더해지는 톡 터지는 단맛. 카레의 깊이를 한 단계 끌어올려 줍니다.</p></div>
+          <div class="slot framed r-1" data-img=""><img src="../images/pea-detail-14.jpg" loading="lazy"></div>
         </div>
       </div>
     </div>
+  </section><section class="blk textimg" data-block="textimg">
+    <div class="wrap wide">
+      <div class="row compact" data-row="">
+        <div class="txt"><h3 class="s-title" data-t="">찐 완두콩 · 삶은 완두콩</h3><p class="s-body" data-t="">별다른 조리 없이 가장 간단하게. 찌거나 삶기만 해도 완두콩 고유의 고소함과 단맛을 그대로 즐길 수 있습니다.</p></div>
+        <div class="slot framed r-43" data-img=""><img src="../images/pea-detail-15.jpg" loading="lazy"></div>
+      </div>
+    </div>
+  </section><section class="blk intro alt" data-block="intro">
+    <div class="wrap">
+      <h2 class="title" data-t="">영동에덴원의 한마디</h2>
+      <hr class="divider">
+      <p class="lead" data-t="">6개월간 직접 발효시킨 퇴비와 유기질 비료를 활용하여, 맛있는 완두콩을 위한 토양을 만들었습니다. 시간이 많이 걸리고 손이 더 가는 방법을 고집하는 이유는, 영동에덴원의 농사에 대한 진심과 더 건강하고 맛있는 완두콩을 위한 정성과 노력입니다.</p>
+      <p class="lead" data-t="">완두콩 한 알 한 알 정성으로 키워, 가장 맛있는 고유의 맛을 낼 수 있다는 마음을 같이 담아 수확합니다.</p>
+      <p class="lead" data-t="">단순히 완두콩을 판매하는 것이 아닌 영동에덴원의 진심을, 청정 자연이 길러낸 건강하고 깊은 고유의 맛의 완두콩에 담아 당신께 선물합니다.</p>
+    </div>
+  </section><section class="blk intro" data-block="intro">
+    <div class="wrap">
+      <h2 class="title" data-t="">햇 완두콩 보관방법</h2>
+      <hr class="divider">
+    </div>
+  </section><section class="blk textimg" data-block="textimg">
+    <div class="wrap wide">
+      <div class="row rev compact" data-row="">
+        <div class="txt"><h3 class="s-title" data-t="">1. 깍지 채 보관 (냉장)</h3><p class="s-body" data-t="">깍지 채 씻지 않고 냉장 보관하시는 것이 완두콩의 신선함을 비교적 오래 유지할 수 있는 방법입니다.</p></div>
+        <div class="slot framed r-1" data-img=""><img src="../images/pea-detail-16.jpg" loading="lazy"></div>
+      </div>
+    </div>
+  </section><section class="blk textimg" data-block="textimg">
+    <div class="wrap wide">
+      <div class="row rev compact" data-row="">
+        <div class="txt"><h3 class="s-title" data-t="">2. 깐 후 보관 (냉동)</h3><p class="s-body" data-t="">오래 보관하시려면, 완두콩을 깐 후 씻지 않은 상태로 지퍼백에 밀봉하여 냉동 보관하시면 최대 1년 정도 보관이 가능합니다.</p></div>
+        <div class="slot framed r-1" data-img=""><img src="../images/pea-detail-17.jpg" loading="lazy"></div>
+      </div>
+    </div>
+  </section><section class="blk intro" data-block="intro">
+    <div class="wrap">
+      <p class="lead" data-t="">완두콩은 수확 후 시간이 지날수록 단맛이 줄어들기 때문에,<br>받으신 후 가능한 빨리 드시거나 냉동 보관하시는 것을 권장합니다.</p>
+    </div>
+  </section><section class="blk faq" data-block="faq">
+    <div class="wrap wide">
+      <p class="eyebrow" data-t="">Q &amp; A</p>
+      <h2 class="title" data-t="">자주 묻는 질문</h2>
+      <div class="qas">
+        <div class="qa" data-row=""><span class="q" data-t="">완두콩은 어떻게 재배하나요?</span><p class="a" data-t="">영동에덴원에서는 영동의 청정 환경에서 자연 농법으로 직접 재배합니다. 화학 비료와 제초제 없이 직접 만든 발효퇴비와 유기농업자재를 활용하고, 풀을 키워 비옥하게 만든 토양에서 정성과 과학적인 방법으로 길러냅니다.</p></div>
+        <div class="qa right" data-row=""><span class="q" data-t="">완두콩의 신선함은 어떻게 유지하나요?</span><p class="a" data-t="">평일 오전 12시 이전 결제 시 당일 발송됩니다. 주문 받은 후 신선한 상품을 수확하여 당일 출고합니다.</p></div>
+        <div class="qa" data-row=""><span class="q" data-t="">받은 완두콩, 어떻게 보관해야 하나요?</span><p class="a" data-t="">깍지 채 씻지 않고 냉장 보관하시는 것이 신선함을 가장 오래 유지하는 방법입니다.</p></div>
+        <div class="qa right" data-row=""><span class="q" data-t="">처음 완두콩 요리를 해보는데, 어떻게 활용하나요?</span><p class="a" data-t="">완두콩밥, 완두콩 수프, 완두콩 카레 등 다양한 한식·양식 요리에 두루 사용할 수 있습니다. 꼭 요리가 아니더라도, 찌거나 삶아서 드셔도 맛있습니다.</p></div>
+        <div class="qa" data-row=""><span class="q" data-t="">오래 보관하고 싶은데 가능할까요?</span><p class="a" data-t="">완두콩을 깐 후, 씻지 않은 상태로 지퍼백에 밀봉하여 냉동 보관하시면 최대 1년 정도 보관이 가능합니다.</p></div>
+      </div>
+    </div>
+  </section><section class="blk notice" data-block="notice">
+    <div class="wrap">
+      <div class="noticebox">
+        <h3 class="title" data-t="" style="font-size:clamp(20px,4vw,23px)">반품 및 교환안내</h3>
+        <hr class="divider">
+        <p class="n-line" data-t="">· 농산물 특성상 반품 및 교환이 불가능합니다. 구매를 하시는 경우, 신중하게 고려하여 구매를 결정해주시면 감사하겠습니다.</p>
+        <p class="n-line" data-t="">· 상품에 대한 문의는 아래 연락처로 전화 주시면 상세히 안내해 드리겠습니다.</p>
+      </div>
+    </div>
   </section>
+  <section class="blk foot" data-block="footer">
+    <div class="wrap">
+      <h3 class="title" data-t="">영동에덴원</h3>
+      <p class="f-line" data-t="">대표  010-5126-7578</p>
+      <p class="f-line" data-t="">택배문의  010-7310-5590</p>
+      <p class="f-line" data-t="">상담시간  월~금 / 10:00 ~ 19:00</p>
+    </div>
+  </section>
+  </div>
 
-
-  <!-- ============ CTA ============ -->
   <section class="detail-cta">
     <h2 class="detail-cta__title">청정 자연이 길러낸 초생재배 햇 완두콩,<br />직접 만나보세요</h2>
     <p class="detail-cta__sub">
       구매는 화면의 주문 버튼으로, 그 밖의 문의는 아래에서.
     </p>
     <div class="detail-cta__buttons">
-      <a href="../order.html?product=pea" class="btn btn--primary" style="min-width:180px;">주문하기</a>
       <a href="../contact.html" class="btn btn--earth" style="min-width:180px;">✉&nbsp;&nbsp;문의하기</a>
       <a href="../index.html#products" class="btn btn--ghost" style="border-color:rgba(244,237,224,0.5);">다른 제품 보기</a>
     </div>
@@ -2042,13 +2154,11 @@
       <div class="footer__mark">영동에덴원</div>
     </div>
     <div class="footer__legal">
-      농업회사법인 주식회사 에프엔엘바이오푸드 <span class="footer__sep">|</span> 대표 길우관<br />
+      (주)농업회사법인 에프엔엘바이오푸드 <span class="footer__sep">|</span> 대표 길우관<br />
       사업자등록번호 550-87-01994 <span class="footer__sep">|</span> 통신판매업 2021-충북영동-0123<br />
-      충청북도 영동군 학산면 모리2길 3-1<br />
+      충북 영동군 학산면 모리2길 3-2<br />
       010-5126-7578 <span class="footer__sep">|</span> kwg7978@naver.com<br />
-      <a href="../terms.html">이용약관</a> <span class="footer__sep">|</span>
-      <a href="../privacy.html">개인정보처리방침</a> <span class="footer__sep">|</span>
-      <a href="../refund.html">교환·반품·환불 안내</a><br />
+      <a href="../privacy.html">개인정보 처리방침</a> <span class="footer__sep">|</span>
       <span style="opacity:0.5;">ⓒ 2026 영동에덴원 · All rights reserved.</span>
     </div>
   </footer>
@@ -2062,7 +2172,7 @@
      현재 경로에 /products/ 포함 여부로 자동 판별. -->
 <style>
   .cart-dock {
-    position: fixed; top: 50%; transform: translateY(-50%); right: 0; z-index: 95;
+    position: fixed; top: 42%; right: 0; z-index: 95;
     display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
   }
   .cart-fab, .status-fab {
@@ -2114,7 +2224,7 @@
   .cart-fab__badge.on { display: inline-flex; }
   /* 모바일: 우하단 작은 아이콘만 */
   @media (max-width: 640px) {
-    .cart-dock { top: auto; transform: none; bottom: 16px; right: 16px; gap: 8px; align-items: flex-end; }
+    .cart-dock { top: auto; bottom: 16px; right: 16px; gap: 8px; align-items: flex-end; }
     .cart-dock .order-fab { display: none; }   /* 모바일: 자가수령·택배는 하단 바로 이동 */
     .cart-fab, .status-fab { border-radius: 100px; padding: 0.6rem 0.7rem; box-shadow: 0 4px 14px rgba(42,31,20,0.2); }
     .cart-fab__label, .status-fab__label { display: none; }
@@ -2260,114 +2370,5 @@
   footer .footer__legal a:hover { opacity: 1; }
   footer .footer__sep { opacity: 0.35; }
 </style>
-<!-- ===== 영동에덴원 회원 위젯 (주문 페이지 공통: order/cart/giftset) ===== -->
-<!-- 사용법: 닫는 body 태그 바로 앞(장바구니 위젯 뒤)에 그대로 삽입.
-     기능: 1) 주문 전송에 회원 세션 자동 동반  2) 주문 성공 시 회원 주문 자동 연결(적립 대상)
-           3) 좌하단 회원 상태 칩 -->
-
-<script>
-(function () {
-  var MEMBER_API = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
-    ? "https://api.yd-edenwon.com" : "";
-  var dock = document.querySelector(".cart-dock");
-  var fab = document.createElement("a");
-  fab.className = "status-fab member-fab";
-  fab.id = "memberFab";
-  fab.style.display = "none";
-  fab.innerHTML = '<span class="status-fab__icon">\uD83C\uDF31</span>'
-    + '<span class="status-fab__label"></span>';
-  if (dock) { dock.appendChild(fab); }
-  else {
-    var dk = document.createElement("div");
-    dk.className = "cart-dock";
-    dk.appendChild(fab);
-    document.body.appendChild(dk);
-  }
-  var fabLabel = fab.querySelector(".status-fab__label");
-  if (!document.getElementById("memberFabCss")) {
-    var st = document.createElement("style");
-    st.id = "memberFabCss";
-    st.textContent = "@media (max-width:640px){"
-      + ".member-fab .status-fab__label{display:inline !important;}"
-      + ".member-fab{border-radius:100px !important;padding:0.6rem 0.95rem !important;}}";
-    document.head.appendChild(st);
-  }
-
-  // 1) 주문 전송에 세션 동반 + 성공 시 회원 주문 자동 연결
-  var _fetch = window.fetch;
-  window.fetch = function (url, init) {
-    var u = String(url);
-    var isOrder = u.indexOf("/api/orders") > -1 || u.indexOf("/api/cart-order") > -1;
-    if (isOrder) { init = init || {}; init.credentials = "include"; }
-    var p = _fetch(url, init);
-    if (isOrder) {
-      p.then(function (r) { return r.clone().json(); }).then(function (j) {
-        if (!j || j.ok === false) return;
-        var no = j.order_no || (JSON.stringify(j).match(/ED-[0-9]{8}-[A-Z0-9]+/) || [])[0];
-        if (!no) return;
-        _fetch(MEMBER_API + "/api/account/claim-order", {
-          method: "POST", credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ order_no: no })
-        }).catch(function () {});
-      }).catch(function () {});
-    }
-    return p;
-  };
-
-  // 2) 회원 상태 칩
-  var rate = "2";
-  _fetch(MEMBER_API + "/api/account/points-rate")
-    .then(function (r) { return r.json(); })
-    .then(function (j) { if (j.ok) rate = j.rate; })
-    .catch(function () {})
-    .then(function () {
-      return _fetch(MEMBER_API + "/api/account/me", { credentials: "include" });
-    })
-    .then(function (r) { return r.json(); })
-    .then(function (j) {
-      if (j && j.ok) {
-        fabLabel.textContent = "적립 " + rate + "%";
-        fab.title = j.account.name + "님 · 마이페이지";
-        fab.href = MEMBER_API + "/mypage";
-      } else {
-        fabLabel.textContent = "로그인";
-        fab.title = "로그인하고 주문하면 " + rate + "% 적립";
-        fab.href = MEMBER_API + "/login?next="
-          + encodeURIComponent("https://yd-edenwon.com" + location.pathname + location.search);
-      }
-      fab.style.display = "";
-    })
-    .catch(function () {});
-})();
-</script>
-<!-- ===== 회원 위젯 끝 ===== -->
-  <style>
-    .is-soldout{opacity:.5;cursor:not-allowed;pointer-events:none}
-  </style>
-  <script>
-  (function(){
-    var API = "https://api.yd-edenwon.com";
-    var link = document.querySelector('a[href*="order.html?product="]');
-    if (!link) return;
-    var mk = (link.getAttribute("href") || "").match(/product=([^&]+)/);
-    if (!mk) return;
-    var key = decodeURIComponent(mk[1]);
-    fetch(API + "/api/products").then(function(r){ return r.json(); }).then(function(d){
-      if (!d || !d.ok || !d.products) return;
-      var p = d.products.filter(function(x){ return x.key === key; })[0];
-      var allSold = p && (p.options || []).length && p.options.every(function(o){ return o.sold_out; });
-      if (!allSold) return;
-      document.querySelectorAll('a[href*="order.html?product="]').forEach(function(a){
-        a.classList.add("is-soldout");
-        a.setAttribute("aria-disabled", "true");
-        var lab = a.querySelector(".order-fab__label");
-        if (lab) { lab.textContent = "품절"; }
-        else { a.innerHTML = a.innerHTML.replace(/주문하기/g, "품절"); }
-      });
-    }).catch(function(){});
-  })();
-  </script>
-  <script src="/reviews-widget.js" defer></script>
 </body>
 </html>
