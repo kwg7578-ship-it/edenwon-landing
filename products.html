@@ -403,20 +403,31 @@
 
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 300px));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1.8rem;
-      max-width: 960px;   /* 한 줄 최대 3개 */
-      margin: 0 auto;
-      justify-content: center;   /* 적으면 가운데 */
     }
 
-    .product-grid--ferment {}
+    .product-grid--ferment {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
 
-    .product-grid--craft {}
+    .product-grid--craft {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      max-width: 720px;
+      margin: 0 auto;
+    }
 
-    .product-grid--harvest {}
+    .product-grid--harvest {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      max-width: 360px;
+      margin: 0 auto;
+    }
 
-    .product-grid--single {}
+    .product-grid--single {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      max-width: 360px;
+      margin: 0 auto;
+    }
 
     .product-card {
       background: var(--cream);
@@ -2146,17 +2157,6 @@
             <h3 class="product-card__name">햇 완두콩</h3>
             <p class="product-card__tag">Fresh Green Peas</p>
             <p class="product-card__desc">화학 비료와 제초제 없이, 직접 만든 발효퇴비와 유기농업자재로 길러낸 맛있고 건강한 햇 완두콩.</p>
-            <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/bit.html" class="product-card">
-            <div class="product-card__image">
-<img src="images/product-bit.jpg" alt="초생재배 비트" loading="lazy" />
-</div>
-            <h3 class="product-card__name">비트</h3>
-            <p class="product-card__tag">Fresh Beetroot</p>
-            <p class="product-card__desc">직접 만든 발효퇴비와 유기질 비료로 땅심을 키우고, 풀과 함께 자라게 한 초생재배 비트.</p>
             <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
