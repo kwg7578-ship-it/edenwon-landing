@@ -402,32 +402,21 @@
     }
 
     .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;   /* 적으면 가운데, 마지막 줄도 가운데 */
       gap: 1.8rem;
-    }
-
-    .product-grid--ferment {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-
-    .product-grid--craft {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      max-width: 720px;
+      max-width: 940px;
       margin: 0 auto;
     }
 
-    .product-grid--harvest {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      max-width: 360px;
-      margin: 0 auto;
-    }
+    .product-grid--ferment {}
 
-    .product-grid--single {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      max-width: 360px;
-      margin: 0 auto;
-    }
+    .product-grid--craft {}
+
+    .product-grid--harvest {}
+
+    .product-grid--single {}
 
     .product-card {
       background: var(--cream);
@@ -437,6 +426,9 @@
       position: relative;
       display: flex;
       flex-direction: column;
+      flex: 0 1 calc(33.333% - 1.2rem);   /* 한 줄 3개 */
+      min-width: 220px;   /* 좁아지면 자동 줄바꿈 */
+      max-width: 300px;
     }
 
     .product-card:hover {
@@ -2040,6 +2032,7 @@
             <h3 class="product-card__name">발효의 초심</h3>
             <p class="product-card__tag">Natural Vinegar</p>
             <p class="product-card__desc">누룩도 종초도 더하지 않고 옹기에서 자연 미생물이 복합 발효한 천연발효식초. 여러 종류로 만나보실 수 있습니다.</p>
+            <p class="product-card__price">35,000원~</p>
             <p class="product-card__time">1년 6개월 이상 발효한 천연발효식초</p>
             <span class="product-card__more">식초 종류 자세히 보기 →</span>
           </a>
@@ -2049,6 +2042,7 @@
             <h3 class="product-card__name">옹기숙성 된장</h3>
             <p class="product-card__tag">Aged Soybean Paste</p>
             <p class="product-card__desc">직접 농사 지은 콩으로 완전히 띄운 메주와 국내산 천일염으로 복합 발효·숙성.</p>
+            <p class="product-card__price">20,000원</p>
             <p class="product-card__time">2년 이상 발효 및 숙성시킨 한식된장</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
@@ -2058,6 +2052,7 @@
             <h3 class="product-card__name">옹기숙성 고추장</h3>
             <p class="product-card__tag">Aged Red Pepper Paste</p>
             <p class="product-card__desc">직접 기른 엿기름 당화액, 메주 가루, 찰개떡 가루, 표고 가루를 혼합해 복합 발효·숙성.</p>
+            <p class="product-card__price">20,000원</p>
             <p class="product-card__time">1년 이상 발효 및 숙성시킨 고추장</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
@@ -2067,6 +2062,7 @@
             <h3 class="product-card__name">옹기숙성 어간장</h3>
             <p class="product-card__tag">Aged Fish Soy Sauce</p>
             <p class="product-card__desc">3년 숙성 대멸 액젓과 2년 숙성 간장을 혼합해 다시 숙성시킨 깊은 감칠맛.</p>
+            <p class="product-card__price">20,000원</p>
             <p class="product-card__time">2년 이상 추가 숙성시킨 어간장</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
@@ -2076,6 +2072,7 @@
             <h3 class="product-card__name">옹기발효 청국장</h3>
             <p class="product-card__tag">Fermented Soybean</p>
             <p class="product-card__desc">직접 농사 지은 콩으로 옹기단지에서 최적의 환경으로 냄새 없이 띄운 청국장.</p>
+            <p class="product-card__price">4,000원</p>
             <p class="product-card__time">옹기 단지에서 발효시킨 청국장</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
@@ -2085,6 +2082,7 @@
             <h3 class="product-card__name">옹기숙성 비빔된장</h3>
             <p class="product-card__tag">Seasoned Soybean Paste</p>
             <p class="product-card__desc">밥에 비벼 먹고, 쌈장으로도 즐기는 — 누구나 맛있게 먹는 옹기숙성 비빔된장.</p>
+            <p class="product-card__price">15,000원</p>
             <p class="product-card__time">토마토잼과 된장의 콜라보</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
@@ -2094,6 +2092,7 @@
             <h3 class="product-card__name">옹기숙성 비빔고추장</h3>
             <p class="product-card__tag">Seasoned Red Pepper Paste</p>
             <p class="product-card__desc">밥에 비벼 먹고, 쌈장으로도 즐기는 — 누구나 맛있게 먹는 옹기숙성 비빔고추장.</p>
+            <p class="product-card__price">15,000원</p>
             <p class="product-card__time">토마토잼과 고추장의 콜라보</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
@@ -2112,6 +2111,7 @@
             <h3 class="product-card__name">명품 메주</h3>
             <p class="product-card__tag">Artisan Meju</p>
             <p class="product-card__desc">직접 농사 지은 콩으로 빚어, 발효실에서 속까지 완전하게 띄운 명품 메주. 전통 방식과 과학적 관리가 만났습니다.</p>
+            <p class="product-card__price">25,000원</p>
             <p class="product-card__time">발효실에서 완전히 발효시킨 메주</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
@@ -2130,6 +2130,7 @@
             <h3 class="product-card__name">진짜'S 잼</h3>
             <p class="product-card__tag">Real Jam</p>
             <p class="product-card__desc">젤라틴·펙틴 없이 원물만으로 풍미를 높이기 위해 가마솥에서 천천히 달여낸 잼.</p>
+            <p class="product-card__price">10,000원~</p>
             <p class="product-card__time">3시간 이상 달여 만든 잼</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
@@ -2139,6 +2140,7 @@
             <h3 class="product-card__name">진짜'S 조청</h3>
             <p class="product-card__tag">Real Rice Syrup</p>
             <p class="product-card__desc">직접 기른 엿기름과 다양한 농산물을 사용해 가마솥에서 천천히 달여낸 조청.</p>
+            <p class="product-card__price">20,000원</p>
             <p class="product-card__time">6시간 이상 달여 만든 조청</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
@@ -2157,6 +2159,19 @@
             <h3 class="product-card__name">햇 완두콩</h3>
             <p class="product-card__tag">Fresh Green Peas</p>
             <p class="product-card__desc">화학 비료와 제초제 없이, 직접 만든 발효퇴비와 유기농업자재로 길러낸 맛있고 건강한 햇 완두콩.</p>
+            <p class="product-card__price">10,000원~</p>
+            <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
+            <span class="product-card__more">자세히 보기 →</span>
+          </a>
+
+          <a href="products/bit.html" class="product-card">
+            <div class="product-card__image">
+<img src="images/product-bit.jpg" alt="초생재배 비트" loading="lazy" />
+</div>
+            <h3 class="product-card__name">비트</h3>
+            <p class="product-card__tag">Fresh Beetroot</p>
+            <p class="product-card__desc">직접 만든 발효퇴비와 유기질 비료로 땅심을 키우고, 풀과 함께 자라게 한 초생재배 비트.</p>
+            <p class="product-card__price">6,000원</p>
             <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
             <span class="product-card__more">자세히 보기 →</span>
           </a>
