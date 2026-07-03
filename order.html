@@ -505,7 +505,9 @@
   <script>
     // 운영(웹사이트)에서 열리면 파이 API로, 그 외(로컬/파이 직접 접속)는 같은 출처로 호출
     var API_BASE = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
-      ? "https://api.yd-edenwon.com" : "";
+      ? "https://api.yd-edenwon.com"
+      : (location.port === "5005" ? "http://" + location.hostname + ":5002" : "");
+      /* 5005 = 미리보기 무대·빌더 서버 — 무대에서도 주문 연동이 실제 동작 (2026-07-04) */
 
     var PRODUCT_KEY = (new URLSearchParams(location.search).get("product") || "pea").trim();
 
