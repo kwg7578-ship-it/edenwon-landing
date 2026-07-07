@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>발효의 초심 - 영동에덴</title>
+  <title>된장 — 영동에덴원</title>
   <meta name="description" content="영동의 청정 자연에서 자연 농법으로 길러낸 맛있고 정직한 햇 완두콩. — 영동에덴원" />
 
   <meta property="og:title" content="햇 완두콩 — 영동에덴원" />
@@ -1867,13 +1867,13 @@
 .pdx .gallery{background:transparent}
 
 .pdx{
-  --bg:#F8F2E3;
-  --bg-alt:#ECE0C6;
-  --ink:#2E2716;
-  --muted:#6E5F3B;
-  --accent:#C08A2E;
-  --frame:#DDCDA2;
-  --paper:#FCF7EA;
+  --bg:#F4EDE0;
+  --bg-alt:#E9DEC9;
+  --ink:#2A1F14;
+  --muted:#6B5B43;
+  --accent:#8B6F47;
+  --frame:#D8C9A8;
+  --paper:#FBF6EC;
   --head:'Noto Sans KR', sans-serif;
   --body:'Noto Sans KR', sans-serif;
   --eyebrow:'Cormorant Garamond', serif;
@@ -1920,6 +1920,11 @@
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
 .grid2 .cell{min-width:0}
 @media(max-width:560px){.grid2{grid-template-columns:1fr}}
+
+.labelpair{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:36px}
+.lp-item{margin:0}
+.lp-cap{text-align:center;margin-top:12px;font-family:var(--head);font-size:clamp(13px,2.3vw,15px);letter-spacing:.05em;color:var(--accent)}
+@media(max-width:560px){.labelpair{grid-template-columns:1fr;gap:18px}}
 
 .stack{margin-top:6px}
 
@@ -1970,140 +1975,90 @@
   <!-- ============ DETAIL HERO ============ -->
   <div class="pdx">
 <section class="blk hero" data-block="hero">
-  <div class="wrap">
-    <p class="eyebrow" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">YEONGDONG EDENWON</p>
-    <h1 class="title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 35px;">누룩 · 종초를 더하지 않은,<br>시간이 빚은 발효의 <span class="hl">초심(醋心)</span></h1>
-    <p class="lead" data-t="" style="margin-top: 18px; font-size: 20px;" data-listener-added_3c3acfcb="true">자연의 복합 미생물 대사활동으로만,<br>옹기 안에서 길게는 3년 넘게 발효 · 숙성한 천연발효식초입니다.</p>
-    <div class="slot framed r-43" data-img="" style="margin:32px auto 0;max-width:600px"><img src="../images/vinegar-01.jpg"></div>
-    <h2 class="title" data-t="" style="margin-top: 46px; font-size: 35px;" data-listener-added_3c3acfcb="true">발효에 진심이기에 가능한 정직한 고집</h2>
-    <hr class="divider">
-    <p class="lead" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">발효를 빠르게 하려면 누룩이나 종초를 더하면 됩니다.&nbsp;<br>영동에덴원은 그 빠른 방법을 선택하지 않았습니다.</p>
-    <p class="lead" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">옹기 안에서 오직 자연의 복합 미생물 대사활동으로만,&nbsp;<br>1년 6개월 이상, 길게는 3년 넘게 발효 및 숙성했습니다.</p>
-    <p class="lead" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">단순히 식초를 파는 것이 아닌,&nbsp;<br>고객에게 정직하게 발효된 식초를 제공한다는 마음으로 발효합니다.</p>
-  </div>
+<div class="wrap">
+<p class="eyebrow" data-t="" style="font-size: 18px;" data-listener-added_24c4bb3d="true">YEONGDONG EDENWON</p>
+<h1 class="title" data-t="" style="font-size: 35px;" data-listener-added_24c4bb3d="true">직접 빚은 메주를,<br>옹기에 담아 시간으로 완성한 <span class="hl">된장</span></h1>
+<p class="lead" data-t="" style="margin-top: 18px; font-size: 20px;">직접 자연농법으로 농사지은 콩으로 손수 메주를 빚고,<br>옹기 안에서 복합 미생물의 대사활동으로 길게 발효 · 숙성한 된장입니다.</p>
+<div class="slot framed r-43" data-img="" style="margin:32px auto 0; max-width:600px;"><img src="../images/doenjang-01.jpg"></div>
+<h2 class="title" data-t="" style="margin-top: 46px; font-size: 35px;">메주부터 옹기까지, 정직한 콩 맛</h2>
+<hr class="divider">
+<p class="lead" data-t="" style="font-size: 20px;">된장의 맛은 메주에서 시작됩니다.&nbsp;</p><p class="lead" data-t="" style="font-size: 20px;">영동에덴원은 콩을 고르고 삶아 메주를 빚는 일부터 직접 합니다.</p>
+<p class="lead" data-t="" style="font-size: 20px;">빠른 방법을 선택하지 않고, 옹기 안에서 자연의 복합 미생물 대사활동으로만&nbsp;</p><p class="lead" data-t="" style="font-size: 20px;">시간을 들여 발효 · 숙성합니다.</p>
+<p class="lead" data-t="" style="font-size: 20px;">단순히 된장을 파는 것이 아닌, 정직하게 완성된 된장을 전한다는 마음으로 빚습니다.</p>
+</div>
 </section><section class="blk intro alt" data-block="intro">
-  <div class="wrap">
-    <h2 class="title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 35px;">정직하게 발효되는 식초, 발효의 초심</h2>
-    <hr class="divider">
-    <p class="lead" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">영동에덴원은 빠르고 쉬운 방법 대신, 시간 · 옹기가 발효하는 정직한 방법을 선택했습니다.</p>
-    <p class="lead" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">누룩 · 종초가 없이 복합 미생물의 대사활동으로 원물 고유의 풍미를 살린,&nbsp;<br>맑고 깊은 산미의 천연발효식초를 경험할 수 있습니다.</p>
-  </div>
-</section><section class="blk" data-block="tiers">
-  <div class="wrap" style="text-align:center">
-    <h2 class="title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 35px;">영동에덴원의 식초들</h2>
-    <hr class="divider">
-    <div style="margin-top:40px;display:flex;flex-direction:column;gap:34px">
-      <div>
-        <div style="display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:5px"><span class="s-title" data-t="" style="margin: 0px; font-size: 24px;" data-listener-added_3c3acfcb="true">프리미엄 식초</span><span data-t="" style="font-size: 13px; color: var(--accent); background: var(--paper); border: 1px solid var(--frame); border-radius: 20px; padding: 3px 10px;" class="" data-listener-added_3c3acfcb="true">3종</span></div>
-        <p class="s-body" data-t="" style="margin: 0px 0px 14px; font-size: 18px;" data-listener-added_3c3acfcb="true">귀한 원물을 활용한 프리미엄 라인</p>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"><span data-t="" style="background: var(--ink); color: var(--paper); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">비파</span><span data-t="" style="background: var(--ink); color: var(--paper); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">포포</span><span data-t="" style="background: var(--ink); color: var(--paper); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">선학초</span></div>
-      </div>
-      <div>
-        <div style="display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:5px"><span class="s-title" data-t="" style="margin: 0px; font-size: 24px;" data-listener-added_3c3acfcb="true">산야초 식초</span><span data-t="" style="font-size: 13px; color: var(--accent); background: var(--paper); border: 1px solid var(--frame); border-radius: 20px; padding: 3px 10px;" class="" data-listener-added_3c3acfcb="true">18종</span></div>
-        <p class="s-body" data-t="" style="margin: 0px 0px 14px; font-size: 18px;" data-listener-added_3c3acfcb="true">약용작물을 원물로 활용한 산야초 라인</p>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:640px;margin:0 auto"><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">메밀</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">토란</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">생강</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">여주</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">방풍</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">쑥</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">칡</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">곰보배추</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">생강나무</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">제비꽃</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">돌나물</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">뱀딸기</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">환삼덩굴</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">삼백초</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">엉겅퀴</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">참소엽</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">익모초</span><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">민트</span></div>
-      </div>
-      <div>
-        <div style="display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:5px"><span class="s-title" data-t="" style="margin: 0px; font-size: 24px;" data-listener-added_3c3acfcb="true">과일 식초</span><span data-t="" style="font-size: 13px; color: var(--accent); background: var(--paper); border: 1px solid var(--frame); border-radius: 20px; padding: 3px 10px;" class="" data-listener-added_3c3acfcb="true">1종</span></div>
-        <p class="s-body" data-t="" style="margin: 0px 0px 14px; font-size: 18px;" data-listener-added_3c3acfcb="true">원물의 풍미를 활용한 과일 라인</p>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center"><span data-t="" style="background: var(--paper); color: var(--ink); border: 1px solid var(--frame); font-size: 15px; border-radius: 20px; padding: 6px 15px;" class="" data-listener-added_3c3acfcb="true">아로니아</span></div>
-      </div>
-    </div>
-    <p data-t="" style="margin-top: 30px; font-size: 15px; color: var(--muted); line-height: 1.7;" class="" data-listener-added_3c3acfcb="true">* 농촌진흥청 농업기술포털 · 식품안전나라 · 동의보감 등 공식 자료 참고.<br>본 식초는 일반 식품으로, 표시된 원물의 전통적 활용 정보가 의학적 효능을 보장하지 않습니다.</p>
-  </div>
-</section><section class="blk gallery" data-block="gallery">
-  <div class="wrap wide">
-    <div class="grid2">
-      <div class="cell" data-row=""><div class="slot framed r-1" data-img=""><img src="../images/vinegar-02.jpg" loading="lazy"></div></div>
-      <div class="cell" data-row=""><div class="slot framed r-1" data-img=""><img src="../images/vinegar-03.jpg" loading="lazy"></div></div>
-      <div class="cell" data-row=""><div class="slot framed r-1" data-img=""><img src="../images/vinegar-04.jpg" loading="lazy"></div></div>
-      <div class="cell" data-row=""><div class="slot framed r-1" data-img=""><img src="../images/vinegar-05.jpg" loading="lazy"></div></div>
-    </div>
-  </div>
+<div class="wrap">
+<h2 class="title" data-t="" style="font-size: 35px;">정직하게 익은 된장,<br>발효의 깊이</h2>
+<hr class="divider">
+<p class="lead" data-t="" style="font-size: 20px;">영동에덴원은 빠르고 쉬운 방법 대신, 시간 · 옹기가 익히는 정직한 방법을 선택했습니다.</p>
+<p class="lead" data-t="" style="font-size: 20px;">직접 빚은 메주와 옹기 숙성으로 콩 고유의 풍미를 살린,&nbsp;</p><p class="lead" data-t="" style="font-size: 20px;">구수하고 깊은 된장을 경험할 수 있습니다.</p>
+</div>
 </section><section class="blk growth" data-block="growth">
-  <div class="wrap wide">
-    <h2 class="title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 35px;">시간 · 옹기가 식초를 발효하는 시간</h2>
-    <hr class="divider">
-    <p class="lead" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">좋은 식초는 좋은 원물에서 시작됩니다.<br>영동에덴원이 보유한 최적의 발효 기술로 원물 고유의 풍미를 살립니다.</p>
-    <div class="stack">
-      <div class="row" data-row="">
-        <div class="txt"><p class="s-eyebrow" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 16px;">STEP 01</p><h3 class="s-title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 24px;">원물 준비 · 단당물 만들기</h3><p class="s-body" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">식초로 만들 원물을 준비하고 가마솥에서 단당물을&nbsp;<br>만듭니다. 발효의 바탕이 되는 첫 단계입니다.</p></div>
-        <div class="slot framed r-43" data-img=""><img src="../images/vinegar-06.jpg" loading="lazy"></div>
-      </div>
-      <div class="row rev" data-row="">
-        <div class="txt"><p class="s-eyebrow" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 16px;">STEP 02</p><h3 class="s-title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 24px;">옹기에 담기</h3><p class="s-body" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">원물과 단당물을 옹기에 담아 복합 발효를 시작할&nbsp;<br>준비를 합니다.</p></div>
-        <div class="slot framed r-43" data-img=""><img src="../images/vinegar-07.jpg" loading="lazy"></div>
-      </div>
-      <div class="row" data-row="">
-        <div class="txt"><p class="s-eyebrow" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 16px;">STEP 03</p><h3 class="s-title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 24px;">알코올 발효</h3><p class="s-body" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">누룩 · 종초를 더하지 않고, 자연의 복합 미생물&nbsp;<br>대사활동으로 천천히 알코올이 만들어집니다.</p></div>
-        <div class="slot framed r-43" data-img=""><img src="../images/vinegar-08.jpg" loading="lazy"></div>
-      </div>
-      <div class="row rev" data-row="">
-        <div class="txt"><p class="s-eyebrow" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 16px;">STEP 04</p><h3 class="s-title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 24px;">초산 발효 · 숙성</h3><p class="s-body" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">미생물의 대사물질인 알코올이 초산균의 대사활동으로 초산 발효가 되면서, 1년 6개월에서 길게는 3년 넘게&nbsp;<br>발효 · 숙성을 합니다.</p></div>
-        <div class="slot framed r-43" data-img=""><img src="../images/vinegar-09.jpg" loading="lazy"></div>
-      </div>
-    </div>
-  </div>
+<div class="wrap wide">
+<h2 class="title" data-t="" style="font-size: 35px;">메주에서 된장이 되기까지</h2>
+<hr class="divider">
+<p class="lead" data-t="" style="font-size: 20px;">좋은 된장은 좋은 콩과 정직한 손에서 시작됩니다.<br>8년간 얻어진 영동에덴원의 발효 기술로 콩 고유의 풍미를 살립니다.</p>
+<div class="stack">
+<div class="row" data-row=""><div class="txt"><p class="s-eyebrow" data-t="" style="font-size: 16px;">STEP 01</p><h3 class="s-title" data-t="" style="font-size: 24px;">콩 선별 · 세척</h3><p class="s-body" data-t="" style="font-size: 18px;">먼저 직접 농사지은 콩을 선별해, 깨끗이 씻습니다.&nbsp;</p><p class="s-body" data-t="" style="font-size: 18px;">된장의 맛을 결정하는 첫 단계입니다.</p></div><div class="slot framed r-43" data-img=""><img src="../images/doenjang-02.jpg" loading="lazy"></div></div>
+<div class="row rev" data-row=""><div class="txt"><p class="s-eyebrow" data-t="" style="font-size: 16px;">STEP 02</p><h3 class="s-title" data-t="" style="font-size: 24px;">가마솥에 콩 삶기</h3><p class="s-body" data-t="" style="font-size: 18px;">고른 콩을 가마솥에 푹 삶아 메주를 쑤기 위한&nbsp;</p><p class="s-body" data-t="" style="font-size: 18px;">준비를 합니다.</p></div><div class="slot framed r-43" data-img=""><img src="../images/doenjang-03.jpg" loading="lazy"></div></div>
+<div class="row" data-row=""><div class="txt"><p class="s-eyebrow" data-t="" style="font-size: 16px;">STEP 03</p><h3 class="s-title" data-t="" style="font-size: 24px;">삶은 콩 마쇄하기</h3><p class="s-body" data-t="" style="font-size: 18px;">잘 삶아진 콩을 적당히 마쇄하여,&nbsp;</p><p class="s-body" data-t="" style="font-size: 18px;">메주를 빚을 준비를 합니다.</p></div><div class="slot framed r-43" data-img=""><img src="../images/doenjang-04.jpg" loading="lazy"></div></div>
+<div class="row rev" data-row=""><div class="txt"><p class="s-eyebrow" data-t="" style="font-size: 16px;">STEP 04</p><h3 class="s-title" data-t="" style="font-size: 24px;">메주 빚기</h3><p class="s-body" data-t="" style="font-size: 18px;">마쇄된 콩을 손으로 하나 하나 메주를 빚습니다.&nbsp;</p><p class="s-body" data-t="" style="font-size: 18px;" data-listener-added_24c4bb3d="true">영동에덴원 식구들이 함께 손으로 빚는 과정입니다.</p></div><div class="slot framed r-43" data-img=""><img src="../images/doenjang-05.jpg" loading="lazy"></div></div>
+<div class="row" data-row=""><div class="txt"><p class="s-eyebrow" data-t="" style="font-size: 16px;">STEP 05</p><h3 class="s-title" data-t="" style="font-size: 24px;"></h3><h3 class="s-title" data-t="" style="font-size: 24px;">발효실에서 메주 띄우기</h3><p class="s-body" data-t="" style="font-size: 18px;">최적의 환경으로 세팅된 발효실에서 메주를 띄워,&nbsp;</p><p class="s-body" data-t="" style="font-size: 18px;">복합 미생물이 자연스럽게 자리 잡게 유도합니다.</p></div><div class="slot framed r-43" data-img=""><img src="../images/doenjang-06.jpg" loading="lazy"></div></div>
+<div class="row rev" data-row=""><div class="txt"><p class="s-eyebrow" data-t="" style="font-size: 16px;">STEP 06</p><h3 class="s-title" data-t="" style="font-size: 24px;">바람치기&nbsp;<span style="letter-spacing: -0.01em;">· 햇볕들이기</span></h3><p class="s-body" data-t="" style="font-size: 18px;">잘 띄워진 메주를 매달아 바람에 건조를 시킵니다.&nbsp;</p><p class="s-body" data-t="" style="font-size: 18px;">동시에 햇볕으로 살균하여,&nbsp;</p><p class="s-body" data-t="" style="font-size: 18px;">미생물의 활동을 멈추게 합니다.</p></div><div class="slot framed r-43" data-img=""><img src="../images/doenjang-07.jpg" loading="lazy"></div></div>
+<div class="row" data-row=""><div class="txt"><p class="s-eyebrow" data-t="" style="font-size: 16px;">STEP 07</p><h3 class="s-title" data-t="" style="font-size: 24px;">옹기에 메주와 염수 담기</h3><p class="s-body" data-t="" style="font-size: 18px;">완전히 발효된 메주를 옹기에 담고 염수를 부어&nbsp;</p><p class="s-body" data-t="" style="font-size: 18px;">메주의 아미노산 성분이 추출이 되도록 합니다.</p></div><div class="slot framed r-43" data-img=""><img src="../images/doenjang-08.jpg" loading="lazy"></div></div>
+<div class="row rev" data-row=""><div class="txt"><p class="s-eyebrow" data-t="" style="font-size: 16px;">STEP 08</p><h3 class="s-title" data-t="" style="font-size: 24px;">장 가르기, 그리고 발효 · 숙성</h3><p class="s-body" data-t="" style="font-size: 18px;">추출이 완료된 옹기에서 장을 갈라 된장으로 만들어,&nbsp;</p><p class="s-body" data-t="" style="font-size: 18px;">옹기 안에서 복합 발효 · 숙성으로 된장을 완성합니다.</p></div><div class="slot framed r-43" data-img=""><img src="../images/doenjang-09.jpg" loading="lazy"></div></div>
+</div>
+</div>
 </section><section class="blk faq" data-block="faq">
-  <div class="wrap wide">
-    <p class="eyebrow" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">Q &amp; A</p>
-    <h2 class="title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 35px;">자주 묻는 질문</h2>
-    <div class="qas">
-      <div class="qa" data-row=""><span class="q" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">영동에덴원의 천연발효식초는 무엇이 다른가요?</span><p class="a" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">누룩 · 종초 같은 발효 촉진제를 더하지 않고, 옹기 안에서 자연 복합&nbsp;<br>미생물의 대사활동으로만 천천히 발효 · 숙성시킨 식초입니다.</p></div>
-      <div class="qa right" data-row=""><span class="q" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">얼마나 오래 발효 · 숙성하나요?</span><p class="a" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">최소 1년 6개월 이상, 원물에 따라 길게는 3년 넘게 발효 · 숙성합니다.</p></div>
-      <div class="qa" data-row=""><span class="q" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">바닥에 가라앉은 것이 있는데 괜찮나요?</span><p class="a" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">천연발효식초가 발효되는 과정에서 생기는 침전물로, 살균 · 여과를&nbsp;<br>최소화한 식초에서 자연스럽게 나타나는 모습입니다.&nbsp;<br>침전물은 미생물의 대사물질로, 드셔도 됩니다.</p></div>
-      <div class="qa right" data-row=""><span class="q" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">어떻게 마시면 좋나요?</span><p class="a" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">원물로 드시거나, 물이나 탄산수를 활용해 기호에 맞게 희석해 드시거나,&nbsp;<br>요리의 산미를 더하는 용도로 두루 활용할 수 있습니다.&nbsp;<br>청이나 쨈을 활용해 음료로 만들어 드시는 것도 좋은 방법입니다.</p></div>
-    </div>
-  </div>
+<div class="wrap wide">
+<p class="eyebrow" data-t="" style="font-size: 18px;">Q &amp; A</p>
+<h2 class="title" data-t="" style="font-size: 35px;">자주 묻는 질문</h2>
+<div class="qas">
+<div class="qa" data-row=""><span class="q" data-t="" style="font-size: 20px;" data-listener-added_24c4bb3d="true">영동에덴원의 된장은 무엇이 다른가요?</span><p class="a" data-t="" style="font-size: 18px;" data-listener-added_24c4bb3d="true">자연농법으로 농사지은 콩을 선별해 메주를 직접 빚고, 옹기 안에서&nbsp;</p><p class="a" data-t="" style="font-size: 18px;" data-listener-added_24c4bb3d="true">자연 복합 미생물의 대사활동으로 시간을 들여 발효 · 숙성한 된장입니다.</p></div>
+<div class="qa right" data-row=""><span class="q" data-t="" style="font-size: 20px;" data-listener-added_24c4bb3d="true">메주도 직접 만드나요?</span><p class="a" data-t="" style="font-size: 18px;">네. 직접 농사지은 콩으로 메주를 빚는 일부터,&nbsp;</p><p class="a" data-t="" style="font-size: 18px;">옹기에 담아 숙성하는 일까지 직접 합니다.</p></div>
+<div class="qa" data-row=""><span class="q" data-t="" style="font-size: 20px;">메주 모양이 특이하게 생겼는데 왜 그런거죠?</span><p class="a" data-t="" style="font-size: 18px;">메주가 완전히 발효될 수 있는 조건의 형태로 만든 메주입니다.</p><p class="a" data-t="" style="font-size: 18px;">전통적인 기술과 과학의 이론이 만나 만들어진 메주의 형태입니다.</p></div>
+<div class="qa right" data-row=""><span class="q" data-t="" style="font-size: 20px;" data-listener-added_24c4bb3d="true">어떻게 보관하나요?</span><p class="a" data-t="" style="font-size: 18px;">직사광선을 피해 서늘한 곳에 두고, 개봉 후에는 냉장 보관을 권장합니다.&nbsp;</p><p class="a" data-t="" style="font-size: 18px;">표면을 평평하게 눌러 공기와 닿는 면을 줄이면 더 오래 보관할 수 있습니다.</p></div>
+</div>
+</div>
 </section><section class="blk intro alt" data-block="intro">
-  <div class="wrap">
-    <h2 class="title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 35px;">영동에덴원의 한마디</h2>
-    <hr class="divider">
-    <p class="lead" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">매일 식초 옹기의 발효 상태를 살피며, 발효 일지를 기록하고 있습니다.&nbsp;<br>복합 미생물 발효의 과정을 꼼꼼히 살펴 균일하고 높은 품질을 유지합니다.</p>
-    <p class="lead" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">빠르고 쉬운 방법 대신 시간 · 옹기를 선택한 이유는,&nbsp;<br>발효에 대한 진심과 더 건강한 천연발효식초를 위한 노력입니다.</p>
-    <p class="lead" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 20px;">단순히 천연발효식초를 판매하는 것이 아닌, 시간 · 옹기가 빚어낸 발효의 초심을,&nbsp;<br>영동에덴원이 당신에게 선물합니다.</p>
-  </div>
+<div class="wrap">
+<h2 class="title" data-t="" style="font-size: 35px;">영동에덴원의 한마디</h2>
+<hr class="divider">
+<p class="lead" data-t="" style="font-size: 20px;">매일 옹기의 발효 상태를 살피며, 메주를 빚는 일부터 옹기를 가르는 일까지 손으로 합니다.</p>
+<p class="lead" data-t="" style="font-size: 20px;">빠르고 쉬운 방법 대신 시간 · 옹기를 선택한 이유는,&nbsp;</p><p class="lead" data-t="" style="font-size: 20px;">발효에 대한 진심과 더 정직한 된장을 위한 노력입니다.</p>
+<p class="lead" data-t="" style="font-size: 20px;">8년간 축적된 시간 · 옹기 · 미생물의 발효를, 영동에덴원이 당신의 식탁에 전합니다.</p>
+</div>
 </section><section class="blk recipe" data-block="recipe">
-  <div class="wrap wide">
-    <h2 class="title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 35px;">식초, 이렇게 즐기세요</h2>
-    <hr class="divider">
-    <div class="stack">
-      <div class="row rev compact" data-row="">
-        <div class="txt"><h3 class="s-title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 24px;">음용</h3><p class="s-body" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">원액으로 드셔도 좋고, 물이나 탄산수에 기호에 맞게&nbsp;<div>희석하거나, 청과 쨈을 활용한 에이드 같은 상큼한&nbsp;<br>식초 음료로 드셔도 좋습니다.</div></p></div>
-        <div class="slot framed r-1" data-img=""><img src="../images/vinegar-10.jpg" loading="lazy"></div>
-      </div>
-      <div class="row rev compact" data-row="">
-        <div class="txt"><h3 class="s-title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 24px;">요리</h3><p class="s-body" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">무침 · 드레싱 · 초절임 등 요리에 맑고 깊은 산미를 더합니다.</p></div>
-        <div class="slot framed r-1" data-img=""><img src="../images/vinegar-11.jpg" loading="lazy"></div>
-      </div>
-      <div class="row rev compact" data-row="">
-        <div class="txt"><h3 class="s-title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 24px;">시원한 디저트</h3><p class="s-body" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">제철 과일로 만든 화채에 얼음과 같이 넣거나, 시원한 음료나&nbsp;<br>에이드에 레몬 대신 넣어서 드셔도 좋습니다.</p></div>
-        <div class="slot framed r-1" data-img=""><img src="../images/vinegar-12.jpg" loading="lazy"></div>
-      </div>
-    </div>
-  </div>
-</section><section class="blk notice" data-block="notice">
-  <div class="wrap">
-    <div class="noticebox">
-      <h3 class="title" data-t="" style="font-size: 25px;" data-listener-added_3c3acfcb="true">보관 및 섭취 안내</h3>
-      <hr class="divider">
-      <p class="n-line" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">· 직사광선을 피해 서늘한 곳에 보관하시고, 개봉 후에는 냉장 보관을 권장합니다.</p>
-      <p class="n-line" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">· 자연 발효식초 특성상 침전물이 생길 수 있으며, 이는 자연스러운 현상입니다.</p>
-      <p class="n-line" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 18px;">· 상품에 대한 문의는 아래 연락처로 전화 주시면 상세히 안내해 드리겠습니다.</p>
-    </div>
-  </div>
-</section><section class="blk foot" data-block="footer">
-  <div class="wrap">
-    <h3 class="title" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 25px;">영동에덴원</h3>
-    <p class="f-line" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 17px;">대표  010-5126-7578</p>
-    <p class="f-line" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 17px;">택배문의  010-7310-5590</p>
-    <p class="f-line" data-t="" data-listener-added_3c3acfcb="true" style="font-size: 17px;">상담시간  월~금 / 10:00 ~ 19:00</p>
-  </div>
+<div class="wrap wide">
+<h2 class="title" data-t="" style="font-size: 35px;">된장, 이렇게 즐기세요</h2>
+<hr class="divider">
+<div class="stack">
+<div class="row rev compact" data-row="">
+<div class="txt"><h3 class="s-title" data-t="" style="font-size: 24px;">구수한 된장찌개</h3><p class="s-body" data-t="" style="font-size: 18px;">푹 끓인 된장찌개 한 그릇으로, 된장의 깊은 맛을&nbsp;</p><p class="s-body" data-t="" style="font-size: 18px;">그대로 즐겨보세요.</p></div>
+<div class="slot framed r-1" data-img=""><img src="../images/doenjang-10.jpg" loading="lazy"></div>
+</div>
+<div class="row rev compact" data-row="">
+<div class="txt"><h3 class="s-title" data-t="" style="font-size: 24px;">쌈장 · 강된장</h3><p class="s-body" data-t="" style="font-size: 18px;">다진 채소와 함께 쌈장으로, 또는 강된장으로 끓여 밥에 비벼 드셔도 좋습니다.</p></div>
+<div class="slot framed r-1" data-img=""><img src="../images/doenjang-11.jpg" loading="lazy"></div>
+</div>
+<div class="row rev compact" data-row="">
+<div class="txt"><h3 class="s-title" data-t="" style="font-size: 24px;">국 · 무침의 밑 간으</h3><p class="s-body" data-t="" style="font-size: 18px;">된장국, 나물 무침, 각종 찌개의 밑맛으로 구수한 감칠맛을 더합니다.</p></div>
+<div class="slot framed r-1" data-img=""><img src="../images/doenjang-12.jpg" loading="lazy"></div>
+</div>
+</div>
+</div>
+</section><section class="blk notice" data-block="notice"><div class="wrap"><div class="noticebox"><h3 class="title" data-t="" style="font-size:clamp(20px,4vw,23px);">보관 및 섭취 안내</h3><hr class="divider"><p class="n-line" data-t="">· 직사광선을 피해 서늘한 곳에 보관하시고, 개봉 후에는 냉장 보관을 권장합니다.</p><p class="n-line" data-t="">· 상품에 대한 문의는 아래 연락처로 전화 주시면 상세히 안내해 드리겠습니다.</p></div></div></section><section class="blk foot" data-block="footer">
+<div class="wrap">
+<h3 class="title" data-t="" style="font-size: 25px;">영동에덴원</h3>
+<p class="f-line" data-t="" style="font-size: 17px;">대표  010-5126-7578</p>
+<p class="f-line" data-t="" style="font-size: 17px;">택배문의  010-7310-5590</p>
+<p class="f-line" data-t="" style="font-size: 17px;">상담시간  월~금 / 10:00 ~ 19:00</p>
+</div>
 </section>
   </div>
 
   <section class="detail-cta">
-    <h2 class="detail-cta__title">옹기가 빚은 식초,<br />직접 만나보세요</h2>
+    <h2 class="detail-cta__title">옹기가 완성한 된장,<br />직접 만나보세요</h2>
     <p class="detail-cta__sub">
       구매는 화면의 주문 버튼으로, 그 밖의 문의는 아래에서.
     </p>
@@ -2198,7 +2153,7 @@
   }
 </style>
 <div class="cart-dock">
-  <a class="order-fab order-fab--self" href="../order.html?product=vinegar" aria-label="주문하기">
+  <a class="order-fab order-fab--self" href="../order.html" aria-label="주문하기">
     <span class="order-fab__icon">🤲</span>
     <span class="order-fab__label">주문하기</span>
   </a>
@@ -2282,7 +2237,7 @@
   }
 </style>
 <div class="mobile-order-bar">
-  <a class="mobile-order-bar__self" href="../order.html?product=vinegar">🤲 주문하기</a>
+  <a class="mobile-order-bar__self" href="../order.html">🤲 주문하기</a>
   <a class="mobile-order-bar__store" href="https://smartstore.naver.com/fnl_biofood" target="_blank" rel="noopener">📦 택배 주문</a>
 </div>
 
