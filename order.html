@@ -505,9 +505,7 @@
   <script>
     // 운영(웹사이트)에서 열리면 파이 API로, 그 외(로컬/파이 직접 접속)는 같은 출처로 호출
     var API_BASE = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
-      ? "https://api.yd-edenwon.com"
-      : (location.port === "5005" ? "http://" + location.hostname + ":5002" : "");
-      /* 5005 = 미리보기 무대·빌더 서버 — 무대에서도 주문 연동이 실제 동작 (2026-07-04) */
+      ? "https://api.yd-edenwon.com" : "";
 
     var PRODUCT_KEY = (new URLSearchParams(location.search).get("product") || "pea").trim();
 
@@ -1324,8 +1322,8 @@
 </script>
 <!-- ===== 회원 위젯 끝 ===== -->
 
-<!-- ===== 영동에덴원 카드결제 위젯 (토스페이먼츠) ===== -->
-<script src="https://js.tosspayments.com/v2/standard"></script>
+<!-- ===== 영동에덴원 카드결제 위젯 (나이스페이) ===== -->
+<script src="https://pg-web.nicepay.co.kr/v3/common/js/nicepay-pgweb.js"></script>
 <style>
   .pay-method { margin:18px 0 6px; padding:14px; background:#fffdf9;
     border:1.5px solid #d9cfc0; border-radius:12px; }
@@ -1352,25 +1350,76 @@
     + '<div class="pm-note" id="pmNote"></div>';
   btn.parentNode.insertBefore(box, btn);
 
-  var tossPayments = null;
-  fetch(PAY_API + "/api/payment/config")
-    .then(function (r) { return r.json(); })
-    .then(function (j) {
-      if (j.ok && window.TossPayments) {
-        tossPayments = TossPayments(j.client_key);
-        if (j.mode === "test")
-          document.getElementById("pmNote").textContent =
-            "카드 결제 도입을 위해 준비중입니다.";
-      } else { document.getElementById("pmCard").style.display = "none"; }
-    })
-    .catch(function () { document.getElementById("pmCard").style.display = "none"; });
-
   function payMethod() {
     var el = document.querySelector('input[name="payMethod"]:checked');
     return el ? el.value : "bank";
   }
 
-  var _f = window.fetch;
+  var _f = window.fetch;   // 위젯 내부 호출은 원본 fetch로(래퍼 우회)
+
+  // 결제창 취소 시 무통장 폴백 UI
+  function fallbackToBank(oc) {
+    var go = document.getElementById("cardGoing");
+    var bank = document.querySelector("#doneStage .bank");
+    if (go) go.textContent = "카드 결제가 취소되었습니다. 아래 무통장 입금으로 진행해 주세요.";
+    if (bank) bank.style.display = "";
+    _f(PAY_API + "/api/nicepay/to-bank", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(oc) }).catch(function () {});
+  }
+
+  // 결제창 표준 콜백(전역 고정 함수명) — 인증 성공 시 payForm 제출, 취소/닫힘 시 주문 자동취소
+  var _pendingCancel = null;   // {order_no, phone}
+  window.nicepaySubmit = function () {
+    var f = document.getElementById("nicepayForm");
+    if (f) f.submit();
+  };
+  window.nicepayClose = function () {
+    if (!_pendingCancel) return;
+    var oc = _pendingCancel; _pendingCancel = null;
+    _f(PAY_API + "/api/nicepay/abandon", { method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(oc) })
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        var go = document.getElementById("cardGoing");
+        if (res && res.ok) {
+          var chk = document.querySelector("#doneStage .done__check");
+          if (chk) { chk.textContent = "\u2715"; chk.style.background = "#8a7a64"; }
+          var st = document.getElementById("sumStatus");
+          if (st) st.textContent = "취소됨";
+          if (go) go.innerHTML = "카드 결제가 취소되어 <b>주문도 함께 취소</b>되었습니다."
+            + "<br><a href='javascript:location.reload()' style='display:inline-block;margin-top:12px;"
+            + "padding:11px 20px;background:#2A1F14;color:#F4EDE0;border-radius:9px;"
+            + "text-decoration:none;font-weight:700;'>다시 주문하기</a>";
+        } else {
+          fallbackToBank(oc);
+        }
+      })
+      .catch(function () { fallbackToBank(oc); });
+  };
+
+  // params로 나이스페이 payForm 조립 후 결제창 오픈
+  function openNicepay(params, oc) {
+    if (typeof goPay !== "function") { fallbackToBank(oc); return; }
+    var old = document.getElementById("nicepayForm");
+    if (old) old.parentNode.removeChild(old);
+    var f = document.createElement("form");
+    f.id = "nicepayForm";
+    f.name = "nicepayForm";
+    f.method = "post";
+    f.acceptCharset = "euc-kr";
+    f.action = params.ReturnURL;
+    Object.keys(params).forEach(function (k) {
+      var i = document.createElement("input");
+      i.type = "hidden"; i.name = k; i.value = params[k];
+      f.appendChild(i);
+    });
+    document.body.appendChild(f);
+    _pendingCancel = oc;
+    goPay(f);
+  }
+
   window.fetch = function (url, init) {
     var u = String(url);
     var isOrder = u.indexOf("/api/orders") > -1 || u.indexOf("/api/cart-order") > -1;
@@ -1382,15 +1431,13 @@
       } catch (e) {}
     }
     var p = _f(url, init);
-    if (isOrder && payMethod() === "card" && tossPayments) {
+    if (isOrder && payMethod() === "card") {
       p.then(function (r) { return r.clone().json(); }).then(function (j) {
         if (!j || j.ok === false || !j.order_no) return;
         var total = (j.pay_amount != null) ? j.pay_amount
                   : ((j.amount || 0) + (j.shipping_fee || 0));
         var ph = (document.getElementById("phone") || {}).value || "";
-        _f(PAY_API + "/api/payment/intent", { method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ order_no: j.order_no, phone: ph }) }).catch(function () {});
+        var oc = { order_no: j.order_no, phone: ph };
         try {
           var bank = document.querySelector("#doneStage .bank");
           if (bank) {
@@ -1398,55 +1445,33 @@
             var go = document.createElement("div");
             go.className = "card-going";
             go.id = "cardGoing";
-            go.textContent = "카드 결제창으로 이동합니다… 결제를 완료해 주세요.";
+            go.textContent = "카드 결제창에서 결제를 완료해 주세요.";
             bank.parentNode.insertBefore(go, bank);
           }
         } catch (e) {}
+        // 적립금 먼저 반영(있으면) → 서버가 확정금액으로 SignData를 만들도록 params는 그 다음
         (window.__edenPointsRequest
           ? window.__edenPointsRequest(j.order_no, total)
-          : Promise.resolve(total)).then(function (finalTotal) {
-        tossPayments.payment({ customerKey: TossPayments.ANONYMOUS })
-          .requestPayment({
-            method: "CARD",
-            amount: { currency: "KRW", value: finalTotal },
-            orderId: j.order_no,
-            orderName: (j.product || "영동에덴원") + " 주문",
-            successUrl: PAY_API + "/payment/success",
-            failUrl: PAY_API + "/payment/fail"
-          })
-          .catch(function () {
-            _f(PAY_API + "/api/payment/abandon", { method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ order_no: j.order_no, phone: ph }) })
+          : Promise.resolve(total)).then(function () {
+          _f(PAY_API + "/api/nicepay/params", { method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(oc) })
             .then(function (r) { return r.json(); })
             .then(function (res) {
-              var go = document.getElementById("cardGoing");
-              var bank = document.querySelector("#doneStage .bank");
-              if (res && res.ok) {
-                var chk = document.querySelector("#doneStage .done__check");
-                if (chk) { chk.textContent = "\u2715"; chk.style.background = "#8a7a64"; }
-                var st = document.getElementById("sumStatus");
-                if (st) st.textContent = "취소됨";
-                if (go) go.innerHTML = "카드 결제가 취소되어 <b>주문도 함께 취소</b>되었습니다."
-                  + "<br><a href='javascript:location.reload()' style='display:inline-block;margin-top:12px;"
-                  + "padding:11px 20px;background:#2A1F14;color:#F4EDE0;border-radius:9px;"
-                  + "text-decoration:none;font-weight:700;'>다시 주문하기</a>";
+              if (res && res.ok && res.params) {
+                openNicepay(res.params, oc);
               } else {
-                if (go) go.textContent = "카드 결제가 취소되었습니다. 아래 무통장 입금으로 진행해 주세요.";
-                if (bank) bank.style.display = "";
-                _f(PAY_API + "/api/payment/to-bank", { method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ order_no: j.order_no, phone: ph }) }).catch(function () {});
+                var go = document.getElementById("cardGoing");
+                if (go) go.textContent = (res && res.error)
+                  ? res.error + " 무통장 입금으로 진행해 주세요."
+                  : "카드 결제 준비중입니다. 무통장 입금으로 진행해 주세요.";
+                fallbackToBank(oc);
               }
             })
             .catch(function () {
-              var bank = document.querySelector("#doneStage .bank");
-              if (bank) bank.style.display = "";
-                _f(PAY_API + "/api/payment/to-bank", { method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ order_no: j.order_no, phone: ph }) }).catch(function () {});
+              var bank2 = document.querySelector("#doneStage .bank");
+              if (bank2) bank2.style.display = "";
             });
-          });
         });
       }).catch(function () {});
     }
