@@ -484,10 +484,10 @@
       });
     }
 
-    // 신분 목록은 /api/product에서 가져옴(아무 제품이나 — 신분 정의는 공통)
+    // 신분 목록은 소속 전용 API에서 가져옴(제품과 무관 — 제품 API 의존 제거)
     async function loadAffiliations() {
       try {
-        var res = await fetch(API_BASE + "/api/product?product=pea");
+        var res = await fetch(API_BASE + "/api/affiliations");
         var data = await res.json();
         if (data.ok && data.affiliations) {
           AFF_LIST = data.affiliations;
@@ -498,7 +498,9 @@
             affSelect.appendChild(opt);
           });
         }
-      } catch (e) {}
+      } catch (e) {
+        console.error("소속 목록 로드 실패:", e);
+      }
       // 신분 옵션이 채워진 뒤 저장된 인적사항 자동 입력
       fillProfile();
     }
