@@ -1,6 +1,7 @@
 name: Purge Cloudflare cache
 on:
   push:
+    branches: [main]
   workflow_dispatch:
 jobs:
   purge:
