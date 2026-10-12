@@ -296,4 +296,6 @@
   .page-detail .buybar .btn{min-height:52px;padding:0 8px;font-size:16px}
   .page-detail .buybar .buy__like{width:52px;height:52px}
   .page-detail{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+  /* 브라우저가 입력칸·합계로 스크롤할 때도 고정 바 위에 멈추게 */
+  :root:has(body.page-detail){scroll-padding-bottom:calc(72px + env(safe-area-inset-bottom))}
 }
