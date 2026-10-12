@@ -359,7 +359,8 @@
 .crow__opt{font-size:14px;color:var(--muted)}
 .crow__soldout{font-size:13px;color:var(--accent);font-weight:500}
 .crow__soldout[hidden]{display:none}
-.crow.is-soldout .crow__img,.crow.is-soldout .crow__name{opacity:.55}
+.crow.is-soldout .crow__img{opacity:.55}
+.crow.is-soldout .crow__name{color:var(--muted)}
 .crow__qty{display:flex;justify-content:center}
 .crow .qty__btn{width:44px;height:44px}
 .crow__sum{text-align:right;font-size:17px;font-weight:700}
@@ -550,7 +551,8 @@
 .record{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));border-top:1px solid var(--foot-line)}
 .record__cell{display:flex;flex-direction:column;gap:10px;padding:28px 20px 28px 0;border-bottom:1px solid var(--foot-line)}
 .record dt{font-size:13px;color:var(--foot-muted)}
-.record dd{font-family:var(--serif);font-size:28px}
+.record dd{display:flex;flex-direction:column;gap:10px}
+.record__v{font-family:var(--serif);font-size:28px}
 .record__note{font-size:13px;color:var(--foot-muted)}
 .usage__top{display:flex;flex-wrap:wrap;gap:64px;align-items:flex-start}
 .usage__intro{flex:1 1 360px}
@@ -618,7 +620,7 @@
   .mstep__text{flex:none}
   .mstep__title{font-size:22px}
   .record{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .record dd{font-size:22px}
+  .record__v{font-size:22px}
   .record__cell{padding:20px 12px 20px 0}
   .usage__top{gap:24px}
   .recipes{grid-template-columns:1fr}

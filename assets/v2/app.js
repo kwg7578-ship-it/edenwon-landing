@@ -41,8 +41,8 @@
         el.textContent = n > 99 ? "99+" : String(n);
         el.hidden = n === 0;
       });
-      document.querySelectorAll("[data-cart-link]").forEach(function (el) {
-        el.setAttribute("aria-label", n ? "장바구니 " + n + "개" : "장바구니");
+      document.querySelectorAll("[data-cart-sr]").forEach(function (el) {
+        el.textContent = n ? "장바구니 " + n + "개" : "장바구니";
       });
     }
   };
