@@ -95,19 +95,19 @@
 <div class="gallery__slide" data-shot="0"><picture><source type="image/webp" srcset="../images/v2/product-jocheong-480.webp 480w, ../images/v2/product-jocheong-960.webp 960w, ../images/v2/product-jocheong-1200.webp 1200w" sizes="(max-width: 768px) 100vw, 640px"><img src="../images/v2/product-jocheong-960.jpg" srcset="../images/v2/product-jocheong-480.jpg 480w, ../images/v2/product-jocheong-960.jpg 960w, ../images/v2/product-jocheong-1200.jpg 1200w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="진짜&#39;S 조청 300g" class="gallery__img" loading="eager" fetchpriority="high" decoding="async"></picture></div>      </div>
     </div>
 
-    <div class="buy" data-buy>
+    <div class="buy" id="buy" data-buy>
       <div class="buy__head">
         <p class="buy__cat">잼·조청·비빔장</p>
         <h1 class="buy__name">진짜&#39;S 조청</h1>
         <p class="buy__lede">자가 재배 엿기름 · 가마솥 6시간</p>
-        <div class="buy__price">
+<a class="buy__rating" href="#reviews"><span aria-hidden="true" class="buy__stars">★★★★★</span><span>[평점]</span><span class="muted">· 리뷰 [N]개</span></a>        <div class="buy__price">
           <span class="buy__won">20,000원</span>
-          <a class="buy__login" href="https://api.yd-edenwon.com/login">로그인하면 소속 할인가와 적립금이 적용됩니다</a>
         </div>
+        <a class="buy__login" href="https://api.yd-edenwon.com/login">로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
       </div>
 
       <dl class="buy__facts">
-<dt>받는 방법</dt><dd>택배 배송 · 영동 농장 직접 수령</dd><dt>주문 알림</dt><dd>주문 즉시 주문번호와 결제 안내 문자</dd><dt>적립</dt><dd>회원 구매 시 [적립률]% 적립</dd>      </dl>
+<dt>배송</dt><dd>택배 5,000원 · 100,000원 이상 무료</dd><dt>직접 수령</dt><dd>영동 농장 (충북 영동군 학산면)</dd><dt>주문 알림</dt><dd>주문 즉시 주문번호·결제 안내 문자</dd><dt>적립</dt><dd>회원 구매 시 [적립률]% 적립</dd>      </dl>
 
       <div class="buy__select">
         <label for="opt">용량</label>
@@ -141,39 +141,34 @@
   </div>
 </div>
 
-<nav class="pdtabs" aria-label="상품 정보 바로가기">
-  <div class="pdtabs__in container">
-    <a href="#info" data-sec-link aria-current="true">상세 정보</a>
-    <a href="#reviews" data-sec-link>리뷰</a>
-    <a href="#delivery" data-sec-link>배송·교환</a>
-  </div>
+<nav class="toc" aria-label="상품 정보 바로가기" data-toc>
+  <div class="toc__in container">
+<a href="#reviews" data-sec-link aria-current="true">리뷰</a><a href="#notice" data-sec-link>상품정보</a><a href="#shipping" data-sec-link>배송·교환</a>  </div>
 </nav>
 
-<section id="info" class="pdsec" aria-labelledby="info-h" data-sec>
-  <h2 class="sr-only" id="info-h">상세 정보</h2>
-  <div class="narrow narrow--first">
-    <h3 class="h3">상품 정보</h3>
-    <dl class="infotable">
-      <dt>제품명</dt><dd>진짜&#39;S 조청</dd>
-      <dt>내용량</dt><dd>300g</dd>
-<dt>원재료 및 함량</dt><dd>[원재료 및 함량]</dd><dt>보관 방법</dt><dd>[보관 방법]</dd><dt>소비기한</dt><dd>[소비기한]</dd>      <dt>제조원</dt><dd>농업회사법인 주식회사 에프엔엘바이오푸드</dd>
-    </dl>
+<section class="sb container" id="reviews" data-sec aria-labelledby="reviews-h">
+  <div class="sb__headrow"><h2 class="sb__h" id="reviews-h">리뷰</h2></div>
+  <div class="rv-sum">
+    <div class="rv-sum__score"><span class="rv-sum__avg">[평점]</span><span class="muted">리뷰 [N]개</span></div>
+    <div class="rv-sum__dist" aria-hidden="true"><div><span>5</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>4</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>3</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>2</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>1</span><span class="rv-sum__bar"></span><span>[ ]</span></div></div>
   </div>
-</section>
-
-<section id="reviews" class="narrow pdsec" aria-labelledby="reviews-h" data-sec>
-  <div class="narrow__head"><h3 class="h3" id="reviews-h">리뷰</h3></div>
   <p class="reviews-empty">구매하신 분들의 리뷰가 이곳에 모입니다.</p>
 </section>
-
-<section id="delivery" class="narrow pdsec" aria-labelledby="delivery-h" data-sec>
-  <h3 class="h3" id="delivery-h">배송·교환</h3>
-  <dl class="infotable">
-    <dt>배송비</dt><dd>택배 5,000원 · 상품 합계 100,000원 이상 무료. 제주·도서산간은 배송비가 추가될 수 있습니다.</dd>
-    <dt>직접 수령</dt><dd>충청북도 영동군 학산면 모리2길 3-1 · [수령 가능 시간]</dd>
-    <dt>교환·환불</dt><dd><a href="../refund.html">교환·반품·환불 안내 보기</a></dd>
-  </dl>
+<section class="sb container sb--fold" id="notice" data-sec aria-label="상품정보제공고시">
+  <details class="fold" data-fold>
+    <summary class="fold__sum"><span>상품정보제공고시</span><span class="fold__icon" aria-hidden="true"></span></summary>
+    <dl class="infotable infotable--fold">
+<dt>제품명</dt><dd>진짜&#39;S 조청</dd><dt>식품의 유형</dt><dd>[식품의 유형]</dd><dt>생산자 및 소재지</dt><dd>농업회사법인 주식회사 에프엔엘바이오푸드 · 충청북도 영동군 학산면 모리2길 3-1</dd><dt>제조연월일·소비기한</dt><dd>[제조연월일·소비기한]</dd><dt>내용량</dt><dd>300g</dd><dt>원재료명 및 함량</dt><dd>[원재료명 및 함량]</dd><dt>보관 방법</dt><dd>[보관 방법]</dd><dt>소비자 상담</dt><dd>010-5126-7578</dd>    </dl>
+  </details>
 </section>
+<section class="sb container sb--fold" id="shipping" data-sec aria-label="배송·교환·환불">
+  <details class="fold" data-fold>
+    <summary class="fold__sum"><span>배송·교환·환불</span><span class="fold__icon" aria-hidden="true"></span></summary>
+    <dl class="infotable infotable--fold">
+<dt>배송비</dt><dd>택배 5,000원 · 상품 합계 100,000원 이상 무료. 제주·도서산간은 배송비가 추가될 수 있습니다.</dd><dt>직접 수령</dt><dd>충청북도 영동군 학산면 모리2길 3-1 · [수령 가능 시간]</dd><dt>교환·환불</dt><dd><a href="../refund.html">교환·반품·환불 안내 보기</a></dd>    </dl>
+  </details>
+</section>
+
 
 <section class="related container" aria-labelledby="related-h">
   <h2 class="h2 h2--md" id="related-h">함께 담기 좋은 제품</h2>
@@ -265,8 +260,7 @@
     <div class="ft__cs">
       <p class="ft__cs-h">고객센터</p>
       <p class="ft__tel"><a href="tel:01051267578">010-5126-7578</a></p>
-      <p class="ft__hours">[운영 시간] · 점심시간 [시간]<br>주말·공휴일 휴무</p>
-      <div class="ft__sns">
+<p class="ft__hours">[운영 시간] · 점심시간 [시간]<br>주말·공휴일 휴무</p>      <div class="ft__sns">
         <a href="https://blog.naver.com/gr_edenfarm" rel="noopener">블로그</a>
       </div>
     </div>
