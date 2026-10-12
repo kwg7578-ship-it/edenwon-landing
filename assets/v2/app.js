@@ -148,7 +148,23 @@
     });
   }
 
+  /* ── 웹글꼴: 렌더링을 막지 않게 media=print 로 받아 두었다가 켠다.
+     홈은 첫 배너 사진이 뜬 뒤(최대 3초) 켠다 — 한글 글꼴 조각들이 배너 사진과 대역폭을 다투지 않게. ── */
+  function enableFonts() {
+    document.querySelectorAll("link[data-webfont]").forEach(function (l) { l.media = "all"; });
+  }
+  function initFonts() {
+    var hero = document.querySelector("[data-slide] img[fetchpriority=high]");
+    if (!hero || hero.complete) { enableFonts(); return; }
+    var done = false;
+    function go() { if (!done) { done = true; enableFonts(); } }
+    hero.addEventListener("load", go);
+    hero.addEventListener("error", go);
+    setTimeout(go, 3000);
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    initFonts();
     Cart.render();
     initDrawer();
     initSearch();
