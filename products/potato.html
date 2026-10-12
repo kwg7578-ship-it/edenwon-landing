@@ -143,10 +143,30 @@
 
 <nav class="toc" aria-label="상품 정보 바로가기" data-toc>
   <div class="toc__in container">
-<a href="#reviews" data-sec-link aria-current="true">리뷰</a><a href="#notice" data-sec-link>상품정보</a><a href="#shipping" data-sec-link>배송·교환</a>  </div>
+<a href="#intro" data-sec-link aria-current="true">소개</a><a href="#glance" data-sec-link>한눈에</a><a href="#usage" data-sec-link>맛과 쓰임</a><a href="#reviews" data-sec-link>리뷰</a><a href="#notice" data-sec-link>상품정보</a><a href="#shipping" data-sec-link>배송·교환</a>  </div>
 </nav>
 
-<section class="sb container" id="reviews" data-sec aria-labelledby="reviews-h">
+<section class="sb-hero sb-hero--bottom" id="intro" data-sec data-in-toc aria-label="소개">
+  <picture><source type="image/webp" srcset="../images/v2/summer-potato-harvest-480.webp 480w, ../images/v2/summer-potato-harvest-960.webp 960w, ../images/v2/summer-potato-harvest-1000.webp 1000w" sizes="100vw"><img src="../images/v2/summer-potato-harvest-960.jpg" srcset="../images/v2/summer-potato-harvest-480.jpg 480w, ../images/v2/summer-potato-harvest-960.jpg 960w, ../images/v2/summer-potato-harvest-1000.jpg 1000w" sizes="100vw" width="960" height="720" alt="밭에서 갓 캔 감자" class="sb-hero__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+  <div class="sb-hero__scrim"></div>
+  <div class="sb-hero__text">
+<p class="eyebrow">FRESH POTATO</p>    <h2 class="sb-hero__title">풀과 함께 자란
+영동 감자.</h2>
+<p class="sb-hero__lead">화학비료와 화학 농약을 쓰지 않고, 직접 만든 발효퇴비와 풀로 가꾼 밭에서 감자을(를) 길렀습니다.</p>  </div>
+</section>
+<section class="sb container" id="glance" data-sec data-in-toc aria-labelledby="glance-h">
+  <h2 class="sb__h" id="glance-h">한눈에 보기</h2>
+  <dl class="glance">
+<div class="glance__cell"><dt>재배</dt><dd>풀과 함께(초생재배)</dd></div><div class="glance__cell"><dt>거름</dt><dd>자가제조 발효퇴비 · 유기질 비료</dd></div><div class="glance__cell"><dt>용량</dt><dd>1kg</dd></div><div class="glance__cell"><dt>보관</dt><dd>[보관]</dd></div>  </dl>
+</section>
+<div class="photo2 photo2--2" id="photos" data-sec>
+<figure class="photo2__fig"><picture><source type="image/webp" srcset="../images/v2/potato-02-480.webp 480w, ../images/v2/potato-02-960.webp 960w, ../images/v2/potato-02-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 50vw"><img src="../images/v2/potato-02-960.jpg" srcset="../images/v2/potato-02-480.jpg 480w, ../images/v2/potato-02-960.jpg 960w, ../images/v2/potato-02-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 50vw" width="960" height="720" alt="이랑에 줄지어 놓인 감자" class="photo2__img" loading="lazy" fetchpriority="low" decoding="async"></picture></figure><figure class="photo2__fig"><picture><source type="image/webp" srcset="../images/v2/potato-03-480.webp 480w, ../images/v2/potato-03-960.webp 960w, ../images/v2/potato-03-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 50vw"><img src="../images/v2/potato-03-960.jpg" srcset="../images/v2/potato-03-480.jpg 480w, ../images/v2/potato-03-960.jpg 960w, ../images/v2/potato-03-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 50vw" width="960" height="720" alt="감자를 캐는 밭" class="photo2__img" loading="lazy" fetchpriority="low" decoding="async"></picture></figure></div>
+<section class="sb container" id="usage" data-sec data-in-toc aria-labelledby="usage-h">
+  <div class="usage__top">
+    <div class="sb__head usage__intro"><p class="eyebrow eyebrow--accent">TASTE &amp; USE</p><h2 class="sb__h" id="usage-h">맛과 쓰임</h2><p class="sb__lead">[맛 설명 — 첫맛, 향, 끝맛 2~3문장. 대표 시식 메모로 작성]</p></div>
+<ul class="pairs"><li><span class="pairs__k">그대로</span><span class="pairs__v">껍질째 삶거나 쪄서 소금 한 꼬집</span></li><li><span class="pairs__k">요리</span><span class="pairs__v">된장찌개 · 감자볶음</span></li><li><span class="pairs__k">샐러드</span><span class="pairs__v">감자 샐러드 · 샌드위치</span></li></ul>  </div>
+</section>
+<section class="sb container" id="reviews" data-sec data-in-toc aria-labelledby="reviews-h">
   <div class="sb__headrow"><h2 class="sb__h" id="reviews-h">리뷰</h2></div>
   <div class="rv-sum">
     <div class="rv-sum__score"><span class="rv-sum__avg">[평점]</span><span class="muted">리뷰 [N]개</span></div>
@@ -154,14 +174,14 @@
   </div>
   <p class="reviews-empty">구매하신 분들의 리뷰가 이곳에 모입니다.</p>
 </section>
-<section class="sb container sb--fold" id="notice" data-sec aria-label="상품정보제공고시">
+<section class="sb container sb--fold" id="notice" data-sec data-in-toc aria-label="상품정보제공고시">
   <details class="fold" data-fold>
     <summary class="fold__sum"><span>상품정보제공고시</span><span class="fold__icon" aria-hidden="true"></span></summary>
     <dl class="infotable infotable--fold">
 <dt>품목 또는 명칭</dt><dd>감자</dd><dt>포장단위별 내용물의 용량(중량), 수량, 크기</dt><dd>1kg</dd><dt>생산자, 수입품의 경우 수입자를 함께 표기</dt><dd>농업회사법인 주식회사 에프엔엘바이오푸드 · 충청북도 영동군 학산면 모리2길 3-1</dd><dt>「농수산물의 원산지 표시 등에 관한 법률」에 따른 원산지</dt><dd>[원산지]</dd><dt>제조연월일, 소비기한 또는 품질유지기한</dt><dd>[소비기한]</dd><dt>세부 품목군별 표시사항 — 농수산물: 「농수산물 품질관리법」에 따른 유전자변형농수산물 표시, 지리적 표시</dt><dd>[유전자변형농수산물·지리적 표시]</dd><dt>상품구성</dt><dd>[상품구성]</dd><dt>보관방법 또는 취급방법</dt><dd>[보관 방법]</dd><dt>소비자 안전을 위한 주의사항 (「식품 등의 표시ㆍ광고에 관한 법률 시행규칙」 제5조 및 [별표 2]에 따른 표시사항을 말함)</dt><dd>[소비자 안전 주의사항]</dd><dt>소비자 상담 관련 전화번호</dt><dd>010-5126-7578</dd>    </dl>
   </details>
 </section>
-<section class="sb container sb--fold" id="shipping" data-sec aria-label="배송·교환·환불">
+<section class="sb container sb--fold" id="shipping" data-sec data-in-toc aria-label="배송·교환·환불">
   <details class="fold" data-fold>
     <summary class="fold__sum"><span>배송·교환·환불</span><span class="fold__icon" aria-hidden="true"></span></summary>
     <dl class="infotable infotable--fold">
