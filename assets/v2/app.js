@@ -403,7 +403,16 @@
       ticking = false;
       var line = window.innerHeight * 0.4, cur = secs[0];
       secs.forEach(function (s) { if (s.getBoundingClientRect().top <= line) cur = s; });
-      links.forEach(function (a) { if (a.getAttribute("href") === "#" + cur.id) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+      links.forEach(function (a) {
+        var on = a.getAttribute("href") === "#" + cur.id;
+        if (on) {
+          if (a.getAttribute("aria-current") !== "true") {
+            a.setAttribute("aria-current", "true");
+            var bar = a.parentNode;   // 모바일 가로 줄: 현재 항목이 보이게
+            if (bar.scrollWidth > bar.clientWidth) bar.scrollTo({ left: a.offsetLeft - 20, behavior: "smooth" });
+          }
+        } else a.removeAttribute("aria-current");
+      });
     }
     window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     update();
@@ -581,8 +590,39 @@
     }
   }
 
+  /* ── 접힌 구역(상품정보제공고시·배송·교환): 바로가기·주소 #id 로 오면 펼친다 ── */
+  function initFolds() {
+    function openFor(id) {
+      var sec = id && document.getElementById(id);
+      var d = sec && sec.querySelector("details[data-fold]");
+      if (d) d.open = true;
+    }
+    document.querySelectorAll("[data-sec-link], a[href^='#']").forEach(function (a) {
+      a.addEventListener("click", function () { openFor(a.getAttribute("href").slice(1)); });
+    });
+    window.addEventListener("hashchange", function () { openFor(location.hash.slice(1)); });
+    if (location.hash) openFor(location.hash.slice(1));
+  }
+
+  /* ── 식초 «고르는 법» 카드 → 구매 영역의 선택 상자로 ── */
+  function initChoose() {
+    document.querySelectorAll("[data-choose]").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        var sel = document.querySelector("[data-opt-select]");
+        if (!sel) return;
+        e.preventDefault();
+        sel.scrollIntoView({ block: "center", behavior: "smooth" });
+        sel.focus({ preventScroll: true });
+        var msg = document.querySelector("[data-buy-msg]");
+        if (msg) { msg.textContent = a.getAttribute("data-choose") + " 계열에서 골라 주세요."; msg.hidden = false; }
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initFonts();
+    initFolds();
+    initChoose();
     Added.init();
     initCardAdd();
     document.querySelectorAll("[data-catalog]").forEach(initCatalog);
