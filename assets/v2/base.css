@@ -1,0 +1,142 @@
+/* v2 기본: 리셋 · 타이포 · 공통 부품(헤더·푸터·버튼·카드) */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;overflow-wrap:anywhere;word-break:keep-all}
+img,picture,svg{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:8px;top:-100px;z-index:100;background:var(--primary);color:var(--on-primary);padding:12px 16px;text-decoration:none}
+.skip:focus{top:8px}
+main:focus{outline:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.container{width:100%;max-width:var(--container);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter)}
+.muted{color:var(--muted)}
+
+/* 타이포 */
+.h2{font-family:var(--serif);font-weight:500;font-size:36px;line-height:1.35;white-space:pre-line}
+.h2--lg{font-size:38px}
+.h2--sm{font-size:32px}
+.eyebrow{font-size:13px;letter-spacing:.14em;font-weight:500}
+.eyebrow--accent{color:var(--accent)}
+.eyebrow--on-dark{color:var(--accent-on-dark)}
+.sec-head{display:flex;flex-direction:column;gap:12px}
+.sec-head--center{align-items:center;text-align:center}
+.sec-head--row{flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px}
+.sec-head__sub{font-size:16px;color:var(--muted)}
+.link-under{font-size:15px;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+
+/* 버튼: 각진 모서리, 높이 52~60 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 32px;border:1px solid transparent;border-radius:0;font-size:15px;font-weight:500;text-decoration:none;cursor:pointer;background:none}
+.btn--dark{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.btn--line{border-color:var(--ink);color:var(--ink);padding:0 48px;font-weight:400}
+.btn--line-white{border-color:#FFFFFF;color:#FFFFFF;padding:0 36px}
+.icon-btn{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;background:none;border:0;padding:0;color:var(--ink);cursor:pointer;position:relative}
+.pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.pill{min-height:44px;padding:0 22px;border-radius:22px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:14px;font-weight:500;cursor:pointer}
+.pill[aria-selected="true"]{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.badge{position:absolute;top:16px;left:16px;background:#FFFFFF;color:var(--accent);font-size:12px;font-weight:500;padding:5px 10px;line-height:1.4}
+
+/* 헤더 (Header2) */
+.hd{background:var(--bg);color:var(--ink);position:relative;z-index:20}
+.hd__notice{background:var(--foot);color:var(--foot-ink);font-size:13px;text-align:center;padding:9px 16px;letter-spacing:.02em}
+.hd__util{display:flex;justify-content:flex-end;gap:20px;font-size:12px;padding-top:10px}
+.hd__util a{color:var(--muted);text-decoration:none}
+.hd__bar{min-height:72px;display:flex;align-items:center;column-gap:56px}
+.hd__menu{display:none}
+.logo{display:flex;flex-direction:column;text-decoration:none;color:var(--ink);padding:6px 0 10px}
+.logo__ko{font-family:var(--serif);font-size:25px;font-weight:600;letter-spacing:.04em;line-height:1.2}
+.logo__en{font-size:9px;letter-spacing:.34em;color:var(--muted);line-height:1.6}
+.gnb{display:flex;flex-wrap:wrap;column-gap:40px;flex:1 1 auto}
+.gnb a{text-decoration:none;color:var(--ink);font-size:16px;padding:22px 0 20px;border-bottom:2px solid transparent}
+.gnb a[aria-current="page"]{font-weight:700;border-bottom-color:var(--ink)}
+.hd__actions{display:flex;align-items:center;gap:2px;margin-left:auto}
+.hd__count{position:absolute;top:5px;right:2px;min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:#FFFFFF;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1}
+.hd__count[hidden]{display:none}
+.hd__line{height:1px;background:var(--line)}
+.hd__search{border-top:1px solid var(--line);padding:16px 0}
+.hd__search form{display:flex;gap:8px}
+.hd__search input{flex:1;min-width:0;min-height:52px;border:1px solid var(--line);background:#FFFFFF;padding:0 16px;font-size:16px;border-radius:0}
+
+/* 서랍 메뉴 (≤768) */
+.drawer{position:fixed;inset:0;z-index:50}
+.drawer[hidden]{display:none}
+.drawer__scrim{position:absolute;inset:0;background:var(--scrim)}
+.drawer__panel{position:absolute;top:0;bottom:0;left:0;width:min(86vw,360px);background:var(--bg);display:flex;flex-direction:column;overflow-y:auto;padding:8px 20px 32px;transform:translateX(-100%);transition:transform .22s ease}
+.drawer.is-open .drawer__panel{transform:none}
+.drawer__top{display:flex;align-items:center;justify-content:space-between;min-height:60px;border-bottom:1px solid var(--line)}
+.drawer__top .logo__ko{font-size:21px}
+.drawer__nav{display:flex;flex-direction:column;padding:8px 0;border-bottom:1px solid var(--line)}
+.drawer__nav a{display:flex;align-items:center;min-height:52px;font-size:17px;text-decoration:none}
+.drawer__nav a[aria-current="page"]{font-weight:700}
+.drawer__util{display:flex;flex-direction:column;padding-top:8px}
+.drawer__util a{display:flex;align-items:center;min-height:44px;font-size:14px;color:var(--muted);text-decoration:none}
+body.is-locked{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.drawer__panel{transition:none}}
+
+/* 상품 카드 */
+.grid4{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:48px 24px}
+.card{display:flex;flex-direction:column;gap:18px}
+.card[hidden]{display:none}
+.card__photo{position:relative;display:block;aspect-ratio:1/1;background:var(--photo);overflow:hidden}
+.card__img{width:100%;height:100%;object-fit:cover}
+.card__photo picture{height:100%}
+.card__bag{position:absolute;right:16px;bottom:16px;width:44px;height:44px;border-radius:22px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.card__text{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink)}
+.card__name{font-size:16px}
+.card__price{font-size:18px;font-weight:700}
+.card__desc{font-size:13px;color:var(--muted)}
+.card.is-soldout .card__photo{opacity:.5}
+.card.is-soldout .card__price{color:var(--muted)}
+
+/* 푸터 (Footer2) */
+.ft{background:var(--foot);color:var(--foot-ink)}
+.ft__navwrap{border-bottom:1px solid var(--foot-line)}
+.ft__nav{display:flex;flex-wrap:wrap;column-gap:32px;font-size:14px}
+.ft__nav a{color:var(--foot-ink);text-decoration:none;padding:20px 0}
+.ft__nav a.is-strong{color:#FFFFFF;font-weight:700}
+.ft__body{padding-top:48px;padding-bottom:56px;display:flex;flex-wrap:wrap;gap:48px;justify-content:space-between}
+.ft__brand{flex:1 1 520px;display:flex;flex-direction:column;gap:20px}
+.ft__logo{display:flex;flex-direction:column}
+.ft__logo .logo__ko{font-size:22px}
+.ft__logo .logo__en{color:var(--foot-muted)}
+.ft__legal{display:flex;flex-direction:column;gap:4px;font-size:13px;line-height:1.8;color:var(--foot-muted)}
+.ft__legal a{color:var(--foot-ink)}
+.ft__cs{flex:0 1 360px;display:flex;flex-direction:column;gap:14px}
+.ft__cs-h{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--foot-muted)}
+.ft__tel{font-family:var(--serif);font-size:26px;font-weight:500}
+.ft__tel a{text-decoration:none}
+.ft__hours{font-size:13px;line-height:1.7;color:var(--foot-muted)}
+.ft__sns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.ft__sns a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--foot-line);color:var(--foot-ink);text-decoration:none;font-size:13px}
+
+/* 반응형 공통 */
+@media (max-width:1024px){
+  .grid4{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hd__bar{column-gap:32px}
+  .gnb{column-gap:28px}
+}
+@media (max-width:768px){
+  .hd__notice{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;padding:8px 16px}
+  .hd__notice span{display:block;overflow:hidden;text-overflow:ellipsis}
+  .hd__util,.gnb,.hd__mypage{display:none}
+  .hd__bar{min-height:60px;display:grid;grid-template-columns:1fr auto 1fr;column-gap:8px}
+  .hd__menu{display:inline-flex;justify-self:start;margin-left:-10px}
+  .logo{align-items:center;padding:6px 0}
+  .logo__ko{font-size:21px}
+  .logo__en{font-size:8px}
+  .hd__actions{justify-self:end;margin-right:-10px}
+  .grid4{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 12px}
+  .card{gap:12px}
+  .card__name{font-size:14px}
+  .card__price{font-size:16px}
+  .badge{top:10px;left:10px;font-size:11px;padding:4px 8px}
+  .card__bag{right:10px;bottom:10px;width:36px;height:36px}
+  .h2{font-size:26px}.h2--lg{font-size:28px}.h2--sm{font-size:24px}
+  .ft__nav{column-gap:20px}
+  .ft__nav a{padding:12px 0;min-height:44px;display:inline-flex;align-items:center}
+  .ft__body{padding-top:36px;padding-bottom:44px;gap:32px}
+  .ft__brand{flex-basis:100%}
+}

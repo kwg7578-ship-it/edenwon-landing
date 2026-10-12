@@ -1,0 +1,18 @@
+/* 영동에덴원 v2 디자인 토큰 — 2-A 지시서 §4 확정값 그대로 */
+:root{
+  --bg:#FAF8F5; --surface:#F1EDE7; --line:#E3DDD4;
+  --ink:#221A15; --muted:#6B625A;
+  --primary:#2E241E; --on-primary:#FAF8F5;
+  --photo:#F5EDE0;                 /* 제품 사진 칸 배경 — 고정 */
+  --foot:#221A15; --foot-ink:#EDE7DF; --foot-muted:#ABA298; --foot-line:#3A302A;
+  --accent:#A4532A;                /* 계절 액센트: 봄 #4F6B27 · 여름 #2C6680 · 가을 #A4532A · 겨울 #4C5866 */
+  --accent-on-dark:#E0A27E;        /* 어두운 띠 위 액센트 */
+  --scrim:rgba(20,15,12,.42);      /* 사진 위 글자 가림막: 단색만, 그라데이션 금지 */
+  --serif:'Noto Serif KR',serif; --sans:'Noto Sans KR',sans-serif;
+  --container:1360px; --gutter:40px;
+}
+html[data-season="spring"]{--accent:#4F6B27}
+html[data-season="summer"]{--accent:#2C6680}
+html[data-season="autumn"]{--accent:#A4532A}
+html[data-season="winter"]{--accent:#4C5866}
+@media (max-width:768px){:root{--gutter:20px}}
