@@ -1,11 +1,18 @@
 <!doctype html>
-<html lang="ko" data-season="autumn">
+<html lang="ko" data-season="autumn" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>영동에덴원 — 옹기에서 천천히, 계절대로 익힙니다</title>
-<meta name="description" content="충북 영동에서 기르고 빚은 먹거리입니다.">
+<title>영동에덴원 · YEONGDONG EDENWON — 자연이 기다리고, 시간이 빚어낸 진심</title>
+<meta name="description" content="충북 영동에서 옹기로 익히는 발효식품. 1년 6개월 이상 옹기 발효한 천연발효식초, 옹기숙성 된장·고추장·어간장, 청국장과 가공식품까지 일곱 가지 진심을 전합니다.">
+<meta property="og:title" content="영동에덴원 · 자연이 기다리고, 시간이 빚어낸 진심">
+<meta property="og:description" content="충북 영동, 옹기로 익히는 발효식품 — 영동에덴원의 일곱 가지 진심">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yd-edenwon.com">
+<meta property="og:image" content="https://yd-edenwon.com/images/hero-snow-pots.jpg">
+<meta property="og:locale" content="ko_KR">
+<link rel="canonical" href="https://yd-edenwon.com/">
 <link rel="icon" href="favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +25,14 @@
 <script src="assets/v2/app.js" defer></script>
 </head>
 <body class="page-home">
+<div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
+  <p class="added__h" id="added-h">장바구니에 담았습니다</p>
+  <p class="added__item" data-added-item></p>
+  <div class="added__btns">
+    <a class="btn btn--dark" href="cart.html">장바구니로 가기</a>
+    <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
+  </div>
+</div>
 <a class="skip" href="#main">본문 바로가기</a>
 <header class="hd">
   <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
@@ -177,88 +192,112 @@
   <div class="pills" role="tablist" aria-label="추천 분류" data-tabs="picks">
 <button type="button" role="tab" class="pill" id="picktab-all" aria-controls="picks-panel" aria-selected="true" data-tab="all">전체</button><button type="button" role="tab" class="pill" id="picktab-jang" aria-controls="picks-panel" aria-selected="false" tabindex="-1" data-tab="jang">장류</button><button type="button" role="tab" class="pill" id="picktab-vinegar" aria-controls="picks-panel" aria-selected="false" tabindex="-1" data-tab="vinegar">식초</button><button type="button" role="tab" class="pill" id="picktab-jam" aria-controls="picks-panel" aria-selected="false" tabindex="-1" data-tab="jam">잼·조청·비빔장</button>  </div>
   <div class="grid4" id="picks-panel" role="tabpanel" aria-labelledby="picktab-all" data-picks data-limit="4">
-<article class="card" data-cat="jang" data-price="20000">
-  <a class="card__photo" href="products/doenjang.html" tabindex="-1" aria-hidden="true">
-    <picture><source type="image/webp" srcset="images/v2/product-doenjang-480.webp 480w, images/v2/product-doenjang-960.webp 960w, images/v2/product-doenjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-doenjang-960.jpg" srcset="images/v2/product-doenjang-480.jpg 480w, images/v2/product-doenjang-960.jpg 960w, images/v2/product-doenjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-<span class="badge">2년 이상 숙성</span><span class="card__bag"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</span>  </a>
+<article class="card" data-cat="jang" data-price="20000" data-name="옹기숙성 된장 300g 자가 재배 콩 · 천일염">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/doenjang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-doenjang-480.webp 480w, images/v2/product-doenjang-960.webp 960w, images/v2/product-doenjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-doenjang-960.jpg" srcset="images/v2/product-doenjang-480.jpg 480w, images/v2/product-doenjang-960.jpg 960w, images/v2/product-doenjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">2년 이상 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 된장 300g 장바구니에 담기" data-add="doenjang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
   <a class="card__text" href="products/doenjang.html">
     <span class="card__name">옹기숙성 된장 300g</span>
     <span class="card__price">20,000원</span>
     <span class="card__desc">자가 재배 콩 · 천일염</span>
   </a>
 </article>
-<article class="card" data-cat="vinegar" data-price="35000">
-  <a class="card__photo" href="products/vinegar.html" tabindex="-1" aria-hidden="true">
-    <picture><source type="image/webp" srcset="images/v2/product-vinegar-480.webp 480w, images/v2/product-vinegar-960.webp 960w, images/v2/product-vinegar-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-vinegar-960.jpg" srcset="images/v2/product-vinegar-480.jpg 480w, images/v2/product-vinegar-960.jpg 960w, images/v2/product-vinegar-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-<span class="badge">자연 발효</span><span class="card__bag"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</span>  </a>
+<article class="card" data-cat="vinegar" data-price="35000" data-name="발효의 초심 천연식초 375ml 산야초·과일·프리미엄 22종">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/vinegar.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-vinegar-480.webp 480w, images/v2/product-vinegar-960.webp 960w, images/v2/product-vinegar-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-vinegar-960.jpg" srcset="images/v2/product-vinegar-480.jpg 480w, images/v2/product-vinegar-960.jpg 960w, images/v2/product-vinegar-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">자연 발효</span>    <a class="card__bag" href="products/vinegar.html" aria-label="발효의 초심 천연식초 375ml 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</a>
+  </div>
   <a class="card__text" href="products/vinegar.html">
     <span class="card__name">발효의 초심 천연식초 375ml</span>
     <span class="card__price">35,000원~</span>
     <span class="card__desc">산야초·과일·프리미엄 22종</span>
   </a>
 </article>
-<article class="card" data-cat="jang" data-price="20000">
-  <a class="card__photo" href="products/gochujang.html" tabindex="-1" aria-hidden="true">
-    <picture><source type="image/webp" srcset="images/v2/product-gochujang-480.webp 480w, images/v2/product-gochujang-960.webp 960w, images/v2/product-gochujang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-gochujang-960.jpg" srcset="images/v2/product-gochujang-480.jpg 480w, images/v2/product-gochujang-960.jpg 960w, images/v2/product-gochujang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-<span class="badge">1년 이상 숙성</span><span class="card__bag"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</span>  </a>
+<article class="card" data-cat="jang" data-price="20000" data-name="옹기숙성 고추장 300g 엿기름 당화액 · 메주가루">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/gochujang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-gochujang-480.webp 480w, images/v2/product-gochujang-960.webp 960w, images/v2/product-gochujang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-gochujang-960.jpg" srcset="images/v2/product-gochujang-480.jpg 480w, images/v2/product-gochujang-960.jpg 960w, images/v2/product-gochujang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">1년 이상 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 고추장 300g 장바구니에 담기" data-add="gochujang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
   <a class="card__text" href="products/gochujang.html">
     <span class="card__name">옹기숙성 고추장 300g</span>
     <span class="card__price">20,000원</span>
     <span class="card__desc">엿기름 당화액 · 메주가루</span>
   </a>
 </article>
-<article class="card" data-cat="jam" data-price="10000">
-  <a class="card__photo" href="products/jam.html" tabindex="-1" aria-hidden="true">
-    <picture><source type="image/webp" srcset="images/v2/product-jam-shine-muscat-480.webp 480w, images/v2/product-jam-shine-muscat-960.webp 960w, images/v2/product-jam-shine-muscat-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-jam-shine-muscat-960.jpg" srcset="images/v2/product-jam-shine-muscat-480.jpg 480w, images/v2/product-jam-shine-muscat-960.jpg 960w, images/v2/product-jam-shine-muscat-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-<span class="badge">여름 수확</span><span class="card__bag"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</span>  </a>
+<article class="card" data-cat="jam" data-price="10000" data-name="진짜&#39;S 잼 샤인머스캣 원물만, 가마솥 3시간">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/jam.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-jam-shine-muscat-480.webp 480w, images/v2/product-jam-shine-muscat-960.webp 960w, images/v2/product-jam-shine-muscat-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-jam-shine-muscat-960.jpg" srcset="images/v2/product-jam-shine-muscat-480.jpg 480w, images/v2/product-jam-shine-muscat-960.jpg 960w, images/v2/product-jam-shine-muscat-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">여름 수확</span>    <button type="button" class="card__bag" aria-label="진짜&#39;S 잼 샤인머스캣 장바구니에 담기" data-add="jam" data-add-option="muscat"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
   <a class="card__text" href="products/jam.html">
     <span class="card__name">진짜&#39;S 잼 샤인머스캣</span>
     <span class="card__price">10,000원</span>
     <span class="card__desc">원물만, 가마솥 3시간</span>
   </a>
 </article>
-<article class="card" data-cat="jang" data-price="20000" hidden>
-  <a class="card__photo" href="products/eoganjang.html" tabindex="-1" aria-hidden="true">
-    <picture><source type="image/webp" srcset="images/v2/product-eoganjang-480.webp 480w, images/v2/product-eoganjang-960.webp 960w, images/v2/product-eoganjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-eoganjang-960.jpg" srcset="images/v2/product-eoganjang-480.jpg 480w, images/v2/product-eoganjang-960.jpg 960w, images/v2/product-eoganjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-<span class="badge">다시 숙성</span><span class="card__bag"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</span>  </a>
+<article class="card" data-cat="jang" data-price="20000" data-name="옹기숙성 어간장 300ml 3년 액젓 + 2년 간장" hidden>
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/eoganjang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-eoganjang-480.webp 480w, images/v2/product-eoganjang-960.webp 960w, images/v2/product-eoganjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-eoganjang-960.jpg" srcset="images/v2/product-eoganjang-480.jpg 480w, images/v2/product-eoganjang-960.jpg 960w, images/v2/product-eoganjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">다시 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 어간장 300ml 장바구니에 담기" data-add="eoganjang" data-add-option="300ml"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
   <a class="card__text" href="products/eoganjang.html">
     <span class="card__name">옹기숙성 어간장 300ml</span>
     <span class="card__price">20,000원</span>
     <span class="card__desc">3년 액젓 + 2년 간장</span>
   </a>
 </article>
-<article class="card" data-cat="jam" data-price="20000" hidden>
-  <a class="card__photo" href="products/jocheong.html" tabindex="-1" aria-hidden="true">
-    <picture><source type="image/webp" srcset="images/v2/product-jocheong-480.webp 480w, images/v2/product-jocheong-960.webp 960w, images/v2/product-jocheong-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-jocheong-960.jpg" srcset="images/v2/product-jocheong-480.jpg 480w, images/v2/product-jocheong-960.jpg 960w, images/v2/product-jocheong-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-<span class="badge">가마솥 6시간</span><span class="card__bag"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</span>  </a>
+<article class="card" data-cat="jam" data-price="20000" data-name="진짜&#39;S 조청 300g 자가 재배 엿기름" hidden>
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/jocheong.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-jocheong-480.webp 480w, images/v2/product-jocheong-960.webp 960w, images/v2/product-jocheong-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-jocheong-960.jpg" srcset="images/v2/product-jocheong-480.jpg 480w, images/v2/product-jocheong-960.jpg 960w, images/v2/product-jocheong-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">가마솥 6시간</span>    <button type="button" class="card__bag" aria-label="진짜&#39;S 조청 300g 장바구니에 담기" data-add="jocheong" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
   <a class="card__text" href="products/jocheong.html">
     <span class="card__name">진짜&#39;S 조청 300g</span>
     <span class="card__price">20,000원</span>
     <span class="card__desc">자가 재배 엿기름</span>
   </a>
 </article>
-<article class="card" data-cat="vinegar" data-price="35000" hidden>
-  <a class="card__photo" href="products/vinegar.html" tabindex="-1" aria-hidden="true">
-    <picture><source type="image/webp" srcset="images/v2/vinegar-hero-480.webp 480w, images/v2/vinegar-hero-960.webp 960w, images/v2/vinegar-hero-1600.webp 1600w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/vinegar-hero-960.jpg" srcset="images/v2/vinegar-hero-480.jpg 480w, images/v2/vinegar-hero-960.jpg 960w, images/v2/vinegar-hero-1600.jpg 1600w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="600" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-<span class="badge">프리미엄</span><span class="card__bag"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</span>  </a>
+<article class="card" data-cat="vinegar" data-price="35000" data-name="천연식초 프리미엄 비파 프리미엄 3종 중 하나" hidden>
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/vinegar.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/vinegar-hero-480.webp 480w, images/v2/vinegar-hero-960.webp 960w, images/v2/vinegar-hero-1600.webp 1600w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/vinegar-hero-960.jpg" srcset="images/v2/vinegar-hero-480.jpg 480w, images/v2/vinegar-hero-960.jpg 960w, images/v2/vinegar-hero-1600.jpg 1600w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="600" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">프리미엄</span>    <button type="button" class="card__bag" aria-label="천연식초 프리미엄 비파 장바구니에 담기" data-add="vinegar" data-add-option="vin_bipa"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
   <a class="card__text" href="products/vinegar.html">
     <span class="card__name">천연식초 프리미엄 비파</span>
     <span class="card__price">50,000원</span>
     <span class="card__desc">프리미엄 3종 중 하나</span>
   </a>
 </article>
-<article class="card" data-cat="jam" data-price="15000" hidden>
-  <a class="card__photo" href="products/bibim-gochujang.html" tabindex="-1" aria-hidden="true">
-    <picture><source type="image/webp" srcset="images/v2/product-bibim-gochujang-480.webp 480w, images/v2/product-bibim-gochujang-960.webp 960w, images/v2/product-bibim-gochujang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-bibim-gochujang-960.jpg" srcset="images/v2/product-bibim-gochujang-480.jpg 480w, images/v2/product-bibim-gochujang-960.jpg 960w, images/v2/product-bibim-gochujang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-<span class="badge">토마토잼 배합</span><span class="card__bag"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</span>  </a>
+<article class="card" data-cat="jam" data-price="15000" data-name="옹기숙성 비빔고추장 300g 밥에 비비거나 쌈장으로" hidden>
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/bibim-gochujang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-bibim-gochujang-480.webp 480w, images/v2/product-bibim-gochujang-960.webp 960w, images/v2/product-bibim-gochujang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-bibim-gochujang-960.jpg" srcset="images/v2/product-bibim-gochujang-480.jpg 480w, images/v2/product-bibim-gochujang-960.jpg 960w, images/v2/product-bibim-gochujang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">토마토잼 배합</span>    <button type="button" class="card__bag" aria-label="옹기숙성 비빔고추장 300g 장바구니에 담기" data-add="bibim-gochujang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
   <a class="card__text" href="products/bibim-gochujang.html">
     <span class="card__name">옹기숙성 비빔고추장 300g</span>
     <span class="card__price">15,000원</span>
