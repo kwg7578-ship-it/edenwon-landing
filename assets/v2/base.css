@@ -81,14 +81,17 @@ body.is-locked{overflow:hidden}
 .card{display:flex;flex-direction:column;gap:18px}
 .card[hidden]{display:none}
 .card__photo{position:relative;display:block;aspect-ratio:1/1;background:var(--photo);overflow:hidden}
+.card__photo-link{display:block;width:100%;height:100%}
 .card__img{width:100%;height:100%;object-fit:cover}
 .card__photo picture{height:100%}
-.card__bag{position:absolute;right:16px;bottom:16px;width:44px;height:44px;border-radius:22px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.card__bag{position:absolute;right:16px;bottom:16px;width:44px;height:44px;border-radius:22px;background:#FFFFFF;border:0;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.card__bag:hover{background:var(--primary);color:var(--on-primary)}
+.badge--soldout{background:var(--foot);color:#FFFFFF}
 .card__text{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink)}
 .card__name{font-size:16px}
 .card__price{font-size:18px;font-weight:700}
 .card__desc{font-size:13px;color:var(--muted)}
-.card.is-soldout .card__photo{opacity:.5}
+.card.is-soldout .card__img{opacity:.55}
 .card.is-soldout .card__price{color:var(--muted)}
 
 /* 푸터 (Footer2) */
@@ -140,3 +143,19 @@ body.is-locked{overflow:hidden}
   .ft__body{padding-top:36px;padding-bottom:44px;gap:32px}
   .ft__brand{flex-basis:100%}
 }
+
+/* 경로 표시 */
+.crumbs{font-size:13px;display:flex;flex-wrap:wrap;gap:8px}
+.crumbs a{text-decoration:none;color:inherit}
+.crumbs--muted{color:var(--muted)}
+.h2--md{font-size:30px}
+.h3{font-size:20px;font-weight:700}
+
+/* 담은 뒤 안내 */
+.added{position:fixed;z-index:60;top:16px;right:16px;width:min(360px,calc(100vw - 32px));background:var(--bg);border:1px solid var(--ink);padding:20px;display:flex;flex-direction:column;gap:10px;box-shadow:0 8px 24px rgba(20,15,12,.12)}
+.added[hidden]{display:none}
+.added__h{font-weight:700;font-size:16px}
+.added__item{font-size:14px;color:var(--muted)}
+.added__btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
+.added__btns .btn{padding:0 12px;min-height:52px}
+@media (max-width:768px){.added{top:auto;bottom:80px;left:16px;right:16px;width:auto}}
