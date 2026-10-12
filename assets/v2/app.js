@@ -758,7 +758,8 @@
       });
     });
     form.querySelectorAll("[data-ship]").forEach(function (r) { r.addEventListener("change", function () { requote(); }); });
-    form.querySelectorAll("[data-pay]").forEach(function (r) { r.addEventListener("change", paint); });
+    var payTouched = false;
+    form.querySelectorAll("[data-pay]").forEach(function (r) { r.addEventListener("change", function () { payTouched = true; paint(); }); });
     var memoSel = $("[data-memo-sel]"), memoBox = $("[data-memo-custom]");
     memoSel.addEventListener("change", function () { memoBox.hidden = memoSel.value !== "custom"; if (!memoBox.hidden) memoBox.querySelector("input").focus(); });
     if (API) {
@@ -799,7 +800,16 @@
       $("[data-co-count]").textContent = lines.length + "종 · " + n + "개";
       if (dropped) { var nt = $("[data-co-notice]"); nt.textContent = "품절이거나 판매가 끝난 상품 " + dropped + "개는 주문서에서 뺐습니다."; nt.hidden = false; }
       paint();
-      if (API) loadMe().then(function () { requote(true); });
+      if (API) {
+        loadMe().then(function () { requote(true); });
+        // 카드 선택지: 결제 설정이 있다고 확인될 때만 보이고(그 전·실패·설정 없음은 숨김), 고객이 아직 고르지 않았으면 카드를 기본으로
+        call("GET", "/api/v2/config").then(function (j) {
+          if (!(j && j.ok && j.card)) return;
+          $("[data-card-opt]").hidden = false;
+          if (!payTouched) $("input[data-pay][value=card]").checked = true;
+          paint();
+        }, function () {});
+      }
     }).catch(function () { empty.hidden = false; empty.querySelector(".cart-empty__msg").textContent = "상품 정보를 불러오지 못했습니다."; });
   }
 

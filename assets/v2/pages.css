@@ -660,3 +660,5 @@
 .done__items .muted{font-size:13px}
 [data-bank-row][hidden]{display:none}
 [data-done-lead]{white-space:pre-line}
+.choice__opt[hidden]{display:none}
+.choice--2>.choice__opt[hidden]+.choice__opt{grid-column:1/-1;border-left:0;border-top:0}
