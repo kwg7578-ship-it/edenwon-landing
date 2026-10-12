@@ -546,6 +546,12 @@
 .mstep__no{font-family:var(--serif);font-size:40px;color:var(--accent);line-height:1}
 .mstep__title{font-family:var(--serif);font-weight:500;font-size:26px}
 .mstep__body{font-size:16px;line-height:1.9;color:var(--muted);max-width:440px}
+.mstep--text .mstep__text{flex:1 1 100%;max-width:640px}
+/* 밝은 소개: 가림막 없이 사진 그대로, 글은 사진 아래 같은 밝은 바탕에 */
+.sb-hero--light{height:auto;background:var(--photo)}
+.sb-hero--light picture{position:static;display:block}
+.sb-hero--light .sb-hero__img{height:auto;max-height:640px;object-fit:contain}
+.sb-hero.sb-hero--light .sb-hero__text{position:static;color:var(--ink);padding-top:40px;padding-bottom:64px}
 .sb-dark{background:var(--foot);color:var(--foot-ink)}
 .sb-dark .sb{gap:36px}
 .record{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));border-top:1px solid var(--foot-line)}
