@@ -1,2594 +1,407 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!doctype html>
+<html lang="ko" data-season="autumn" data-root="">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>제품 — 영동에덴원</title>
-  <link rel="icon" href="favicon.ico" sizes="any" />
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png" />
-  <link rel="apple-touch-icon" href="images/favicon-192.png" />
-  <meta name="description" content="충북 영동에서 옹기로 익히는 발효식품. 1년 6개월 이상 옹기 발효한 천연발효식초, 옹기숙성 된장·고추장·어간장, 청국장과 가공식품까지 일곱 가지 진심을 전합니다." />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="영동에덴원 · 자연이 기다리고, 시간이 빚어낸 진심" />
-  <meta property="og:description" content="충북 영동, 옹기로 익히는 발효식품 — 영동에덴원의 일곱 가지 진심" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://yd-edenwon.com" />
-  <meta property="og:image" content="https://yd-edenwon.com/images/hero-snow-pots.jpg" />
-  <link rel="canonical" href="https://yd-edenwon.com/products">
-  <meta property="og:locale" content="ko_KR" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
-
-  <style>
-    :root {
-      --cream: #F4EDE0;
-      --cream-light: #FBF7EF;
-      --cream-dark: #E8DFCC;
-      --ink: #2A1F14;
-      --ink-soft: #5A4A38;
-      --ink-mute: #8B7A65;
-      --gold: #8B6F47;
-      --gold-dark: #6B5532;
-      --border: rgba(42, 31, 20, 0.08);
-      --border-strong: rgba(42, 31, 20, 0.15);
-
-      --font-display: "Gowun Batang", "Noto Serif KR", serif;
-      --font-body: "Noto Sans KR", system-ui, -apple-system, sans-serif;
-      --font-latin: "Cormorant Garamond", serif;
-
-      --max-w: 1080px;
-      --space-section: clamp(5rem, 12vh, 8rem);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; font-size: 17.5px; }
-
-    body {
-      font-family: var(--font-body);
-      background: var(--cream);
-      color: var(--ink);
-      line-height: 1.7;
-      font-weight: 300;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    img { max-width: 100%; height: auto; display: block; }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* ============ HERO ============ */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: url('images/hero-snow-pots.jpg');
-      background-size: cover;
-      background-position: center;
-      z-index: -2;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(42, 31, 20, 0.35) 0%,
-        rgba(42, 31, 20, 0.5) 50%,
-        rgba(42, 31, 20, 0.7) 100%
-      );
-      z-index: -1;
-    }
-
-    .hero__inner {
-      text-align: center;
-      color: var(--cream);
-      padding: 2rem;
-      max-width: 720px;
-      animation: fadeIn 1.4s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero__eyebrow {
-      font-family: var(--font-latin);
-      font-size: clamp(0.85rem, 2vw, 1.05rem);
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      font-weight: 400;
-      opacity: 0.85;
-      margin-bottom: 2rem;
-    }
-
-    .hero__title {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: clamp(2rem, 5.5vw, 3.4rem);
-      line-height: 1.4;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
-      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
-    }
-
-    .hero__subtitle {
-      font-size: clamp(0.95rem, 2vw, 1.1rem);
-      font-weight: 300;
-      letter-spacing: 0.05em;
-      opacity: 0.92;
-      margin-bottom: 3rem;
-      line-height: 1.8;
-    }
-
-    .hero__subtitle span {
-      display: inline-block;
-      padding: 0 0.7em;
-      opacity: 0.6;
-    }
-
-    .hero__cta {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.95rem 2.2rem;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 1px solid transparent;
-      min-width: 180px;
-    }
-
-    .btn--primary {
-      background: var(--cream);
-      color: var(--ink);
-    }
-
-    .btn--primary:hover {
-      background: var(--cream-light);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    }
-
-    .btn--ghost {
-      background: transparent;
-      color: var(--cream);
-      border-color: rgba(244, 237, 224, 0.5);
-    }
-
-    .btn--ghost:hover {
-      background: rgba(244, 237, 224, 0.1);
-      border-color: var(--cream);
-    }
-
-    .hero__scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      color: var(--cream);
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      opacity: 0.7;
-      animation: scrollHint 2s ease-in-out infinite;
-      font-family: var(--font-latin);
-      text-transform: uppercase;
-    }
-
-    @keyframes scrollHint {
-      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
-      50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
-    }
-
-    /* ============ SHARED SECTION ============ */
-    section {
-      padding: var(--space-section) 1.5rem;
-    }
-
-    .container {
-      max-width: var(--max-w);
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: var(--font-latin);
-      font-size: 0.85rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      text-align: center;
-      margin-bottom: 1.2rem;
-      font-weight: 400;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.7rem, 3.8vw, 2.4rem);
-      font-weight: 400;
-      text-align: center;
-      letter-spacing: -0.01em;
-      line-height: 1.4;
-      margin-bottom: clamp(2.5rem, 6vw, 4rem);
-      color: var(--ink);
-    }
-
-    .divider {
-      width: 40px;
-      height: 1px;
-      background: var(--gold);
-      margin: 0 auto 3rem;
-      opacity: 0.6;
-    }
-
-    /* ============ 브랜드 이야기 (통합) ============ */
-    .about {
-      background: var(--cream);
-      text-align: center;
-    }
-
-    /* 상단 선언 */
-    .about__quote {
-      font-family: var(--font-display);
-      font-size: clamp(1.6rem, 3.6vw, 2.35rem);
-      font-weight: 400;
-      line-height: 1.65;
-      color: var(--ink);
-      margin-bottom: 1.6rem;
-      letter-spacing: -0.01em;
-    }
-    .about__quote em {
-      font-style: normal;
-      color: var(--gold-dark);
-      font-weight: 700;
-    }
-    .about__lead {
-      max-width: 640px;
-      margin: 0 auto;
-      color: var(--ink-soft);
-      font-size: clamp(1rem, 2vw, 1.12rem);
-      line-height: 1.95;
-    }
-    @media (max-width: 600px) { .about__lead .br-pc { display: none; } }
-
-    /* 세 축 (농사·발효·제품) */
-    .pillars {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2.2rem;
-      max-width: 960px;
-      margin: clamp(3.5rem, 7vh, 5rem) auto 0;
-      text-align: left;
-    }
-    .pillar {
-      padding: 2rem 1.8rem;
-      background: var(--cream-light);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      transition: transform .3s ease, box-shadow .3s ease;
-    }
-    .pillar:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(42,31,20,0.07); }
-    .pillar__eyebrow {
-      font-family: var(--font-latin); font-size: 0.78rem; letter-spacing: 0.3em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 0.9rem;
-    }
-    .pillar__title {
-      font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
-      color: var(--ink); margin-bottom: 0.8rem; line-height: 1.4;
-    }
-    .pillar__desc { font-size: 0.94rem; color: var(--ink-soft); line-height: 1.85; }
-    .pillar__link {
-      display: inline-block; margin-top: 1rem; font-size: 0.86rem;
-      color: var(--gold-dark); border-bottom: 1px solid var(--border-strong);
-      text-decoration: none; padding-bottom: 2px; transition: border-color .2s ease;
-    }
-    .pillar__link:hover { border-bottom-color: var(--gold); }
-
-    /* 숫자 — 세 축 아래 증거 */
-    .about__stats {
-      max-width: 960px; margin: clamp(3.5rem, 7vh, 5rem) auto 0;
-      padding-top: clamp(2.5rem, 5vh, 3.5rem);
-      border-top: 1px solid var(--border);
-    }
-
-    @media (max-width: 760px) {
-      .pillars { grid-template-columns: 1fr; gap: 1.2rem; max-width: 460px; }
-    }
-
-    /* ============ PRODUCTS ============ */
-    .products {
-      background: var(--cream-light);
-    }
-
-    .products__group {
-      margin-bottom: 4rem;
-    }
-
-    .products__group:last-child {
-      margin-bottom: 0;
-    }
-
-    .products__group-label {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 400;
-      text-align: center;
-      color: var(--ink-soft);
-      margin-bottom: 0.6rem;
-      letter-spacing: 0.05em;
-    }
-
-    .products__group-sub {
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--ink-mute);
-      margin-bottom: 2.5rem;
-      letter-spacing: 0.05em;
-    }
-    /* ===== 제품 탭 (순수 CSS, 4개) ===== */
-    .ptabs__radio { position: absolute; opacity: 0; pointer-events: none; }
-    .ptabs__nav {
-      display: flex; justify-content: center; flex-wrap: wrap; gap: 2.4rem;
-      margin-bottom: 2.8rem; border-bottom: 1px solid var(--border);
-      padding-bottom: 0;
-    }
-    .ptabs__label {
-      position: relative; padding: 0 0 0.9rem; font-family: var(--font-body);
-      font-size: 0.98rem; letter-spacing: 0.04em; color: var(--ink-mute);
-      cursor: pointer; transition: color 0.25s ease; background: transparent;
-      margin-bottom: -1px;
-    }
-    .ptabs__label::after {
-      content: ""; position: absolute; left: 0; right: 0; bottom: 0;
-      height: 2px; background: var(--gold); transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-    .ptabs__label:hover { color: var(--ink-soft); }
-    .ptabs__panel { display: none; }
-    .ptabs__panel-sub {
-      text-align: center; font-family: var(--font-body); font-size: 0.92rem;
-      color: var(--ink-mute); margin: 0 0 2.2rem; line-height: 1.6;
-    }
-    #ptab-1:checked ~ .ptabs__nav label[for="ptab-1"],
-    #ptab-2:checked ~ .ptabs__nav label[for="ptab-2"],
-    #ptab-3:checked ~ .ptabs__nav label[for="ptab-3"],
-    #ptab-4:checked ~ .ptabs__nav label[for="ptab-4"],
-    #ptab-5:checked ~ .ptabs__nav label[for="ptab-5"] {
-      color: var(--ink); font-weight: 700;
-    }
-    #ptab-1:checked ~ .ptabs__nav label[for="ptab-1"]::after,
-    #ptab-2:checked ~ .ptabs__nav label[for="ptab-2"]::after,
-    #ptab-3:checked ~ .ptabs__nav label[for="ptab-3"]::after,
-    #ptab-4:checked ~ .ptabs__nav label[for="ptab-4"]::after,
-    #ptab-5:checked ~ .ptabs__nav label[for="ptab-5"]::after {
-      transform: scaleX(1);
-    }
-    #ptab-1:checked ~ .ptabs__panels .ptabs__panel--1,
-    #ptab-2:checked ~ .ptabs__panels .ptabs__panel--2,
-    #ptab-3:checked ~ .ptabs__panels .ptabs__panel--3,
-    #ptab-4:checked ~ .ptabs__panels .ptabs__panel--4,
-    #ptab-5:checked ~ .ptabs__panels .ptabs__panel--5 {
-      display: block;
-    }
-    @media (max-width: 600px) {
-      .ptabs__nav { gap: 1.3rem; }
-      .ptabs__label { font-size: 0.9rem; }
-    }
-
-    .product-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;   /* 적으면 가운데, 마지막 줄도 가운데 */
-      gap: 1.8rem;
-      max-width: 940px;
-      margin: 0 auto;
-    }
-
-    .product-grid--ferment {}
-
-    .product-grid--craft {}
-
-    .product-grid--harvest {}
-
-    .product-grid--single {}
-
-    .product-card {
-      background: var(--cream);
-      border: 1px solid var(--border);
-      padding: 1.6rem 1.6rem 1.8rem;
-      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      flex: 0 1 calc(33.333% - 1.2rem);   /* 한 줄 3개 */
-      min-width: 220px;   /* 좁아지면 자동 줄바꿈 */
-      max-width: 300px;
-    }
-
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 16px 40px rgba(42, 31, 20, 0.1);
-      border-color: var(--border-strong);
-    }
-
-    .product-card__image {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      background: var(--cream-dark);
-      margin-bottom: 1.5rem;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .product-card__image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.2, 0, 0.2, 1);
-    }
-    .product-card:hover .product-card__image img {
-      transform: scale(1.06);
-    }
-
-    .product-card__name {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 0.4rem;
-      letter-spacing: -0.01em;
-    }
-
-    .product-card__tag {
-      font-family: var(--font-latin);
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-      font-weight: 400;
-    }
-
-    .product-card__desc {
-      font-size: 0.92rem;
-      color: var(--ink-soft);
-      line-height: 1.75;
-      flex: 1;
-    }
-
-    .product-card__time {
-      margin-top: 1.2rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.8rem;
-      color: var(--gold-dark);
-      letter-spacing: 0.05em;
-    }
-
-    .product-card__more {
-      margin-top: 1.1rem;
-      font-size: 0.85rem;
-      color: var(--gold);
-      letter-spacing: 0.05em;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      align-self: flex-start;
-      transition: gap 0.25s ease, color 0.25s ease;
-    }
-
-    a.product-card:hover .product-card__more {
-      color: var(--gold-dark);
-      gap: 0.7rem;
-    }
-
-    /* 카드 정가 (주문 시스템 API에서 자동 표시) */
-    .product-card__price {
-      margin-top: 0.9rem;
-      font-family: var(--font-body);
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: var(--ink);
-      letter-spacing: 0.01em;
-    }
-    .product-card__price .u { color: var(--ink-soft); font-size: 0.8em; font-weight: 400; }
-
-    .products__cta {
-      text-align: center;
-      margin-top: 4rem;
-    }
-
-    .btn--earth {
-      background: var(--ink);
-      color: var(--cream);
-    }
-
-    .btn--earth:hover {
-      background: var(--gold-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(42, 31, 20, 0.2);
-    }
-
-    /* ============ WHY US ============ */
-    .why {
-      background: var(--cream);
-    }
-
-    .why__grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2.5rem;
-      max-width: 920px;
-      margin: 0 auto;
-    }
-
-    .why__item {
-      text-align: center;
-      padding: 1rem;
-    }
-
-    .why__number {
-      font-family: var(--font-latin);
-      font-size: 2.8rem;
-      font-weight: 300;
-      color: var(--gold);
-      line-height: 1;
-      margin-bottom: 0.8rem;
-    }
-
-    .why__unit {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: var(--gold);
-      margin-left: 0.15rem;
-      letter-spacing: 0.02em;
-    }
-
-    .why__label {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
-    }
-
-    .why__desc {
-      font-size: 0.88rem;
-      color: var(--ink-soft);
-      line-height: 1.7;
-    }
-
-    /* ============ GALLERY ============ */
-    .gallery {
-      background: var(--cream-light);
-    }
-
-    .gallery__seasons {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.6rem;
-      margin-bottom: 3rem;
-    }
-
-    @media (min-width: 768px) {
-      .gallery__seasons {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    .gallery__season {
-      position: relative;
-      aspect-ratio: 3 / 4;
-      overflow: hidden;
-      background: var(--cream-dark);
-      display: block;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .gallery__season img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-
-    .gallery__season:hover img {
-      transform: scale(1.04);
-    }
-
-    .gallery__season-label {
-      position: absolute;
-      bottom: 0.8rem;
-      left: 0.9rem;
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--cream);
-      letter-spacing: 0.1em;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-
-    .gallery__process {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 0.6rem;
-    }
-
-    .gallery__process-item {
-      aspect-ratio: 4 / 3;
-      overflow: hidden;
-      background: var(--cream-dark);
-    }
-
-    .gallery__process-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .gallery__caption {
-      text-align: center;
-      margin-top: 2.5rem;
-      font-size: 0.9rem;
-      color: var(--ink-mute);
-      letter-spacing: 0.05em;
-      font-style: italic;
-    }
-
-    /* ============ CONTACT ============ */
-    .contact {
-      background: var(--ink);
-      color: var(--cream);
-    }
-
-    .contact .section-label { color: var(--gold); opacity: 0.9; }
-    .contact .section-title { color: var(--cream); }
-    .contact .divider { background: var(--gold); }
-
-    .contact__brand {
-      text-align: center;
-      font-family: var(--font-display);
-      font-size: 1.3rem;
-      font-weight: 400;
-      margin-bottom: 0.5rem;
-    }
-
-    .contact__legal {
-      text-align: center;
-      font-size: 0.85rem;
-      color: rgba(244, 237, 224, 0.7);
-      margin-bottom: 0.4rem;
-    }
-
-    .contact__address {
-      text-align: center;
-      font-size: 0.95rem;
-      color: rgba(244, 237, 224, 0.85);
-      margin-bottom: 3rem;
-    }
-
-    .contact__channels {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.2rem;
-      max-width: 420px;
-      margin: 0 auto;
-    }
-
-    .btn--kakao {
-      width: 100%;
-      background: #FEE500;
-      color: #3C1E1E;
-      font-weight: 500;
-      padding: 1.1rem 2rem;
-      font-size: 1rem;
-    }
-
-    .btn--kakao:hover {
-      background: #FFEB3B;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(254, 229, 0, 0.3);
-    }
-
-    .contact__links {
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      width: 100%;
-      text-align: center;
-    }
-
-    .contact__link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.6rem;
-      color: rgba(244, 237, 224, 0.85);
-      font-size: 0.95rem;
-      transition: color 0.2s ease;
-      letter-spacing: 0.02em;
-    }
-
-    .contact__link:hover {
-      color: var(--cream);
-    }
-
-    .contact__link-icon {
-      width: 16px;
-      height: 16px;
-      opacity: 0.7;
-    }
-
-    .contact__map {
-      margin-top: 3rem;
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .contact__map-link {
-      display: block;
-      aspect-ratio: 16 / 9;
-      background: var(--cream-dark);
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(244, 237, 224, 0.15);
-    }
-
-    .contact__map-link::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: url('images/map-placeholder.jpg');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.85;
-    }
-
-    .contact__map-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(42, 31, 20, 0.5);
-      color: var(--cream);
-      font-size: 0.95rem;
-      letter-spacing: 0.05em;
-      transition: background 0.3s ease;
-    }
-
-    .contact__map-link:hover .contact__map-overlay {
-      background: rgba(42, 31, 20, 0.3);
-    }
-
-    /* ============ FOOTER ============ */
-    footer {
-      background: var(--ink);
-      color: rgba(244, 237, 224, 0.5);
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      font-size: 0.8rem;
-      line-height: 2;
-      border-top: 1px solid rgba(244, 237, 224, 0.08);
-    }
-
-    footer .footer__mark {
-      font-family: var(--font-display);
-      color: rgba(244, 237, 224, 0.7);
-      letter-spacing: 0.05em;
-      margin-bottom: 0.6rem;
-      font-size: 0.9rem;
-    }
-
-    footer .footer__legal {
-      font-size: 0.75rem;
-      letter-spacing: 0.02em;
-    }
-
-    /* ============ RESPONSIVE ============ */
-    @media (max-width: 640px) {
-      .hero__cta {
-        flex-direction: column;
-        gap: 0.8rem;
-        width: 100%;
-        max-width: 280px;
-        margin: 0 auto;
-      }
-
-      .btn {
-        width: 100%;
-        min-width: 0;
-      }
-
-      .why__grid {
-        gap: 1.5rem;
-      }
-
-      section {
-        padding: 5rem 1.2rem;
-      }
-    }
-
-    /* ============ SCROLL REVEAL ============ */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-  /* =================================================== */
-  /* ============ PRODUCT DETAIL PAGES ================= */
-  /* =================================================== */
-
-  .detail-nav {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(244, 237, 224, 0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 1.5rem;
-  }
-
-  .detail-nav__inner {
-    max-width: var(--max-w);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .detail-nav__back {
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    transition: color 0.2s ease, gap 0.2s ease;
-  }
-
-  .detail-nav__back:hover {
-    color: var(--ink);
-    gap: 0.7rem;
-  }
-
-  .detail-nav__brand {
-    font-family: var(--font-latin);
-    font-size: 0.8rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-
-  /* Detail hero */
-  .detail-hero {
-    padding: clamp(3rem, 8vh, 5rem) 1.5rem clamp(2rem, 5vh, 3.5rem);
-    text-align: center;
-  }
-
-  .detail-hero__inner {
-    max-width: 760px;
-    margin: 0 auto;
-  }
-
-  .detail-hero__eyebrow {
-    font-family: var(--font-latin);
-    font-size: 0.85rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-  }
-
-  .detail-hero__title {
-    font-family: var(--font-display);
-    font-size: clamp(1.9rem, 4.5vw, 2.8rem);
-    font-weight: 700;
-    color: var(--ink);
-    line-height: 1.35;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
-  }
-
-  .detail-hero__tagline {
-    font-size: clamp(0.95rem, 2vw, 1.1rem);
-    color: var(--ink-soft);
-    line-height: 1.8;
-  }
-
-  .detail-hero__image {
-    margin-top: clamp(2rem, 5vh, 3rem);
-    max-width: 760px;
-    margin-left: auto;
-    margin-right: auto;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    background: var(--cream);
-  }
-
-  .detail-hero__image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  /* Detail content sections */
-  .detail-section {
-    padding: clamp(3rem, 8vh, 5rem) 1.5rem;
-  }
-
-  .detail-section--alt {
-    background: var(--cream-light);
-  }
-
-  .detail-section__inner {
-    max-width: 760px;
-    margin: 0 auto;
-  }
-
-  .detail-section__label {
-    font-family: var(--font-latin);
-    font-size: 0.8rem;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--gold);
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-
-  .detail-section__title {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3.5vw, 2.1rem);
-    font-weight: 400;
-    color: var(--ink);
-    text-align: center;
-    line-height: 1.4;
-    margin-bottom: 2.5rem;
-  }
-
-  .detail-section__body {
-    color: var(--ink-soft);
-    font-size: 1rem;
-    line-height: 2;
-    text-align: center;
-  }
-
-  .detail-section__body p {
-    margin-bottom: 1.2rem;
-  }
-
-  .detail-section__body p:last-child {
-    margin-bottom: 0;
-  }
-
-  /* Process steps */
-  .detail-process {
-    display: grid;
-    gap: 1.2rem;
-    margin-top: 2rem;
-  }
-
-  .detail-process__step {
-    display: flex;
-    gap: 1.3rem;
-    align-items: flex-start;
-    padding: 1.5rem;
-    background: var(--cream);
-    border: 1px solid var(--border);
-  }
-
-  .detail-section--alt .detail-process__step {
-    background: var(--cream);
-  }
-
-  .detail-process__num {
-    font-family: var(--font-latin);
-    font-size: 1.6rem;
-    font-weight: 300;
-    color: var(--gold);
-    line-height: 1;
-    flex-shrink: 0;
-    width: 2rem;
-    text-align: center;
-  }
-
-  .detail-process__text {
-    flex: 1;
-  }
-
-  .detail-process__text strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 0.3rem;
-  }
-
-  .detail-process__text span {
-    font-size: 0.92rem;
-    color: var(--ink-soft);
-    line-height: 1.7;
-  }
-
-  /* Variety grid (식초 종류 등) */
-  .variety-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.3rem;
-    margin-top: 2rem;
-  }
-
-  .variety-card {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    padding: 1.8rem 1.6rem;
-    transition: all 0.3s ease;
-  }
-
-  .detail-section--alt .variety-card {
-    background: var(--cream-light);
-  }
-
-  .variety-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 28px rgba(42, 31, 20, 0.08);
-    border-color: var(--border-strong);
-  }
-
-  .variety-card__image {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background: var(--cream-dark);
-    margin-bottom: 1.3rem;
-    overflow: hidden;
-  }
-
-  .variety-card__image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .variety-card__name {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 0.5rem;
-  }
-
-  .variety-card__desc {
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-    line-height: 1.7;
-  }
-
-  .variety-card__note {
-    margin-top: 0.9rem;
-    padding-top: 0.8rem;
-    border-top: 1px solid var(--border);
-    font-size: 0.8rem;
-    color: var(--gold-dark);
-    letter-spacing: 0.03em;
-  }
-
-  /* Detail CTA */
-  .detail-cta {
-    background: var(--ink);
-    color: var(--cream);
-    padding: clamp(3.5rem, 9vh, 5.5rem) 1.5rem;
-    text-align: center;
-  }
-
-  .detail-cta__title {
-    font-family: var(--font-display);
-    font-size: clamp(1.4rem, 3vw, 1.9rem);
-    font-weight: 400;
-    margin-bottom: 1rem;
-  }
-
-  .detail-cta__sub {
-    font-size: 0.95rem;
-    color: rgba(244, 237, 224, 0.8);
-    margin-bottom: 2.5rem;
-    line-height: 1.8;
-  }
-
-  .detail-cta__buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  @media (max-width: 640px) {
-    .detail-cta__buttons {
-      flex-direction: column;
-      max-width: 280px;
-      margin: 0 auto;
-    }
-    .detail-process__step {
-      padding: 1.2rem;
-      gap: 1rem;
-    }
-  }
-
-  /* =================================================== */
-  /* ============ DETAIL — VARIETY & USES ============== */
-  /* =================================================== */
-
-  /* 식초 종류 — 분류 블록 */
-  .variety-block {
-    margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
-  }
-
-  .variety-block:last-child {
-    margin-bottom: 0;
-  }
-
-  .variety-block__head {
-    text-align: center;
-    margin-bottom: 1.6rem;
-  }
-
-  .variety-block__name {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 0.4rem;
-  }
-
-  .variety-block__count {
-    font-family: var(--font-latin);
-    font-size: 0.9rem;
-    color: var(--gold);
-    margin-left: 0.3rem;
-  }
-
-  .variety-block__desc {
-    font-size: 0.9rem;
-    color: var(--ink-mute);
-    line-height: 1.7;
-  }
-
-  .variety-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    justify-content: center;
-  }
-
-  .variety-tag {
-    padding: 0.55rem 1.15rem;
-    background: var(--cream-light);
-    border: 1px solid var(--border-strong);
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-    letter-spacing: 0.02em;
-    transition: all 0.2s ease;
-  }
-
-  .variety-tag:hover {
-    border-color: var(--gold);
-    color: var(--ink);
-  }
-
-  .variety-tag--premium {
-    border-color: var(--gold);
-    color: var(--gold-dark);
-    font-weight: 500;
-    background: var(--cream);
-  }
-
-  /* 공정 사진 스트립 */
-  .detail-photos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0.6rem;
-    margin-top: 2rem;
-  }
-
-  .detail-photos__item {
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    background: var(--cream-dark);
-  }
-
-  .detail-photos__item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .detail-photos__caption {
-    text-align: center;
-    margin-top: 1.5rem;
-    font-size: 0.88rem;
-    color: var(--ink-mute);
-    font-style: italic;
-  }
-
-  /* 활용법 */
-  .detail-uses {
-    display: grid;
-    gap: 0.9rem;
-    margin-top: 2rem;
-  }
-
-  .detail-uses__item {
-    display: flex;
-    gap: 0.9rem;
-    align-items: baseline;
-    padding: 1.15rem 1.4rem;
-    background: var(--cream-light);
-    border: 1px solid var(--border);
-  }
-
-  .detail-uses__bullet {
-    color: var(--gold);
-    flex-shrink: 0;
-    font-size: 0.9rem;
-  }
-
-  .detail-uses__text {
-    font-size: 0.95rem;
-    color: var(--ink-soft);
-    line-height: 1.6;
-  }
-
-  .detail-price-note {
-    text-align: center;
-    margin-top: 1.5rem;
-    font-size: 0.9rem;
-    color: var(--ink-mute);
-  }
-
-  /* =================================================== */
-  /* ============ PROCESS JOURNEY (공정 여정) ========== */
-  /* =================================================== */
-
-  .process-journey {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.4rem 0.9rem;
-    margin-top: 2rem;
-  }
-
-  @media (min-width: 720px) {
-    .process-journey {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .process-journey__img {
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    background: var(--cream-dark);
-    margin-bottom: 0.75rem;
-  }
-
-  .process-journey__img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  .process-journey__stage:hover .process-journey__img img {
-    transform: scale(1.05);
-  }
-
-  .process-journey__label {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 0.45rem;
-    font-size: 0.92rem;
-    color: var(--ink-soft);
-    letter-spacing: 0.02em;
-  }
-
-  .process-journey__num {
-    font-family: var(--font-latin);
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--gold);
-  }
-
-  /* =================================================== */
-  /* ============ GALLERY PAGE ========================= */
-  /* =================================================== */
-
-  .gallery-page {
-    background: var(--cream-light);
-    min-height: 100vh;
-  }
-
-  .gallery-page__hero {
-    padding: clamp(5rem, 12vh, 8rem) 1.5rem clamp(3rem, 6vh, 4rem);
-    text-align: center;
-    max-width: 880px;
-    margin: 0 auto;
-  }
-
-  .gallery-page__eyebrow {
-    font-family: var(--font-latin);
-    font-size: 0.85rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.4rem;
-  }
-
-  .gallery-page__title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 700;
-    color: var(--ink);
-    line-height: 1.3;
-    margin-bottom: 1.2rem;
-  }
-
-  .gallery-page__sub {
-    font-size: 1rem;
-    color: var(--ink-soft);
-    line-height: 1.8;
-  }
-
-  /* 탭 */
-  .gallery-tabs {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0;
-    border-bottom: 1px solid var(--border);
-    margin: 0 auto clamp(2rem, 5vh, 3rem);
-    max-width: 600px;
-  }
-
-  .gallery-tab {
-    flex: 1;
-    min-width: 80px;
-    padding: 1rem 0.5rem;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--ink-mute);
-    cursor: pointer;
-    transition: all 0.25s ease;
-    letter-spacing: 0.05em;
-  }
-
-  .gallery-tab:hover {
-    color: var(--ink-soft);
-  }
-
-  .gallery-tab--active {
-    color: var(--ink);
-    border-bottom-color: var(--gold);
-    font-weight: 700;
-  }
-
-  .gallery-tab__count {
-    font-family: var(--font-latin);
-    font-size: 0.8rem;
-    color: var(--gold);
-    margin-left: 0.35rem;
-    font-weight: 400;
-  }
-
-  /* 그리드 */
-  .gallery-panels {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 1.5rem clamp(4rem, 10vh, 6rem);
-  }
-
-  .gallery-panel {
-    display: none;
-    animation: galleryFade 0.4s ease;
-  }
-
-  .gallery-panel--active {
-    display: block;
-  }
-
-  @keyframes galleryFade {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.6rem;
-  }
-
-  @media (min-width: 640px) {
-    .gallery-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.8rem;
-    }
-  }
-
-  @media (min-width: 960px) {
-    .gallery-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
-  }
-
-  .gallery-item {
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    background: var(--cream-dark);
-    cursor: pointer;
-    position: relative;
-  }
-
-  .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  .gallery-item:hover img {
-    transform: scale(1.06);
-  }
-
-  /* 라이트박스 */
-  .lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(20, 14, 8, 0.92);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    cursor: zoom-out;
-  }
-
-  .lightbox--open {
-    display: flex;
-  }
-
-  .lightbox__img {
-    max-width: 95vw;
-    max-height: 90vh;
-    object-fit: contain;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  }
-
-  .lightbox__close {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    background: none;
-    border: none;
-    color: var(--cream);
-    font-size: 2rem;
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.2s;
-    line-height: 1;
-  }
-
-  .lightbox__close:hover { opacity: 1; }
-
-  /* 메인 갤러리 미리보기 — "전체 보기" 링크 */
-  .gallery__cta {
-    text-align: center;
-    margin-top: clamp(2.5rem, 6vh, 3.5rem);
-  }
-
-  .gallery__cta-link {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    color: var(--ink);
-    text-decoration: none;
-    padding-bottom: 0.3rem;
-    border-bottom: 1px solid var(--gold);
-    transition: all 0.25s ease;
-  }
-
-  .gallery__cta-link:hover {
-    color: var(--gold-dark);
-    letter-spacing: 0.04em;
-  }
-
-  /* =================================================== */
-  /* ============ PRIVACY POLICY PAGE ================== */
-  /* =================================================== */
-
-  .policy-page {
-    background: var(--cream-light);
-    min-height: 100vh;
-  }
-
-  .policy {
-    padding: clamp(4rem, 10vh, 6rem) 1.5rem clamp(3rem, 8vh, 5rem);
-  }
-
-  .policy__inner {
-    max-width: 780px;
-    margin: 0 auto;
-  }
-
-  .policy__hero {
-    text-align: center;
-    margin-bottom: clamp(3rem, 7vh, 4.5rem);
-    padding-bottom: clamp(2rem, 5vh, 3rem);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .policy__eyebrow {
-    font-family: var(--font-latin);
-    font-size: 0.85rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.4rem;
-  }
-
-  .policy__title {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 4.5vw, 2.5rem);
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 0.8rem;
-  }
-
-  .policy__meta {
-    font-size: 0.9rem;
-    color: var(--ink-mute);
-    font-family: var(--font-latin);
-  }
-
-  .policy__intro {
-    background: var(--cream);
-    padding: 1.6rem 1.8rem;
-    margin-bottom: 2.5rem;
-    border-left: 3px solid var(--gold);
-    font-size: 0.97rem;
-    line-height: 1.85;
-    color: var(--ink-soft);
-  }
-
-  .policy__section {
-    margin-bottom: 2.8rem;
-  }
-
-  .policy__h2 {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 1rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .policy__h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--ink-soft);
-    margin: 1.4rem 0 0.6rem;
-  }
-
-  .policy__body p {
-    font-size: 0.95rem;
-    line-height: 1.85;
-    color: var(--ink-soft);
-    margin-bottom: 0.9rem;
-  }
-
-  .policy__list {
-    list-style: none;
-    padding-left: 0;
-    margin: 0.6rem 0 1rem;
-  }
-
-  .policy__list li {
-    position: relative;
-    padding-left: 1.3rem;
-    font-size: 0.93rem;
-    line-height: 1.85;
-    color: var(--ink-soft);
-    margin-bottom: 0.5rem;
-  }
-
-  .policy__list li::before {
-    content: "·";
-    position: absolute;
-    left: 0.5rem;
-    color: var(--gold);
-    font-weight: 700;
-  }
-
-  .policy__list li strong {
-    color: var(--ink);
-    font-weight: 700;
-  }
-
-  .policy__note {
-    font-size: 0.88rem;
-    color: var(--ink-mute);
-    background: var(--cream);
-    padding: 0.9rem 1.1rem;
-    margin-top: 0.8rem;
-    line-height: 1.7;
-  }
-
-  .policy__contact-box {
-    background: var(--cream);
-    padding: 1.4rem 1.6rem;
-    margin-top: 0.8rem;
-  }
-
-  .policy__contact-box p {
-    margin-bottom: 0.6rem;
-    font-weight: 700;
-    color: var(--ink);
-  }
-
-  .policy__contact-list {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-  }
-
-  .policy__contact-list li {
-    padding: 0.25rem 0;
-    font-size: 0.93rem;
-    color: var(--ink-soft);
-  }
-
-
-  /* =================================================== */
-  /* ============ CONTACT PAGE ========================= */
-  /* =================================================== */
-
-  .contact-page {
-    background: var(--cream-light);
-    min-height: 100vh;
-  }
-
-  .contact-page__hero {
-    padding: clamp(5rem, 12vh, 8rem) 1.5rem clamp(2rem, 5vh, 3rem);
-    text-align: center;
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .contact-page__eyebrow {
-    font-family: var(--font-latin);
-    font-size: 0.85rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.4rem;
-  }
-
-  .contact-page__title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 700;
-    color: var(--ink);
-    line-height: 1.3;
-    margin-bottom: 1.2rem;
-  }
-
-  .contact-page__sub {
-    font-size: 1rem;
-    color: var(--ink-soft);
-    line-height: 1.8;
-  }
-
-  /* Quick channels */
-  .contact-page__channels {
-    padding: 0 1.5rem;
-  }
-
-  .contact-page__channels-inner {
-    max-width: 720px;
-    margin: 0 auto;
-    background: var(--cream);
-    padding: 2rem 1.8rem;
-    border: 1px solid var(--border);
-    text-align: center;
-  }
-
-  .contact-page__channels-label {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    color: var(--ink);
-    margin-bottom: 1.2rem;
-  }
-
-  .contact-page__channels-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    justify-content: center;
-    margin-bottom: 1.2rem;
-  }
-
-  .contact-page__channels-buttons .btn {
-    min-width: 200px;
-  }
-
-  .btn--dark {
-    border-color: var(--ink-soft) !important;
-    color: var(--ink) !important;
-  }
-  .btn--dark:hover {
-    background: var(--ink);
-    color: var(--cream) !important;
-  }
-
-  .contact-page__channels-note {
-    font-size: 0.88rem;
-    color: var(--ink-mute);
-  }
-
-  /* Form area */
-  .contact-page__form {
-    padding: clamp(2.5rem, 6vh, 4rem) 1.5rem clamp(2.5rem, 6vh, 4rem);
-  }
-
-  .contact-page__form-inner {
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .contact-page__placeholder {
-    background: var(--cream);
-    border: 1px dashed var(--border-strong);
-    padding: clamp(3rem, 7vh, 4.5rem) 1.5rem;
-    text-align: center;
-  }
-
-  .contact-page__placeholder-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .contact-page__placeholder-title {
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    color: var(--ink);
-    margin-bottom: 0.8rem;
-  }
-
-  .contact-page__placeholder-text {
-    font-size: 0.95rem;
-    color: var(--ink-soft);
-    line-height: 1.7;
-  }
-
-  /* Additional info */
-  .contact-page__info {
-    padding: 0 1.5rem clamp(4rem, 10vh, 6rem);
-  }
-
-  .contact-page__info-inner {
-    max-width: 920px;
-    margin: 0 auto;
-  }
-
-  .contact-page__info-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-
-  @media (min-width: 640px) {
-    .contact-page__info-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .contact-page__info-card {
-    background: var(--cream);
-    padding: 1.5rem 1.4rem;
-    border: 1px solid var(--border);
-  }
-
-  .contact-page__info-label {
-    font-family: var(--font-display);
-    font-size: 0.92rem;
-    color: var(--gold);
-    margin-bottom: 0.7rem;
-    font-weight: 700;
-  }
-
-  .contact-page__info-text {
-    font-size: 0.93rem;
-    color: var(--ink-soft);
-    line-height: 1.7;
-  }
-
-  .contact-page__info-text a {
-    color: var(--ink-soft);
-    text-decoration: none;
-    border-bottom: 1px solid var(--border-strong);
-  }
-
-  .contact-page__info-text a:hover {
-    color: var(--ink);
-  }
-
-  .contact-page__info-note {
-    font-size: 0.82rem;
-    color: var(--ink-mute);
-  }
-
-  .contact-page__privacy-note {
-    text-align: center;
-    font-size: 0.85rem;
-    color: var(--ink-mute);
-    margin-top: 1.5rem;
-    line-height: 1.7;
-  }
-
-  .contact-page__privacy-note a {
-    color: var(--gold-dark);
-    text-decoration: none;
-    border-bottom: 1px solid var(--border-strong);
-  }
-
-  /* ===== 상단 고정 헤더 ===== */
-  .site-header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 80;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.1rem 2rem;
-    background: rgba(244, 237, 224, 0); border-bottom: 1px solid transparent;
-    transition: background .3s ease, border-color .3s ease, padding .3s ease, box-shadow .3s ease;
-  }
-  .site-header.scrolled {
-    background: rgba(251, 247, 239, 0.92);
-    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-    border-bottom-color: var(--border-strong);
-    padding: 0.7rem 2rem; box-shadow: 0 2px 16px rgba(42, 31, 20, 0.06);
-  }
-  .site-header__logo {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    font-family: var(--font-display); font-size: 1.15rem; font-weight: 700;
-    color: var(--ink); text-decoration: none; letter-spacing: 0.02em; white-space: nowrap;
-  }
-  .site-header__symbol { height: 26px; width: auto; display: block; transition: height .3s ease; }
-  .site-header.scrolled .site-header__symbol { height: 23px; }
-  /* 히어로 위(at-top)=흰색 심볼, 스크롤 후=갈색 심볼 */
-  .site-header__symbol--ink { display: none; }
-  .site-header.at-top .site-header__symbol--white { display: block; }
-  .site-header.at-top .site-header__symbol--ink { display: none; }
-  .site-header:not(.at-top) .site-header__symbol--white { display: none; }
-  .site-header:not(.at-top) .site-header__symbol--ink { display: block; }
-  .site-header.at-top .site-header__logo { color: var(--cream); }
-  .site-nav { display: flex; align-items: center; gap: 1.8rem; }
-  .site-nav__links { display: flex; align-items: center; gap: 1.8rem; list-style: none; margin: 0; padding: 0; }
-  .site-nav__links a {
-    font-family: var(--font-body); font-size: 0.92rem; font-weight: 400;
-    color: var(--ink-soft); text-decoration: none; transition: color .2s ease; white-space: nowrap;
-  }
-  .site-nav__links a:hover { color: var(--gold-dark); }
-  .site-header.at-top .site-nav__links a { color: rgba(244, 237, 224, 0.85); }
-  .site-header.at-top .site-nav__links a:hover { color: #fff; }
-
-  /* 햄버거 (모바일) */
-  .nav-toggle { display: none; background: none; border: none; cursor: pointer;
-    width: 30px; height: 30px; padding: 0; position: relative; }
-  .nav-toggle span { display: block; position: absolute; left: 3px; right: 3px; height: 2px;
-    background: var(--ink); transition: transform .3s ease, opacity .2s ease, background .3s ease; }
-  .nav-toggle span:nth-child(1) { top: 8px; }
-  .nav-toggle span:nth-child(2) { top: 14px; }
-  .nav-toggle span:nth-child(3) { top: 20px; }
-  .site-header.at-top .nav-toggle span { background: var(--cream); }
-  body.nav-open .nav-toggle span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  body.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
-  body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-  body.nav-open .nav-toggle span { background: var(--ink) !important; }
-
-  @media (max-width: 820px) {
-    .site-header, .site-header.scrolled { padding: 0.9rem 1.3rem; }
-    .nav-toggle { display: block; z-index: 1002; }
-    .site-nav {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
-      z-index: 1000;
-      background: #F4EDE0; flex-direction: column; justify-content: center; align-items: center;
-      gap: 0; opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity .3s ease, visibility .3s ease;
-    }
-    body.nav-open .site-nav { opacity: 1; visibility: visible; pointer-events: auto; }
-    body.nav-open { overflow: hidden; }
-    .site-nav__links { flex-direction: column; gap: 1.8rem; text-align: center; }
-    .site-nav__links a { font-size: 1.25rem; color: var(--ink) !important; }
-    .site-header.at-top .site-nav__links a { color: var(--ink) !important; }
-  }
-
-  /* 앵커 이동 시 고정 헤더가 제목을 덮지 않도록 */
-  #about, #products, #gallery, #contact { scroll-margin-top: 80px; }
-
-  /* ===== 서브페이지 공통 ===== */
-  body.subpage { padding-top: 64px; }   /* 고정 헤더 높이만큼 본문 내림 */
-  body.subpage .products { padding-top: clamp(2.5rem, 6vh, 4rem); }
-
-  /* ===== 페이지 전환 효과 (페이드인 + 라이즈) ===== */
-  body.page-leaving { opacity: 0; transition: opacity .28s ease; }
-  .page-enter { animation: pageEnter .5s ease both; }
-  @keyframes pageEnter {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .page-enter { animation: none; }
-    body.page-leaving { opacity: 1 !important; }
-  }
-
-  
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>제품 — 영동에덴원</title>
+<meta name="description" content="충북 영동에서 옹기로 익히는 발효식품. 1년 6개월 이상 옹기 발효한 천연발효식초, 옹기숙성 된장·고추장·어간장, 청국장과 가공식품까지 일곱 가지 진심을 전합니다.">
+<meta property="og:title" content="영동에덴원 · 자연이 기다리고, 시간이 빚어낸 진심">
+<meta property="og:description" content="충북 영동, 옹기로 익히는 발효식품 — 영동에덴원의 일곱 가지 진심">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yd-edenwon.com">
+<meta property="og:image" content="https://yd-edenwon.com/images/hero-snow-pots.jpg">
+<meta property="og:locale" content="ko_KR">
+<link rel="canonical" href="https://yd-edenwon.com/products">
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap" media="print" data-webfont>
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="assets/v2/tokens.css">
+<link rel="stylesheet" href="assets/v2/base.css">
+<link rel="stylesheet" href="assets/v2/pages.css">
+<script src="assets/v2/app.js" defer></script>
 </head>
-<body class="subpage">
-
-  <!-- ============ 상단 고정 헤더 ============ -->
-  <header class="site-header scrolled" id="siteHeader">
-    <a href="index.html" class="site-header__logo">
-      <img src="images/logo-symbol-white.png" alt="" class="site-header__symbol site-header__symbol--white" />
-      <img src="images/logo-symbol-ink.png" alt="" class="site-header__symbol site-header__symbol--ink" />
-      <span>영동에덴원</span>
+<body class="page-products">
+<div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
+  <p class="added__h" id="added-h">장바구니에 담았습니다</p>
+  <p class="added__item" data-added-item></p>
+  <div class="added__btns">
+    <a class="btn btn--dark" href="cart.html">장바구니로 가기</a>
+    <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
+  </div>
+</div>
+<a class="skip" href="#main">본문 바로가기</a>
+<header class="hd">
+  <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
+  <div class="hd__util container">
+<a href="https://api.yd-edenwon.com/login">로그인</a><a href="https://api.yd-edenwon.com/signup">회원가입</a><a href="order-status.html">주문 조회</a><a href="contact.html">고객센터</a>  </div>
+  <div class="hd__bar container">
+    <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+    <a class="logo" href="index.html" aria-label="영동에덴원 홈">
+      <span class="logo__ko">영동에덴원</span>
+      <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
     </a>
-    <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <nav class="site-nav" id="siteNav">
-      <ul class="site-nav__links">
-        <li><a href="story.html">영동에덴원 이야기</a></li>
-        <li><a href="products.html">제품</a></li>
-        <li><a href="gallery.html">갤러리</a></li>
-        <li><a href="order.html">주문하기</a></li>
-      </ul>
+    <nav class="gnb" aria-label="주 메뉴">
+<a href="products.html" aria-current="page">제품</a><a href="products.html?cat=gift">선물세트</a><a href="story.html">영동에덴원 이야기</a><a href="contact.html">단체·기업 구매</a>    </nav>
+    <div class="hd__actions">
+      <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+</button>
+      <a class="icon-btn hd__mypage" href="https://api.yd-edenwon.com/mypage" aria-label="마이페이지"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg>
+</a>
+      <a class="icon-btn hd__cart" href="cart.html" aria-label="장바구니" data-cart-link><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="hd__count" data-cart-count hidden></span></a>
+    </div>
+  </div>
+  <div class="hd__search" id="search" hidden>
+    <form class="container" action="products.html" method="get" role="search">
+      <label class="sr-only" for="q">제품 검색</label>
+      <input id="q" name="q" type="search" placeholder="제품 이름으로 찾기" autocomplete="off">
+      <button type="submit" class="btn btn--dark">찾기</button>
+    </form>
+  </div>
+  <div class="hd__line"></div>
+</header>
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="메뉴">
+    <div class="drawer__top">
+      <span class="logo__ko">영동에덴원</span>
+      <button type="button" class="icon-btn" aria-label="메뉴 닫기" data-drawer-close><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+    </div>
+    <nav class="drawer__nav" aria-label="모바일 주 메뉴">
+<a href="products.html" aria-current="page">제품</a><a href="products.html?cat=gift">선물세트</a><a href="story.html">영동에덴원 이야기</a><a href="contact.html">단체·기업 구매</a>    </nav>
+    <nav class="drawer__util" aria-label="회원·고객 메뉴">
+<a href="https://api.yd-edenwon.com/login">로그인</a><a href="https://api.yd-edenwon.com/signup">회원가입</a><a href="order-status.html">주문 조회</a><a href="contact.html">고객센터</a>      <a href="https://api.yd-edenwon.com/mypage">마이페이지</a>
     </nav>
-  </header>
-
-  
-
-  <!-- ============ PRODUCTS ============ -->
-  <section class="products" id="products">
-    <div class="container">
-      <div class="section-label">Products</div>
-      <h2 class="section-title">영동에덴원의 정직한 먹거리</h2>
-
-      <!-- 제품 탭 (옹기발효 / 발효 / 진짜'S 시리즈 / 농산물) -->
-      <input type="radio" name="ptabs" id="ptab-1" class="ptabs__radio" checked />
-      <input type="radio" name="ptabs" id="ptab-2" class="ptabs__radio" />
-      <input type="radio" name="ptabs" id="ptab-3" class="ptabs__radio" />
-      <input type="radio" name="ptabs" id="ptab-4" class="ptabs__radio" />
-      <input type="radio" name="ptabs" id="ptab-5" class="ptabs__radio" />
-
-      <div class="ptabs__nav">
-        <label for="ptab-1" class="ptabs__label">옹기발효</label>
-        <label for="ptab-2" class="ptabs__label">발효</label>
-        <label for="ptab-3" class="ptabs__label">진짜'S 시리즈</label>
-        <label for="ptab-4" class="ptabs__label">농산물</label>
-        <label for="ptab-5" class="ptabs__label">선물세트</label>
-      </div>
-
-      <div class="ptabs__panels">
-
-        <!-- 패널 1: 옹기발효 -->
-        <div class="ptabs__panel ptabs__panel--1">
-          <p class="ptabs__panel-sub">옹기에서 시간과 미생물이 빚어낸 영동에덴원의 진심</p>
-          <div class="product-grid product-grid--ferment">
-
-          <a href="products/vinegar.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-vinegar.jpg" alt="발효의 초심 천연발효식초" loading="lazy" /></div>
-            <h3 class="product-card__name">발효의 초심</h3>
-            <p class="product-card__tag">Natural Vinegar</p>
-            <p class="product-card__desc">누룩도 종초도 더하지 않고 옹기에서 자연 미생물이 복합 발효한 천연발효식초. 여러 종류로 만나보실 수 있습니다.</p>
-            <p class="product-card__price">35,000원~</p>
-            <p class="product-card__time">1년 6개월 이상 발효한 천연발효식초</p>
-            <span class="product-card__more">식초 종류 자세히 보기 →</span>
-          </a>
-
-          <a href="products/doenjang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-doenjang.jpg" alt="옹기숙성 된장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기숙성 된장</h3>
-            <p class="product-card__tag">Aged Soybean Paste</p>
-            <p class="product-card__desc">직접 농사 지은 콩으로 완전히 띄운 메주와 국내산 천일염으로 복합 발효·숙성.</p>
-            <p class="product-card__price">20,000원</p>
-            <p class="product-card__time">2년 이상 발효 및 숙성시킨 한식된장</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/gochujang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-gochujang.jpg" alt="옹기숙성 고추장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기숙성 고추장</h3>
-            <p class="product-card__tag">Aged Red Pepper Paste</p>
-            <p class="product-card__desc">직접 기른 엿기름 당화액, 메주 가루, 찰개떡 가루, 표고 가루를 혼합해 복합 발효·숙성.</p>
-            <p class="product-card__price">20,000원</p>
-            <p class="product-card__time">1년 이상 발효 및 숙성시킨 고추장</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/eoganjang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-eoganjang.jpg" alt="옹기숙성 어간장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기숙성 어간장</h3>
-            <p class="product-card__tag">Aged Fish Soy Sauce</p>
-            <p class="product-card__desc">3년 숙성 대멸 액젓과 2년 숙성 간장을 혼합해 다시 숙성시킨 깊은 감칠맛.</p>
-            <p class="product-card__price">20,000원</p>
-            <p class="product-card__time">2년 이상 추가 숙성시킨 어간장</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/cheonggukjang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-cheonggukjang.jpg" alt="옹기발효 청국장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기발효 청국장</h3>
-            <p class="product-card__tag">Fermented Soybean</p>
-            <p class="product-card__desc">직접 농사 지은 콩으로 옹기단지에서 최적의 환경으로 냄새 없이 띄운 청국장.</p>
-            <p class="product-card__price">4,000원</p>
-            <p class="product-card__time">옹기 단지에서 발효시킨 청국장</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/bibim-doenjang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-bibim-doenjang.jpg" alt="옹기숙성 비빔된장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기숙성 비빔된장</h3>
-            <p class="product-card__tag">Seasoned Soybean Paste</p>
-            <p class="product-card__desc">밥에 비벼 먹고, 쌈장으로도 즐기는 — 누구나 맛있게 먹는 옹기숙성 비빔된장.</p>
-            <p class="product-card__price">15,000원</p>
-            <p class="product-card__time">토마토잼과 된장의 콜라보</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/bibim-gochujang.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-bibim-gochujang.jpg" alt="옹기숙성 비빔고추장" loading="lazy" /></div>
-            <h3 class="product-card__name">옹기숙성 비빔고추장</h3>
-            <p class="product-card__tag">Seasoned Red Pepper Paste</p>
-            <p class="product-card__desc">밥에 비벼 먹고, 쌈장으로도 즐기는 — 누구나 맛있게 먹는 옹기숙성 비빔고추장.</p>
-            <p class="product-card__price">15,000원</p>
-            <p class="product-card__time">토마토잼과 고추장의 콜라보</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-        </div>
-        </div>
-        <!-- /패널 1 -->
-
-        <!-- 패널 2: 발효 -->
-        <div class="ptabs__panel ptabs__panel--2">
-          <p class="ptabs__panel-sub">발효실에서 정성으로 띄운 발효식품</p>
-          <div class="product-grid product-grid--single">
-
-          <a href="products/meju.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-meju.jpg" alt="명품 메주" loading="lazy" /></div>
-            <h3 class="product-card__name">명품 메주</h3>
-            <p class="product-card__tag">Artisan Meju</p>
-            <p class="product-card__desc">직접 농사 지은 콩으로 빚어, 발효실에서 속까지 완전하게 띄운 명품 메주. 전통 방식과 과학적 관리가 만났습니다.</p>
-            <p class="product-card__price">25,000원</p>
-            <p class="product-card__time">발효실에서 완전히 발효시킨 메주</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          </div>
-        </div>
-        <!-- /패널 2 -->
-
-        <!-- 패널 3: 진짜'S 시리즈 -->
-        <div class="ptabs__panel ptabs__panel--3">
-          <p class="ptabs__panel-sub">가마솥에서 천천히 달여낸 정직한 가공식품</p>
-          <div class="product-grid product-grid--craft">
-
-          <a href="products/jam.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-jam.jpg" alt="진짜'S 잼" loading="lazy" /></div>
-            <h3 class="product-card__name">진짜'S 잼</h3>
-            <p class="product-card__tag">Real Jam</p>
-            <p class="product-card__desc">젤라틴·펙틴 없이 원물만으로 풍미를 높이기 위해 가마솥에서 천천히 달여낸 잼.</p>
-            <p class="product-card__price">10,000원~</p>
-            <p class="product-card__time">3시간 이상 달여 만든 잼</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          <a href="products/jocheong.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-jocheong.jpg" alt="진짜'S 조청" loading="lazy" /></div>
-            <h3 class="product-card__name">진짜'S 조청</h3>
-            <p class="product-card__tag">Real Rice Syrup</p>
-            <p class="product-card__desc">직접 기른 엿기름과 다양한 농산물을 사용해 가마솥에서 천천히 달여낸 조청.</p>
-            <p class="product-card__price">20,000원</p>
-            <p class="product-card__time">6시간 이상 달여 만든 조청</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          </div>
-        </div>
-        <!-- /패널 3 -->
-
-        <!-- 패널 4: 농산물 -->
-        <div class="ptabs__panel ptabs__panel--4">
-          <p class="ptabs__panel-sub">청정 자연에서 자연 농법으로 길러낸 정직한 농산물</p>
-          <div class="product-grid product-grid--harvest">
-
-          <a href="products/pea.html" class="product-card">
-            <div class="product-card__image"><img src="images/product-pea.jpg" alt="햇 완두콩" loading="lazy" /></div>
-            <h3 class="product-card__name">햇 완두콩</h3>
-            <p class="product-card__tag">Fresh Green Peas</p>
-            <p class="product-card__desc">화학 비료와 제초제 없이, 직접 만든 발효퇴비와 유기농업자재로 길러낸 맛있고 건강한 햇 완두콩.</p>
-            <p class="product-card__price">10,000원~</p>
-            <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-          <a href="products/beet.html" class="product-card">
-            <div class="product-card__image">
-              <img src="images/product-beet.jpg" alt="비트" loading="lazy" />
-            </div>
-            <h3 class="product-card__name">비트</h3>
-            <p class="product-card__tag">Fresh Beet</p>
-            <p class="product-card__desc">화학 비료와 제초제 없이, 직접 만든 발효퇴비와 유기농업자재로 길러낸 맛있고 건강한 비트</p>
-            <p class="product-card__price">6,000원</p>
-            <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-          <a href="products/onion.html" class="product-card">
-            <div class="product-card__image">
-              <img src="images/product-onion.jpg" alt="양파" loading="lazy" />
-            </div>
-            <h3 class="product-card__name">양파</h3>
-            <p class="product-card__tag">Fresh Onion</p>
-            <p class="product-card__desc">화학 비료와 제초제 없이, 직접 만든 발효퇴비와 유기농업자재로 길러낸 맛있고 건강한 양파</p>
-            <p class="product-card__price">5,000원</p>
-            <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-          <a href="products/garlic.html" class="product-card">
-            <div class="product-card__image">
-              <img src="images/product-garlic.jpg" alt="마늘" loading="lazy" />
-            </div>
-            <h3 class="product-card__name">마늘</h3>
-            <p class="product-card__tag">Fresh Garlic</p>
-            <p class="product-card__desc">화학 비료와 제초제 없이, 직접 만든 발효퇴비와 유기농업자재로 길러낸 맛있고 건강한 마늘</p>
-            <p class="product-card__price">16,000원</p>
-            <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-          <a href="products/potato.html" class="product-card">
-            <div class="product-card__image">
-              <img src="images/product-potato.jpg" alt="감자" loading="lazy" />
-            </div>
-            <h3 class="product-card__name">감자</h3>
-            <p class="product-card__tag">Fresh Potato</p>
-            <p class="product-card__desc">화학 비료와 제초제 없이, 직접 만든 발효퇴비와 유기농업자재로 길러낸 맛있고 건강한 감자</p>
-            <p class="product-card__price">12,000원</p>
-            <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-          <a href="products/shine-grape.html" class="product-card">
-            <div class="product-card__image">
-              <img src="images/product-shine-grape.jpg" alt="청포도" loading="lazy" />
-            </div>
-            <h3 class="product-card__name">청포도</h3>
-            <p class="product-card__tag">Fresh Shine Grape</p>
-            <p class="product-card__desc">화학 비료와 제초제 없이, 직접 만든 발효퇴비와 유기농업자재로 길러낸 맛있고 건강한 청포도</p>
-            <p class="product-card__price">20,000원</p>
-            <p class="product-card__time">청정 자연에서 자연 농법으로 재배</p>
-            <span class="product-card__more">자세히 보기 →</span>
-          </a>
-
-          </div>
-        </div>
-        <!-- /패널 4 -->
-
-        <!-- 패널 5: 선물세트 -->
-        <div class="ptabs__panel ptabs__panel--5">
-          <p class="ptabs__panel-sub">발효식품 네 가지를 담아 전하는 선물세트 · 합산가에서 5,000원 할인</p>
-          <div class="product-grid product-grid--craft">
-
-          <a href="giftset.html?set=jam" class="product-card">
-            <div class="product-card__image"><img src="images/giftset-jam.jpg" alt="장류 선물세트" loading="lazy" /></div>
-            <h3 class="product-card__name">장류 선물세트</h3>
-            <p class="product-card__tag">Gift Set</p>
-            <p class="product-card__desc">고추장·된장·잼·비빔장 등 장류와 잼으로 구성하는 선물세트. 원하는 네 가지를 직접 담아 보내실 수 있습니다.</p>
-            <p class="product-card__time">4종 구성 · 합산가에서 5,000원 할인</p>
-            <span class="product-card__more">선물세트 구성하기 →</span>
-          </a>
-
-          <a href="giftset.html?set=vinegar" class="product-card">
-            <div class="product-card__image"><img src="images/giftset-vinegar.jpg" alt="식초 선물세트" loading="lazy" /></div>
-            <h3 class="product-card__name">식초 선물세트</h3>
-            <p class="product-card__tag">Gift Set</p>
-            <p class="product-card__desc">발효의 초심(식초)과 어간장, 장류·잼까지 — 식초를 중심으로 구성하는 선물세트.</p>
-            <p class="product-card__time">4종 구성 · 합산가에서 5,000원 할인</p>
-            <span class="product-card__more">선물세트 구성하기 →</span>
-          </a>
-
-          </div>
-        </div>
-        <!-- /패널 5 -->
-
-      </div>
-      <!-- /제품 탭 -->
-
-      <div class="products__cta">
-        <a href="contact.html" class="btn btn--earth">문의하기</a>
-      </div>
+  </div>
+</div>
+<main id="main" tabindex="-1">
+<div data-catalog>
+  <section class="pbanner pbanner--dark" aria-labelledby="pbanner-h" data-pbanner>
+    <div class="pbanner__slide" data-banner="all" data-tone="dark" data-title="제품" data-sub="영동의 밭에서 기르고, 옹기에서 익힌 것들">
+      <picture><source type="image/webp" srcset="images/v2/autumn-rice-harvest-480.webp 480w, images/v2/autumn-rice-harvest-960.webp 960w" sizes="100vw"><img src="images/v2/autumn-rice-harvest-960.jpg" srcset="images/v2/autumn-rice-harvest-480.jpg 480w, images/v2/autumn-rice-harvest-960.jpg 960w" sizes="100vw" width="960" height="720" alt="" class="pbanner__img" loading="eager" fetchpriority="high" decoding="async" style="object-position:center 60%"></picture>
+    </div>
+    <div class="pbanner__slide" data-banner="vinegar" data-tone="light" data-title="천연발효식초" data-sub="누룩도 종초도 없이, 옹기 속 자연 미생물로" hidden>
+      <picture><source type="image/webp" srcset="images/v2/vinegar-hero-480.webp 480w, images/v2/vinegar-hero-960.webp 960w, images/v2/vinegar-hero-1600.webp 1600w" sizes="100vw"><img src="images/v2/vinegar-hero-960.jpg" srcset="images/v2/vinegar-hero-480.jpg 480w, images/v2/vinegar-hero-960.jpg 960w, images/v2/vinegar-hero-1600.jpg 1600w" sizes="100vw" width="960" height="600" alt="" class="pbanner__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:78% center"></picture>
+    </div>
+    <div class="pbanner__slide" data-banner="jang" data-tone="dark" data-title="옹기숙성 장류" data-sub="자가 재배 콩으로 띄운 메주, 천일염, 그리고 시간" hidden>
+      <picture><source type="image/webp" srcset="images/v2/meju-pot-brine-sunlit-480.webp 480w, images/v2/meju-pot-brine-sunlit-960.webp 960w, images/v2/meju-pot-brine-sunlit-1000.webp 1000w" sizes="100vw"><img src="images/v2/meju-pot-brine-sunlit-960.jpg" srcset="images/v2/meju-pot-brine-sunlit-480.jpg 480w, images/v2/meju-pot-brine-sunlit-960.jpg 960w, images/v2/meju-pot-brine-sunlit-1000.jpg 1000w" sizes="100vw" width="960" height="720" alt="" class="pbanner__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:center"></picture>
+    </div>
+    <div class="pbanner__slide" data-banner="jam" data-tone="light" data-title="잼·조청·비빔장" data-sub="가마솥에서 오래 달인 진짜&#39;S 시리즈" hidden>
+      <picture><source type="image/webp" srcset="images/v2/jam-hero-480.webp 480w, images/v2/jam-hero-960.webp 960w, images/v2/jam-hero-1600.webp 1600w" sizes="100vw"><img src="images/v2/jam-hero-960.jpg" srcset="images/v2/jam-hero-480.jpg 480w, images/v2/jam-hero-960.jpg 960w, images/v2/jam-hero-1600.jpg 1600w" sizes="100vw" width="960" height="600" alt="" class="pbanner__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:center"></picture>
+    </div>
+    <div class="pbanner__slide" data-banner="farm" data-tone="dark" data-title="제철 농산물" data-sub="화학비료와 제초제 없이 기른 영동의 제철" hidden>
+      <picture><source type="image/webp" srcset="images/v2/spring-field-480.webp 480w, images/v2/spring-field-960.webp 960w, images/v2/spring-field-1000.webp 1000w" sizes="100vw"><img src="images/v2/spring-field-960.jpg" srcset="images/v2/spring-field-480.jpg 480w, images/v2/spring-field-960.jpg 960w, images/v2/spring-field-1000.jpg 1000w" sizes="100vw" width="960" height="720" alt="" class="pbanner__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:center"></picture>
+    </div>
+    <div class="pbanner__slide" data-banner="gift" data-tone="light" data-title="선물세트" data-sub="4종 구성, 합산가에서 5,000원 할인" hidden>
+      <picture><source type="image/webp" srcset="images/v2/giftset-vinegar-480.webp 480w, images/v2/giftset-vinegar-960.webp 960w, images/v2/giftset-vinegar-1200.webp 1200w" sizes="100vw"><img src="images/v2/giftset-vinegar-960.jpg" srcset="images/v2/giftset-vinegar-480.jpg 480w, images/v2/giftset-vinegar-960.jpg 960w, images/v2/giftset-vinegar-1200.jpg 1200w" sizes="100vw" width="960" height="720" alt="" class="pbanner__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:center"></picture>
+    </div>
+    <div class="pbanner__scrim"></div>
+    <div class="pbanner__text">
+      <nav class="crumbs" aria-label="현재 위치"><a href="index.html">홈</a><span aria-hidden="true">/</span><span>제품</span></nav>
+      <h1 class="pbanner__title" id="pbanner-h" data-banner-title>제품</h1>
+      <p class="pbanner__sub" data-banner-sub>영동의 밭에서 기르고, 옹기에서 익힌 것들</p>
     </div>
   </section>
 
+  <div class="ptabs">
+    <div class="ptabs__in container" role="tablist" aria-label="제품 분류" data-cat-tabs>
+<button type="button" role="tab" class="ptab" id="ptab-all" aria-controls="plist" aria-selected="true" data-cat="all" data-label="전체">전체</button><button type="button" role="tab" class="ptab" id="ptab-vinegar" aria-controls="plist" aria-selected="false" tabindex="-1" data-cat="vinegar" data-label="천연발효식초">천연발효식초</button><button type="button" role="tab" class="ptab" id="ptab-jang" aria-controls="plist" aria-selected="false" tabindex="-1" data-cat="jang" data-label="옹기숙성 장류">옹기숙성 장류</button><button type="button" role="tab" class="ptab" id="ptab-jam" aria-controls="plist" aria-selected="false" tabindex="-1" data-cat="jam" data-label="잼·조청·비빔장">잼·조청·비빔장</button><button type="button" role="tab" class="ptab" id="ptab-farm" aria-controls="plist" aria-selected="false" tabindex="-1" data-cat="farm" data-label="제철 농산물">제철 농산물</button><button type="button" role="tab" class="ptab" id="ptab-gift" aria-controls="plist" aria-selected="false" tabindex="-1" data-cat="gift" data-label="선물세트">선물세트</button>    </div>
+  </div>
 
-  
-
-
-
-  <script>
-    // 서브페이지 헤더: 항상 scrolled 유지(히어로 없음), 햄버거만 동작
-    (function () {
-      var toggle = document.getElementById("navToggle");
-      var nav = document.getElementById("siteNav");
-      if (toggle && nav) {
-        function closeNav() {
-          document.body.classList.remove("nav-open");
-          toggle.setAttribute("aria-expanded", "false");
-        }
-        toggle.addEventListener("click", function () {
-          var open = document.body.classList.toggle("nav-open");
-          toggle.setAttribute("aria-expanded", open ? "true" : "false");
-        });
-        nav.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", closeNav); });
-      }
-    })();
-  </script>
-
-  <script>
-    // ===== 페이지 전환 효과 =====
-    (function () {
-      document.body.classList.add("page-enter");
-      var sameOriginLink = function (a) {
-        if (!a) return false;
-        if (a.target === "_blank") return false;
-        if (a.hasAttribute("download")) return false;
-        var href = a.getAttribute("href") || "";
-        if (!href || href.charAt(0) === "#") return false;
-        if (/^(mailto:|tel:|javascript:)/i.test(href)) return false;
-        if (/^https?:\/\//i.test(href) && a.host !== location.host) return false;
-        return true;
-      };
-      document.addEventListener("click", function (e) {
-        var a = e.target.closest ? e.target.closest("a") : null;
-        if (!sameOriginLink(a)) return;
-        var url = a.href;
-        e.preventDefault();
-        document.body.classList.add("page-leaving");
-        setTimeout(function () { window.location.href = url; }, 260);
-      });
-      window.addEventListener("pageshow", function (ev) {
-        if (ev.persisted) document.body.classList.remove("page-leaving");
-      });
-    })();
-  </script>
-
-<!-- ===== 영동에덴원 장바구니 위젯 (전 페이지 공통) ===== -->
-<!-- 사용법: 각 페이지 본문 맨 끝(닫는 body 태그 앞)에 이 블록을 그대로 삽입.
-     상대경로 주의 — 상세페이지(products/ 안)는 ../ 기준, 루트 페이지는 동일 경로.
-     현재 경로에 /products/ 포함 여부로 자동 판별. -->
-<style>
-  .cart-dock {
-    position: fixed; top: 50%; transform: translateY(-50%); right: 0; z-index: 95;
-    display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
-  }
-  .cart-fab, .status-fab {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--font-body, "Noto Sans KR", sans-serif);
-    cursor: pointer; text-decoration: none;
-    border-radius: 100px 0 0 100px;       /* 오른쪽 화면에 붙는 배너 */
-    padding: 0.7rem 1.1rem 0.7rem 1rem;
-    box-shadow: -4px 6px 20px rgba(42,31,20,0.18);
-    transition: background .2s ease, transform .2s ease, padding-right .2s ease;
-    transform: translateX(0);
-  }
-  .cart-fab { background: var(--ink, #2A1F14); color: var(--cream, #F4EDE0); font-size: 0.9rem; }
-  .cart-fab:hover { background: var(--gold-dark, #6B5532); transform: translateX(-2px); }
-  .status-fab {
-    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
-    border: 1px solid var(--border-strong, rgba(42,31,20,0.2)); border-right: none;
-    font-size: 0.84rem;
-  }
-  .status-fab:hover { background: var(--cream-dark, #E8DFCC); transform: translateX(-2px); }
-  .cart-fab__icon, .status-fab__icon { font-size: 1.02rem; line-height: 1; }
-  .cart-fab__label, .status-fab__label { white-space: nowrap; }
-  .cart-fab__badge {
-    min-width: 20px; height: 20px; padding: 0 6px; border-radius: 100px;
-    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
-    font-size: 0.78rem; font-weight: 700; display: none;
-    align-items: center; justify-content: center; line-height: 1;
-  }
-  .cart-fab__badge.on { display: inline-flex; }
-  /* 모바일: 우하단 작은 아이콘만 */
-  @media (max-width: 640px) {
-    .cart-dock { top: auto; transform: none; bottom: 16px; right: 16px; gap: 8px; align-items: flex-end; }
-    .cart-fab, .status-fab { border-radius: 100px; padding: 0.6rem 0.7rem; box-shadow: 0 4px 14px rgba(42,31,20,0.2); }
-    .cart-fab__label, .status-fab__label { display: none; }
-  }
-</style>
-<div class="cart-dock">
-  <a class="cart-fab" id="cartFab" href="#" aria-label="장바구니">
-    <span class="cart-fab__icon">🧺</span>
-    <span class="cart-fab__label">장바구니</span>
-    <span class="cart-fab__badge" id="cartFabBadge">0</span>
+  <div class="plist container" id="plist" role="tabpanel" aria-labelledby="ptab-all">
+    <div class="plist__bar">
+      <p class="plist__count" aria-live="polite"><span data-query-note hidden></span>총 <b data-count>18</b>개</p>
+      <div class="sorts" role="group" aria-label="정렬">
+        <button type="button" class="sort" aria-pressed="true" data-sort="rec">추천순</button>
+        <button type="button" class="sort" aria-pressed="false" data-sort="low">낮은 가격순</button>
+        <button type="button" class="sort" aria-pressed="false" data-sort="high">높은 가격순</button>
+      </div>
+    </div>
+    <div class="grid4 grid4--list" data-grid>
+<article class="card" data-cat="vinegar" data-price="35000" data-name="발효의 초심 천연식초 375ml 산야초·과일·프리미엄 22종" data-order="0">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/vinegar.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-vinegar-480.webp 480w, images/v2/product-vinegar-960.webp 960w, images/v2/product-vinegar-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-vinegar-960.jpg" srcset="images/v2/product-vinegar-480.jpg 480w, images/v2/product-vinegar-960.jpg 960w, images/v2/product-vinegar-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">자연 발효</span>    <a class="card__bag" href="products/vinegar.html" aria-label="발효의 초심 천연식초 375ml 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</a>
+  </div>
+  <a class="card__text" href="products/vinegar.html">
+    <span class="card__name">발효의 초심 천연식초 375ml</span>
+    <span class="card__price">35,000원~</span>
+    <span class="card__desc">산야초·과일·프리미엄 22종</span>
   </a>
-  <a class="status-fab" id="statusFab" href="#" aria-label="주문 조회">
-    <span class="status-fab__icon">🔍</span>
-    <span class="status-fab__label">주문 조회</span>
+</article>
+<article class="card" data-cat="jang" data-price="20000" data-name="옹기숙성 된장 300g 자가 재배 콩 · 천일염" data-order="1">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/doenjang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-doenjang-480.webp 480w, images/v2/product-doenjang-960.webp 960w, images/v2/product-doenjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-doenjang-960.jpg" srcset="images/v2/product-doenjang-480.jpg 480w, images/v2/product-doenjang-960.jpg 960w, images/v2/product-doenjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">2년 이상 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 된장 300g 장바구니에 담기" data-add="doenjang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/doenjang.html">
+    <span class="card__name">옹기숙성 된장 300g</span>
+    <span class="card__price">20,000원</span>
+    <span class="card__desc">자가 재배 콩 · 천일염</span>
   </a>
+</article>
+<article class="card" data-cat="jang" data-price="20000" data-name="옹기숙성 고추장 300g 엿기름 당화액 · 메주가루" data-order="2">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/gochujang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-gochujang-480.webp 480w, images/v2/product-gochujang-960.webp 960w, images/v2/product-gochujang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-gochujang-960.jpg" srcset="images/v2/product-gochujang-480.jpg 480w, images/v2/product-gochujang-960.jpg 960w, images/v2/product-gochujang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">1년 이상 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 고추장 300g 장바구니에 담기" data-add="gochujang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/gochujang.html">
+    <span class="card__name">옹기숙성 고추장 300g</span>
+    <span class="card__price">20,000원</span>
+    <span class="card__desc">엿기름 당화액 · 메주가루</span>
+  </a>
+</article>
+<article class="card" data-cat="jang" data-price="20000" data-name="옹기숙성 어간장 300ml 3년 액젓 + 2년 간장" data-order="3">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/eoganjang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-eoganjang-480.webp 480w, images/v2/product-eoganjang-960.webp 960w, images/v2/product-eoganjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-eoganjang-960.jpg" srcset="images/v2/product-eoganjang-480.jpg 480w, images/v2/product-eoganjang-960.jpg 960w, images/v2/product-eoganjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+    <button type="button" class="card__bag" aria-label="옹기숙성 어간장 300ml 장바구니에 담기" data-add="eoganjang" data-add-option="300ml"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/eoganjang.html">
+    <span class="card__name">옹기숙성 어간장 300ml</span>
+    <span class="card__price">20,000원</span>
+    <span class="card__desc">3년 액젓 + 2년 간장</span>
+  </a>
+</article>
+<article class="card" data-cat="jang" data-price="4000" data-name="옹기발효 청국장 200g 냄새를 줄인 옹기 발효" data-order="4">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/cheonggukjang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-cheonggukjang-480.webp 480w, images/v2/product-cheonggukjang-960.webp 960w, images/v2/product-cheonggukjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-cheonggukjang-960.jpg" srcset="images/v2/product-cheonggukjang-480.jpg 480w, images/v2/product-cheonggukjang-960.jpg 960w, images/v2/product-cheonggukjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+    <button type="button" class="card__bag" aria-label="옹기발효 청국장 200g 장바구니에 담기" data-add="cheonggukjang" data-add-option="200g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/cheonggukjang.html">
+    <span class="card__name">옹기발효 청국장 200g</span>
+    <span class="card__price">4,000원</span>
+    <span class="card__desc">냄새를 줄인 옹기 발효</span>
+  </a>
+</article>
+<article class="card" data-cat="jang" data-price="25000" data-name="명품 메주 1개 발효실에서 속까지 띄운 메주" data-order="5">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/meju.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-meju-480.webp 480w, images/v2/product-meju-960.webp 960w, images/v2/product-meju-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-meju-960.jpg" srcset="images/v2/product-meju-480.jpg 480w, images/v2/product-meju-960.jpg 960w, images/v2/product-meju-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+    <button type="button" class="card__bag" aria-label="명품 메주 1개 장바구니에 담기" data-add="meju" data-add-option="1ea"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/meju.html">
+    <span class="card__name">명품 메주 1개</span>
+    <span class="card__price">25,000원</span>
+    <span class="card__desc">발효실에서 속까지 띄운 메주</span>
+  </a>
+</article>
+<article class="card" data-cat="jam" data-price="15000" data-name="옹기숙성 비빔된장 300g 밥에 비비거나 쌈장으로" data-order="6">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/bibim-doenjang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-bibim-doenjang-480.webp 480w, images/v2/product-bibim-doenjang-960.webp 960w, images/v2/product-bibim-doenjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-bibim-doenjang-960.jpg" srcset="images/v2/product-bibim-doenjang-480.jpg 480w, images/v2/product-bibim-doenjang-960.jpg 960w, images/v2/product-bibim-doenjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+    <button type="button" class="card__bag" aria-label="옹기숙성 비빔된장 300g 장바구니에 담기" data-add="bibim-doenjang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/bibim-doenjang.html">
+    <span class="card__name">옹기숙성 비빔된장 300g</span>
+    <span class="card__price">15,000원</span>
+    <span class="card__desc">밥에 비비거나 쌈장으로</span>
+  </a>
+</article>
+<article class="card" data-cat="jam" data-price="15000" data-name="옹기숙성 비빔고추장 300g 밥에 비비거나 쌈장으로" data-order="7">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/bibim-gochujang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-bibim-gochujang-480.webp 480w, images/v2/product-bibim-gochujang-960.webp 960w, images/v2/product-bibim-gochujang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-bibim-gochujang-960.jpg" srcset="images/v2/product-bibim-gochujang-480.jpg 480w, images/v2/product-bibim-gochujang-960.jpg 960w, images/v2/product-bibim-gochujang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+    <button type="button" class="card__bag" aria-label="옹기숙성 비빔고추장 300g 장바구니에 담기" data-add="bibim-gochujang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/bibim-gochujang.html">
+    <span class="card__name">옹기숙성 비빔고추장 300g</span>
+    <span class="card__price">15,000원</span>
+    <span class="card__desc">밥에 비비거나 쌈장으로</span>
+  </a>
+</article>
+<article class="card" data-cat="jam" data-price="10000" data-name="진짜&#39;S 잼 샤인머스캣 · 복숭아 · 토마토" data-order="8">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/jam.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-jam-shine-muscat-480.webp 480w, images/v2/product-jam-shine-muscat-960.webp 960w, images/v2/product-jam-shine-muscat-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-jam-shine-muscat-960.jpg" srcset="images/v2/product-jam-shine-muscat-480.jpg 480w, images/v2/product-jam-shine-muscat-960.jpg 960w, images/v2/product-jam-shine-muscat-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">가마솥 3시간</span>    <a class="card__bag" href="products/jam.html" aria-label="진짜&#39;S 잼 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</a>
+  </div>
+  <a class="card__text" href="products/jam.html">
+    <span class="card__name">진짜&#39;S 잼</span>
+    <span class="card__price">10,000원</span>
+    <span class="card__desc">샤인머스캣 · 복숭아 · 토마토</span>
+  </a>
+</article>
+<article class="card" data-cat="jam" data-price="20000" data-name="진짜&#39;S 조청 300g 자가 재배 엿기름 · 가마솥 6시간" data-order="9">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/jocheong.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-jocheong-480.webp 480w, images/v2/product-jocheong-960.webp 960w, images/v2/product-jocheong-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-jocheong-960.jpg" srcset="images/v2/product-jocheong-480.jpg 480w, images/v2/product-jocheong-960.jpg 960w, images/v2/product-jocheong-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+    <button type="button" class="card__bag" aria-label="진짜&#39;S 조청 300g 장바구니에 담기" data-add="jocheong" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/jocheong.html">
+    <span class="card__name">진짜&#39;S 조청 300g</span>
+    <span class="card__price">20,000원</span>
+    <span class="card__desc">자가 재배 엿기름 · 가마솥 6시간</span>
+  </a>
+</article>
+<article class="card is-soldout" data-cat="farm" data-price="10000" data-name="햇 완두콩 1kg · 3kg" data-order="10">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/pea.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-pea-480.webp 480w, images/v2/product-pea-960.webp 960w, images/v2/product-pea-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-pea-960.jpg" srcset="images/v2/product-pea-480.jpg 480w, images/v2/product-pea-960.jpg 960w, images/v2/product-pea-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge badge--soldout">품절</span>  </div>
+  <a class="card__text" href="products/pea.html">
+    <span class="card__name">햇 완두콩</span>
+    <span class="card__price"><span class="sr-only">품절, </span>10,000원~</span>
+    <span class="card__desc">1kg · 3kg</span>
+  </a>
+</article>
+<article class="card" data-cat="farm" data-price="12000" data-name="감자 1kg 화학비료·제초제 없이" data-order="11">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/potato.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-potato-480.webp 480w, images/v2/product-potato-750.webp 750w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-potato-750.jpg" srcset="images/v2/product-potato-480.jpg 480w, images/v2/product-potato-750.jpg 750w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="750" height="1000" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+    <button type="button" class="card__bag" aria-label="감자 1kg 장바구니에 담기" data-add="potato" data-add-option="1kg"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/potato.html">
+    <span class="card__name">감자 1kg</span>
+    <span class="card__price">12,000원</span>
+    <span class="card__desc">화학비료·제초제 없이</span>
+  </a>
+</article>
+<article class="card" data-cat="farm" data-price="16000" data-name="마늘 1kg 화학비료·제초제 없이" data-order="12">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/garlic.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-garlic-480.webp 480w, images/v2/product-garlic-750.webp 750w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-garlic-750.jpg" srcset="images/v2/product-garlic-480.jpg 480w, images/v2/product-garlic-750.jpg 750w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="750" height="1000" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+    <button type="button" class="card__bag" aria-label="마늘 1kg 장바구니에 담기" data-add="garlic" data-add-option="1kg"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/garlic.html">
+    <span class="card__name">마늘 1kg</span>
+    <span class="card__price">16,000원</span>
+    <span class="card__desc">화학비료·제초제 없이</span>
+  </a>
+</article>
+<article class="card" data-cat="farm" data-price="5000" data-name="양파 1kg 화학비료·제초제 없이" data-order="13">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/onion.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-onion-480.webp 480w, images/v2/product-onion-960.webp 960w, images/v2/product-onion-1000.webp 1000w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-onion-960.jpg" srcset="images/v2/product-onion-480.jpg 480w, images/v2/product-onion-960.jpg 960w, images/v2/product-onion-1000.jpg 1000w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+    <button type="button" class="card__bag" aria-label="양파 1kg 장바구니에 담기" data-add="onion" data-add-option="1kg"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/onion.html">
+    <span class="card__name">양파 1kg</span>
+    <span class="card__price">5,000원</span>
+    <span class="card__desc">화학비료·제초제 없이</span>
+  </a>
+</article>
+<article class="card" data-cat="farm" data-price="6000" data-name="비트 1kg 화학비료·제초제 없이" data-order="14">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/beet.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-beet-480.webp 480w, images/v2/product-beet-750.webp 750w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-beet-750.jpg" srcset="images/v2/product-beet-480.jpg 480w, images/v2/product-beet-750.jpg 750w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="750" height="1000" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+    <button type="button" class="card__bag" aria-label="비트 1kg 장바구니에 담기" data-add="beet" data-add-option="1kg"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/beet.html">
+    <span class="card__name">비트 1kg</span>
+    <span class="card__price">6,000원</span>
+    <span class="card__desc">화학비료·제초제 없이</span>
+  </a>
+</article>
+<article class="card" data-cat="farm" data-price="20000" data-name="샤인머스캣 2kg 제철 생과" data-order="15">
+  <div class="card__photo">
+    <a class="card__photo-link" href="products/shine-grape.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/product-shine-grape-480.webp 480w, images/v2/product-shine-grape-960.webp 960w, images/v2/product-shine-grape-1000.webp 1000w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-shine-grape-960.jpg" srcset="images/v2/product-shine-grape-480.jpg 480w, images/v2/product-shine-grape-960.jpg 960w, images/v2/product-shine-grape-1000.jpg 1000w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">제철</span>    <button type="button" class="card__bag" aria-label="샤인머스캣 2kg 장바구니에 담기" data-add="shine-grape" data-add-option="1kg"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+</button>
+  </div>
+  <a class="card__text" href="products/shine-grape.html">
+    <span class="card__name">샤인머스캣 2kg</span>
+    <span class="card__price">20,000원</span>
+    <span class="card__desc">제철 생과</span>
+  </a>
+</article>
+<article class="card" data-cat="gift" data-price="" data-name="장류 선물세트 4종 구성 · 합산가에서 5,000원 할인" data-order="16">
+  <div class="card__photo">
+    <a class="card__photo-link" href="giftset.html?set=jam" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/giftset-jam-480.webp 480w, images/v2/giftset-jam-960.webp 960w, images/v2/giftset-jam-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/giftset-jam-960.jpg" srcset="images/v2/giftset-jam-480.jpg 480w, images/v2/giftset-jam-960.jpg 960w, images/v2/giftset-jam-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">선물</span>  </div>
+  <a class="card__text" href="giftset.html?set=jam">
+    <span class="card__name">장류 선물세트</span>
+    <span class="card__price">구성 고르기</span>
+    <span class="card__desc">4종 구성 · 합산가에서 5,000원 할인</span>
+  </a>
+</article>
+<article class="card" data-cat="gift" data-price="" data-name="식초 선물세트 4종 구성 · 합산가에서 5,000원 할인" data-order="17">
+  <div class="card__photo">
+    <a class="card__photo-link" href="giftset.html?set=vinegar" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="images/v2/giftset-vinegar-480.webp 480w, images/v2/giftset-vinegar-960.webp 960w, images/v2/giftset-vinegar-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/giftset-vinegar-960.jpg" srcset="images/v2/giftset-vinegar-480.jpg 480w, images/v2/giftset-vinegar-960.jpg 960w, images/v2/giftset-vinegar-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+    </a>
+<span class="badge">선물</span>  </div>
+  <a class="card__text" href="giftset.html?set=vinegar">
+    <span class="card__name">식초 선물세트</span>
+    <span class="card__price">구성 고르기</span>
+    <span class="card__desc">4종 구성 · 합산가에서 5,000원 할인</span>
+  </a>
+</article>
+    </div>
+    <p class="plist__empty" data-empty hidden>찾는 제품이 없습니다. <a href="products.html">전체 제품 보기</a></p>
+  </div>
 </div>
-<script>
-  (function () {
-    var CART_KEY = "edenwon_cart";
-    var inProducts = location.pathname.indexOf("/products/") >= 0;
-    var CART_HREF = inProducts ? "../cart.html" : "cart.html";
-    var STATUS_HREF = inProducts ? "../order-status.html" : "order-status.html";
-
-    window.EdenwonCart = {
-      key: CART_KEY,
-      read: function () {
-        try { return JSON.parse(localStorage.getItem(CART_KEY) || "[]"); }
-        catch (e) { return []; }
-      },
-      write: function (items) {
-        try { localStorage.setItem(CART_KEY, JSON.stringify(items)); } catch (e) {}
-        this.refreshBadge();
-      },
-      count: function () {
-        return this.read().reduce(function (s, it) { return s + (it.count || 0); }, 0);
-      },
-      add: function (item) {
-        var items = this.read();
-        var found = null;
-        for (var i = 0; i < items.length; i++) {
-          if (items[i].product === item.product && items[i].option === item.option) { found = items[i]; break; }
-        }
-        if (found) found.count += item.count;
-        else items.push(item);
-        this.write(items);
-      },
-      refreshBadge: function () {
-        var b = document.getElementById("cartFabBadge");
-        if (!b) return;
-        var n = this.count();
-        b.textContent = n;
-        b.classList.toggle("on", n > 0);
-      }
-    };
-
-    var fab = document.getElementById("cartFab");
-    if (fab) fab.setAttribute("href", CART_HREF);
-    var sfab = document.getElementById("statusFab");
-    if (sfab) sfab.setAttribute("href", STATUS_HREF);
-    EdenwonCart.refreshBadge();
-  })();
-</script>
-<!-- ===== /장바구니 위젯 ===== -->
-
-<style>
-  /* 인덱스 전용: 헤더(우상단)와 겹치지 않도록 장바구니 독을 우하단으로 */
-  .cart-dock { top: auto !important; bottom: 22px; right: 22px; }
-  @media (max-width: 820px) { .cart-dock { bottom: 16px; right: 16px; } }
-</style>
-
-  <footer>
-    <div class="footer__brand">
-      <img src="images/logo-symbol-white.png" alt="" class="footer__symbol" />
-      <div class="footer__mark">영동에덴원</div>
+</main>
+<footer class="ft">
+  <div class="ft__navwrap">
+    <nav class="ft__nav container" aria-label="정책·안내">
+      <a href="story.html">영동에덴원 소개</a>
+<a href="terms.html">이용약관</a><a href="privacy.html" class="is-strong">개인정보처리방침</a><a href="refund.html">교환·반품·환불 안내</a>      <a href="order-status.html">주문 조회</a>
+      <a href="contact.html">단체·기업 구매 문의</a>
+    </nav>
+  </div>
+  <div class="ft__body container">
+    <div class="ft__brand">
+      <p class="ft__logo"><span class="logo__ko">영동에덴원</span><span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span></p>
+      <p class="ft__legal">
+        <span>농업회사법인 주식회사 에프엔엘바이오푸드 · 대표 길우관</span>
+        <span>충청북도 영동군 학산면 모리2길 3-1</span>
+        <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
+        <span>kwg7978@naver.com</span>
+<a href="privacy.html#revision-notice">개인정보처리방침·이용약관 개정 안내 (시행 2026년 10월 19일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
+      </p>
     </div>
-    <div class="footer__legal">
-      농업회사법인 주식회사 에프엔엘바이오푸드 <span class="footer__sep">|</span> 대표 길우관<br />
-      사업자등록번호 550-87-01994 <span class="footer__sep">|</span> 통신판매업 2021-충북영동-0123<br />
-      충청북도 영동군 학산면 모리2길 3-1<br />
-      010-5126-7578 <span class="footer__sep">|</span> kwg7978@naver.com<br />
-      <a href="terms.html">이용약관</a> <span class="footer__sep">|</span>
-      <a href="privacy.html">개인정보처리방침</a> <span class="footer__sep">|</span>
-      <a href="refund.html">교환·반품·환불 안내</a><br />
-      <span style="opacity:0.5;">ⓒ 2026 영동에덴원 · All rights reserved.</span>
+    <div class="ft__cs">
+      <p class="ft__cs-h">고객센터</p>
+      <p class="ft__tel"><a href="tel:01051267578">010-5126-7578</a></p>
+      <p class="ft__hours">[운영 시간] · 점심시간 [시간]<br>주말·공휴일 휴무</p>
+      <div class="ft__sns">
+        <a href="https://blog.naver.com/gr_edenfarm" rel="noopener">블로그</a>
+      </div>
     </div>
-  </footer>
-<style>
-  /* ===== 통일 푸터 (독립 블록) ===== */
-  footer { background: var(--ink); color: rgba(244,237,224,0.5); padding: 2.8rem 1.5rem; text-align: center; font-size: 0.8rem; line-height: 2; border-top: 1px solid rgba(244,237,224,0.08); }
-  footer .footer__brand { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-bottom: 1.1rem; }
-  footer .footer__symbol { height: 36px !important; width: auto !important; opacity: 0.92; margin: 0 auto; display: block; }
-  footer .footer__mark { font-family: var(--font-display); color: rgba(244,237,224,0.78); letter-spacing: 0.06em; font-size: 0.98rem; margin: 0; }
-  footer .footer__legal { font-size: 0.75rem; letter-spacing: 0.02em; }
-  footer .footer__legal a { color: inherit; opacity: 0.7; text-decoration: none; border-bottom: 1px solid rgba(244,237,224,0.2); }
-  footer .footer__legal a:hover { opacity: 1; }
-  footer .footer__sep { opacity: 0.35; }
-</style>
-<!-- ===== 영동에덴원 회원 위젯 (주문 페이지 공통: order/cart/giftset) ===== -->
-<!-- 사용법: 닫는 body 태그 바로 앞(장바구니 위젯 뒤)에 그대로 삽입.
-     기능: 1) 주문 전송에 회원 세션 자동 동반  2) 주문 성공 시 회원 주문 자동 연결(적립 대상)
-           3) 좌하단 회원 상태 칩 -->
-
-<script>
-(function () {
-  var MEMBER_API = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
-    ? "https://api.yd-edenwon.com" : "";
-  var dock = document.querySelector(".cart-dock");
-  var fab = document.createElement("a");
-  fab.className = "status-fab member-fab";
-  fab.id = "memberFab";
-  fab.style.display = "none";
-  fab.innerHTML = '<span class="status-fab__icon">\uD83C\uDF31</span>'
-    + '<span class="status-fab__label"></span>';
-  if (dock) { dock.appendChild(fab); }
-  else {
-    var dk = document.createElement("div");
-    dk.className = "cart-dock";
-    dk.appendChild(fab);
-    document.body.appendChild(dk);
-  }
-  var fabLabel = fab.querySelector(".status-fab__label");
-  if (!document.getElementById("memberFabCss")) {
-    var st = document.createElement("style");
-    st.id = "memberFabCss";
-    st.textContent = "@media (max-width:640px){"
-      + ".member-fab .status-fab__label{display:inline !important;}"
-      + ".member-fab{border-radius:100px !important;padding:0.6rem 0.95rem !important;}}";
-    document.head.appendChild(st);
-  }
-
-  // 1) 주문 전송에 세션 동반 + 성공 시 회원 주문 자동 연결
-  var _fetch = window.fetch;
-  window.fetch = function (url, init) {
-    var u = String(url);
-    var isOrder = u.indexOf("/api/orders") > -1 || u.indexOf("/api/cart-order") > -1;
-    if (isOrder) { init = init || {}; init.credentials = "include"; }
-    var p = _fetch(url, init);
-    if (isOrder) {
-      p.then(function (r) { return r.clone().json(); }).then(function (j) {
-        if (!j || j.ok === false) return;
-        var no = j.order_no || (JSON.stringify(j).match(/ED-[0-9]{8}-[A-Z0-9]+/) || [])[0];
-        if (!no) return;
-        _fetch(MEMBER_API + "/api/account/claim-order", {
-          method: "POST", credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ order_no: no })
-        }).catch(function () {});
-      }).catch(function () {});
-    }
-    return p;
-  };
-
-  // 2) 회원 상태 칩
-  var rate = "2";
-  _fetch(MEMBER_API + "/api/account/points-rate")
-    .then(function (r) { return r.json(); })
-    .then(function (j) { if (j.ok) rate = j.rate; })
-    .catch(function () {})
-    .then(function () {
-      return _fetch(MEMBER_API + "/api/account/me", { credentials: "include" });
-    })
-    .then(function (r) { return r.json(); })
-    .then(function (j) {
-      if (j && j.ok) {
-        fabLabel.textContent = "적립 " + rate + "%";
-        fab.title = j.account.name + "님 · 마이페이지";
-        fab.href = MEMBER_API + "/mypage";
-      } else {
-        fabLabel.textContent = "로그인";
-        fab.title = "로그인하고 주문하면 " + rate + "% 적립";
-        fab.href = MEMBER_API + "/login?next="
-          + encodeURIComponent("https://yd-edenwon.com" + location.pathname + location.search);
-      }
-      fab.style.display = "";
-    })
-    .catch(function () {});
-})();
-</script>
-<!-- ===== 회원 위젯 끝 ===== -->
-  <style>
-    .product-card.card-sold{opacity:.62}
-    .product-card.card-sold .product-card__more{color:#c0392b}
-    .product-card__image{position:relative}
-    .card-sold-badge{position:absolute;top:12px;left:12px;background:#c0392b;color:#fff;font-size:0.82rem;font-weight:700;padding:0.22rem 0.8rem;border-radius:100px;z-index:3;letter-spacing:0.02em;box-shadow:0 1px 4px rgba(0,0,0,0.18)}
-  </style>
-  <script>
-  (function(){
-    var API = "https://api.yd-edenwon.com";
-    function won(n){ return Number(n).toLocaleString("ko-KR") + "원"; }
-    function esc(s){ return String(s).replace(/[&<>]/g, function(ch){ return {"&":"&amp;","<":"&lt;",">":"&gt;"}[ch]; }); }
-    function priceHtml(p){
-      var pool = (p.options || []).filter(function(o){ return !o.sold_out; });
-      if (!pool.length) pool = p.options || [];
-      var rows = pool.map(function(o){ return { label: o.label, price: Number(o.price) }; })
-                     .filter(function(o){ return !isNaN(o.price) && o.price > 0; });
-      if (!rows.length) return "";
-      var prices = rows.map(function(o){ return o.price; });
-      var min = Math.min.apply(null, prices);
-      var uniq = {}; prices.forEach(function(v){ uniq[v] = 1; });
-      if (rows.length === 1) return won(rows[0].price) + " <span class='u'>· " + esc(rows[0].label) + "</span>";
-      if (Object.keys(uniq).length === 1) return won(min) + " <span class='u'>· " + rows.length + "종</span>";
-      if (rows.length <= 3) return rows.map(function(o){ return "<span class='u'>" + esc(o.label) + "</span> " + won(o.price); }).join(" <span class='u'>·</span> ");
-      return won(min) + "<span class='u'>부터</span>";
-    }
-    fetch(API + "/api/products").then(function(r){ return r.json(); }).then(function(d){
-      if (!d || !d.ok || !d.products) return;
-      var byKey = {}, sold = {};
-      d.products.forEach(function(p){
-        byKey[p.key] = p;
-        var o = p.options || [];
-        if (o.length && o.every(function(x){ return x.sold_out; })) sold[p.key] = true;
-      });
-      document.querySelectorAll("a.product-card").forEach(function(c){
-        var m = (c.getAttribute("href") || "").match(/products\/([^\/]+)\.html/);
-        if (!m) return;
-        var key = m[1], p = byKey[key];
-        if (sold[key]) {
-          c.classList.add("card-sold");
-          var im = c.querySelector(".product-card__image");
-          if (im && !im.querySelector(".card-sold-badge")) {
-            var b = document.createElement("span");
-            b.className = "card-sold-badge";
-            b.textContent = "품절";
-            im.appendChild(b);
-          }
-        }
-        if (p) {
-          var ph = priceHtml(p);
-          if (ph && !c.querySelector(".product-card__price")) {
-            var el = document.createElement("p");
-            el.className = "product-card__price";
-            el.innerHTML = ph;
-            var more = c.querySelector(".product-card__more");
-            if (more) c.insertBefore(el, more); else c.appendChild(el);
-          }
-        }
-      });
-    }).catch(function(){});
-  })();
-  </script>
+  </div>
+</footer>
 </body>
 </html>
