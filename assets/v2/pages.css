@@ -637,3 +637,26 @@
   .page-detail .related{margin-top:72px}
   .page-detail .related .h2{font-size:24px}
 }
+
+/* ── 주문서·완료 실제 연결(2-B-1 STOP 3) ── */
+.co__member{font-size:14px;line-height:1.7;background:var(--surface);padding:12px 16px}
+.co__member[hidden]{display:none}
+.zip-row,.pts-row{display:flex;gap:8px;align-items:center}
+.zip-row input,.pts-row input{flex:1;min-width:0}
+.co__pts{display:flex;flex-direction:column;gap:8px;border-top:2px solid var(--ink);padding-top:18px;font-size:15px}
+.co__pts[hidden]{display:none}
+.co__dl dt .muted{font-size:13px;margin-left:4px}
+.co__error{font-size:14px;line-height:1.6;color:#9B2C1F;background:#FBEDEA;border-left:3px solid #9B2C1F;padding:12px 14px}
+.co__error[hidden]{display:none}
+.co__submit[aria-busy="true"]{opacity:.7;cursor:progress}
+.co__cardfail{display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.6;background:var(--surface);padding:16px}
+.co__cardfail[hidden]{display:none}
+.co__cardfail-btns{display:flex;flex-wrap:wrap;gap:8px}
+.co__cardfail-btns .btn{flex:1 1 140px;min-height:48px}
+.done__grid[hidden]{display:none}
+.done__example[hidden]{display:none}
+.done__items{display:flex;flex-direction:column;border-top:1px solid var(--line);font-size:14px}
+.done__items li{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.done__items .muted{font-size:13px}
+[data-bank-row][hidden]{display:none}
+[data-done-lead]{white-space:pre-line}

@@ -121,7 +121,7 @@
         <div class="fields">
           <div class="field"><label for="rcv-name">받는 분</label><input id="rcv-name" name="rcv_name" type="text" autocomplete="shipping name"></div>
           <div class="field"><label for="rcv-phone">휴대폰</label><input id="rcv-phone" name="rcv_phone" type="tel" inputmode="tel" autocomplete="shipping tel"></div>
-          <div class="field field--zip"><label for="zip">우편번호</label><input id="zip" name="zip" type="text" inputmode="numeric" autocomplete="shipping postal-code" maxlength="5"></div>
+          <div class="field field--zip"><label for="zip">우편번호</label><div class="zip-row"><input id="zip" name="zip" type="text" inputmode="numeric" autocomplete="shipping postal-code" maxlength="5"><button type="button" class="btn-small" data-zip-search>우편번호 찾기</button></div></div>
           <div class="field"><label for="addr1">주소</label><input id="addr1" name="addr1" type="text" autocomplete="shipping address-line1"></div>
           <div class="field"><label for="addr2">상세 주소</label><input id="addr2" name="addr2" type="text" autocomplete="shipping address-line2"></div>
           <div class="field"><label for="memo-sel">배송 요청사항</label>
@@ -143,9 +143,8 @@
 
       <section class="co__sec" aria-labelledby="s-pay">
         <h2 class="co__h" id="s-pay">결제 수단</h2>
-        <div class="choice choice--3" role="radiogroup" aria-labelledby="s-pay">
+        <div class="choice choice--2" role="radiogroup" aria-labelledby="s-pay">
           <label class="choice__opt choice__opt--center"><input type="radio" name="pay" value="card" checked data-pay><span class="choice__t"><b>신용·체크카드</b></span></label>
-          <label class="choice__opt choice__opt--center"><input type="radio" name="pay" value="easy" data-pay><span class="choice__t"><b>간편결제</b></span></label>
           <label class="choice__opt choice__opt--center"><input type="radio" name="pay" value="bank" data-pay><span class="choice__t"><b>무통장입금</b></span></label>
         </div>
         <p class="co__info" data-bank-note hidden>입금 계좌와 금액은 주문 직후 화면과 문자로 바로 안내해 드립니다. 입금이 확인되면 준비를 시작하고 다시 알려드립니다.</p>
@@ -157,8 +156,8 @@
       <dl class="co__dl">
         <div><dt>상품 금액</dt><dd data-co-subtotal>0원</dd></div>
         <div><dt>배송비</dt><dd data-co-ship>0원</dd></div>
-        <div><dt>소속 할인</dt><dd>−0원 <span class="muted">(로그인 시 자동)</span></dd></div>
-        <div><dt>적립금</dt><dd>−0원</dd></div>
+        <div><dt>소속 할인<span class="muted" data-co-seg></span></dt><dd><span data-co-disc>−0원</span> <span class="muted">(로그인 시 자동)</span></dd></div>
+        <div><dt>적립금</dt><dd data-co-pts>−0원</dd></div>
       </dl>
       <p class="co__freehint" data-co-freehint hidden></p>
       <div class="co__total"><span>최종 결제 금액</span><b data-co-total>0원</b></div>
