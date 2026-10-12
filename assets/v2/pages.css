@@ -227,21 +227,34 @@
 .pdtabs a{text-align:center;padding:22px 0 20px;color:var(--muted);text-decoration:none;font-size:16px;border-bottom:2px solid transparent;margin-bottom:-1px}
 .pdtabs a[aria-current="true"]{color:var(--ink);font-weight:700;border-bottom-color:var(--ink)}
 .pdsec{scroll-margin-top:72px}
-.pstory{position:relative;height:640px;overflow:hidden}
-.pstory picture{position:absolute;inset:0}
-.pstory__img{width:100%;height:100%;object-fit:cover}
-.pstory__scrim{position:absolute;inset:0;background:var(--scrim)}
-.pstory__text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#FFFFFF;text-align:center;padding:0 24px}
-.pstory .eyebrow{letter-spacing:.2em}
-.pstory__title{font-family:var(--serif);font-weight:500;font-size:42px;line-height:1.4;white-space:pre-line}
+.sb-hero{position:relative;height:640px;overflow:hidden}
+.sb-hero picture{position:absolute;inset:0}
+.sb-hero__img{width:100%;height:100%;object-fit:cover}
+.sb-hero__scrim{position:absolute;inset:0;background:var(--scrim)}
+.sb-hero__text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#FFFFFF;text-align:center;padding:0 24px}
+.sb-hero .eyebrow{letter-spacing:.2em}
+.sb-hero__title{font-family:var(--serif);font-weight:500;font-size:42px;line-height:1.4;white-space:pre-line}
 .steps{max-width:1100px;margin:0 auto;padding:112px 40px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px}
 .step{display:flex;flex-direction:column;gap:14px;border-top:1px solid var(--ink);padding-top:24px}
 .step__no{font-family:var(--serif);font-size:32px;color:var(--accent)}
 .step__title{font-size:20px;font-weight:500}
 .step__body{font-size:15px;line-height:1.8;color:var(--muted)}
 .photo2{display:flex;flex-wrap:wrap}
-.photo2>picture{flex:1 1 50%;min-width:320px}
+.photo2__fig{margin:0;flex:1 1 0;min-width:320px}
+.photo2--1 .photo2__fig{flex-basis:100%}
 .photo2__img{width:100%;height:560px;object-fit:cover}
+.photo2__fig figcaption{padding:12px 20px 0;font-size:13px;color:var(--muted)}
+.sb-h{max-width:1100px;margin:0 auto;padding:0 40px;font-family:var(--serif);font-weight:500;font-size:28px}
+.sb-steps .sb-h{padding-top:112px;margin-bottom:-64px}
+.sb-text{max-width:760px;margin:0 auto;padding:112px 40px;display:flex;flex-direction:column;gap:18px;font-size:16px;line-height:1.9;color:var(--ink)}
+.sb-text__title{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.4}
+.sb-usage{padding:112px 0 0}
+.sb-usage__list{max-width:1100px;margin:40px auto 0;padding:0 40px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.sb-usage__list li{background:var(--surface);padding:28px 24px;display:flex;flex-direction:column;gap:10px}
+.sb-usage__t{font-weight:700;font-size:17px}
+.sb-usage__b{font-size:15px;line-height:1.8;color:var(--muted)}
+.narrow--block{padding-top:112px}
+.sb-usage+.photo2,.sb-usage+.sb-hero,.narrow--block+.photo2,.narrow--block+.sb-hero{margin-top:112px}
 .narrow{max-width:860px;margin:0 auto;padding:112px 40px 0;display:flex;flex-direction:column;gap:24px}
 .narrow--first{padding-top:80px}
 .infotable{display:grid;grid-template-columns:180px minmax(0,1fr);border-top:2px solid var(--ink);font-size:14px;line-height:1.7}
@@ -280,10 +293,18 @@
   .buy__actions{display:none}
   .buy__total b{font-size:24px}
   .pdtabs a{padding:16px 0 14px;font-size:15px}
-  .pstory{height:440px}
-  .pstory__title{font-size:28px}
+  .sb-hero{height:440px}
+  .sb-hero__title{font-size:28px}
+  .sb-h{padding:0 20px;font-size:22px}
+  .sb-steps .sb-h{padding-top:56px;margin-bottom:-24px}
+  .sb-text{padding:56px 20px;font-size:15px}
+  .sb-text__title{font-size:24px}
+  .sb-usage{padding-top:56px}
+  .sb-usage__list{grid-template-columns:1fr;padding:0 20px;margin-top:24px;gap:12px}
+  .narrow--block{padding-top:56px}
+  .sb-usage+.photo2,.sb-usage+.sb-hero,.narrow--block+.photo2,.narrow--block+.sb-hero{margin-top:56px}
   .steps{padding:56px 20px}
-  .photo2>picture{flex-basis:100%;min-width:0}
+  .photo2__fig{flex-basis:100%;min-width:0}
   .photo2__img{height:320px}
   .narrow{padding:64px 20px 0}
   .infotable{grid-template-columns:104px minmax(0,1fr)}
