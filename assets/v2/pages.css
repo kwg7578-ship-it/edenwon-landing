@@ -772,3 +772,35 @@
   .lk{grid-template-columns:1fr;gap:32px}
 }
 .my__nav[hidden],.my__wd[hidden]{display:none}
+
+/* ── 브랜드 이야기(story.html, 개정 3 STOP 3.6): 옛 본문을 2-A 토큰으로 ── */
+.brand{max-width:1120px;padding-top:88px;padding-bottom:120px;display:flex;flex-direction:column;gap:72px}
+.brand__head{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center}
+.brand__eyebrow{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.brand__quote{font-family:var(--serif);font-weight:500;font-size:44px;line-height:1.45;text-wrap:balance}
+.brand__quote em{font-style:normal;color:var(--accent)}
+.brand__lead{font-size:17px;line-height:1.9;color:var(--muted);max-width:34em}
+.brand__pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink);border-bottom:1px solid var(--line)}
+.pillar2{display:flex;flex-direction:column;gap:14px;padding:36px 32px 40px;border-left:1px solid var(--line)}
+.pillar2:first-child{border-left:0;padding-left:0}
+.pillar2__eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.pillar2__title{font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.45}
+.pillar2__desc{font-size:15px;line-height:1.85;color:var(--muted)}
+.pillar2__link{margin-top:auto;align-self:flex-start;font-size:14px;color:var(--ink);text-underline-offset:4px}
+.brand__stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px 32px;background:var(--surface);padding:56px 48px}
+.stat2{display:flex;flex-direction:column;gap:8px}
+.stat2__n{font-family:var(--serif);font-weight:500;font-size:48px;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.stat2__u{font-family:var(--sans);font-size:16px;font-weight:500;margin-left:4px;color:var(--muted)}
+.stat2__label{font-size:16px;font-weight:700;padding-top:8px;border-top:1px solid var(--line);margin-top:6px}
+.stat2__desc{font-size:14px;line-height:1.75;color:var(--muted)}
+@media (max-width:768px){
+  .brand{padding-top:40px;padding-bottom:72px;gap:44px}
+  .brand__quote{font-size:30px}
+  .brand__lead{font-size:15px}
+  .brand__lead .br-pc{display:none}
+  .brand__pillars{grid-template-columns:1fr}
+  .pillar2{border-left:0;border-top:1px solid var(--line);padding:28px 0}
+  .pillar2:first-child{border-top:0}
+  .brand__stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 20px;padding:32px 20px}
+  .stat2__n{font-size:38px}
+}
