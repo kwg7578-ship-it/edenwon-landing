@@ -916,7 +916,16 @@
     });
   }
 
+  // 친환경 인증 유효기간: 종료일(한국 날짜)이 지나면 인증 줄·표지를 뺀다. 빌드도 같은 규칙으로 빼지만, 다시 빌드하기 전의 페이지를 위한 안전장치.
+  function initCertExpiry() {
+    var today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+    document.querySelectorAll("[data-cert-end]").forEach(function (el) {
+      if (today > el.getAttribute("data-cert-end")) el.remove();
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    initCertExpiry();
     initFonts();
     initFolds();
     initChoose();

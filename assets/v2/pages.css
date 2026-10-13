@@ -534,6 +534,9 @@
 .glance__cell{display:flex;flex-direction:column;gap:10px;padding:24px 20px 24px 0;border-bottom:1px solid var(--line)}
 .glance dt{font-size:13px;color:var(--muted);letter-spacing:.04em}
 .glance dd{font-size:17px;font-weight:500;line-height:1.5}
+/* 친환경 인증 표지: 원본 그대로, 크기만 줄임(최대 96px, 원본보다 키우지 않음 — width/height 는 빌드가 계산) */
+.cert{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.cert__mark{flex:none;max-width:96px;height:auto}
 .sb-band{background:var(--surface)}
 .sb-band+.sb,.sb-dark+.sb{padding-top:120px}
 .sb--steps{gap:96px}
