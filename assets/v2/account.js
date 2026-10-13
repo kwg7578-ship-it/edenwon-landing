@@ -418,7 +418,7 @@
       if (!check(ff, [["af-sid", "학번은 9자리 숫자로 입력해 주세요.", d.needs.indexOf("student_id") < 0 || /^\d{9}$/.test(sid)],
                       ["af-dept", "학과를 입력해 주세요.", d.needs.indexOf("department") < 0 || dept]])) return;
       busy(btn, true, "신고하는 중…");
-      acall("POST", "/api/v2/account/affiliations", { affiliation: d.id, student_id: sid, department: dept }).then(function (j) {
+      acall("POST", "/api/v2/account/affiliations", { affiliation: d.id, student_id: sid, department: dept, consent: afc.checked === true }).then(function (j) {
         busy(btn, false); affReady();
         if (!j.ok) { if (j.code === "student_id") setErr(ff, "af-sid", j.error); else if (j.code === "department") setErr(ff, "af-dept", j.error); else formErr(ff, j.error || NET); return; }
         afc.checked = false; affReady(); mine();
