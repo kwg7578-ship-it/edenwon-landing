@@ -873,3 +873,23 @@
   .brand__photo,.brand__photo--2{grid-column:span 1}
   .brand__photo--1{grid-column:span 2}
 }
+
+/* 동의 «내용 보기»(2-B-2 개정 4-1 결정 3·8): 체크 줄 아래 접힌 표. summary 는 label 밖이라 펼쳐도 체크가 바뀌지 않는다 */
+.agree-row{display:flex;flex-direction:column;gap:6px}
+.consent{padding-left:30px;font-size:13px}
+.consent summary{display:inline-flex;align-items:center;min-height:32px;cursor:pointer;color:var(--ink);text-decoration:underline;text-underline-offset:3px;list-style:none}
+.consent summary::-webkit-details-marker{display:none}
+.consent summary::after{content:"";width:6px;height:6px;margin-left:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px)}
+.consent[open] summary::after{transform:rotate(-135deg) translateY(-1px)}
+.consent__t{width:100%;margin-top:8px;border-collapse:collapse;border-top:1px solid var(--ink);background:#FFFFFF}
+.consent__t th,.consent__t td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.7}
+.consent__t th{width:9.5em;font-weight:500;background:var(--surface);color:var(--ink)}
+.consent__t td{color:var(--ink)}
+.consent__more{margin-top:8px}
+.consent__more a{color:var(--ink);text-underline-offset:3px}
+.agree__note{display:block;font-size:13px;color:var(--muted);line-height:1.6;margin-top:2px}
+@media (max-width:768px){
+  .consent{padding-left:0}
+  .consent__t th,.consent__t td{display:block;width:auto}
+  .consent__t th{border-bottom:0;padding-bottom:4px}
+}

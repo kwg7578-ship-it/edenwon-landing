@@ -372,6 +372,10 @@
 
     // 내 소속
     var defs = [], ff = page.querySelector("[data-aff-form]"), sel = ff.querySelector("#af-id");
+    // [선택] 별도 체크 동의(개정 4-1 결정 3): 체크하지 않으면 «신고하기»가 꺼진다
+    var afc = ff.querySelector("[data-af-consent]"), afb = ff.querySelector("[data-aff-submit]");
+    function affReady() { afb.disabled = !afc.checked; }
+    afc.addEventListener("change", affReady); affReady();
     function needs() {
       var d = defs.filter(function (x) { return x.id === sel.value; })[0] || { needs: [], description: "" };
       ff.querySelectorAll("[data-af-need]").forEach(function (box) { box.hidden = d.needs.indexOf(box.getAttribute("data-af-need")) < 0; });
@@ -408,17 +412,17 @@
     }
     sel.addEventListener("change", needs);
     ff.addEventListener("submit", function (e) {
-      e.preventDefault(); var btn = ff.querySelector("[data-aff-submit]"); if (btn.disabled) return; clearErrs(ff);
+      e.preventDefault(); var btn = ff.querySelector("[data-aff-submit]"); if (btn.disabled || !afc.checked) return; clearErrs(ff);
       var d = defs.filter(function (x) { return x.id === sel.value; })[0]; if (!d) return;
       var sid = ff.querySelector("#af-sid").value.trim(), dept = ff.querySelector("#af-dept").value.trim();
       if (!check(ff, [["af-sid", "학번은 9자리 숫자로 입력해 주세요.", d.needs.indexOf("student_id") < 0 || /^\d{9}$/.test(sid)],
                       ["af-dept", "학과를 입력해 주세요.", d.needs.indexOf("department") < 0 || dept]])) return;
       busy(btn, true, "신고하는 중…");
       acall("POST", "/api/v2/account/affiliations", { affiliation: d.id, student_id: sid, department: dept }).then(function (j) {
-        busy(btn, false);
+        busy(btn, false); affReady();
         if (!j.ok) { if (j.code === "student_id") setErr(ff, "af-sid", j.error); else if (j.code === "department") setErr(ff, "af-dept", j.error); else formErr(ff, j.error || NET); return; }
-        mine();
-      }, function () { busy(btn, false); formErr(ff, NET); });
+        afc.checked = false; affReady(); mine();
+      }, function () { busy(btn, false); affReady(); formErr(ff, NET); });
     });
 
     // 회원정보

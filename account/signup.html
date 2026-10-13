@@ -143,8 +143,24 @@
     <h2 class="acct__h2">3. 약관 동의</h2>
     <div class="agrees">
       <label class="agree"><input type="checkbox" id="agree-terms" required disabled><span>[필수] 이용약관에 동의합니다 <a href="../terms.html" target="_blank" rel="noopener">(내용 보기)</a></span></label>
-      <label class="agree"><input type="checkbox" id="agree-privacy" required disabled><span>[필수] 개인정보 수집·이용에 동의합니다 <a href="../privacy.html" target="_blank" rel="noopener">(내용 보기)</a></span></label>
-      <label class="agree"><input type="checkbox" id="agree-mkt" disabled><span>[선택] 영동에덴원의 할인 혜택·신제품·제철 농산물 소식을 문자로 받겠습니다 (광고성 정보 수신 동의)</span></label>
+      <div class="agree-row">
+        <label class="agree"><input type="checkbox" id="agree-privacy" required disabled><span>[필수] 개인정보 수집·이용에 동의합니다</span></label>
+        <details class="consent" data-consent="privacy">
+  <summary>내용 보기</summary>
+  <table class="consent__t">
+<tr><th scope="row">수집·이용 목적</th><td>회원 가입 의사 확인, 휴대폰 문자 인증을 통한 본인 식별, 회원 자격 유지·관리, 주문·적립금 서비스 제공, 고객 문의 응대</td></tr><tr><th scope="row">수집 항목</th><td>휴대폰 번호, 이름, 비밀번호(일방향 암호화하여 저장)</td></tr><tr><th scope="row">보유·이용 기간</th><td>회원 탈퇴 시까지(탈퇴하면 즉시 파기). 다만 주문·결제 기록은 「전자상거래 등에서의 소비자보호에 관한 법률」에 따라 5년, 소비자 불만·분쟁 처리 기록은 3년 보관한 뒤 파기합니다.</td></tr><tr><th scope="row">동의를 거부할 권리와 불이익</th><td>동의를 거부할 수 있습니다. 거부하시면 회원가입을 할 수 없으며, 비회원 주문은 그대로 이용할 수 있습니다(소속 할인가·적립금은 회원에게만 적용됩니다).</td></tr>  </table>
+<p class="consent__more"><a href="../privacy.html" target="_blank" rel="noopener">개인정보 처리방침 전문 보기</a></p></details>
+
+      </div>
+      <div class="agree-row">
+        <label class="agree"><input type="checkbox" id="agree-mkt" disabled><span>[선택] 영동에덴원의 할인 혜택·신제품·제철 농산물 소식을 문자로 받겠습니다 (광고성 정보 수신 동의)</span></label>
+        <details class="consent" data-consent="marketing">
+  <summary>내용 보기</summary>
+  <table class="consent__t">
+<tr><th scope="row">수집·이용 목적</th><td>할인 혜택·신제품·제철 농산물 소식 문자 발송</td></tr><tr><th scope="row">수집 항목</th><td>휴대폰 번호, 이름</td></tr><tr><th scope="row">보유·이용 기간</th><td>동의를 철회하거나 탈퇴할 때까지</td></tr><tr><th scope="row">동의를 거부할 권리와 불이익</th><td>동의하지 않아도 가입과 주문에 제한이 없습니다. 마이페이지 «회원정보»에서 언제든 철회할 수 있습니다.</td></tr>  </table>
+</details>
+
+      </div>
       <label class="agree agree--sub"><input type="checkbox" id="agree-night" disabled><span>[선택] 야간(21시~8시) 수신에도 동의합니다</span></label>
       <p class="field__err" data-err-for="agree" hidden></p>
     </div>
