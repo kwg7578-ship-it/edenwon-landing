@@ -861,3 +861,15 @@
   .policy__title{font-size:28px}
   .policy__section{padding:26px 0}
 }
+
+/* story 사진 칸(2-B-2 개정 4-3): 본문 폭 안, 위 2장 · 아래 3장. 원본 1000px 이라 전면 배너로 쓰지 않는다 */
+.brand__photos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.brand__photo{margin:0;grid-column:span 2;background:var(--photo);aspect-ratio:4/3;overflow:hidden}
+.brand__photo--1,.brand__photo--2{grid-column:span 3}
+.brand__photo picture{display:block;width:100%;height:100%}
+.brand__img{display:block;width:100%;height:100%;object-fit:cover}
+@media (max-width:768px){
+  .brand__photos{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .brand__photo,.brand__photo--2{grid-column:span 1}
+  .brand__photo--1{grid-column:span 2}
+}
