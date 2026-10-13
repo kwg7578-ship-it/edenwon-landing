@@ -1,5 +1,5 @@
-/* 영동에덴원 v2 — 장바구니(localStorage edenwon_cart_v2) · 서랍 메뉴 · 검색 · 배너 슬라이더 · 탭 · 주문서
-   기존 키(edenwon_profile 등)는 읽지도 쓰지도 않는다.
+/* 영동에덴원 v2 — 장바구니(localStorage edenwon_cart_v2) · 서랍 메뉴 · 검색 · 배너 슬라이더 · 탭 · 주문서 · 머리글 회원 칸
+   기존 키(edenwon_profile 등)는 읽지 않는다. 로그아웃·탈퇴 때만 회원 관련 키를 지운다(B15, clearMember).
    서버 호출은 <html data-api> 가 있을 때만(LOCAL=1 리허설 · PREVIEW=0 출시). PREVIEW=1 미리보기는 아무것도 보내지 않는다. */
 (function () {
   "use strict";
@@ -18,6 +18,57 @@
         return r.json().catch(function () { return {}; }).then(function (j) { j._status = r.status; return j; });
       }, function (e) { clearTimeout(timer); throw e; });
   }
+
+  /* ── 회원 API(2-B-2): 쿠키를 싣고, 쓰기 요청에는 X-Edenwon: 1 을 붙인다(서버의 쓰기 요청 보호) ── */
+  function acall(method, path, body) {
+    var h = {};
+    if (method !== "GET") { h["Content-Type"] = "application/json"; h["X-Edenwon"] = "1"; }
+    var ctl = window.AbortController ? new AbortController() : null;
+    var timer = ctl ? setTimeout(function () { ctl.abort(); }, 15000) : null;
+    return fetch(API + path, { method: method, credentials: "include", headers: h,
+                               body: method !== "GET" ? JSON.stringify(body || {}) : undefined, signal: ctl ? ctl.signal : undefined })
+      .then(function (r) {
+        clearTimeout(timer);
+        return r.json().catch(function () { return {}; }).then(function (j) { j._status = r.status; return j; });
+      }, function (e) { clearTimeout(timer); throw e; });
+  }
+  /* 로그아웃·탈퇴 뒤 이 브라우저에 남은 회원 관련 값 지우기(B15). 장바구니·찜은 남긴다. */
+  var MEMBER_KEYS = { local: ["edenwon_profile"], session: ["edenwon_order_lookup", "edenwon_pending_v2"] };
+  function clearMember() {
+    MEMBER_KEYS.local.forEach(function (k) { try { localStorage.removeItem(k); } catch (e) {} });
+    MEMBER_KEYS.session.forEach(function (k) { try { sessionStorage.removeItem(k); } catch (e) {} });
+  }
+  /* 머리글 회원 칸: «로그인 · 회원가입» ↔ «○○님 · 마이 · 로그아웃». 자리는 미리 잡혀 있어 바뀌어도 밀리지 않는다. */
+  var Member = { me: null, ready: null };
+  function paintMember(me) {
+    document.querySelectorAll("[data-hd-member], [data-dr-member]").forEach(function (box) {
+      box.querySelectorAll("[data-m-anon]").forEach(function (el) { el.hidden = !!me; });
+      box.querySelectorAll("[data-m-in]").forEach(function (el) { el.hidden = !me; });
+      var n = box.querySelector("[data-hd-name], [data-dr-name]");
+      if (n) n.textContent = me ? me.name + "님" : "";
+    });
+  }
+  function loginHref() {
+    return root() + "account/login.html?next=" + encodeURIComponent(location.pathname + location.search);
+  }
+  function initMember() {
+    if (!API) { Member.ready = Promise.resolve(null); return; }
+    var onAcct = /\/account\//.test(location.pathname);
+    if (!onAcct) document.querySelectorAll("[data-hd-login], [data-dr-login]").forEach(function (a) { a.href = loginHref(); });
+    Member.ready = acall("GET", "/api/v2/me").then(function (j) {
+      Member.me = j && j.ok && j.member ? j.member : null; paintMember(Member.me); return Member.me;
+    }, function () { return null; });
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest && e.target.closest("[data-logout]");
+      if (!b || b.disabled) return;
+      e.preventDefault(); b.disabled = true;
+      acall("POST", "/api/v2/auth/logout").then(function () {
+        clearMember(); Member.me = null; paintMember(null); b.disabled = false;
+        if (onAcct) location.href = root() + "index.html";
+      }, function () { b.disabled = false; });
+    });
+  }
+  window.Eden = { API: API, acall: acall, clearMember: clearMember, paintMember: paintMember, member: Member };
 
   /* ── 장바구니 저장소 ── */
   var Cart = {
@@ -406,6 +457,35 @@
     render();
   }
 
+  /* ── 상세 «회원가»(2-B-2): 로그인 회원이면 내 소속의 할인가·남은 수량, 아니면 로그인 안내(돌아올 주소 포함) ── */
+  function initMemberPrice() {
+    var lnk = document.querySelector("[data-login-link]"), box = document.querySelector("[data-member-price]");
+    var dataEl = document.getElementById("product-data");
+    if (!API || !lnk || !box || !dataEl) return;
+    lnk.href = loginHref();
+    var data = JSON.parse(dataEl.textContent);
+    Member.ready.then(function (me) {
+      if (!me) return;
+      return acall("GET", "/api/v2/account/prices?product=" + encodeURIComponent(data.key)).then(function (j) {
+        if (!j.ok) return;
+        var rows = (j.options || []).filter(function (o) { return o.member; });
+        if (!rows.length) return;
+        box.textContent = "";
+        rows.forEach(function (o, i) {
+          var m = o.member, t = rows.length > 1 ? o.label + " — " : "";   // 회원가 옵션이 둘 이상이면 옵션 이름을 앞에
+          if (m.left === 0) t += m.label + " 할인 한도(1인 " + m.limit + "개" + (m.period === "yearly" ? ", 해마다" : "") + ")를 모두 쓰셔서 정가로 계산됩니다.";
+          else {
+            t += m.label + " 회원가 " + won(m.price);
+            if (m.limit !== null) t += " · 남은 할인 " + m.left + "개 (1인 " + m.limit + "개" + (m.period === "yearly" ? ", 해마다" : "") + "까지)";
+          }
+          if (i) box.appendChild(document.createElement("br"));
+          box.appendChild(document.createTextNode(t));
+        });
+        box.hidden = false; lnk.hidden = true;
+      });
+    }, function () {});
+  }
+
   /* ── 찜(이 기기에만 저장: edenwon_wish_v2) ── */
   function initLike(btn) {
     var KEY = "edenwon_wish_v2", key = btn.getAttribute("data-like");
@@ -632,6 +712,7 @@
             var el = $("[data-pts]");
             if (el && ptsVal() !== b.points) el.value = String(b.points);
             if (errBox && errBox.getAttribute("data-from") === "quote") say("");
+            affNotes(j.lines);
           } else {
             q = null;
             if (j.error) { say(j.error); errBox.setAttribute("data-from", "quote"); }
@@ -643,7 +724,7 @@
     function loadMe() {
       return call("GET", "/api/v2/me", null, true).then(function (j) {
         member = j && j.ok && j.member ? j.member : null;
-        var href = API + "/login?next=" + encodeURIComponent(location.href);
+        var href = loginHref();
         form.querySelectorAll("[data-login]").forEach(function (a) { a.href = href; });
         $("[data-login-row]").hidden = !!member;
         $("[data-pts-anon]").hidden = !!member;
@@ -658,7 +739,57 @@
           af.hidden = false;
         }
         ptsHint();
+        return loadBook();
       }, function () { member = null; });
+    }
+    /* 주소록(2-B-2): 회원이면 «주소록에서 고르기»(저장된 배송지가 있을 때)와 «이 배송지를 주소록에 저장»(5개 미만일 때) */
+    var book = [], bookMax = 5;
+    function loadBook() {
+      return acall("GET", "/api/v2/account/addresses").then(function (j) {
+        if (!j.ok) return;
+        book = j.addresses || []; bookMax = j.max || 5;
+        var box = $("[data-addr-book]"), pick = $("[data-addr-pick]"), list = $("[data-addr-picker]");
+        box.hidden = false; pick.hidden = !book.length;
+        $("[data-addr-save-row]").hidden = book.length >= bookMax;
+        list.innerHTML = "";
+        book.forEach(function (a) {
+          var li = document.createElement("li"), b = document.createElement("button"), t = document.createElement("b"), m = document.createElement("span");
+          b.type = "button"; b.setAttribute("data-pick-id", a.id);
+          t.textContent = (a.label || "배송지") + (a.is_default ? " · 기본" : "");
+          m.className = "muted"; m.textContent = a.recipient_name + " · " + fmtPhone(a.recipient_phone) + " · (" + a.zip + ") " + a.address1 + " " + a.address2;
+          b.appendChild(t); b.appendChild(m); li.appendChild(b); list.appendChild(li);
+          b.addEventListener("click", function () {
+            $("#rcv-name").value = a.recipient_name; $("#rcv-phone").value = fmtPhone(a.recipient_phone);
+            $("#zip").value = a.zip; $("#addr1").value = a.address1; $("#addr2").value = a.address2;
+            list.hidden = true; pick.setAttribute("aria-expanded", "false");
+            $("[data-addr-save-new]").checked = false;
+            $("#addr2").focus();
+          });
+        });
+      }, function () {});
+    }
+    function saveBook() {
+      var c = $("[data-addr-save-new]");
+      if (!member || !c || !c.checked || ship() !== "parcel") return Promise.resolve();
+      return acall("POST", "/api/v2/account/addresses", { recipient_name: $("#rcv-name").value.trim(), recipient_phone: $("#rcv-phone").value,
+                                                         zip: $("#zip").value.trim(), address1: $("#addr1").value.trim(), address2: $("#addr2").value.trim() })
+        .then(function () {}, function () {});
+    }
+    /* 소속 할인 줄 안내(B10): quote 줄의 소속별 할인 수량·정가 수량·이번 주문 뒤 남는 할인 */
+    function affNotes(jl) {
+      lines.forEach(function (l, i) {
+        var el = l.li && l.li.querySelector("[data-item-aff]"), x = jl && jl[i];
+        if (!el) return;
+        var t = "";
+        if (x && x.aff_parts && x.aff_parts.length) {
+          t = x.aff_parts.map(function (p) { return p.label + " 할인 " + p.qty + "개"; }).join(" · ");
+          if (x.regular_qty) t += " · 정가 " + x.regular_qty + "개";
+          if (x.limit_left_after !== null && x.limit_left_after !== undefined) t += " — 이번 주문 뒤 남는 할인 " + x.limit_left_after + "개";
+        } else if (x && member && x.limit_left_after === 0) {
+          t = "소속 할인 한도를 모두 쓰셔서 정가로 계산됩니다.";
+        }
+        el.textContent = t; el.hidden = !t;
+      });
     }
     function memo() { var s = $("[data-memo-sel]").value; return s === "custom" ? $("#memo").value.trim() : s; }
     function validate() {
@@ -751,7 +882,7 @@
         }
         pending = { order_no: j.order_no, view_token: j.view_token, phone: body.buyer.phone, buynow: fromBuyNow, items: body.lines };
         try { sessionStorage.setItem(PENDING, JSON.stringify(pending)); } catch (e2) {}
-        if (j.next === "card") startCard(); else goDone();
+        saveBook().then(function () { if (j.next === "card") startCard(); else goDone(); });
       }, function () {
         setBusy(false);
         say("연결이 원활하지 않습니다. 잠시 뒤 다시 눌러 주세요. 여러 번 눌러도 주문은 한 번만 접수됩니다."); errBox.removeAttribute("data-from");
@@ -768,6 +899,12 @@
       pts.addEventListener("input", function () { pts.value = digitsOf(pts.value).replace(/^0+(?=\d)/, ""); requote(); });
       $("[data-pts-all]").addEventListener("click", function () { pts.value = String(member ? member.points : 0); requote(true); });
     }
+    var pickBtn = $("[data-addr-pick]");
+    if (pickBtn) pickBtn.addEventListener("click", function () {
+      var list = $("[data-addr-picker]"); list.hidden = !list.hidden;
+      pickBtn.setAttribute("aria-expanded", String(!list.hidden));
+      if (!list.hidden) { var f = list.querySelector("button"); if (f) f.focus(); }
+    });
     var zipBtn = $("[data-zip-search]");
     if (zipBtn) zipBtn.addEventListener("click", function () {
       var go = function () {
@@ -794,7 +931,7 @@
         li.querySelector(".co__item-name").textContent = l.p.name;
         li.querySelector(".co__item-opt").textContent = l.o.label + " · " + l.qty + "개";
         li.querySelector(".co__item-sum").textContent = won(l.o.price * l.qty);
-        ul.appendChild(li);
+        ul.appendChild(li); l.li = li;
         n += l.qty;
       });
       $("[data-co-count]").textContent = lines.length + "종 · " + n + "개";
@@ -927,6 +1064,8 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    initMember();
+    initMemberPrice();
     initCertExpiry();
     initFonts();
     initFolds();

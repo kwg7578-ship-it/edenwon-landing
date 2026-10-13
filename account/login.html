@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko" data-season="autumn" data-root="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>로그인 — 영동에덴원</title>
+<meta name="description" content="충북 영동에서 기르고 빚은 먹거리입니다.">
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap" media="print" data-webfont>
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="../assets/v2/tokens.css">
+<link rel="stylesheet" href="../assets/v2/base.css">
+<link rel="stylesheet" href="../assets/v2/pages.css">
+<script src="../assets/v2/app.js" defer></script>
+<script src="../assets/v2/account.js" defer></script></head>
+<body class="page-acct">
+<div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
+  <p class="added__h" id="added-h">장바구니에 담았습니다</p>
+  <p class="added__item" data-added-item></p>
+  <div class="added__btns">
+    <a class="btn btn--dark" href="../cart.html">장바구니로 가기</a>
+    <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
+  </div>
+</div>
+<header class="hd">
+  <a class="skip" href="#main">본문 바로가기</a>
+  <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
+  <div class="hd__util container">
+    <span class="hd__member" data-hd-member>
+  <a href="../account/login.html" data-hd-login data-m-anon>로그인</a>
+  <a href="../account/signup.html" data-hd-signup data-m-anon>회원가입</a>
+  <span data-hd-name data-m-in hidden></span>
+  <a href="../account/" data-hd-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-hd-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="../order-status.html">주문 조회</a><a href="../contact.html">고객센터</a>  </div>
+  <div class="hd__bar container">
+    <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+    <a class="logo" href="../index.html">
+      <span class="logo__ko">영동에덴원</span><span class="sr-only"> 홈</span>
+      <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
+    </a>
+    <nav class="gnb" aria-label="주 메뉴">
+<a href="../products.html">제품</a><a href="../products.html?cat=gift">선물세트</a><a href="../story.html">영동에덴원 이야기</a><a href="../contact.html">단체·기업 구매</a>    </nav>
+    <div class="hd__actions">
+      <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+</button>
+      <a class="icon-btn hd__mypage" href="../account/" aria-label="마이페이지"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg>
+</a>
+      <a class="icon-btn hd__cart" href="../cart.html" data-cart-link><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="sr-only" data-cart-sr>장바구니</span><span class="hd__count" data-cart-count aria-hidden="true" hidden></span></a>
+    </div>
+  </div>
+  <div class="hd__search" id="search" hidden>
+    <form class="container" action="../products.html" method="get" role="search">
+      <label class="sr-only" for="q">제품 검색</label>
+      <input id="q" name="q" type="search" placeholder="제품 이름으로 찾기" autocomplete="off">
+      <button type="submit" class="btn btn--dark">찾기</button>
+    </form>
+  </div>
+  <div class="hd__line"></div>
+</header>
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="메뉴">
+    <div class="drawer__top">
+      <span class="logo__ko">영동에덴원</span>
+      <button type="button" class="icon-btn" aria-label="메뉴 닫기" data-drawer-close><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+    </div>
+    <nav class="drawer__nav" aria-label="모바일 주 메뉴">
+<a href="../products.html">제품</a><a href="../products.html?cat=gift">선물세트</a><a href="../story.html">영동에덴원 이야기</a><a href="../contact.html">단체·기업 구매</a>    </nav>
+    <nav class="drawer__util" aria-label="회원·고객 메뉴">
+      <span class="hd__member" data-dr-member>
+  <a href="../account/login.html" data-dr-login data-m-anon>로그인</a>
+  <a href="../account/signup.html" data-dr-signup data-m-anon>회원가입</a>
+  <span data-dr-name data-m-in hidden></span>
+  <a href="../account/" data-dr-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-dr-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="../order-status.html">주문 조회</a><a href="../contact.html">고객센터</a>      <a href="../account/">마이페이지</a>
+    </nav>
+  </div>
+</div>
+<main id="main" tabindex="-1">
+<div class="acct container" data-acct="login">
+  <h1 class="acct__h1">로그인</h1>
+  <p class="acct__pv" role="note">미리보기 화면입니다 — 회원 기능은 출시 때 연결됩니다. 버튼은 눌리지 않고, 보이는 값은 예시입니다.</p>
+  <form class="acct__form" data-login-form novalidate>
+    <div class="field">
+  <label for="login-phone">휴대폰 번호</label>
+  <input id="login-phone" name="login-phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="010-0000-0000" data-phone required aria-describedby="login-phone-err" disabled>
+  <p class="field__err" id="login-phone-err" data-err-for="login-phone" hidden></p>
+</div>
+
+    <div class="field">
+  <label for="login-pw">비밀번호</label>
+  <div class="pw-row">
+    <input id="login-pw" name="login-pw" type="password" autocomplete="current-password" required aria-describedby="login-pw-err" disabled>
+    <button type="button" class="btn-small pw-row__toggle" data-pw-toggle aria-controls="login-pw" aria-pressed="false" disabled>보기</button>
+  </div>
+  <p class="field__err" id="login-pw-err" data-err-for="login-pw" hidden></p>
+</div>
+
+    <p class="co__error" data-form-err role="alert" hidden></p>
+    <button type="submit" class="btn btn--dark acct__submit" data-login-submit disabled>로그인</button>
+  </form>
+  <p class="acct__links"><a href="find.html" data-to-find>비밀번호 찾기</a><span aria-hidden="true">·</span><a href="signup.html" data-to-signup>회원가입</a></p>
+  <ul class="acct__notes">
+    <li>로그인 상태는 이 기기에서 90일 동안 이어집니다. 함께 쓰는 기기라면 다 쓰신 뒤 로그아웃해 주세요.</li>
+    <li>로그인하면 소속 할인가와 적립금이 주문서에 바로 적용됩니다.</li>
+  </ul>
+</div>
+</main>
+<footer class="ft">
+  <div class="ft__navwrap">
+    <nav class="ft__nav container" aria-label="정책·안내">
+      <a href="../story.html">영동에덴원 소개</a>
+<a href="../terms.html">이용약관</a><a href="../privacy.html" class="is-strong">개인정보처리방침</a><a href="../refund.html">교환·반품·환불 안내</a>      <a href="../order-status.html">주문 조회</a>
+      <a href="../contact.html">단체·기업 구매 문의</a>
+    </nav>
+  </div>
+  <div class="ft__body container">
+    <div class="ft__brand">
+      <p class="ft__logo"><span class="logo__ko">영동에덴원</span><span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span></p>
+      <p class="ft__legal">
+        <span>농업회사법인 주식회사 에프엔엘바이오푸드 · 대표 길우관</span>
+        <span>충청북도 영동군 학산면 모리2길 3-1</span>
+        <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
+        <span>kwg7978@naver.com</span>
+<a href="../privacy.html#revision-notice">개인정보처리방침·이용약관 개정 안내 (시행 2026년 10월 19일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
+      </p>
+    </div>
+    <div class="ft__cs">
+      <p class="ft__cs-h">고객센터</p>
+      <p class="ft__tel"><a href="tel:01051267578">010-5126-7578</a></p>
+<p class="ft__hours">월~금 10:00~19:00</p>      <div class="ft__sns">
+        <a href="https://blog.naver.com/gr_edenfarm" rel="noopener">블로그</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

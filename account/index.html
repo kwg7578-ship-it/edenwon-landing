@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ko" data-season="autumn" data-root="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>마이페이지 — 영동에덴원</title>
+<meta name="description" content="충북 영동에서 기르고 빚은 먹거리입니다.">
+<link rel="icon" href="../favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap" media="print" data-webfont>
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="../assets/v2/tokens.css">
+<link rel="stylesheet" href="../assets/v2/base.css">
+<link rel="stylesheet" href="../assets/v2/pages.css">
+<script src="../assets/v2/app.js" defer></script>
+<script src="../assets/v2/account.js" defer></script></head>
+<body class="page-acct page-my">
+<div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
+  <p class="added__h" id="added-h">장바구니에 담았습니다</p>
+  <p class="added__item" data-added-item></p>
+  <div class="added__btns">
+    <a class="btn btn--dark" href="../cart.html">장바구니로 가기</a>
+    <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
+  </div>
+</div>
+<header class="hd">
+  <a class="skip" href="#main">본문 바로가기</a>
+  <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
+  <div class="hd__util container">
+    <span class="hd__member" data-hd-member>
+  <a href="../account/login.html" data-hd-login data-m-anon>로그인</a>
+  <a href="../account/signup.html" data-hd-signup data-m-anon>회원가입</a>
+  <span data-hd-name data-m-in hidden></span>
+  <a href="../account/" data-hd-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-hd-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="../order-status.html">주문 조회</a><a href="../contact.html">고객센터</a>  </div>
+  <div class="hd__bar container">
+    <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+    <a class="logo" href="../index.html">
+      <span class="logo__ko">영동에덴원</span><span class="sr-only"> 홈</span>
+      <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
+    </a>
+    <nav class="gnb" aria-label="주 메뉴">
+<a href="../products.html">제품</a><a href="../products.html?cat=gift">선물세트</a><a href="../story.html">영동에덴원 이야기</a><a href="../contact.html">단체·기업 구매</a>    </nav>
+    <div class="hd__actions">
+      <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+</button>
+      <a class="icon-btn hd__mypage" href="../account/" aria-label="마이페이지"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg>
+</a>
+      <a class="icon-btn hd__cart" href="../cart.html" data-cart-link><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="sr-only" data-cart-sr>장바구니</span><span class="hd__count" data-cart-count aria-hidden="true" hidden></span></a>
+    </div>
+  </div>
+  <div class="hd__search" id="search" hidden>
+    <form class="container" action="../products.html" method="get" role="search">
+      <label class="sr-only" for="q">제품 검색</label>
+      <input id="q" name="q" type="search" placeholder="제품 이름으로 찾기" autocomplete="off">
+      <button type="submit" class="btn btn--dark">찾기</button>
+    </form>
+  </div>
+  <div class="hd__line"></div>
+</header>
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="메뉴">
+    <div class="drawer__top">
+      <span class="logo__ko">영동에덴원</span>
+      <button type="button" class="icon-btn" aria-label="메뉴 닫기" data-drawer-close><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+    </div>
+    <nav class="drawer__nav" aria-label="모바일 주 메뉴">
+<a href="../products.html">제품</a><a href="../products.html?cat=gift">선물세트</a><a href="../story.html">영동에덴원 이야기</a><a href="../contact.html">단체·기업 구매</a>    </nav>
+    <nav class="drawer__util" aria-label="회원·고객 메뉴">
+      <span class="hd__member" data-dr-member>
+  <a href="../account/login.html" data-dr-login data-m-anon>로그인</a>
+  <a href="../account/signup.html" data-dr-signup data-m-anon>회원가입</a>
+  <span data-dr-name data-m-in hidden></span>
+  <a href="../account/" data-dr-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-dr-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="../order-status.html">주문 조회</a><a href="../contact.html">고객센터</a>      <a href="../account/">마이페이지</a>
+    </nav>
+  </div>
+</div>
+<main id="main" tabindex="-1">
+<div class="my container" data-acct="mypage">
+  <div class="my__head">
+    <h1 class="acct__h1">마이페이지</h1>
+    <p class="my__hello"><b data-my-name>김예시</b>님 · 적립금 <b data-my-points>3,200원</b></p>
+  </div>
+  <p class="acct__pv" role="note">미리보기 화면입니다 — 회원 기능은 출시 때 연결됩니다. 버튼은 눌리지 않고, 보이는 값은 예시입니다.</p>
+  <div class="my__body">
+    <nav class="my__nav" aria-label="마이페이지 메뉴">
+<a href="#orders" data-tab="orders" aria-current="page">주문 내역</a><a href="#points" data-tab="points">적립금</a><a href="#addresses" data-tab="addresses">배송지</a><a href="#affiliations" data-tab="affiliations">내 소속</a><a href="#profile" data-tab="profile">회원정보</a><a href="#withdraw" data-tab="withdraw">회원 탈퇴</a>      <button type="button" class="my__logout" data-logout disabled>로그아웃</button>
+    </nav>
+    <div class="my__main">
+
+      <section class="my__pane" data-pane="orders" aria-labelledby="h-orders">
+        <h2 class="co__h" id="h-orders">주문 내역</h2>
+        <ul class="my__orders" data-orders>
+          <li data-order-no="ED-20261012-A1B2"><a href="#orders/ED-20261012-A1B2"><span class="my__o-no">ED-20261012-A1B2</span><span class="my__o-t">국산 재래 된장 외 1건</span><span class="muted">2026-10-12</span><b>45,000원</b><span class="my__badge">입금 확인</span></a></li>
+          <li data-order-no="ED-20260915-C3D4"><a href="#orders/ED-20260915-C3D4"><span class="my__o-no">ED-20260915-C3D4</span><span class="my__o-t">햇 완두콩</span><span class="muted">2026-09-15</span><b>15,000원</b><span class="my__badge">수령 완료</span></a></li>
+        </ul>
+        <p class="my__empty" data-orders-empty hidden>아직 주문이 없습니다. 비회원으로 주문하셨다면 <a href="../order-status.html">주문 조회</a>에서 확인해 주세요.</p>
+        <button type="button" class="btn btn--line my__more" data-orders-more hidden disabled>더 보기</button>
+        <section class="my__detail" data-order-detail hidden tabindex="-1" aria-labelledby="h-od">
+          <a href="#orders" class="my__back" data-od-back>← 주문 목록</a>
+          <h3 class="co__h" id="h-od">주문 <span data-od-no></span></h3>
+          <dl class="co__dl">
+            <div><dt>상태</dt><dd data-od-status></dd></div>
+            <div><dt>주문일</dt><dd data-od-date></dd></div>
+            <div><dt>받는 방법</dt><dd data-od-receive></dd></div>
+            <div><dt>결제</dt><dd data-od-pay></dd></div>
+          </dl>
+          <ul class="done__items" data-od-items></ul>
+          <dl class="co__dl">
+            <div><dt>상품 금액</dt><dd data-od-goods></dd></div>
+            <div><dt>소속 할인</dt><dd data-od-disc></dd></div>
+            <div><dt>배송비</dt><dd data-od-ship></dd></div>
+            <div><dt>적립금</dt><dd data-od-pts></dd></div>
+          </dl>
+          <div class="co__total"><span>결제 금액</span><b data-od-amount></b></div>
+          <div class="my__bank" data-od-bank hidden><p>입금 계좌 <b data-od-bankline></b></p><button type="button" class="btn-small" data-od-copy disabled>계좌 복사</button><span class="muted" data-od-copied role="status"></span></div>
+          <div class="my__rcv" data-od-rcv hidden><p class="muted">받는 분</p><p data-od-rcvline></p></div>
+        </section>
+      </section>
+
+      <section class="my__pane" data-pane="points" aria-labelledby="h-points" hidden>
+        <h2 class="co__h" id="h-points">적립금</h2>
+        <p class="my__big">보유 적립금 <b data-pts-balance>3,200원</b></p>
+        <p class="muted">주문 금액의 <span data-pts-rate>2</span>%를 입금 확인 뒤 적립해 드립니다. 주문서에서 1원 단위로 쓸 수 있습니다.</p>
+        <table class="my__table"><caption class="sr-only">적립금 내역</caption>
+          <thead><tr><th scope="col">날짜</th><th scope="col">내용</th><th scope="col" class="num">금액</th></tr></thead>
+          <tbody data-pts-log><tr><td>2026-10-12</td><td>주문 적립</td><td class="num">+900원</td></tr><tr><td>2026-09-15</td><td>주문 사용</td><td class="num">−1,000원</td></tr></tbody>
+        </table>
+        <p class="my__empty" data-pts-empty hidden>적립금 내역이 없습니다.</p>
+      </section>
+
+      <section class="my__pane" data-pane="addresses" aria-labelledby="h-addr" hidden>
+        <h2 class="co__h" id="h-addr">배송지 <span class="muted" data-addr-count></span></h2>
+        <ul class="my__addrs" data-addr-list>
+          <li data-addr-id="1"><p><b>집</b> <span class="my__badge">기본 배송지</span></p><p>김예시 · 010-0000-1234</p><p class="muted">(29100) 충북 영동군 영동읍 예시로 1, 101호</p>
+            <div class="my__acts"><button type="button" class="btn-small" disabled>수정</button><button type="button" class="btn-small" disabled>삭제</button></div></li>
+        </ul>
+        <form class="acct__form my__addrform" data-addr-form novalidate>
+          <h3 class="acct__h2" data-addr-form-h>새 배송지</h3>
+          <div class="fields">
+            <div class="field">
+  <label for="ad-label">이름표 <span class="muted">(선택)</span></label>
+  <input id="ad-label" name="ad-label" type="text" placeholder="예: 집, 회사" maxlength="20" aria-describedby="ad-label-err" disabled>
+  <p class="field__err" id="ad-label-err" data-err-for="ad-label" hidden></p>
+</div>
+
+            <div class="field">
+  <label for="ad-name">받는 분</label>
+  <input id="ad-name" name="ad-name" type="text" autocomplete="shipping name" maxlength="40" required aria-describedby="ad-name-err" disabled>
+  <p class="field__err" id="ad-name-err" data-err-for="ad-name" hidden></p>
+</div>
+
+            <div class="field">
+  <label for="ad-phone">받는 분 휴대폰</label>
+  <input id="ad-phone" name="ad-phone" type="tel" autocomplete="shipping tel" inputmode="tel" placeholder="010-0000-0000" data-phone required aria-describedby="ad-phone-err" disabled>
+  <p class="field__err" id="ad-phone-err" data-err-for="ad-phone" hidden></p>
+</div>
+
+            <div class="field field--zip"><label for="ad-zip">우편번호</label><div class="zip-row"><input id="ad-zip" name="ad-zip" type="text" inputmode="numeric" autocomplete="shipping postal-code" maxlength="5" required aria-describedby="ad-zip-err" disabled><button type="button" class="btn-small" data-zip-search disabled>우편번호 찾기</button></div><p class="field__err" id="ad-zip-err" data-err-for="ad-zip" hidden></p></div>
+            <div class="field">
+  <label for="ad-addr1">주소</label>
+  <input id="ad-addr1" name="ad-addr1" type="text" autocomplete="shipping address-line1" required aria-describedby="ad-addr1-err" disabled>
+  <p class="field__err" id="ad-addr1-err" data-err-for="ad-addr1" hidden></p>
+</div>
+
+            <div class="field">
+  <label for="ad-addr2">상세 주소</label>
+  <input id="ad-addr2" name="ad-addr2" type="text" autocomplete="shipping address-line2" required aria-describedby="ad-addr2-err" disabled>
+  <p class="field__err" id="ad-addr2-err" data-err-for="ad-addr2" hidden></p>
+</div>
+
+          </div>
+          <label class="agree"><input type="checkbox" id="ad-default" disabled><span>기본 배송지로 쓰기</span></label>
+          <p class="co__error" data-form-err role="alert" hidden></p>
+          <div class="acct__btns"><button type="submit" class="btn btn--dark" data-addr-save disabled>저장</button><button type="button" class="btn btn--line" data-addr-cancel hidden disabled>취소</button></div>
+        </form>
+      </section>
+
+      <section class="my__pane" data-pane="affiliations" aria-labelledby="h-aff" hidden>
+        <h2 class="co__h" id="h-aff">내 소속</h2>
+        <p class="muted">소속을 신고하면 바로 다음 주문부터 소속 할인가가 적용됩니다. 영동에덴원이 나중에 확인하며, 확인되지 않으면 할인이 중지될 수 있습니다. 재학생·교수 소속은 매년 3월 31일까지 다시 신고해 주세요.</p>
+        <ul class="my__affs" data-aff-mine>
+<li data-aff-id="student"><b>기전대학교 재학생</b> <span class="my__badge" data-aff-state>적용 중</span> <span class="muted"><span data-aff-exp>2027-03-31</span>까지</span></li>        </ul>
+        <p class="my__empty" data-aff-empty hidden>신고한 소속이 없습니다.</p>
+        <form class="acct__form" data-aff-form novalidate>
+          <h3 class="acct__h2">소속 신고</h3>
+          <div class="field"><label for="af-id">소속</label>
+            <select id="af-id" name="af-id" aria-describedby="af-id-err" disabled><option>기전대학교 재학생</option></select>
+            <p class="field__hint" data-af-desc></p>
+            <p class="field__err" id="af-id-err" data-err-for="af-id" hidden></p></div>
+          <div data-af-need="student_id"><div class="field">
+  <label for="af-sid">학번</label>
+  <input id="af-sid" name="af-sid" type="text" inputmode="numeric" maxlength="9" required aria-describedby="af-sid-err af-sid-hint" disabled>
+<p class="field__hint" id="af-sid-hint">9자리 숫자</p>  <p class="field__err" id="af-sid-err" data-err-for="af-sid" hidden></p>
+</div>
+</div>
+          <div data-af-need="department"><div class="field">
+  <label for="af-dept">학과</label>
+  <input id="af-dept" name="af-dept" type="text" placeholder="예: 식품영양학과" maxlength="40" required aria-describedby="af-dept-err" disabled>
+  <p class="field__err" id="af-dept-err" data-err-for="af-dept" hidden></p>
+</div>
+</div>
+          <p class="co__error" data-form-err role="alert" hidden></p>
+          <button type="submit" class="btn btn--dark" data-aff-submit disabled>신고하기</button>
+        </form>
+      </section>
+
+      <section class="my__pane" data-pane="profile" aria-labelledby="h-pf" hidden>
+        <h2 class="co__h" id="h-pf">회원정보</h2>
+        <form class="acct__form" data-pf-form novalidate>
+          <div class="field">
+  <label for="pf-name">이름</label>
+  <input id="pf-name" name="pf-name" type="text" autocomplete="name" maxlength="40" value="김예시" required aria-describedby="pf-name-err" disabled>
+  <p class="field__err" id="pf-name-err" data-err-for="pf-name" hidden></p>
+</div>
+
+          <div class="field">
+  <label for="pf-email">이메일 <span class="muted">(선택)</span></label>
+  <input id="pf-email" name="pf-email" type="email" autocomplete="email" aria-describedby="pf-email-err pf-email-hint" disabled>
+<p class="field__hint" id="pf-email-hint">입력하지 않아도 됩니다. 지금은 주문 안내에 쓰지 않습니다.</p>  <p class="field__err" id="pf-email-err" data-err-for="pf-email" hidden></p>
+</div>
+
+          <label class="agree"><input type="checkbox" id="pf-mkt" disabled><span>[선택] 할인 혜택·신제품·제철 농산물 소식을 문자로 받겠습니다 (광고성 정보 수신 동의)</span></label>
+          <label class="agree agree--sub"><input type="checkbox" id="pf-night" disabled><span>[선택] 야간(21시~8시) 수신에도 동의합니다</span></label>
+          <p class="co__error" data-form-err role="alert" hidden></p>
+          <p class="field__ok" data-form-ok role="status" hidden></p>
+          <button type="submit" class="btn btn--dark" data-pf-save disabled>저장</button>
+        </form>
+        <form class="acct__form" data-phone-form novalidate>
+          <h3 class="acct__h2">휴대폰 번호 바꾸기 <span class="muted" data-pf-phone>010-0000-1234</span></h3>
+          <div class="verify" data-verify="change" data-prefix="pf">
+  <div class="field">
+    <label for="pf-phone">휴대폰 번호</label>
+    <div class="pw-row">
+      <input id="pf-phone" name="pf-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" data-phone required aria-describedby="pf-phone-err pf-phone-hint" disabled>
+      <button type="button" class="btn-small" data-send-code disabled>인증번호 받기</button>
+    </div>
+<p class="field__hint" id="pf-phone-hint">새 번호로 인증번호를 보내드립니다. 바꾸면 이 번호로 로그인합니다.</p>    <p class="field__err" id="pf-phone-err" data-err-for="pf-phone" hidden></p>
+    <p class="field__ok" data-code-msg role="status" hidden></p>
+  </div>
+  <div class="field" data-code-box>
+    <label for="pf-code">인증번호 6자리</label>
+    <div class="pw-row">
+      <input id="pf-code" name="pf-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" aria-describedby="pf-code-err" disabled>
+      <button type="button" class="btn-small" data-check-code disabled>확인</button>
+    </div>
+    <p class="field__err" id="pf-code-err" data-err-for="pf-code" hidden></p>
+  </div>
+  <p class="field__ok" data-code-ok role="status" hidden>휴대폰 인증을 마쳤습니다.</p>
+</div>
+
+          <p class="co__error" data-form-err role="alert" hidden></p>
+          <button type="submit" class="btn btn--dark" data-phone-save disabled>번호 바꾸기</button>
+        </form>
+        <form class="acct__form" data-pw-form novalidate>
+          <h3 class="acct__h2">비밀번호 바꾸기</h3>
+          <div class="field">
+  <label for="pf-cur">현재 비밀번호</label>
+  <div class="pw-row">
+    <input id="pf-cur" name="pf-cur" type="password" autocomplete="current-password" required aria-describedby="pf-cur-err" disabled>
+    <button type="button" class="btn-small pw-row__toggle" data-pw-toggle aria-controls="pf-cur" aria-pressed="false" disabled>보기</button>
+  </div>
+  <p class="field__err" id="pf-cur-err" data-err-for="pf-cur" hidden></p>
+</div>
+
+          <div class="field">
+  <label for="pf-new">새 비밀번호</label>
+  <div class="pw-row">
+    <input id="pf-new" name="pf-new" type="password" autocomplete="new-password" required aria-describedby="pf-new-err pf-new-hint" disabled>
+    <button type="button" class="btn-small pw-row__toggle" data-pw-toggle aria-controls="pf-new" aria-pressed="false" disabled>보기</button>
+  </div>
+<p class="field__hint" id="pf-new-hint">6자 이상</p>  <p class="field__err" id="pf-new-err" data-err-for="pf-new" hidden></p>
+</div>
+
+          <div class="field">
+  <label for="pf-new2">새 비밀번호 확인</label>
+  <div class="pw-row">
+    <input id="pf-new2" name="pf-new2" type="password" autocomplete="new-password" required aria-describedby="pf-new2-err" disabled>
+    <button type="button" class="btn-small pw-row__toggle" data-pw-toggle aria-controls="pf-new2" aria-pressed="false" disabled>보기</button>
+  </div>
+  <p class="field__err" id="pf-new2-err" data-err-for="pf-new2" hidden></p>
+</div>
+
+          <p class="co__error" data-form-err role="alert" hidden></p>
+          <p class="field__ok" data-form-ok role="status" hidden></p>
+          <button type="submit" class="btn btn--dark" data-pw-save disabled>비밀번호 바꾸기</button>
+        </form>
+      </section>
+
+      <section class="my__pane" data-pane="withdraw" aria-labelledby="h-wd" hidden>
+        <h2 class="co__h" id="h-wd">회원 탈퇴</h2>
+        <ul class="my__wd" data-wd-info>
+          <li class="my__warn">적립금 <b data-wd-points>3,200원</b>이 소멸하며 되돌릴 수 없습니다.</li>
+          <li>이름·이메일·주소(배송지 주소록 포함)·학번·학과·수신 동의 정보는 즉시 삭제합니다.</li>
+          <li>주문·결제 기록은 전자상거래법에 따라 5년(불만·분쟁 기록 3년) 보관한 뒤 파기합니다.</li>
+          <li data-wd-pending hidden>진행 중인 주문 <b data-wd-pend-n>0</b>건은 그대로 처리됩니다. 이 주문에 사용한 적립금은 취소되더라도 돌려드리지 않습니다.</li>
+          <li data-wd-reviews hidden>작성하신 후기 <b data-wd-rev-n>0</b>건은 작성자를 «탈퇴회원»으로 바꾸어 게시를 유지합니다.</li>
+          <li>같은 휴대폰 번호로 언제든 다시 가입할 수 있습니다(적립금은 복구되지 않습니다).</li>
+        </ul>
+        <form class="acct__form" data-wd-form novalidate>
+          <div class="field">
+  <label for="wd-pw">비밀번호 확인</label>
+  <div class="pw-row">
+    <input id="wd-pw" name="wd-pw" type="password" autocomplete="current-password" required aria-describedby="wd-pw-err" disabled>
+    <button type="button" class="btn-small pw-row__toggle" data-pw-toggle aria-controls="wd-pw" aria-pressed="false" disabled>보기</button>
+  </div>
+  <p class="field__err" id="wd-pw-err" data-err-for="wd-pw" hidden></p>
+</div>
+
+          <p class="co__error" data-form-err role="alert" hidden></p>
+          <button type="submit" class="btn btn--line" data-wd-submit disabled>탈퇴하기</button>
+        </form>
+        <section class="acct__done" data-wd-done hidden tabindex="-1" aria-labelledby="h-wd-done">
+          <h3 class="acct__h2" id="h-wd-done">탈퇴가 완료되었습니다</h3>
+          <p>그동안 영동에덴원을 이용해 주셔서 감사합니다.</p>
+          <a class="btn btn--dark" href="../index.html">홈으로</a>
+        </section>
+      </section>
+    </div>
+  </div>
+</div>
+</main>
+<footer class="ft">
+  <div class="ft__navwrap">
+    <nav class="ft__nav container" aria-label="정책·안내">
+      <a href="../story.html">영동에덴원 소개</a>
+<a href="../terms.html">이용약관</a><a href="../privacy.html" class="is-strong">개인정보처리방침</a><a href="../refund.html">교환·반품·환불 안내</a>      <a href="../order-status.html">주문 조회</a>
+      <a href="../contact.html">단체·기업 구매 문의</a>
+    </nav>
+  </div>
+  <div class="ft__body container">
+    <div class="ft__brand">
+      <p class="ft__logo"><span class="logo__ko">영동에덴원</span><span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span></p>
+      <p class="ft__legal">
+        <span>농업회사법인 주식회사 에프엔엘바이오푸드 · 대표 길우관</span>
+        <span>충청북도 영동군 학산면 모리2길 3-1</span>
+        <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
+        <span>kwg7978@naver.com</span>
+<a href="../privacy.html#revision-notice">개인정보처리방침·이용약관 개정 안내 (시행 2026년 10월 19일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
+      </p>
+    </div>
+    <div class="ft__cs">
+      <p class="ft__cs-h">고객센터</p>
+      <p class="ft__tel"><a href="tel:01051267578">010-5126-7578</a></p>
+<p class="ft__hours">월~금 10:00~19:00</p>      <div class="ft__sns">
+        <a href="https://blog.naver.com/gr_edenfarm" rel="noopener">블로그</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
