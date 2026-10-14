@@ -598,7 +598,7 @@
 .rv-sum__dist>div>span:last-child{width:32px;text-align:right}
 .rv-sum__bar{flex:1;height:6px;background:var(--line)}
 /* 주문 후기(2-B-3 F2·F3) */
-.rv-sum[hidden],.rv-note[hidden],.rv-more[hidden],.reviews-empty[hidden],.buy__rating[hidden],.my__rv[hidden],.my__rv-form[hidden]{display:none}
+.rv-sum[hidden],.rv-note[hidden],.rv-more[hidden],.reviews-empty[hidden],.buy__rating[hidden],.my__rv[hidden],.my__rv-form[hidden],.my__rv .btn[hidden]{display:none}
 .rv-sum{border-top:2px solid var(--ink)}
 .rv-sum__stars{color:var(--accent);letter-spacing:2px}
 .rv-sum__bar{position:relative;overflow:hidden}
