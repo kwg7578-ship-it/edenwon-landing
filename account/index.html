@@ -128,6 +128,19 @@
           <div class="co__total"><span>결제 금액</span><b data-od-amount></b></div>
           <div class="my__bank" data-od-bank hidden><p>입금 계좌 <b data-od-bankline></b></p><button type="button" class="btn-small" data-od-copy disabled>계좌 복사</button><span class="muted" data-od-copied role="status"></span></div>
           <div class="my__rcv" data-od-rcv hidden><p class="muted">받는 분</p><p data-od-rcvline></p></div>
+          <section class="my__rv" data-od-rv hidden aria-labelledby="h-od-rv">
+            <h4 class="acct__h2" id="h-od-rv">주문 후기</h4>
+            <p data-rv-state role="status"></p>
+            <button type="button" class="btn btn--line" data-rv-open hidden disabled>후기 쓰기</button>
+            <form class="my__rv-form" data-rv-form hidden novalidate>
+              <fieldset class="rv-pick"><legend>별점</legend>
+<label><input type="radio" name="rv-rating" value="5" disabled><span aria-hidden="true">★★★★★</span><span class="sr-only">5점</span></label><label><input type="radio" name="rv-rating" value="4" disabled><span aria-hidden="true">★★★★</span><span class="sr-only">4점</span></label><label><input type="radio" name="rv-rating" value="3" disabled><span aria-hidden="true">★★★</span><span class="sr-only">3점</span></label><label><input type="radio" name="rv-rating" value="2" disabled><span aria-hidden="true">★★</span><span class="sr-only">2점</span></label><label><input type="radio" name="rv-rating" value="1" disabled><span aria-hidden="true">★</span><span class="sr-only">1점</span></label>              </fieldset>
+              <div class="field"><label for="rv-body">후기</label><textarea id="rv-body" name="rv-body" rows="5" maxlength="2000" required disabled></textarea></div>
+              <p class="muted">이 주문에 담긴 상품의 상세 화면에 «주문 후기»로 함께 보입니다. 이름은 첫 글자만 보이고, 관리자 확인 뒤 공개됩니다. 작성하시면 상품 금액의 1%를 적립해 드립니다.</p>
+              <p class="co__error" data-rv-err role="alert" hidden></p>
+              <div class="acct__btns"><button type="submit" class="btn btn--dark" data-rv-save disabled>후기 저장</button><button type="button" class="btn btn--line" data-rv-cancel disabled>취소</button></div>
+            </form>
+          </section>
         </section>
       </section>
 

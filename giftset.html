@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script>/* 2-C 출시(L2): 옛 주소 → 새 화면. 공개 품목만 옮기고, 출시 보류 품목은 이 옛 화면을 그대로 쓴다. */
+(function(){var M={"jam": "/products/giftset-jam#buy", "vinegar": "/products/giftset-vinegar#buy"},H=["jam", "vinegar"],q=new URLSearchParams(location.search).get("set"),t;
+if(q===null||q==="")t="/products?cat=gift";else if(Object.prototype.hasOwnProperty.call(M,q))t=M[q];else if(H.indexOf(q)>=0)t=null;else t="/products?cat=gift";
+if(t)location.replace(t);})();</script>
+<noscript><meta http-equiv="refresh" content="0;url=/products?cat=gift"></noscript>
+
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>발효의 진심 선물세트 — 영동에덴원</title>

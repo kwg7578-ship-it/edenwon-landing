@@ -116,7 +116,7 @@
         <p class="buy__cat">잼·조청·비빔장</p>
         <h1 class="buy__name">진짜&#39;S 조청</h1>
         <p class="buy__lede">자가 재배 엿기름 · 가마솥 6시간</p>
-<a class="buy__rating" href="#reviews"><span aria-hidden="true" class="buy__stars">★★★★★</span><span>[평점]</span><span class="muted">· 리뷰 [N]개</span></a>        <div class="buy__price">
+<a class="buy__rating" href="#reviews" data-rv-badge hidden><span aria-hidden="true" class="buy__stars">★</span><span data-rv-badge-avg></span><span class="muted" data-rv-badge-n></span></a>        <div class="buy__price">
           <span class="buy__won">20,000원</span>
         </div>
         <a class="buy__login" href="../account/login.html" data-login-link>로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
@@ -175,13 +175,16 @@
     <div class="sb__head usage__intro"><p class="eyebrow eyebrow--accent">TASTE &amp; USE</p><h2 class="sb__h" id="usage-h">맛과 쓰임</h2><p class="sb__lead">[맛 설명 — 첫맛, 향, 끝맛 2~3문장. 대표 시식 메모로 작성]</p></div>
 <ul class="pairs"><li><span class="pairs__k">간식</span><span class="pairs__v">떡 · 한과에 곁들여</span></li><li><span class="pairs__k">요리</span><span class="pairs__v">자연스러운 단맛</span></li><li><span class="pairs__k">차 · 음료</span><span class="pairs__v">청 · 꿀 대신</span></li></ul>  </div>
 </section>
-<section class="sb container" id="reviews" data-sec data-in-toc aria-labelledby="reviews-h">
-  <div class="sb__headrow"><h2 class="sb__h" id="reviews-h">리뷰</h2></div>
-  <div class="rv-sum">
-    <div class="rv-sum__score"><span class="rv-sum__avg">[평점]</span><span class="muted">리뷰 [N]개</span></div>
-    <div class="rv-sum__dist" aria-hidden="true"><div><span>5</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>4</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>3</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>2</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>1</span><span class="rv-sum__bar"></span><span>[ ]</span></div></div>
+<section class="sb container" id="reviews" data-sec data-in-toc aria-labelledby="reviews-h" data-reviews="jocheong">
+  <div class="sb__headrow"><h2 class="sb__h" id="reviews-h">주문 후기</h2></div>
+  <div class="rv-sum" data-rv-sum hidden>
+    <div class="rv-sum__score"><span class="rv-sum__avg" data-rv-avg></span><span class="rv-sum__stars" aria-hidden="true" data-rv-stars></span><span class="muted" data-rv-count></span></div>
+    <div class="rv-sum__dist" data-rv-dist aria-label="별점 분포"></div>
   </div>
-  <p class="reviews-empty">구매하신 분들의 리뷰가 이곳에 모입니다.</p>
+  <p class="rv-note muted" data-rv-note hidden>후기는 주문 단위로 남깁니다. 함께 주문한 상품이 있으면 그 상품의 후기에도 함께 보입니다.</p>
+  <ul class="rv-list" data-rv-list></ul>
+  <button type="button" class="btn btn--line rv-more" data-rv-more hidden>후기 더 보기</button>
+  <p class="reviews-empty" data-rv-empty>첫 후기를 남겨 주세요.</p>
 </section>
 <section class="sb container sb--fold" id="notice" data-sec data-in-toc aria-label="상품정보제공고시">
   <details class="fold" data-fold>

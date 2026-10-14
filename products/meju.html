@@ -116,7 +116,7 @@
         <p class="buy__cat">옹기숙성 장류</p>
         <h1 class="buy__name">명품 메주</h1>
         <p class="buy__lede">발효실에서 속까지 띄운 메주</p>
-<a class="buy__rating" href="#reviews"><span aria-hidden="true" class="buy__stars">★★★★★</span><span>[평점]</span><span class="muted">· 리뷰 [N]개</span></a>        <div class="buy__price">
+<a class="buy__rating" href="#reviews" data-rv-badge hidden><span aria-hidden="true" class="buy__stars">★</span><span data-rv-badge-avg></span><span class="muted" data-rv-badge-n></span></a>        <div class="buy__price">
           <span class="buy__won">25,000원</span>
         </div>
         <a class="buy__login" href="../account/login.html" data-login-link>로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
@@ -199,13 +199,16 @@
 <h3 class="sb-h">장 담그는 순서</h3>  <ol class="steps">
 <li class="step"><span class="step__no">01</span><span class="step__title">메주 준비</span><span class="step__body">잘 띄운 메주를 준비합니다.</span></li><li class="step"><span class="step__no">02</span><span class="step__title">소금물</span><span class="step__body">소금과 물로 염수를 만듭니다.</span></li><li class="step"><span class="step__no">03</span><span class="step__title">장 가르기</span><span class="step__body">장물이 우러나면 간장과 된장으로 가릅니다.</span></li>  </ol>
 </section>
-<section class="sb container" id="reviews" data-sec data-in-toc aria-labelledby="reviews-h">
-  <div class="sb__headrow"><h2 class="sb__h" id="reviews-h">리뷰</h2></div>
-  <div class="rv-sum">
-    <div class="rv-sum__score"><span class="rv-sum__avg">[평점]</span><span class="muted">리뷰 [N]개</span></div>
-    <div class="rv-sum__dist" aria-hidden="true"><div><span>5</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>4</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>3</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>2</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>1</span><span class="rv-sum__bar"></span><span>[ ]</span></div></div>
+<section class="sb container" id="reviews" data-sec data-in-toc aria-labelledby="reviews-h" data-reviews="meju">
+  <div class="sb__headrow"><h2 class="sb__h" id="reviews-h">주문 후기</h2></div>
+  <div class="rv-sum" data-rv-sum hidden>
+    <div class="rv-sum__score"><span class="rv-sum__avg" data-rv-avg></span><span class="rv-sum__stars" aria-hidden="true" data-rv-stars></span><span class="muted" data-rv-count></span></div>
+    <div class="rv-sum__dist" data-rv-dist aria-label="별점 분포"></div>
   </div>
-  <p class="reviews-empty">구매하신 분들의 리뷰가 이곳에 모입니다.</p>
+  <p class="rv-note muted" data-rv-note hidden>후기는 주문 단위로 남깁니다. 함께 주문한 상품이 있으면 그 상품의 후기에도 함께 보입니다.</p>
+  <ul class="rv-list" data-rv-list></ul>
+  <button type="button" class="btn btn--line rv-more" data-rv-more hidden>후기 더 보기</button>
+  <p class="reviews-empty" data-rv-empty>첫 후기를 남겨 주세요.</p>
 </section>
 <section class="sb container sb--fold" id="notice" data-sec data-in-toc aria-label="상품정보제공고시">
   <details class="fold" data-fold>

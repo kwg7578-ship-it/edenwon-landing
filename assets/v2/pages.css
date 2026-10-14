@@ -597,6 +597,34 @@
 .rv-sum__dist>div>span:first-child{width:24px}
 .rv-sum__dist>div>span:last-child{width:32px;text-align:right}
 .rv-sum__bar{flex:1;height:6px;background:var(--line)}
+/* 주문 후기(2-B-3 F2·F3) */
+.rv-sum[hidden],.rv-note[hidden],.rv-more[hidden],.reviews-empty[hidden],.buy__rating[hidden],.my__rv[hidden],.my__rv-form[hidden]{display:none}
+.rv-sum{border-top:2px solid var(--ink)}
+.rv-sum__stars{color:var(--accent);letter-spacing:2px}
+.rv-sum__bar{position:relative;overflow:hidden}
+.rv-sum__fill{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.rv-note{font-size:13px;padding:14px 0 0}
+.rv-list{display:flex;flex-direction:column}
+.rv-item{padding:22px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px;min-width:0}
+.rv-item__head{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:13px}
+.rv-item__stars{color:var(--accent);letter-spacing:1px}
+.rv-item__who{font-weight:500}
+.rv-item__body{font-size:15px;line-height:1.75;white-space:pre-line;overflow-wrap:anywhere}
+.rv-item__items{font-size:12px}
+.rv-item__reply{background:var(--surface);padding:14px 16px;font-size:14px;line-height:1.7}
+.rv-item__reply-h{font-size:12px;font-weight:700;margin-bottom:4px}
+.rv-more{margin:24px auto 0;display:flex}
+.cart-moved{background:var(--surface);border-left:3px solid var(--accent);padding:12px 16px;margin:16px var(--gutter);font-size:14px}
+.my__rvb{grid-row:2;grid-column:4;justify-self:end;font-size:12px;font-weight:500;color:var(--accent);white-space:nowrap}
+.my__rvb.is-done{color:var(--muted)}
+.my__rv{border-top:1px solid var(--line);margin-top:24px;padding-top:16px;display:flex;flex-direction:column;gap:12px}
+.my__rv-form{display:flex;flex-direction:column;gap:14px}
+.my__rv-form textarea{width:100%;min-height:120px;border:1px solid var(--line);background:#FFFFFF;padding:12px 14px;font:inherit;font-size:16px;resize:vertical}
+.rv-pick{border:0;display:flex;flex-wrap:wrap;gap:8px;padding:0}
+.rv-pick legend{font-size:14px;font-weight:500;margin-bottom:8px}
+.rv-pick label{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid var(--line);cursor:pointer;color:var(--accent);font-size:15px}
+.rv-pick input{accent-color:var(--ink)}
+.rv-pick label:has(input:checked){border-color:var(--ink);background:var(--surface)}
 .fold{border-bottom:1px solid var(--line)}
 #notice .fold{border-top:1px solid var(--ink)}
 .fold__sum{cursor:pointer;padding:22px 0;font-size:17px;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:44px}

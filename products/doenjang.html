@@ -118,7 +118,7 @@
         <p class="buy__cat">옹기숙성 장류</p>
         <h1 class="buy__name">옹기숙성 된장</h1>
         <p class="buy__lede">자가 재배 콩으로 띄운 메주와 천일염으로, 옹기에서 2년 넘게 익힌 된장입니다.</p>
-<a class="buy__rating" href="#reviews"><span aria-hidden="true" class="buy__stars">★★★★★</span><span>[평점]</span><span class="muted">· 리뷰 [N]개</span></a>        <div class="buy__price">
+<a class="buy__rating" href="#reviews" data-rv-badge hidden><span aria-hidden="true" class="buy__stars">★</span><span data-rv-badge-avg></span><span class="muted" data-rv-badge-n></span></a>        <div class="buy__price">
           <span class="buy__won">20,000원</span>
         </div>
         <a class="buy__login" href="../account/login.html" data-login-link>로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
@@ -213,13 +213,16 @@
   <div class="recipes">
 <article class="recipe"><picture><source type="image/webp" srcset="../images/v2/doenjang-10-480.webp 480w, ../images/v2/doenjang-10-960.webp 960w, ../images/v2/doenjang-10-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 33vw"><img src="../images/v2/doenjang-10-960.jpg" srcset="../images/v2/doenjang-10-480.jpg 480w, ../images/v2/doenjang-10-960.jpg 960w, ../images/v2/doenjang-10-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 33vw" width="960" height="960" alt="된장찌개" class="recipe__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span class="recipe__tag">기본</span><h3 class="recipe__title">된장찌개</h3><p class="recipe__body">멸치 육수에 된장을 풀고 두부·애호박·양파를 넣어 끓입니다. 된장은 처음부터 다 넣지 말고 간을 보며 더합니다.</p></article><article class="recipe"><picture><source type="image/webp" srcset="../images/v2/doenjang-11-480.webp 480w, ../images/v2/doenjang-11-738.webp 738w" sizes="(max-width: 768px) 100vw, 33vw"><img src="../images/v2/doenjang-11-738.jpg" srcset="../images/v2/doenjang-11-480.jpg 480w, ../images/v2/doenjang-11-738.jpg 738w" sizes="(max-width: 768px) 100vw, 33vw" width="738" height="1100" alt="쌈장" class="recipe__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span class="recipe__tag">5분</span><h3 class="recipe__title">쌈장</h3><p class="recipe__body">된장에 다진 마늘, 참기름, 깨를 섞습니다. 고추장을 조금 더하면 매콤해집니다.</p></article><article class="recipe"><picture><source type="image/webp" srcset="../images/v2/doenjang-12-480.webp 480w, ../images/v2/doenjang-12-960.webp 960w, ../images/v2/doenjang-12-1100.webp 1100w" sizes="(max-width: 768px) 100vw, 33vw"><img src="../images/v2/doenjang-12-960.jpg" srcset="../images/v2/doenjang-12-480.jpg 480w, ../images/v2/doenjang-12-960.jpg 960w, ../images/v2/doenjang-12-1100.jpg 1100w" sizes="(max-width: 768px) 100vw, 33vw" width="960" height="960" alt="청경채 된장 무침" class="recipe__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span class="recipe__tag">반찬</span><h3 class="recipe__title">청경채 된장 무침</h3><p class="recipe__body">데친 청경채에 된장 조금, 참기름, 깨를 넣고 가볍게 무칩니다.</p></article>  </div>
 </section>
-<section class="sb container" id="reviews" data-sec data-in-toc aria-labelledby="reviews-h">
-  <div class="sb__headrow"><h2 class="sb__h" id="reviews-h">리뷰</h2></div>
-  <div class="rv-sum">
-    <div class="rv-sum__score"><span class="rv-sum__avg">[평점]</span><span class="muted">리뷰 [N]개</span></div>
-    <div class="rv-sum__dist" aria-hidden="true"><div><span>5</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>4</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>3</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>2</span><span class="rv-sum__bar"></span><span>[ ]</span></div><div><span>1</span><span class="rv-sum__bar"></span><span>[ ]</span></div></div>
+<section class="sb container" id="reviews" data-sec data-in-toc aria-labelledby="reviews-h" data-reviews="doenjang">
+  <div class="sb__headrow"><h2 class="sb__h" id="reviews-h">주문 후기</h2></div>
+  <div class="rv-sum" data-rv-sum hidden>
+    <div class="rv-sum__score"><span class="rv-sum__avg" data-rv-avg></span><span class="rv-sum__stars" aria-hidden="true" data-rv-stars></span><span class="muted" data-rv-count></span></div>
+    <div class="rv-sum__dist" data-rv-dist aria-label="별점 분포"></div>
   </div>
-  <p class="reviews-empty">구매하신 분들의 리뷰가 이곳에 모입니다.</p>
+  <p class="rv-note muted" data-rv-note hidden>후기는 주문 단위로 남깁니다. 함께 주문한 상품이 있으면 그 상품의 후기에도 함께 보입니다.</p>
+  <ul class="rv-list" data-rv-list></ul>
+  <button type="button" class="btn btn--line rv-more" data-rv-more hidden>후기 더 보기</button>
+  <p class="reviews-empty" data-rv-empty>첫 후기를 남겨 주세요.</p>
 </section>
 <section class="sb container sb--fold" id="notice" data-sec data-in-toc aria-label="상품정보제공고시">
   <details class="fold" data-fold>

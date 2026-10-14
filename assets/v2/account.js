@@ -230,10 +230,27 @@
 
     // 주문
     var oPage = 1;
+    /* 주문 후기(2-B-3 F3): 주문 단위. 수령 완료 주문은 «후기 쓰기», 쓴 주문은 «작성함» */
+    var rv = { map: null };
+    function loadRv() {
+      return acall("GET", "/api/v2/account/reviews").then(function (j) {
+        rv.map = {};
+        if (j.ok) j.orders.forEach(function (o) { rv.map[o.order_no] = o; });
+        return rv.map;
+      }, function () { rv.map = {}; return rv.map; });
+    }
+    function rvBadge(li, no) {
+      var x = rv.map && rv.map[no], old = li.querySelector(".my__rvb");
+      if (old) old.remove();
+      if (!x) return;
+      var s = document.createElement("span"); s.className = "my__rvb" + (x.state === "written" ? " is-done" : "");
+      s.textContent = x.state === "written" ? "후기 작성함" : "후기 쓰기"; li.querySelector("a").appendChild(s);
+    }
     function loadOrders(n) {
       loaded.orders = true;
       var ul = page.querySelector("[data-orders]"), more = page.querySelector("[data-orders-more]");
-      acall("GET", "/api/v2/account/orders?page=" + n).then(function (j) {
+      Promise.all([acall("GET", "/api/v2/account/orders?page=" + n), rv.map ? Promise.resolve(rv.map) : loadRv()]).then(function (r) {
+        var j = r[0];
         if (!j.ok) return;
         if (n === 1) ul.innerHTML = "";
         j.orders.forEach(function (o) {
@@ -244,7 +261,7 @@
           });
           var b = document.createElement("b"); b.textContent = won(o.amount); a.appendChild(b);
           var st = document.createElement("span"); st.className = "my__badge"; st.textContent = o.status; a.appendChild(st);
-          li.appendChild(a); ul.appendChild(li);
+          li.appendChild(a); ul.appendChild(li); rvBadge(li, o.order_no);
         });
         page.querySelector("[data-orders-empty]").hidden = j.total > 0;
         oPage = j.page; more.hidden = j.page >= j.pages;
@@ -272,9 +289,47 @@
         q("[data-od-copy]").setAttribute("data-copy", (o.bank_line || "").replace(/^\S+\s(\S+).*$/, "$1"));
         q("[data-od-rcv]").hidden = !o.recipient;
         if (o.recipient) q("[data-od-rcvline]").textContent = o.recipient.name + " · " + fmtPhone(o.recipient.phone) + " · (" + o.recipient.zip + ") " + o.recipient.address1 + " " + o.recipient.address2;
+        loadRv().then(function () { rvPaint(o.order_no); });   // 상세를 열 때마다 새로(그사이 수령 완료된 주문)
         box.hidden = false; box.focus();
       });
     }
+    function rvPaint(no) {
+      var sec = page.querySelector("[data-od-rv]"), x = rv.map[no], form = sec.querySelector("[data-rv-form]");
+      var state = sec.querySelector("[data-rv-state]"), open = sec.querySelector("[data-rv-open]");
+      sec.hidden = !x; form.hidden = true; sec.setAttribute("data-no", no);
+      if (!x) return;
+      if (x.state === "written") {
+        state.textContent = "후기를 남기셨습니다(별점 " + x.rating + "점" + (x.date ? " · " + x.date : "") + "). 관리자 확인 뒤 상품 화면에 보입니다.";
+        open.hidden = true;
+      } else {
+        state.textContent = "받아 보신 상품은 어떠셨나요? 후기를 남겨 주세요.";
+        open.hidden = false;
+      }
+    }
+    (function () {
+      var sec = page.querySelector("[data-od-rv]"), form = sec.querySelector("[data-rv-form]"), err = sec.querySelector("[data-rv-err]");
+      sec.querySelector("[data-rv-open]").addEventListener("click", function (e) {
+        form.hidden = false; e.currentTarget.hidden = true; err.hidden = true; form.querySelector("input[name=rv-rating]").focus();
+      });
+      sec.querySelector("[data-rv-cancel]").addEventListener("click", function () { rvPaint(sec.getAttribute("data-no")); });
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var r = form.querySelector("input[name=rv-rating]:checked"), body = form.querySelector("#rv-body").value.trim();
+        var fail = function (m) { err.textContent = m; err.hidden = false; };
+        if (!r) return fail("별점을 골라 주세요.");
+        if (body.length < 2) return fail("후기 내용을 두 글자 이상 적어 주세요.");
+        var btn = form.querySelector("[data-rv-save]"), no = sec.getAttribute("data-no");
+        btn.disabled = true; err.hidden = true;
+        acall("POST", "/api/v2/account/reviews", { order_no: no, rating: +r.value, body: body }).then(function (j) {
+          btn.disabled = false;
+          if (!j.ok) return fail(j.error || "저장하지 못했습니다. 잠시 뒤 다시 시도해 주세요.");
+          rv.map[no] = { order_no: no, state: "written", rating: +r.value, date: "" };
+          form.reset(); rvPaint(no);
+          if (j.points) sec.querySelector("[data-rv-state]").textContent += " 적립금 " + won(j.points) + "을 드렸습니다.";
+          var li = page.querySelector('[data-orders] li[data-order-no="' + no + '"]'); if (li) rvBadge(li, no);
+        }, function () { btn.disabled = false; fail("연결이 원활하지 않습니다. 잠시 뒤 다시 시도해 주세요."); });
+      });
+    })();
     page.querySelector("[data-od-copy]").addEventListener("click", function (e) {
       var v = e.currentTarget.getAttribute("data-copy"), out = page.querySelector("[data-od-copied]");
       if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(v).then(function () { out.textContent = "복사했습니다"; }, function () { out.textContent = "길게 눌러 직접 복사해 주세요"; });

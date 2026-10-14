@@ -1024,6 +1024,91 @@
     }
   }
 
+  /* ── 상세 «주문 후기»(2-B-3 F2): GET /api/v2/reviews?product= — 평균·개수·분포·목록(10개씩 «더 보기»).
+     0개면 «첫 후기를 남겨 주세요» 한 줄만. API 가 없는 미리보기도 그 한 줄. 글은 textContent 로만 넣는다. ── */
+  function initReviews(sec) {
+    var key = sec.getAttribute("data-reviews"), list = sec.querySelector("[data-rv-list]"), more = sec.querySelector("[data-rv-more]");
+    var page = 0;
+    function stars(n) { return "★★★★★".slice(0, n) + "☆☆☆☆☆".slice(0, 5 - n); }
+    function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+    function load(n) {
+      more.disabled = true;
+      call("GET", "/api/v2/reviews?product=" + encodeURIComponent(key) + "&page=" + n).then(function (j) {
+        more.disabled = false;
+        if (!j || !j.ok) return;
+        var s = j.summary;
+        if (n === 1) {
+          sec.querySelector("[data-rv-empty]").hidden = s.count > 0;
+          sec.querySelector("[data-rv-sum]").hidden = !s.count;
+          sec.querySelector("[data-rv-note]").hidden = !s.count;
+          if (s.count) {
+            sec.querySelector("[data-rv-avg]").textContent = s.average.toFixed(1);
+            sec.querySelector("[data-rv-stars]").textContent = stars(Math.round(s.average));
+            sec.querySelector("[data-rv-count]").textContent = "후기 " + s.count + "개";
+            var d = sec.querySelector("[data-rv-dist]"); d.innerHTML = "";
+            [5, 4, 3, 2, 1].forEach(function (k) {
+              var row = el("div"), bar = el("span", "rv-sum__bar"), fill = el("span", "rv-sum__fill"), c = s.distribution[String(k)] || 0;
+              fill.style.width = (s.count ? Math.round(c * 100 / s.count) : 0) + "%"; bar.appendChild(fill);
+              row.appendChild(el("span", null, k + "점")); row.appendChild(bar); row.appendChild(el("span", "muted", c + "개"));
+              row.setAttribute("aria-label", k + "점 " + c + "개"); d.appendChild(row);
+            });
+            var b = document.querySelector("[data-rv-badge]");
+            if (b) { b.querySelector("[data-rv-badge-avg]").textContent = s.average.toFixed(1); b.querySelector("[data-rv-badge-n]").textContent = "· 후기 " + s.count + "개"; b.hidden = false; }
+          }
+        }
+        j.reviews.forEach(function (r) {
+          var li = el("li", "rv-item"), head = el("p", "rv-item__head");
+          var st = el("span", "rv-item__stars", stars(r.rating)); st.setAttribute("aria-label", "별점 " + r.rating + "점");
+          head.appendChild(st); head.appendChild(el("span", "rv-item__who", r.author)); head.appendChild(el("span", "muted", r.date));
+          li.appendChild(head); li.appendChild(el("p", "rv-item__body", r.body));
+          if (r.products && r.products.length > 1) li.appendChild(el("p", "rv-item__items muted", "함께 주문: " + r.products.join(", ")));
+          if (r.reply) { var rp = el("div", "rv-item__reply"); rp.appendChild(el("p", "rv-item__reply-h", "영동에덴원 답글")); rp.appendChild(el("p", null, r.reply)); li.appendChild(rp); }
+          list.appendChild(li);
+        });
+        page = j.page; more.hidden = j.page >= j.pages;
+      }, function () { more.disabled = false; });
+    }
+    if (!API) return;
+    more.addEventListener("click", function () { load(page + 1); });
+    load(1);
+  }
+
+  /* ── 옛 장바구니 옮기기(2-C L3): 옛 화면의 edenwon_cart 에 담긴 것을 새 장바구니로 한 번만 옮긴다.
+     옛 값은 지우지 않는다(되돌리기 때 옛 화면 장바구니가 그대로 남게) — 옮긴 내용을 edenwon_cart_moved 에 적어 같은 내용은 다시 옮기지 않는다.
+     공개 중인 상품·옵션(products.json + 실시간 값)이고 품절이 아닌 것만. 못 옮긴 것이 있으면 안내 한 줄. ── */
+  var OLD_CART_KEY = "edenwon_cart";
+  function migrateOldCart() {
+    var old, raw = null, moved = null;
+    try { raw = localStorage.getItem(OLD_CART_KEY); moved = localStorage.getItem(OLD_CART_KEY + "_moved"); old = JSON.parse(raw || "null"); } catch (e) { old = null; }
+    if (!Array.isArray(old) || !old.length || raw === moved) return;
+    loadProducts(root() + "assets/v2/products.json").then(function (P) {
+      var ok = [], dropped = 0;
+      old.forEach(function (it) {
+        var key = it && (it.product || it.key), id = it && it.option, n = Math.floor(Number(it && (it.count || it.qty)) || 0);
+        var hit = key && id ? optOf(P, String(key), String(id)) : null;
+        if (hit && !hit.o.sold_out && n > 0) ok.push({ key: String(key), option: String(id), qty: Math.min(Cart.MAX_QTY, n) });
+        else dropped++;
+      });
+      if (ok.length) Cart.add(ok);
+      try { localStorage.setItem(OLD_CART_KEY + "_moved", raw); } catch (e) {}
+      var msg = dropped ? "예전 장바구니에서 " + (ok.length ? ok.length + "개 품목을 옮겼습니다. " : "") + "판매가 끝났거나 품절된 " + dropped + "개 품목은 옮기지 못했습니다." : "";
+      if (ok.length && document.querySelector("[data-cart-page]")) {   // 장바구니 화면은 다시 그려야 옮긴 품목이 보인다
+        try { if (msg) sessionStorage.setItem("edenwon_cart_moved", msg); } catch (e) {}
+        location.reload(); return;
+      }
+      if (msg) cartMovedNote(msg);
+    }, function () {});
+  }
+  function cartMovedNote(msg) {
+    var p = document.createElement("p"); p.className = "cart-moved"; p.setAttribute("role", "status"); p.textContent = msg;
+    var main = document.querySelector("main") || document.body; main.insertBefore(p, main.firstChild);
+  }
+  function showCartMoved() {
+    var m = null;
+    try { m = sessionStorage.getItem("edenwon_cart_moved"); sessionStorage.removeItem("edenwon_cart_moved"); } catch (e) {}
+    if (m) cartMovedNote(m);
+  }
+
   /* ── 접힌 구역(상품정보제공고시·배송·교환): 바로가기·주소 #id 로 오면 펼친다 ── */
   function initFolds() {
     function openFor(id) {
@@ -1076,6 +1161,9 @@
     document.querySelectorAll("[data-gallery]").forEach(initGallery);
     document.querySelectorAll("[data-buy]").forEach(initBuy);
     document.querySelectorAll("[data-like]").forEach(initLike);
+    document.querySelectorAll("[data-reviews]").forEach(initReviews);
+    showCartMoved();
+    migrateOldCart();
     initSecNav();
     document.querySelectorAll("[data-cart-page]").forEach(initCartPage);
     document.querySelectorAll("[data-checkout]").forEach(initCheckout);
