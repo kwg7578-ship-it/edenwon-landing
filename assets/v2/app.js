@@ -1215,14 +1215,14 @@
   function initGift(page) {
     var sheet = document.querySelector("[data-sheet]"), panel = sheet.querySelector(".sheet__panel");
     var slotsEl = page.querySelector("[data-slots]"), err = page.querySelector("[data-gift-err]");
-    var P = null, G = null, set = null, picks = [], cur = -1, lastFocus = null;
+    var P = null, G = null, set = null, picks = [], cur = -1, lastFocus = null, openInfo = {};
     var want = new URLSearchParams(location.search).get("set");
     function d() { return G.sets[set]; }
     function img(h) { return root() + "images/v2/" + h.p.img.replace(/\.jpg$/, "") + "-480.jpg"; }
     function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
     function choose(id) {
       if (!G.sets[id]) id = Object.keys(G.sets)[0];
-      set = id; picks = new Array(G.slots).fill(null);
+      set = id; picks = new Array(G.slots).fill(null); openInfo = {};
       page.querySelectorAll("[data-set]").forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-set") === id ? "true" : "false"); });
       paint();
     }
@@ -1245,7 +1245,9 @@
           b.appendChild(el("span", "gift__slot-empty", (i + 1) + "번째 칸 고르기"));
         }
         b.addEventListener("click", function () { open(i, b); });
-        li.appendChild(b); slotsEl.appendChild(li);
+        li.appendChild(b);
+        if (x) li.appendChild(infoBox(i, x.key));
+        slotsEl.appendChild(li);
       });
       var full = n === G.slots, off = full ? Math.min(G.discount, sum) : 0;
       page.querySelector("[data-gift-goods]").textContent = won(sum);
@@ -1254,6 +1256,25 @@
       page.querySelector("[data-gift-hint]").textContent = full ? "구성을 다 고르셨습니다. 칸을 누르면 바꿀 수 있습니다." : (G.slots - n) + "칸 남았습니다. 칸을 누르면 담을 수 있는 상품이 아래에서 올라옵니다.";
       page.querySelector("[data-gift-cart]").disabled = !full; page.querySelector("[data-gift-buy]").disabled = !full;
       err.hidden = true;
+    }
+    /* 고른 구성품의 상품정보제공고시 — 누르면 그 자리에서 표가 펼쳐진다(상세 화면의 고시 표와 같은 행) */
+    function infoBox(i, key) {
+      var n = G.notice && G.notice[key], wrap = el("div", "gift__info"), id = "gift-info-" + i;
+      var t = el("button", "gift__info-btn", openInfo[i] ? "상품정보 접기" : "상품정보 보기");
+      t.type = "button"; t.setAttribute("aria-expanded", openInfo[i] ? "true" : "false"); t.setAttribute("aria-controls", id);
+      var box = el("div", "gift__info-box"); box.id = id; box.hidden = !openInfo[i];
+      if (n) {
+        box.appendChild(el("p", "gift__info-cat muted", "상품정보제공고시 · " + n.category));
+        var dl = el("dl", "gift__info-dl");
+        n.rows.forEach(function (r) { dl.appendChild(el("dt", null, r[0])); dl.appendChild(el("dd", null, r[1])); });
+        box.appendChild(dl);
+      }
+      t.addEventListener("click", function () {
+        openInfo[i] = !openInfo[i]; box.hidden = !openInfo[i];
+        t.setAttribute("aria-expanded", openInfo[i] ? "true" : "false"); t.textContent = openInfo[i] ? "상품정보 접기" : "상품정보 보기";
+      });
+      wrap.appendChild(t); wrap.appendChild(box);
+      return wrap;
     }
     function open(i, from) {
       cur = i; lastFocus = from;
@@ -1295,7 +1316,7 @@
       sheet.hidden = true;
       var t = slotsEl.querySelector('[data-slot="' + cur + '"]') || lastFocus; if (t) t.focus();
     }
-    function pick(k, id) { picks[cur] = { key: k, option: id }; var i = cur; paint(); cur = i; close(); }
+    function pick(k, id) { if (!picks[cur] || picks[cur].key !== k) delete openInfo[cur]; picks[cur] = { key: k, option: id }; var i = cur; paint(); cur = i; close(); }
     sheet.querySelectorAll("[data-sheet-close]").forEach(function (b) { b.addEventListener("click", close); });
     sheet.querySelector("[data-sheet-back]").addEventListener("click", function () {
       sheet.querySelector("[data-sheet-opts]").hidden = true; var ul = sheet.querySelector("[data-sheet-list]"); ul.hidden = false;
