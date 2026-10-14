@@ -101,11 +101,14 @@
       Cart.write(items);
       return true;
     },
+    _n: null,
     render: function () {
-      var n = Cart.count();
+      var n = Cart.count(), up = Cart._n !== null && n > Cart._n;
+      Cart._n = n;
       document.querySelectorAll("[data-cart-count]").forEach(function (el) {
         el.textContent = n > 99 ? "99+" : String(n);
         el.hidden = n === 0;
+        if (up) { el.classList.remove("is-pop"); void el.offsetWidth; el.classList.add("is-pop"); }   // 담을 때 한 번 톡
       });
       document.querySelectorAll("[data-cart-sr]").forEach(function (el) {
         el.textContent = n ? "장바구니 " + n + "개" : "장바구니";
@@ -168,19 +171,27 @@
     });
   }
 
-  /* ── 배너 슬라이더: 자동 넘김 없음. 화살표 · 점 · 키보드 ←/→ · 스와이프 ── */
+  /* ── 배너 슬라이더(개정 2-1): 화살표 · 점 · 키보드 ←/→ · 스와이프. 페이지를 다 불러온 뒤 사진이 겹쳐 바뀐다(6초 머묾, 1.2초 전환).
+     일시정지 버튼 필수(WCAG 2.2.2). 마우스를 올리거나 포커스가 들어오면, 화면 밖이거나 탭이 숨겨지면 멈춘다.
+     움직임 줄이기 설정이면 자동 전환 없음(첫 장 고정, 손으로만 넘김). 그 전까지는 첫 장만 있고 나머지 사진은 늦게 불러온다. ── */
+  var REDUCE = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   function initCarousel(root) {
     var slides = root.querySelectorAll("[data-slide]");
     var dots = root.querySelectorAll("[data-dot]");
     var num = root.querySelector("[data-num]");
-    var n = slides.length, i = 0;
+    var pause = root.querySelector("[data-pause]");
+    var n = slides.length, i = 0, fade = false, timer = null, DWELL = 6000;
+    var st = { user: false, hover: false, focus: false, off: false, tab: false };
+    function running() { return fade && n > 1 && !st.user && !st.hover && !st.focus && !st.off && !st.tab; }
+    function schedule() { clearTimeout(timer); timer = running() ? setTimeout(function () { go(i + 1); }, DWELL) : null; }
     function go(k) {
       i = (k + n) % n;
-      slides.forEach(function (s, j) { s.hidden = j !== i; });
+      slides.forEach(function (s, j) { if (fade) s.classList.toggle("is-on", j === i); else s.hidden = j !== i; });
       dots.forEach(function (d, j) { if (j === i) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
       if (num) num.textContent = (i + 1 < 10 ? "0" : "") + (i + 1);
       root.setAttribute("data-tone", slides[i].classList.contains("hero__slide--light") ? "light" : "dark");
       root.setAttribute("data-index", String(i));
+      schedule();
     }
     var prev = root.querySelector("[data-prev]"), next = root.querySelector("[data-next]");
     if (prev) prev.addEventListener("click", function () { go(i - 1); });
@@ -200,6 +211,62 @@
       x0 = y0 = null;
     }, { passive: true });
     go(0);
+    if (n < 2 || REDUCE) return;
+    function paint() {
+      pause.classList.toggle("is-paused", st.user); pause.setAttribute("aria-pressed", st.user ? "true" : "false");
+      pause.setAttribute("aria-label", st.user ? "배너 자동 넘김 다시 시작" : "배너 자동 넘김 멈춤");
+    }
+    if (pause) pause.addEventListener("click", function () { st.user = !st.user; paint(); schedule(); });
+    root.addEventListener("mouseenter", function () { st.hover = true; schedule(); });
+    root.addEventListener("mouseleave", function () { st.hover = false; schedule(); });
+    root.addEventListener("focusin", function (e) { st.focus = e.target !== pause; schedule(); });   // 일시정지 버튼 자체의 포커스는 멈춤 조건이 아님(WAI 캐러셀)
+    root.addEventListener("focusout", function (e) { if (!root.contains(e.relatedTarget)) { st.focus = false; schedule(); } });
+    document.addEventListener("visibilitychange", function () { st.tab = document.hidden; schedule(); });
+    if ("IntersectionObserver" in window)
+      new IntersectionObserver(function (es) { st.off = !es[0].isIntersecting; schedule(); }, { threshold: 0.25 }).observe(root);
+    function enable() {      // 첫 화면을 다 그린 뒤: 나머지 사진을 불러오기 시작하고 겹쳐 바뀌는 방식으로
+      root.classList.add("is-fade", "is-fade-init");
+      fade = true;
+      slides.forEach(function (s, j) { s.hidden = false; s.classList.toggle("is-on", j === i); });
+      requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove("is-fade-init"); }); });
+      if (pause) { pause.hidden = false; paint(); }
+      schedule();
+    }
+    if (document.readyState === "complete") setTimeout(enable, 400);
+    else window.addEventListener("load", function () { setTimeout(enable, 400); });
+  }
+
+  /* ── 움직임(개정 2-2): 스크롤 등장 · 머리글 붙음 표시. 처음 화면 안에 있던 것은 움직이지 않는다(첫 표시를 늦추지 않게). ── */
+  function initMotion() {
+    var hd = document.querySelector("[data-hd]");
+    if (hd) {
+      var stuck = false, tick = false;
+      var onScroll = function () {
+        tick = false;
+        var s = window.scrollY > 24;
+        if (s !== stuck) { stuck = s; hd.classList.toggle("is-stuck", s); }
+      };
+      window.addEventListener("scroll", function () { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true });
+      onScroll();
+    }
+    if (REDUCE || !("IntersectionObserver" in window)) return;
+    if (!/\bpage-(home|products|detail|story)\b/.test(document.body.className)) return;
+    var vh = window.innerHeight, list = [];
+    document.querySelectorAll("main .card, main > section:not(.hero), main .sb, main .story-block, main .cats__item").forEach(function (el) {
+      if (el.closest(".rv") || (el.tagName === "SECTION" && el.querySelector(".card"))) return;
+      if (el.getBoundingClientRect().top < vh) return;
+      el.classList.add("rv"); list.push(el);
+    });
+    var io = new IntersectionObserver(function (es) {
+      var k = 0;
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        if (el.classList.contains("card") || el.classList.contains("cats__item")) el.style.transitionDelay = Math.min(k++, 5) * 0.06 + "s";
+        el.classList.add("is-in"); io.unobserve(el);
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    list.forEach(function (el) { io.observe(el); });
   }
 
   /* ── 탭(홈 추천): 분류별로 앞에서 N개만 보이기 ── */
@@ -1150,6 +1217,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     initMember();
+    initMotion();
     initMemberPrice();
     initCertExpiry();
     initFonts();

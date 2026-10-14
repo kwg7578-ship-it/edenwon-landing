@@ -1,0 +1,33 @@
+/* 영동에덴원 v2 움직임 체계 (2-B-3 개정 2-2) — 외부 라이브러리 없음.
+   규칙: 0.2~0.8초, ease-out 계열, transform·opacity 만 움직인다(화면 밀림 CLS 0), 반복·회전·튀는 움직임 없음.
+   prefers-reduced-motion 이면 모두 끈다(맨 아래). 등장 움직임은 app.js 가 «처음 화면 밖에 있던 것»에만 .rv 를 붙인다.
+   이 파일은 렌더링을 막지 않게 늦게 불러온다(layout.html). 배치에 닿는 머리글 붙임·홈 배너 겹침 규칙은 pages.css 끝에 있다. */
+
+/* 버튼·링크·탭: 색과 밑줄 0.2초 */
+a,button,.btn,.pill,.gnb a,.cats__item,.card__text{transition:color .2s ease-out,background-color .2s ease-out,border-color .2s ease-out,text-decoration-color .2s ease-out,opacity .2s ease-out}
+
+/* 스크롤 등장: 16~24px 아래에서, 0.6초, 처음 한 번만. 카드는 app.js 가 0.06초씩 늦춘다 */
+.rv{opacity:0;transform:translateY(20px)}
+.rv.is-in{opacity:1;transform:none;transition:opacity .6s ease-out,transform .6s var(--ease-out)}
+
+/* 상품 카드: 사진이 살짝 커진다(마우스가 있는 기기만) */
+.card__photo{overflow:hidden}
+@media (hover:hover){
+  .card__img{transition:transform .4s var(--ease-out)}
+  .card:hover .card__img,.card:focus-within .card__img{transform:scale(1.04)}
+}
+
+/* 장바구니 담기: 숫자 배지가 한 번 톡, «담았습니다» 안내가 미끄러져 나온다 */
+@keyframes ed-pop{0%{transform:scale(1)}40%{transform:scale(1.28)}100%{transform:scale(1)}}
+.hd__count.is-pop{animation:ed-pop .4s var(--ease-out) 1}
+@keyframes ed-slide-down{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@keyframes ed-slide-up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.added:not([hidden]){animation:ed-slide-down .32s var(--ease-out) 1}
+@media (max-width:768px){.added:not([hidden]){animation-name:ed-slide-up}}
+
+/* 움직임 줄이기: 모두 끈다 */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+  .hd.is-stuck .hd__bar>*,.hd.is-stuck .logo{transform:none}
+}
