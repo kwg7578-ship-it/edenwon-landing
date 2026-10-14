@@ -1,892 +1,198 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!doctype html>
+<html lang="ko" data-season="autumn" data-root="">
 <head>
-<script>/* 2-C 출시(L2): 옛 주소 → 새 화면. 공개 품목만 옮기고, 출시 보류 품목은 이 옛 화면을 그대로 쓴다. */
-(function(){var M={"jam": "/products/giftset-jam#buy", "vinegar": "/products/giftset-vinegar#buy"},H=["jam", "vinegar"],q=new URLSearchParams(location.search).get("set"),t;
-if(q===null||q==="")t="/products?cat=gift";else if(Object.prototype.hasOwnProperty.call(M,q))t=M[q];else if(H.indexOf(q)>=0)t=null;else t="/products?cat=gift";
-if(t)location.replace(t);})();</script>
-<noscript><meta http-equiv="refresh" content="0;url=/products?cat=gift"></noscript>
-
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
 <title>발효의 진심 선물세트 — 영동에덴원</title>
-<meta name="description" content="장류 선물세트와 식초 선물세트, 두 가지 구성의 영동에덴원 선물세트. 합산가에서 5,000원 할인." />
+<meta name="description" content="장류 선물세트와 식초 선물세트, 두 가지 구성의 영동에덴원 선물세트. 합산가에서 5,000원 할인.">
 <link rel="canonical" href="https://yd-edenwon.com/giftset">
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<style>
-  :root {
-    --cream:#F4EDE0; --cream-light:#FBF7EF; --cream-dark:#E8DFCC;
-    --ink:#2A1F14; --ink-soft:#5A4A38; --ink-mute:#8B7A65;
-    --gold:#8B6F47; --gold-dark:#6B5532;
-    --border:rgba(42,31,20,0.08); --border-strong:rgba(42,31,20,0.15);
-    --font-display:"Gowun Batang","Noto Serif KR",serif;
-    --font-body:"Noto Sans KR",system-ui,sans-serif;
-    --font-latin:"Cormorant Garamond",serif;
-  }
-  * { box-sizing:border-box; margin:0; padding:0; }
-  html { scroll-behavior:smooth; }
-  body { font-family:var(--font-body); background:var(--cream); color:var(--ink); line-height:1.7; font-weight:300; -webkit-font-smoothing:antialiased; }
-
-  .nav { border-bottom:1px solid var(--border); background:var(--cream); }
-  .nav__inner { max-width:760px; margin:0 auto; padding:1.1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; }
-  .nav__back { font-size:0.92rem; color:var(--ink-soft); text-decoration:none; }
-  .nav__brand { font-family:var(--font-latin); font-size:0.85rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); text-decoration:none; }
-
-  .wrap { max-width:760px; margin:0 auto; padding:clamp(2rem,6vh,3.4rem) 1.4rem 5rem; }
-  .eyebrow { font-family:var(--font-latin); font-size:0.85rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); text-align:center; margin-bottom:1rem; }
-  .title { font-family:var(--font-display); font-size:clamp(1.8rem,5vw,2.4rem); font-weight:400; text-align:center; line-height:1.4; margin-bottom:0.9rem; }
-  .lede { text-align:center; color:var(--ink-soft); font-size:0.97rem; line-height:1.9; max-width:540px; margin:0 auto 2rem; }
-  .divider { width:40px; height:1px; background:var(--gold); margin:2.4rem auto; opacity:0.6; }
-  .sec-title { font-family:var(--font-display); font-size:1.3rem; text-align:center; margin-bottom:0.4rem; }
-  .sec-sub { text-align:center; color:var(--ink-mute); font-size:0.86rem; margin-bottom:1.6rem; }
-  .loading { text-align:center; color:var(--ink-mute); padding:3rem 0; }
-
-  /* 세트 종류 선택 */
-  .sets { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-  .set-card { background:var(--cream-light); border:1.5px solid var(--border-strong); border-radius:12px; padding:1.1rem; cursor:pointer; transition:border-color .15s, box-shadow .15s, background .15s; text-align:left; font-family:var(--font-body); }
-  .set-card:hover { border-color:var(--gold); }
-  .set-card.sel { border-color:var(--gold); box-shadow:0 0 0 3px rgba(139,111,71,0.12); background:#fff; }
-  .set-card__photo { aspect-ratio:4/3; border-radius:8px; overflow:hidden; background:repeating-linear-gradient(45deg,var(--cream-dark),var(--cream-dark) 10px,#e2d8c2 10px,#e2d8c2 20px); display:flex; align-items:center; justify-content:center; color:var(--ink-mute); font-size:0.78rem; text-align:center; margin-bottom:0.9rem; }
-  .set-card__photo img { width:100%; height:100%; object-fit:cover; }
-  .set-card__name { font-family:var(--font-display); font-size:1.1rem; margin-bottom:0.3rem; }
-  .set-card__desc { font-size:0.82rem; color:var(--ink-soft); line-height:1.7; }
-  .set-card__pick { display:inline-block; margin-top:0.7rem; font-size:0.82rem; color:var(--gold-dark); }
-  .set-card.sel .set-card__pick::before { content:"✓ 선택됨"; }
-  .set-card:not(.sel) .set-card__pick::before { content:"이 세트 고르기 →"; }
-
-  /* 박스 */
-  .box-wrap { display:none; }
-  .box-wrap.on { display:block; animation:fade .4s ease; }
-  @keyframes fade { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:none;} }
-  .box { background:var(--cream-light); border:1px solid var(--border); border-radius:12px; padding:1.4rem; }
-  .box__grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  .slot { aspect-ratio:1/0.92; border:1.5px dashed var(--border-strong); border-radius:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.35rem; cursor:pointer; background:var(--cream); transition:border-color .15s, background .15s; position:relative; padding:0.6rem; text-align:center; }
-  .slot:hover { border-color:var(--gold); background:#fff; }
-  .slot.filled { border-style:solid; cursor:default; aspect-ratio:auto; justify-content:flex-start; gap:0.3rem; }
-  .slot__plus { font-size:1.5rem; color:var(--gold); line-height:1; }
-  .slot__add { color:var(--ink-mute); font-size:0.86rem; }
-  .slot__thumb { width:42px; height:42px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; font-size:1.25rem; position:relative; overflow:hidden; }
-  .slot__photo { width:100%; aspect-ratio:4/3; border-radius:8px; overflow:hidden; background:#fff; position:relative; display:flex; align-items:center; justify-content:center; font-size:1.6rem; margin-bottom:0.15rem; }
-  .slot__name { font-size:0.84rem; color:var(--ink); line-height:1.3; }
-  .slot__size { font-size:0.75rem; color:var(--ink-mute); }
-  .slot__price { font-size:0.8rem; color:var(--gold-dark); }
-  .slot__x { position:absolute; top:6px; right:8px; width:22px; height:22px; border-radius:50%; border:none; background:var(--cream-dark); color:var(--ink-soft); cursor:pointer; font-size:0.9rem; line-height:1; }
-  .slot__change { font-size:0.72rem; color:var(--gold-dark); text-decoration:underline; cursor:pointer; }
-
-  .totals { margin-top:1.4rem; border-top:1px solid var(--border); padding-top:1.1rem; }
-  .totals__row { display:flex; justify-content:space-between; align-items:baseline; font-size:0.92rem; color:var(--ink-soft); padding:0.25rem 0; }
-  .totals__row .v { color:var(--ink); }
-  .totals__row.disc .v { color:var(--gold-dark); }
-  .totals__sum { display:flex; justify-content:space-between; align-items:baseline; border-top:1px solid var(--border); margin-top:0.6rem; padding-top:0.8rem; }
-  .totals__sum .k { font-size:0.98rem; } .totals__sum .v { font-family:var(--font-display); font-size:1.4rem; }
-  .hint { text-align:center; font-size:0.84rem; color:var(--ink-mute); margin-top:0.6rem; }
-
-  /* 주문 폼 */
-  .order-form { margin-top:1.4rem; display:none; }
-  .order-form.on { display:block; }
-  .field { margin-bottom:1.3rem; }
-  .field__label { display:block; font-size:0.9rem; color:var(--ink); margin-bottom:0.5rem; }
-  .field__label .req { color:var(--gold-dark); }
-  .field__sub { color:var(--ink-mute); font-size:0.82rem; }
-  .field__hint { font-size:0.8rem; color:var(--ink-mute); margin-top:0.4rem; }
-  input, textarea { width:100%; font-family:var(--font-body); font-size:0.98rem; font-weight:300; color:var(--ink); background:var(--cream); border:1px solid var(--border-strong); padding:0.85rem 1rem; }
-  input:focus, textarea:focus { outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(139,111,71,0.12); }
-  input[readonly] { background:var(--cream-dark); color:var(--ink-soft); }
-  textarea { resize:vertical; min-height:80px; line-height:1.6; }
-  .field__err { display:none; color:#9a3b2e; font-size:0.82rem; margin-top:0.35rem; }
-  .field.invalid input { border-color:#9a3b2e; }
-  .field.invalid .field__err { display:block; }
-
-  .method-toggle { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:1.4rem; }
-  .method-opt { display:flex; flex-direction:column; align-items:center; gap:0.18rem; cursor:pointer; background:var(--cream); border:1px solid var(--border-strong); border-radius:10px; padding:0.9rem 0.7rem; transition:all .15s; }
-  .method-opt__icon { font-size:1.3rem; line-height:1; }
-  .method-opt__main { font-size:0.98rem; color:var(--ink); margin-top:0.22rem; }
-  .method-opt small { font-size:0.76rem; color:var(--ink-mute); }
-  .method-opt.sel { border-color:var(--gold); box-shadow:0 0 0 3px rgba(139,111,71,0.12); background:#fff; }
-  .method-opt.sel .method-opt__main { color:var(--gold-dark); font-weight:500; }
-  .pickup-note { display:flex; gap:0.7rem; align-items:flex-start; background:var(--cream-dark); border-left:3px solid var(--gold); padding:0.95rem 1.1rem; font-size:0.87rem; color:var(--ink-soft); line-height:1.6; margin-bottom:1.4rem; }
-  .pickup-note strong { color:var(--ink); }
-  .ship-block { border-top:1px dashed var(--border-strong); padding-top:1.4rem; margin-bottom:0.4rem; }
-  .same-check { display:flex; align-items:center; gap:0.55rem; margin-bottom:1.2rem; font-size:0.92rem; cursor:pointer; }
-  .same-check input { width:auto; margin:0; }
-  .addr-row { display:grid; grid-template-columns:1fr auto; gap:8px; }
-  .addr-row .btn-find { white-space:nowrap; padding:0 1.1rem; font-size:0.9rem; background:var(--ink); color:var(--cream); border:1px solid var(--ink); cursor:pointer; transition:all .2s; }
-  .addr-row .btn-find:hover { background:var(--gold-dark); border-color:var(--gold-dark); }
-
-  .btn { display:block; width:100%; padding:1rem; font-family:var(--font-body); font-size:0.98rem; letter-spacing:0.05em; background:var(--ink); color:var(--cream); border:1px solid var(--ink); border-radius:6px; cursor:pointer; transition:all .2s; margin-top:0.6rem; }
-  .btn:hover:not(:disabled) { background:var(--gold-dark); border-color:var(--gold-dark); }
-  .btn:disabled { opacity:0.45; cursor:default; }
-  .btn--start { margin-top:1rem; }
-  .privacy { text-align:center; font-size:0.8rem; color:var(--ink-mute); margin-top:1.2rem; line-height:1.6; }
-  .form-error { display:none; background:#f6e9e6; border:1px solid #d9b3aa; color:#7d2c20; font-size:0.88rem; padding:0.85rem 1rem; margin-top:1rem; }
-  .form-error.show { display:block; }
-
-  /* 완료 */
-  .done { display:none; }
-  .done.on { display:block; animation:fade .5s ease; }
-  .stage.hide { display:none; }
-  .done__check { width:56px; height:56px; margin:0 auto 1.3rem; border:1px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--gold-dark); font-size:1.6rem; }
-  .done__num { text-align:center; font-family:var(--font-display); font-size:1.4rem; letter-spacing:0.04em; margin-bottom:0.4rem; }
-  .done__label { text-align:center; font-family:var(--font-latin); font-size:0.76rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:1.7rem; }
-  .summary { border:1px solid var(--border-strong); margin-bottom:1.6rem; }
-  .summary__row { display:flex; justify-content:space-between; gap:1rem; padding:0.8rem 1.2rem; font-size:0.9rem; border-bottom:1px solid var(--border); }
-  .summary__row:last-child { border-bottom:none; }
-  .summary__row .k { color:var(--ink-mute); white-space:nowrap; } .summary__row .v { color:var(--ink); text-align:right; }
-  .bank { background:var(--cream-dark); padding:1.3rem; margin-bottom:1.4rem; }
-  .bank__title { font-family:var(--font-display); font-size:1.05rem; margin-bottom:0.9rem; }
-  .bank__amount { display:flex; justify-content:space-between; align-items:baseline; padding-bottom:0.8rem; margin-bottom:0.6rem; border-bottom:1px solid var(--border-strong); }
-  .bank__amount strong { font-family:var(--font-display); font-size:1.3rem; color:var(--ink); }
-  .bank__row { display:flex; justify-content:space-between; font-size:0.9rem; padding:0.3rem 0; }
-  .bank__row .k { color:var(--ink-mute); } .bank__v { color:var(--ink); }
-  .bank__note { font-size:0.82rem; color:var(--ink-soft); margin-top:0.9rem; line-height:1.6; }
-
-  /* 모달 */
-  .picker { position:fixed; inset:0; background:rgba(42,31,20,0.45); display:none; align-items:flex-end; justify-content:center; z-index:50; }
-  .picker.on { display:flex; }
-  .picker__panel { background:var(--cream-light); width:100%; max-width:560px; max-height:80vh; border-radius:14px 14px 0 0; padding:1.3rem 1.2rem 1.6rem; overflow-y:auto; }
-  .picker__head { display:flex; align-items:center; gap:0.6rem; margin-bottom:1rem; }
-  .picker__back { background:none; border:none; cursor:pointer; color:var(--ink-soft); font-size:1rem; padding:0.2rem 0.4rem; display:none; }
-  .picker__back.on { display:inline; }
-  .picker__title { font-family:var(--font-display); font-size:1.1rem; flex:1; text-align:center; }
-  .pick-item { display:flex; align-items:center; gap:0.8rem; width:100%; text-align:left; padding:0.7rem 0.6rem; background:none; border:none; border-bottom:1px solid var(--border); cursor:pointer; font-family:var(--font-body); }
-  .pick-item:hover { background:var(--cream-dark); }
-  .pick-item__thumb { width:38px; height:38px; border-radius:50%; background:var(--cream-dark); display:flex; align-items:center; justify-content:center; font-size:1.15rem; flex:none; position:relative; overflow:hidden; }
-  .slot__thumb img, .pick-item__thumb img, .slot__photo img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; }
-  .pick-item__name { flex:1; font-size:0.92rem; color:var(--ink); }
-  .pick-item__meta { color:var(--ink-mute); font-size:0.82rem; }
-  .pick-item__price { color:var(--gold-dark); font-size:0.9rem; }
-  .picker__close { display:block; width:100%; margin-top:1rem; padding:0.7rem; background:none; border:1px solid var(--border-strong); border-radius:6px; cursor:pointer; color:var(--ink-soft); }
-  .season-badge { display:inline-block; background:#e3ecd9; color:#5a7345; font-size:0.68rem; padding:0.05rem 0.4rem; border-radius:100px; margin-left:0.35rem; vertical-align:middle; white-space:nowrap; }
-</style>
-<style>
-.edenwon-footer{background:#2A1F14;color:rgba(244,237,224,0.5);padding:2.8rem 1.5rem;text-align:center;font-size:0.8rem;line-height:2;border-top:1px solid rgba(244,237,224,0.08);}
-.edenwon-footer .footer__brand{display:flex;flex-direction:column;align-items:center;gap:0.5rem;margin-bottom:1.1rem;}
-.edenwon-footer .footer__symbol{height:36px;width:auto;opacity:0.92;}
-.edenwon-footer .footer__mark{font-family:"Gowun Batang",serif;color:rgba(244,237,224,0.78);letter-spacing:0.06em;font-size:0.98rem;}
-.edenwon-footer .footer__legal{font-size:0.75rem;letter-spacing:0.02em;}
-.edenwon-footer .footer__legal a{color:inherit;opacity:0.7;text-decoration:none;border-bottom:1px solid rgba(244,237,224,0.2);}
-.edenwon-footer .footer__legal a:hover{opacity:1;}
-.edenwon-footer .footer__sep{opacity:0.35;}
-</style>
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap" media="print" data-webfont>
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="assets/v2/tokens.css">
+<link rel="stylesheet" href="assets/v2/base.css">
+<link rel="stylesheet" href="assets/v2/pages.css">
+<link rel="stylesheet" href="assets/v2/motion.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="assets/v2/motion.css"></noscript>
+<script src="assets/v2/app.js" defer></script>
 </head>
-<body>
-  <div class="nav"><div class="nav__inner">
-    <a href="index.html" class="nav__back">← 영동에덴원</a>
-    <a href="index.html" class="nav__brand">Yeongdong Edenwon</a>
-  </div></div>
+<body class="page-gift">
+<div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
+  <p class="added__h" id="added-h">장바구니에 담았습니다</p>
+  <p class="added__item" data-added-item></p>
+  <div class="added__btns">
+    <a class="btn btn--dark" href="cart.html">장바구니로 가기</a>
+    <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
+  </div>
+</div>
+<div class="hd-top" role="region" aria-label="공지와 회원 메뉴">
+  <a class="skip" href="#main">본문 바로가기</a>
+  <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
+  <div class="hd__util container">
+    <span class="hd__member" data-hd-member>
+  <a href="account/login.html" data-hd-login data-m-anon>로그인</a>
+  <a href="account/signup.html" data-hd-signup data-m-anon>회원가입</a>
+  <span data-hd-name data-m-in hidden></span>
+  <a href="account/" data-hd-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-hd-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
 
-  <div class="wrap">
-    <div class="stage" id="buildStage">
-      <div class="eyebrow">Gift Set</div>
-      <h1 class="title">발효의 진심 선물세트</h1>
-      <p class="lede">두 가지 선물세트 중 하나를 고르고, 구성을 원하는 대로 바꿔 보내실 수 있습니다.<br />선물세트는 합산 가격에서 <strong>5,000원 할인</strong>됩니다.</p>
-
-      <div id="loading" class="loading">상품을 불러오는 중…</div>
-
-      <div id="content" style="display:none;">
-        <div class="sec-title">선물세트 고르기</div>
-        <div class="sec-sub">세트를 고르면 기본 구성으로 담깁니다 · 한 세트 4종</div>
-        <div class="sets" id="sets"></div>
-
-        <!-- 박스 (세트 선택 후) -->
-        <div class="box-wrap" id="boxWrap">
-          <div class="divider"></div>
-          <div class="sec-title" id="boxTitle">구성</div>
-          <div class="sec-sub">칸을 눌러 제품을 바꿀 수 있어요</div>
-          <div class="box">
-            <div class="box__grid" id="boxGrid"></div>
-            <div class="totals">
-              <div class="totals__row"><span>상품 합계</span><span class="v" id="amtSum">—</span></div>
-              <div class="totals__row disc"><span>선물 할인</span><span class="v">−5,000원</span></div>
-              <div class="totals__sum"><span class="k">세트 가격</span><span class="v" id="amtTotal">—</span></div>
-              <div class="hint" id="hint"></div>
-              <button class="btn btn--start" id="toOrderBtn" disabled>주문 정보 입력</button>
-            </div>
-
-            <!-- 주문 폼 -->
-            <div class="order-form" id="orderForm">
-              <div class="divider"></div>
-              <label class="field__label">수령 방법 <span class="req">*</span></label>
-              <div class="method-toggle">
-                <button type="button" class="method-opt sel" data-method="pickup"><span class="method-opt__icon">🤲</span><span class="method-opt__main">자가수령</span><small>직접 받으러 오기</small></button>
-                <button type="button" class="method-opt" data-method="delivery"><span class="method-opt__icon">📦</span><span class="method-opt__main">택배</span><small>집으로 받기</small></button>
-              </div>
-              <div class="pickup-note" id="notePickup"><span>📍</span><span><strong>자가 수령</strong> — 직접 받으러 오시는 분들을 위한 주문입니다. 주소는 받지 않으며, 배송비도 없습니다.</span></div>
-              <div class="pickup-note" id="noteDelivery" style="display:none;"><span>📦</span><span><strong>택배 발송</strong> — 입금 확인 후 보내 드립니다. 배송비 5,000원, <strong>상품 10만원 이상 무료</strong>. (제주·도서산간은 추가될 수 있습니다.)</span></div>
-
-              <div class="field" id="f-name"><label class="field__label">주문자 성함 <span class="req">*</span></label><input type="text" id="name" maxlength="40" placeholder="성함" autocomplete="name" /><div class="field__err">성함을 입력해 주세요.</div></div>
-              <div class="field" id="f-phone"><label class="field__label">주문자 전화번호 <span class="req">*</span></label><input type="tel" id="phone" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" autocomplete="tel" /><div class="field__err">전화번호를 정확히 입력해 주세요.</div><div class="field__hint">주문 조회 시 본인 확인에 사용됩니다.</div></div>
-
-              <div class="ship-block" id="shipBlock" style="display:none;">
-                <label class="same-check"><input type="checkbox" id="sameAsOrderer" checked /> 받는 분이 주문자와 동일합니다</label>
-                <div id="recipFields" style="display:none;">
-                  <div class="field" id="f-rname"><label class="field__label">받는 분 성함 <span class="req">*</span></label><input type="text" id="recipName" maxlength="40" placeholder="선물 받는 분 성함" /><div class="field__err">받는 분 성함을 입력해 주세요.</div></div>
-                  <div class="field" id="f-rphone"><label class="field__label">받는 분 연락처 <span class="req">*</span></label><input type="tel" id="recipPhone" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" /><div class="field__err">받는 분 연락처를 정확히 입력해 주세요.</div></div>
-                </div>
-                <div class="field" id="f-zip"><label class="field__label">우편번호 <span class="req">*</span></label><div class="addr-row"><input type="text" id="zip" readonly placeholder="주소 찾기를 눌러 주세요" /><button type="button" class="btn-find" id="findAddr">주소 찾기</button></div><div class="field__err">우편번호를 입력해 주세요.</div></div>
-                <div class="field" id="f-addr1"><label class="field__label">주소 <span class="req">*</span></label><input type="text" id="addr1" readonly placeholder="기본 주소" /><div class="field__err">주소를 입력해 주세요.</div></div>
-                <div class="field" id="f-addr2"><label class="field__label">상세주소 <span class="req">*</span></label><input type="text" id="addr2" maxlength="60" placeholder="동·호수 등 상세주소" /><div class="field__err">상세주소를 입력해 주세요.</div></div>
-              </div>
-
-              <div class="field" style="margin-bottom:0;"><label class="field__label">요청사항 <span class="field__sub">(선택)</span></label><textarea id="memo" maxlength="500" placeholder="수령 희망 시기, 선물 메시지 등을 자유롭게 적어 주세요."></textarea></div>
-              <button class="btn" id="submitBtn">주문 접수하기</button>
-        <p style="margin-top:0.7rem;font-size:0.8rem;color:#8a7a66;text-align:center;">주문 접수 시 <a href="terms.html" style="color:inherit;text-decoration:underline;">이용약관</a> 및 <a href="privacy.html" style="color:inherit;text-decoration:underline;">개인정보 수집·이용</a>에 동의한 것으로 간주됩니다.</p>
-              <div class="form-error" id="formError"></div>
-              <p class="privacy">입력 정보는 주문 처리 목적으로만 사용되며, 관리자만 확인합니다. 입력 정보는 이 기기에 저장되어 다음에 자동으로 채워집니다.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+<a href="order-status.html">주문 조회</a><a href="contact.html">고객센터</a>  </div>
+</div>
+<header class="hd" data-hd>
+  <div class="hd__bar container">
+    <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+    <a class="logo" href="index.html">
+      <span class="logo__ko">영동에덴원</span><span class="sr-only"> 홈</span>
+      <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
+    </a>
+    <nav class="gnb" aria-label="주 메뉴">
+<a href="products.html">제품</a><a href="products.html?cat=gift" aria-current="page">선물세트</a><a href="story.html">영동에덴원 이야기</a><a href="contact.html">단체·기업 구매</a>    </nav>
+    <div class="hd__actions">
+      <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+</button>
+      <a class="icon-btn hd__mypage" href="account/" aria-label="마이페이지"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg>
+</a>
+      <a class="icon-btn hd__cart" href="cart.html" data-cart-link><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="sr-only" data-cart-sr>장바구니</span><span class="hd__count" data-cart-count aria-hidden="true" hidden></span></a>
     </div>
+  </div>
+  <div class="hd__search" id="search" hidden>
+    <form class="container" action="products.html" method="get" role="search">
+      <label class="sr-only" for="q">제품 검색</label>
+      <input id="q" name="q" type="search" placeholder="제품 이름으로 찾기" autocomplete="off">
+      <button type="submit" class="btn btn--dark">찾기</button>
+    </form>
+  </div>
+  <div class="hd__line"></div>
+</header>
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="메뉴">
+    <div class="drawer__top">
+      <span class="logo__ko">영동에덴원</span>
+      <button type="button" class="icon-btn" aria-label="메뉴 닫기" data-drawer-close><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+    </div>
+    <nav class="drawer__nav" aria-label="모바일 주 메뉴">
+<a href="products.html">제품</a><a href="products.html?cat=gift" aria-current="page">선물세트</a><a href="story.html">영동에덴원 이야기</a><a href="contact.html">단체·기업 구매</a>    </nav>
+    <nav class="drawer__util" aria-label="회원·고객 메뉴">
+      <span class="hd__member" data-dr-member>
+  <a href="account/login.html" data-dr-login data-m-anon>로그인</a>
+  <a href="account/signup.html" data-dr-signup data-m-anon>회원가입</a>
+  <span data-dr-name data-m-in hidden></span>
+  <a href="account/" data-dr-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-dr-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
 
-    <!-- 완료 -->
-    <div class="done" id="doneStage">
-      <div class="done__check">✓</div>
-      <div class="done__num" id="orderNo">—</div>
-      <div class="done__label">Order Number · 주문번호</div>
-      <div class="summary" id="summaryBox"></div>
-      <div class="bank">
-        <div class="bank__title">입금 안내</div>
-        <div class="bank__amount"><span>입금하실 금액</span><strong id="payAmount">—</strong></div>
-        <div class="bank__row"><span class="k">은행</span><span class="bank__v">농협</span></div>
-        <div class="bank__row"><span class="k">계좌번호</span><span class="bank__v">3010294897501</span></div>
-        <div class="bank__row"><span class="k">예금주</span><span class="bank__v">농업회사법인 주식회사 에프엔엘바이오푸드</span></div>
-        <p class="bank__note">입금자명을 <strong>주문자 성함</strong>으로 해 주시면 확인이 빠릅니다. 입금이 확인되면 준비 후 <span id="fulfillWord">안내</span>를 드립니다. 주문번호로 <a href="order-status.html" style="color:var(--gold-dark);">주문 조회</a> 가능합니다.</p>
+<a href="order-status.html">주문 조회</a><a href="contact.html">고객센터</a>      <a href="account/">마이페이지</a>
+    </nav>
+  </div>
+</div>
+<main id="main" tabindex="-1">
+<script type="application/json" id="gift-data">{"slots": 4, "discount": 5000, "sets": {"jam": {"name": "장류 선물세트", "img": "giftset-jam.jpg", "alt": "장류 선물세트 구성", "allow": ["gochujang", "doenjang", "jam", "bibim-gochujang", "bibim-doenjang"], "def": [["gochujang", "300g"], ["doenjang", "300g"], ["jam", "muscat"], ["bibim-gochujang", "300g"]]}, "vinegar": {"name": "식초 선물세트", "img": "giftset-vinegar.jpg", "alt": "식초 선물세트 구성", "allow": ["vinegar", "eoganjang", "gochujang", "doenjang", "jam", "bibim-gochujang", "bibim-doenjang"], "def": [["vinegar", "vin_bipa"], ["gochujang", "300g"], ["doenjang", "300g"], ["eoganjang", "300ml"]]}}}</script>
+<div class="gift container" data-gift>
+  <nav class="crumbs crumbs--muted" aria-label="현재 위치">
+    <a href="index.html">홈</a><span aria-hidden="true">/</span>
+    <a href="products.html?cat=gift">선물세트</a>
+  </nav>
+  <header class="gift__head">
+    <p class="eyebrow eyebrow--accent">GIFT SET</p>
+    <h1 class="gift__title">선물세트 고르기</h1>
+    <p class="gift__lede">4가지를 직접 골라 담으시면 구성품 합산가에서 5,000원을 빼 드립니다.</p>
+  </header>
+
+  <section class="gift__sets" aria-labelledby="gift-sets-h">
+    <h2 class="gift__h" id="gift-sets-h"><span class="gift__step">1</span>세트 고르기</h2>
+    <div class="gift__set-list" role="radiogroup" aria-labelledby="gift-sets-h">
+      <button type="button" class="gift__set" role="radio" aria-checked="true" data-set="jam">
+        <span class="gift__set-img"><picture><source type="image/webp" srcset="images/v2/giftset-jam-480.webp 480w, images/v2/giftset-jam-960.webp 960w, images/v2/giftset-jam-1200.webp 1200w" sizes="(max-width: 768px) 50vw, 320px"><img src="images/v2/giftset-jam-960.jpg" srcset="images/v2/giftset-jam-480.jpg 480w, images/v2/giftset-jam-960.jpg 960w, images/v2/giftset-jam-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, 320px" width="960" height="720" alt="장류 선물세트 구성" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="gift__set-name">장류 선물세트</span>
+        <span class="gift__set-desc muted" data-set-desc="jam"></span>
+      </button>
+      <button type="button" class="gift__set" role="radio" aria-checked="false" data-set="vinegar">
+        <span class="gift__set-img"><picture><source type="image/webp" srcset="images/v2/giftset-vinegar-480.webp 480w, images/v2/giftset-vinegar-960.webp 960w, images/v2/giftset-vinegar-1200.webp 1200w" sizes="(max-width: 768px) 50vw, 320px"><img src="images/v2/giftset-vinegar-960.jpg" srcset="images/v2/giftset-vinegar-480.jpg 480w, images/v2/giftset-vinegar-960.jpg 960w, images/v2/giftset-vinegar-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, 320px" width="960" height="720" alt="식초 선물세트 구성" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="gift__set-name">식초 선물세트</span>
+        <span class="gift__set-desc muted" data-set-desc="vinegar"></span>
+      </button>
+    </div>
+  </section>
+
+  <section class="gift__build" aria-labelledby="gift-build-h">
+    <div class="gift__build-head">
+      <h2 class="gift__h" id="gift-build-h"><span class="gift__step">2</span>4칸 채우기</h2>
+      <button type="button" class="btn-small" data-gift-fill>추천 구성으로 채우기</button>
+    </div>
+    <ol class="gift__slots" data-slots aria-label="세트 구성 4칸"></ol>
+    <p class="gift__hint muted" data-gift-hint>칸을 누르면 담을 수 있는 상품이 아래에서 올라옵니다.</p>
+  </section>
+
+  <aside class="gift__sum" aria-labelledby="gift-sum-h">
+    <h2 class="gift__h" id="gift-sum-h"><span class="gift__step">3</span>세트 가격</h2>
+    <dl class="gift__dl">
+      <div><dt>구성품 합산가</dt><dd data-gift-goods>0원</dd></div>
+      <div><dt>선물세트 할인</dt><dd data-gift-off>−0원</dd></div>
+    </dl>
+    <div class="gift__total"><span>세트 가격</span><b data-gift-total>0원</b></div>
+    <p class="gift__note muted">택배비는 주문서에서 계산합니다(상품 합계 기준). 소속 할인이 있으면 구성품에 적용됩니다.</p>
+<p class="gift__note">[포장 안내 — 대표 확인]</p>    <p class="co__error" data-gift-err role="alert" hidden></p>
+    <div class="gift__btns">
+      <button type="button" class="btn btn--line" data-gift-cart disabled>장바구니 담기</button>
+      <button type="button" class="btn btn--dark" data-gift-buy disabled>바로 구매</button>
+    </div>
+    <p class="gift__note muted">구성품의 상품정보제공고시는 각 상품 화면 아래에서 보실 수 있습니다.</p>
+  </aside>
+</div>
+
+<div class="sheet" data-sheet hidden>
+  <div class="sheet__scrim" data-sheet-close></div>
+  <section class="sheet__panel" role="dialog" aria-modal="true" aria-labelledby="sheet-h" tabindex="-1">
+    <div class="sheet__head">
+      <h2 class="sheet__h" id="sheet-h"><span data-sheet-slot></span>번째 칸에 담을 상품</h2>
+      <button type="button" class="icon-btn" aria-label="닫기" data-sheet-close><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+    </div>
+    <ul class="sheet__list" data-sheet-list></ul>
+    <div class="sheet__opts" data-sheet-opts hidden>
+      <button type="button" class="sheet__back" data-sheet-back>← 상품 다시 고르기</button>
+      <p class="sheet__opt-h" data-sheet-opt-h></p>
+      <ul class="sheet__opt-list" data-sheet-opt-list></ul>
+    </div>
+  </section>
+</div>
+<noscript><p class="container">선물세트 고르기는 자바스크립트가 필요합니다. 전화(010-5126-7578)로 주문하실 수도 있습니다.</p></noscript>
+</main>
+<footer class="ft">
+  <div class="ft__navwrap">
+    <nav class="ft__nav container" aria-label="정책·안내">
+      <a href="story.html">영동에덴원 소개</a>
+<a href="terms.html">이용약관</a><a href="privacy.html" class="is-strong">개인정보처리방침</a><a href="refund.html">교환·반품·환불 안내</a>      <a href="order-status.html">주문 조회</a>
+      <a href="contact.html">단체·기업 구매 문의</a>
+    </nav>
+  </div>
+  <div class="ft__body container">
+    <div class="ft__brand">
+      <p class="ft__logo"><span class="logo__ko">영동에덴원</span><span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span></p>
+      <p class="ft__legal">
+        <span>농업회사법인 주식회사 에프엔엘바이오푸드 · 대표 길우관</span>
+        <span>충청북도 영동군 학산면 모리2길 3-1</span>
+        <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
+        <span>kwg7978@naver.com</span>
+<a href="privacy.html#revision-notice">개인정보처리방침·이용약관 개정 안내 (시행 2026년 10월 19일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
+      </p>
+    </div>
+    <div class="ft__cs">
+      <p class="ft__cs-h">고객센터</p>
+      <p class="ft__tel"><a href="tel:01051267578">010-5126-7578</a></p>
+<p class="ft__hours">월~금 10:00~19:00</p>      <div class="ft__sns">
+        <a href="https://blog.naver.com/gr_edenfarm" rel="noopener">블로그</a>
       </div>
     </div>
   </div>
-
-  <!-- 제품 선택 모달 (세트 허용 제품만, 옵션 2단계) -->
-  <div class="picker" id="picker"><div class="picker__panel">
-    <div class="picker__head">
-      <button class="picker__back" id="pickBack">←</button>
-      <div class="picker__title" id="pickTitle">제품 선택</div>
-    </div>
-    <div id="pickList"></div>
-    <button class="picker__close" id="pickClose">닫기</button>
-  </div></div>
-
-<script>
-  var API_BASE = (location.hostname.endsWith("yd-edenwon.com")) ? "https://api.yd-edenwon.com" : "";
-  var GIFT_DISCOUNT = 5000;
-
-  // 선물세트 2종: allow=담을 수 있는 제품 / def=기본 구성 4칸 (제품 key)
-  var SETS = [
-    { id:"jam", name:"장류 선물세트", desc:"장류와 잼으로 구성하는 선물세트", photo:"images/giftset-jam.jpg",
-      allow:["gochujang","doenjang","jam","bibim-gochujang","bibim-doenjang"],
-      def:["gochujang","doenjang","jam","bibim-gochujang"] },
-    { id:"vinegar", name:"식초 선물세트", desc:"발효의 초심(식초)을 중심으로 한 선물세트", photo:"images/giftset-vinegar.jpg",
-      allow:["vinegar","eoganjang","gochujang","doenjang","jam","bibim-gochujang","bibim-doenjang"],
-      def:["vinegar","gochujang","doenjang","eoganjang"] }
-  ];
-  var EMOJI = { vinegar:"🫗", doenjang:"🟤", gochujang:"🌶️", eoganjang:"🐟",
-    "bibim-doenjang":"🥢", "bibim-gochujang":"🥢", jam:"🍓" };
-
-  var CAT = {};          // key -> {key, name, emoji, options:[{id,label,price}]}
-  var selSet = null;     // 선택된 세트
-  var slots = [null,null,null,null];   // 각 칸: {key, opt} (opt=optionId)
-  var activeSlot = -1;
-  var orderMethod = "pickup";
-
-  var won = function(n){ return Number(n).toLocaleString("ko-KR") + "원"; };
-  var $ = function(id){ return document.getElementById(id); };
-  function optOf(key, opt){ var p=CAT[key]; if(!p) return null; var o=p.options.filter(function(x){return x.id===opt;})[0]; return o||p.options[0]; }
-  function slotInfo(s){ if(!s) return null; var p=CAT[s.key]; var o=optOf(s.key,s.opt); return p&&o?{name:p.name,emoji:p.emoji,img:imgFor(s.key,o.label),label:o.label,price:o.price,id:o.id,season:(o.season||"")}:null; }
-  function seasonBadge(season){ return season ? ('<span class="season-badge">'+season+' 한정</span>') : ""; }
-  function thumbHtml(img, emoji){ return '<img src="'+img+'" alt="" loading="lazy" onerror="this.remove()">'+(emoji||""); }
-  function imgFor(key, label){
-    if (key === "jam" && label) {
-      if (/샤인|머스캣/.test(label)) return "images/product-jam-shine-muscat.jpg";
-      if (/토마토/.test(label)) return "images/product-jam-tomato.jpg";
-      if (/복숭아/.test(label)) return "images/product-jam.jpg";
-    }
-    return (CAT[key] && CAT[key].img) || "";
-  }
-
-  // ---- 상품 로드 ----
-  (async function init(){
-    try {
-      var res = await fetch(API_BASE + "/api/products");
-      var data = await res.json();
-      if (!res.ok || !data.ok) throw new Error();
-      data.products.forEach(function(p){ CAT[p.key] = { key:p.key, name:p.name, emoji:(EMOJI[p.key]||"🫙"), img:"images/product-"+p.key+".jpg", options:p.options }; });
-      $("loading").style.display = "none";
-      $("content").style.display = "block";
-      renderSets(); fillProfile();
-      var pre = new URLSearchParams(location.search).get("set");
-      if (pre && SETS.some(function(s){ return s.id===pre; })) chooseSet(pre);
-    } catch(e) {
-      $("loading").textContent = "상품을 불러오지 못했습니다. 잠시 후 다시 시도하시거나 카카오톡으로 문의해 주세요.";
-    }
-  })();
-
-  // ---- 세트 카드 ----
-  function setDefaultSum(set){ return set.def.reduce(function(s,k){ var o=CAT[k]?CAT[k].options[0]:null; return s+(o?o.price:0); },0); }
-  function renderSets(){
-    $("sets").innerHTML = SETS.map(function(set){
-      var avail = set.def.every(function(k){ return CAT[k]; });
-      if (!avail) return "";
-      var names = set.def.map(function(k){ return CAT[k].name; }).join(" · ");
-      var sum = setDefaultSum(set);
-      return '<button type="button" class="set-card'+(selSet&&selSet.id===set.id?' sel':'')+'" data-set="'+set.id+'">'
-        + '<div class="set-card__photo">'+(set.photo?('<img src="'+set.photo+'" alt="'+set.name+'" loading="lazy" />'):'실제 세트 사진<br />(준비되면 교체)')+'</div>'
-        + '<div class="set-card__name">'+set.name+'</div>'
-        + '<div class="set-card__desc">기본 구성: '+names+'<br />'+won(Math.max(0,sum-GIFT_DISCOUNT))+' <span style="color:var(--ink-mute);">(5천원 할인 적용)</span></div>'
-        + '<span class="set-card__pick"></span></button>';
-    }).join("");
-    document.querySelectorAll("[data-set]").forEach(function(b){
-      b.addEventListener("click", function(){ chooseSet(b.dataset.set); });
-    });
-  }
-
-  function chooseSet(id){
-    var set = SETS.filter(function(s){ return s.id===id; })[0];
-    if (!set) return;
-    selSet = set;
-    slots = [0,1,2,3].map(function(i){ var k=set.def[i]; return (k&&CAT[k])?{key:k,opt:CAT[k].options[0].id}:null; });
-    document.querySelectorAll(".set-card").forEach(function(c){ c.classList.toggle("sel", c.dataset.set===id); });
-    $("boxTitle").textContent = set.name + " 구성";
-    $("boxWrap").classList.add("on");
-    renderBox(); renderTotal();
-    $("orderForm").classList.remove("on"); $("toOrderBtn").style.display = "block";
-    $("boxWrap").scrollIntoView({behavior:"smooth"});
-  }
-
-  // ---- 박스 ----
-  function renderBox(){
-    var html="";
-    for (var i=0;i<4;i++){
-      var info = slotInfo(slots[i]);
-      if (!info){
-        html += '<div class="slot" data-slot="'+i+'"><span class="slot__plus">+</span><span class="slot__add">제품 담기</span></div>';
-      } else {
-        html += '<div class="slot filled"><button class="slot__x" data-rm="'+i+'">×</button>'
-          + '<div class="slot__photo">'+thumbHtml(info.img,info.emoji)+'</div>'
-          + '<div class="slot__name">'+info.name+seasonBadge(info.season)+'</div>'
-          + '<div class="slot__size">'+info.label+' · <span class="slot__price">'+won(info.price)+'</span></div>'
-          + '<span class="slot__change" data-slot="'+i+'">변경</span></div>';
-      }
-    }
-    $("boxGrid").innerHTML = html;
-    document.querySelectorAll("[data-slot]").forEach(function(el){ el.addEventListener("click", function(e){ e.stopPropagation(); openPicker(+el.dataset.slot); }); });
-    document.querySelectorAll("[data-rm]").forEach(function(b){ b.addEventListener("click", function(e){ e.stopPropagation(); slots[+b.dataset.rm]=null; renderBox(); renderTotal(); }); });
-  }
-  function filledCount(){ return slots.filter(function(s){ return s; }).length; }
-  function productSum(){ return slots.reduce(function(s,sl){ var i=slotInfo(sl); return s+(i?i.price:0); },0); }
-  function renderTotal(){
-    var n=filledCount(), sum=productSum(), ready=(n===4);
-    $("amtSum").textContent = n? won(sum):"—";
-    $("amtTotal").textContent = ready? won(Math.max(0,sum-GIFT_DISCOUNT)):"—";
-    $("hint").style.display = ready? "none":"block";
-    $("hint").textContent = "제품 4종을 모두 담아 주세요 ("+n+"/4)";
-    $("toOrderBtn").disabled = !ready;
-  }
-
-  // ---- 제품 선택 모달 (세트 허용 제품 → 옵션 2단계) ----
-  function openPicker(i){ activeSlot=i; showProductList(); $("picker").classList.add("on"); }
-  function closePicker(){ $("picker").classList.remove("on"); activeSlot=-1; }
-  function showProductList(){
-    $("pickBack").classList.remove("on");
-    $("pickTitle").textContent = "제품 선택";
-    var keys = selSet.allow.filter(function(k){ return CAT[k]; });
-    $("pickList").innerHTML = keys.map(function(k){
-      var p = CAT[k];
-      var meta = (p.options.length>1) ? ('<span class="pick-item__meta">옵션 '+p.options.length+'개 →</span>')
-        : ('<span class="pick-item__price">'+won(p.options[0].price)+'</span>');
-      return '<button class="pick-item" data-prod="'+k+'"><span class="pick-item__thumb">'+thumbHtml(p.img,p.emoji)+'</span>'
-        + '<span class="pick-item__name">'+p.name+'</span>'+meta+'</button>';
-    }).join("");
-    document.querySelectorAll("[data-prod]").forEach(function(b){
-      b.addEventListener("click", function(){
-        var p = CAT[b.dataset.prod];
-        if (p.options.length === 1){ slots[activeSlot]={key:p.key,opt:p.options[0].id}; renderBox(); renderTotal(); closePicker(); }
-        else { showOptionList(p.key); }
-      });
-    });
-  }
-  function showOptionList(key){
-    var p = CAT[key];
-    $("pickBack").classList.add("on");
-    $("pickTitle").textContent = p.name + " 옵션";
-    $("pickList").innerHTML = p.options.map(function(o){
-      return '<button class="pick-item" data-opt="'+o.id+'"><span class="pick-item__thumb">'+thumbHtml(imgFor(p.key,o.label),p.emoji)+'</span>'
-        + '<span class="pick-item__name">'+o.label+seasonBadge(o.season||"")+'</span><span class="pick-item__price">'+won(o.price)+'</span></button>';
-    }).join("");
-    document.querySelectorAll("[data-opt]").forEach(function(b){
-      b.addEventListener("click", function(){ slots[activeSlot]={key:key,opt:b.dataset.opt}; renderBox(); renderTotal(); closePicker(); });
-    });
-  }
-  $("pickBack").addEventListener("click", showProductList);
-  $("pickClose").addEventListener("click", closePicker);
-  $("picker").addEventListener("click", function(e){ if (e.target===$("picker")) closePicker(); });
-
-  // ---- 주문 정보 입력 ----
-  $("toOrderBtn").addEventListener("click", function(){ $("orderForm").classList.add("on"); this.style.display="none"; $("orderForm").scrollIntoView({behavior:"smooth"}); });
-
-  document.querySelectorAll(".method-opt").forEach(function(b){
-    b.addEventListener("click", function(){
-      orderMethod = b.getAttribute("data-method");
-      document.querySelectorAll(".method-opt").forEach(function(x){ x.classList.remove("sel"); });
-      b.classList.add("sel");
-      var d = orderMethod==="delivery";
-      $("shipBlock").style.display = d?"block":"none";
-      $("notePickup").style.display = d?"none":"flex";
-      $("noteDelivery").style.display = d?"flex":"none";
-    });
-  });
-  $("sameAsOrderer").addEventListener("change", function(){ $("recipFields").style.display = this.checked?"none":"block"; });
-  $("findAddr").addEventListener("click", function(){
-    var zip=$("zip"), a1=$("addr1"), a2=$("addr2");
-    if (typeof daum==="undefined" || !daum.Postcode){ zip.removeAttribute("readonly"); a1.removeAttribute("readonly"); zip.placeholder="우편번호 직접 입력"; a1.placeholder="주소 직접 입력"; zip.focus(); return; }
-    new daum.Postcode({ oncomplete:function(d){ zip.value=d.zonecode; a1.value=d.roadAddress||d.jibunAddress; a2.focus(); } }).open();
-  });
-
-  // 인적사항 기억 (order/cart와 동일 저장소)
-  var PROFILE_KEY = "edenwon_profile";
-  function fillProfile(){
-    try { var p = JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"); } catch(e){ return; }
-    if (!p) return;
-    if (p.name) $("name").value = p.name;
-    if (p.phone) $("phone").value = p.phone;
-    if (p.recipSame === false){ $("sameAsOrderer").checked=false; $("recipFields").style.display="block"; if(p.recipName)$("recipName").value=p.recipName; if(p.recipPhone)$("recipPhone").value=p.recipPhone; }
-    if (p.zip) $("zip").value=p.zip; if (p.addr1) $("addr1").value=p.addr1; if (p.addr2) $("addr2").value=p.addr2;
-    if (p.method==="delivery"){ var db=document.querySelector('.method-opt[data-method="delivery"]'); if(db) db.click(); }
-  }
-  function saveProfile(){
-    var p = { name:$("name").value.trim(), phone:$("phone").value.trim(), method:orderMethod,
-      recipSame:$("sameAsOrderer").checked, recipName:$("recipName").value.trim(), recipPhone:$("recipPhone").value.trim(),
-      zip:$("zip").value.trim(), addr1:$("addr1").value.trim(), addr2:$("addr2").value.trim() };
-    if (!p.name && !p.phone) return;
-    try { localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); } catch(e){}
-  }
-
-  // ---- 제출 ----
-  $("submitBtn").addEventListener("click", async function(){
-    var err=$("formError"); err.classList.remove("show");
-    if (filledCount()!==4){ err.innerHTML="제품 4종을 모두 담아 주세요."; err.classList.add("show"); return; }
-    var name=$("name").value.trim(), digits=$("phone").value.replace(/\D/g,"");
-    var nameOk=name.length>0, phoneOk=digits.length>=10 && digits.length<=11;
-    $("f-name").classList.toggle("invalid", !nameOk);
-    $("f-phone").classList.toggle("invalid", !phoneOk);
-    var delivOk=true, deliv={ method:orderMethod, recipient_name:"", recipient_phone:"", zip:"", address1:"", address2:"" };
-    if (orderMethod==="delivery"){
-      var same=$("sameAsOrderer").checked;
-      var rName=same?name:$("recipName").value.trim(), rPhone=same?digits:$("recipPhone").value.replace(/\D/g,"");
-      var zipv=$("zip").value.trim(), a1=$("addr1").value.trim(), a2=$("addr2").value.trim();
-      var rNameOk=rName.length>0, rPhoneOk=rPhone.length>=10&&rPhone.length<=11, zipOk=zipv.length>0, a1Ok=a1.length>0, a2Ok=a2.length>0;
-      if (!same){ $("f-rname").classList.toggle("invalid",!rNameOk); $("f-rphone").classList.toggle("invalid",!rPhoneOk); }
-      $("f-zip").classList.toggle("invalid",!zipOk); $("f-addr1").classList.toggle("invalid",!a1Ok); $("f-addr2").classList.toggle("invalid",!a2Ok);
-      delivOk = rNameOk&&rPhoneOk&&zipOk&&a1Ok&&a2Ok;
-      deliv = { method:"delivery", recipient_name:rName, recipient_phone:rPhone, zip:zipv, address1:a1, address2:a2 };
-    }
-    if (!(nameOk&&phoneOk&&delivOk)){ var f=document.querySelector(".field.invalid input"); if(f)f.focus(); return; }
-
-    var items = slots.map(function(s){ return { product:s.key, option:s.opt, count:1 }; });
-    var btn=this; btn.disabled=true; btn.textContent="접수 중…";
-    try {
-      var res = await fetch(API_BASE + "/api/cart-order", {
-        method:"POST", headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({ name:name, phone:$("phone").value.trim(), memo:$("memo").value.trim(),
-          gift:true, items:items, method:deliv.method, recipient_name:deliv.recipient_name,
-          recipient_phone:deliv.recipient_phone, zip:deliv.zip, address1:deliv.address1, address2:deliv.address2 })
-      });
-      var data = await res.json();
-      if (!res.ok || !data.ok){ btn.disabled=false; btn.textContent="주문 접수하기"; err.innerHTML=data.error||"주문 접수 중 문제가 발생했습니다."; err.classList.add("show"); return; }
-      saveProfile();
-      var isDeliv = data.method==="delivery";
-      var rows = slots.map(function(s){ var i=slotInfo(s); return '<div class="summary__row"><span class="k">'+i.name+'</span><span class="v">'+i.label+'</span></div>'; });
-      rows.unshift('<div class="summary__row"><span class="k">선물세트</span><span class="v">'+selSet.name+'</span></div>');
-      rows.push('<div class="summary__row"><span class="k">수령 방법</span><span class="v">'+(isDeliv?"📦 택배":"🤲 자가수령")+'</span></div>');
-      if (isDeliv){
-        var recip = deliv.recipient_name + ((deliv.recipient_phone && deliv.recipient_phone!==digits)?(" · "+deliv.recipient_phone):"");
-        rows.push('<div class="summary__row"><span class="k">받는 분</span><span class="v">'+recip+'</span></div>');
-        rows.push('<div class="summary__row"><span class="k">배송지</span><span class="v">('+deliv.zip+') '+deliv.address1+' '+deliv.address2+'</span></div>');
-        rows.push('<div class="summary__row"><span class="k">배송비</span><span class="v">'+(data.shipping_fee?won(data.shipping_fee):"무료")+'</span></div>');
-      }
-      rows.push('<div class="summary__row"><span class="k" style="color:var(--gold-dark);">선물 할인</span><span class="v" style="color:var(--gold-dark);">−'+won(data.gift_discount||GIFT_DISCOUNT)+'</span></div>');
-      $("summaryBox").innerHTML = rows.join("");
-      $("orderNo").textContent = data.order_no;
-      $("payAmount").textContent = won(data.pay_amount!=null?data.pay_amount:data.amount);
-      $("fulfillWord").textContent = isDeliv?"택배 발송":"수령 안내";
-      $("buildStage").classList.add("hide");
-      $("doneStage").classList.add("on");
-      window.scrollTo({top:0,behavior:"smooth"});
-    } catch(e){ btn.disabled=false; btn.textContent="주문 접수하기"; err.innerHTML="지금 주문 접수가 어렵습니다. 잠시 후 다시 시도해 주세요."; err.classList.add("show"); }
-  });
-</script>
-<!-- ===== 영동에덴원 회원 위젯 (주문 페이지 공통: order/cart/giftset) ===== -->
-<!-- 사용법: 닫는 body 태그 바로 앞(장바구니 위젯 뒤)에 그대로 삽입.
-     기능: 1) 주문 전송에 회원 세션 자동 동반  2) 주문 성공 시 회원 주문 자동 연결(적립 대상)
-           3) 좌하단 회원 상태 칩 -->
-
-<style>
-  .cart-dock {
-    position: fixed; top: 50%; transform: translateY(-50%); right: 0; z-index: 95;
-    display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
-  }
-  .cart-fab, .status-fab {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--font-body, "Noto Sans KR", sans-serif);
-    cursor: pointer; text-decoration: none;
-    border-radius: 100px 0 0 100px;       /* 오른쪽 화면에 붙는 배너 */
-    padding: 0.7rem 1.1rem 0.7rem 1rem;
-    box-shadow: -4px 6px 20px rgba(42,31,20,0.18);
-    transition: background .2s ease, transform .2s ease, padding-right .2s ease;
-    transform: translateX(0);
-  }
-  .cart-fab { background: var(--ink, #2A1F14); color: var(--cream, #F4EDE0); font-size: 0.9rem; }
-  .cart-fab:hover { background: var(--gold-dark, #6B5532); transform: translateX(-2px); }
-  .status-fab {
-    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
-    border: 1px solid var(--border-strong, rgba(42,31,20,0.2)); border-right: none;
-    font-size: 0.84rem;
-  }
-  .status-fab:hover { background: var(--cream-dark, #E8DFCC); transform: translateX(-2px); }
-  .cart-fab__icon, .status-fab__icon { font-size: 1.02rem; line-height: 1; }
-  .cart-fab__label, .status-fab__label { white-space: nowrap; }
-  .cart-fab__badge {
-    min-width: 20px; height: 20px; padding: 0 6px; border-radius: 100px;
-    background: var(--cream, #F4EDE0); color: var(--ink, #2A1F14);
-    font-size: 0.78rem; font-weight: 700; display: none;
-    align-items: center; justify-content: center; line-height: 1;
-  }
-  .cart-fab__badge.on { display: inline-flex; }
-  /* 모바일: 우하단 작은 아이콘만 */
-  @media (max-width: 640px) {
-    .cart-dock { top: auto; transform: none; bottom: 16px; right: 16px; gap: 8px; align-items: flex-end; }
-    .cart-fab, .status-fab { border-radius: 100px; padding: 0.6rem 0.7rem; box-shadow: 0 4px 14px rgba(42,31,20,0.2); }
-    .cart-fab__label, .status-fab__label { display: none; }
-  }
-
-  </style>
-<script>
-(function () {
-  var MEMBER_API = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
-    ? "https://api.yd-edenwon.com" : "";
-  var dock = document.querySelector(".cart-dock");
-  var fab = document.createElement("a");
-  fab.className = "status-fab member-fab";
-  fab.id = "memberFab";
-  fab.style.display = "none";
-  fab.innerHTML = '<span class="status-fab__icon">\uD83C\uDF31</span>'
-    + '<span class="status-fab__label"></span>';
-  if (dock) { dock.appendChild(fab); }
-  else {
-    var dk = document.createElement("div");
-    dk.className = "cart-dock";
-    dk.appendChild(fab);
-    document.body.appendChild(dk);
-  }
-  var fabLabel = fab.querySelector(".status-fab__label");
-  if (!document.getElementById("memberFabCss")) {
-    var st = document.createElement("style");
-    st.id = "memberFabCss";
-    st.textContent = "@media (max-width:640px){"
-      + ".member-fab .status-fab__label{display:inline !important;}"
-      + ".member-fab{border-radius:100px !important;padding:0.6rem 0.95rem !important;}}";
-    document.head.appendChild(st);
-  }
-
-  // 1) 주문 전송에 세션 동반 + 성공 시 회원 주문 자동 연결
-  var _fetch = window.fetch;
-  window.fetch = function (url, init) {
-    var u = String(url);
-    var isOrder = u.indexOf("/api/orders") > -1 || u.indexOf("/api/cart-order") > -1;
-    if (isOrder) { init = init || {}; init.credentials = "include"; }
-    var p = _fetch(url, init);
-    if (isOrder) {
-      p.then(function (r) { return r.clone().json(); }).then(function (j) {
-        if (!j || j.ok === false) return;
-        var no = j.order_no || (JSON.stringify(j).match(/ED-[0-9]{8}-[A-Z0-9]+/) || [])[0];
-        if (!no) return;
-        _fetch(MEMBER_API + "/api/account/claim-order", {
-          method: "POST", credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ order_no: no })
-        }).catch(function () {});
-      }).catch(function () {});
-    }
-    return p;
-  };
-
-  // 2) 회원 상태 칩
-  var rate = "2";
-  _fetch(MEMBER_API + "/api/account/points-rate")
-    .then(function (r) { return r.json(); })
-    .then(function (j) { if (j.ok) rate = j.rate; })
-    .catch(function () {})
-    .then(function () {
-      return _fetch(MEMBER_API + "/api/account/me", { credentials: "include" });
-    })
-    .then(function (r) { return r.json(); })
-    .then(function (j) {
-      if (j && j.ok) {
-        fabLabel.textContent = "적립 " + rate + "%";
-        fab.title = j.account.name + "님 · 마이페이지";
-        fab.href = MEMBER_API + "/mypage";
-      } else {
-        fabLabel.textContent = "로그인";
-        fab.title = "로그인하고 주문하면 " + rate + "% 적립";
-        fab.href = MEMBER_API + "/login?next="
-          + encodeURIComponent("https://yd-edenwon.com" + location.pathname + location.search);
-      }
-      fab.style.display = "";
-    })
-    .catch(function () {});
-})();
-</script>
-<!-- ===== 회원 위젯 끝 ===== -->
-
-<!-- ===== 영동에덴원 카드결제 위젯 (토스페이먼츠) ===== -->
-<script src="https://js.tosspayments.com/v2/standard"></script>
-<style>
-  .pay-method { margin:18px 0 6px; padding:14px; background:#fffdf9;
-    border:1.5px solid #d9cfc0; border-radius:12px; }
-  .pay-method .pm-title { font-weight:700; font-size:.95rem; margin-bottom:8px; color:#2A1F14; }
-  .pay-method label { display:flex; align-items:center; gap:9px; padding:7px 2px;
-    font-size:.95rem; cursor:pointer; color:#2A1F14; }
-  .pay-method input { width:19px; height:19px; accent-color:#8B6F47; }
-  .pay-method .pm-note { font-size:.8rem; color:#8a7a64; margin-top:6px; }
-  .card-going { text-align:center; padding:16px 0 4px; font-size:.95rem; color:#2A1F14; }
-</style>
-<script>
-(function () {
-  var PAY_API = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
-    ? "https://api.yd-edenwon.com" : "";
-  var btn = document.getElementById("submitBtn");
-  if (!btn) return;
-
-  var box = document.createElement("div");
-  box.className = "pay-method";
-  box.innerHTML = '<div class="pm-title">결제 방법</div>'
-    + '<label><input type="radio" name="payMethod" value="bank" checked> 무통장 입금 (계좌이체)</label>'
-    + '<label id="pmCard"><input type="radio" name="payMethod" value="card"> 카드 결제 '
-    + '<span style="font-size:.78rem;color:#8B6F47;">(신용·체크카드)</span></label>'
-    + '<div class="pm-note" id="pmNote"></div>';
-  btn.parentNode.insertBefore(box, btn);
-
-  var tossPayments = null;
-  fetch(PAY_API + "/api/payment/config")
-    .then(function (r) { return r.json(); })
-    .then(function (j) {
-      if (j.ok && window.TossPayments) {
-        tossPayments = TossPayments(j.client_key);
-        if (j.mode === "test")
-          document.getElementById("pmNote").textContent =
-            "카드 결제는 현재 테스트 모드입니다 (실제 청구 없음).";
-      } else { document.getElementById("pmCard").style.display = "none"; }
-    })
-    .catch(function () { document.getElementById("pmCard").style.display = "none"; });
-
-  function payMethod() {
-    var el = document.querySelector('input[name="payMethod"]:checked');
-    return el ? el.value : "bank";
-  }
-
-  var _f = window.fetch;
-  window.fetch = function (url, init) {
-    var u = String(url);
-    var isOrder = u.indexOf("/api/orders") > -1 || u.indexOf("/api/cart-order") > -1;
-    if (isOrder && init && init.body && payMethod() === "card") {
-      try {
-        var ob = JSON.parse(init.body);
-        ob.payment_method = "카드";
-        init.body = JSON.stringify(ob);
-      } catch (e) {}
-    }
-    var p = _f(url, init);
-    if (isOrder && payMethod() === "card" && tossPayments) {
-      p.then(function (r) { return r.clone().json(); }).then(function (j) {
-        if (!j || j.ok === false || !j.order_no) return;
-        var total = (j.pay_amount != null) ? j.pay_amount
-                  : ((j.amount || 0) + (j.shipping_fee || 0));
-        var ph = (document.getElementById("phone") || {}).value || "";
-        _f(PAY_API + "/api/payment/intent", { method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ order_no: j.order_no, phone: ph }) }).catch(function () {});
-        try {
-          var bank = document.querySelector("#doneStage .bank");
-          if (bank) {
-            bank.style.display = "none";
-            var go = document.createElement("div");
-            go.className = "card-going";
-            go.id = "cardGoing";
-            go.textContent = "카드 결제창으로 이동합니다… 결제를 완료해 주세요.";
-            bank.parentNode.insertBefore(go, bank);
-          }
-        } catch (e) {}
-        (window.__edenPointsRequest
-          ? window.__edenPointsRequest(j.order_no, total)
-          : Promise.resolve(total)).then(function (finalTotal) {
-        tossPayments.payment({ customerKey: TossPayments.ANONYMOUS })
-          .requestPayment({
-            method: "CARD",
-            amount: { currency: "KRW", value: finalTotal },
-            orderId: j.order_no,
-            orderName: (j.product || "영동에덴원") + " 주문",
-            successUrl: PAY_API + "/payment/success",
-            failUrl: PAY_API + "/payment/fail"
-          })
-          .catch(function () {
-            _f(PAY_API + "/api/payment/abandon", { method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ order_no: j.order_no, phone: ph }) })
-            .then(function (r) { return r.json(); })
-            .then(function (res) {
-              var go = document.getElementById("cardGoing");
-              var bank = document.querySelector("#doneStage .bank");
-              if (res && res.ok) {
-                var chk = document.querySelector("#doneStage .done__check");
-                if (chk) { chk.textContent = "\u2715"; chk.style.background = "#8a7a64"; }
-                var st = document.getElementById("sumStatus");
-                if (st) st.textContent = "취소됨";
-                if (go) go.innerHTML = "카드 결제가 취소되어 <b>주문도 함께 취소</b>되었습니다."
-                  + "<br><a href='javascript:location.reload()' style='display:inline-block;margin-top:12px;"
-                  + "padding:11px 20px;background:#2A1F14;color:#F4EDE0;border-radius:9px;"
-                  + "text-decoration:none;font-weight:700;'>다시 주문하기</a>";
-              } else {
-                if (go) go.textContent = "카드 결제가 취소되었습니다. 아래 무통장 입금으로 진행해 주세요.";
-                if (bank) bank.style.display = "";
-                _f(PAY_API + "/api/payment/to-bank", { method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ order_no: j.order_no, phone: ph }) }).catch(function () {});
-              }
-            })
-            .catch(function () {
-              var bank = document.querySelector("#doneStage .bank");
-              if (bank) bank.style.display = "";
-                _f(PAY_API + "/api/payment/to-bank", { method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ order_no: j.order_no, phone: ph }) }).catch(function () {});
-            });
-          });
-        });
-      }).catch(function () {});
-    }
-    return p;
-  };
-})();
-</script>
-<!-- ===== 카드결제 위젯 끝 ===== -->
-
-<!-- ===== 영동에덴원 적립금 사용 위젯 ===== -->
-<style>
-  .points-box { margin:14px 0 6px; padding:13px 14px; background:#fffdf9;
-    border:1.5px solid #d9cfc0; border-radius:12px; display:none; }
-  .points-box .pb-top { display:flex; align-items:center; gap:8px; font-size:.95rem; }
-  .points-box .pb-top b { color:#8B6F47; }
-  .points-box .pb-use { display:none; margin-top:10px; align-items:center; gap:8px; }
-  .points-box .pb-use.show { display:flex; }
-  .points-box input[type=number] { width:110px; padding:9px 10px; font-size:1rem;
-    border:1.5px solid #d9cfc0; border-radius:8px; background:#fff; }
-  .points-box .pb-all { padding:8px 12px; font-size:.85rem; border:1.5px solid #8B6F47;
-    background:#fff; color:#8B6F47; border-radius:8px; cursor:pointer; }
-  .points-box .pb-note { font-size:.78rem; color:#8a7a64; margin-top:8px; }
-</style>
-<script>
-(function () {
-  var API = (location.hostname === "yd-edenwon.com" || location.hostname === "www.yd-edenwon.com")
-    ? "https://api.yd-edenwon.com" : "";
-  var balance = 0;
-  var box = document.createElement("div");
-  box.className = "points-box";
-  box.innerHTML = '<div class="pb-top"><span>\uD83C\uDF31 \uC801\uB9BD\uAE08</span>'
-    + '<b><span id="pbBal">0</span>\uC6D0</b>'
-    + '<label style="margin-left:auto;display:flex;align-items:center;gap:6px;cursor:pointer;">'
-    + '<input type="checkbox" id="pbChk" style="width:19px;height:19px;accent-color:#8B6F47;"> \uC0AC\uC6A9</label></div>'
-    + '<div class="pb-use" id="pbUse"><input type="number" id="pbAmt" min="0" step="10">'
-    + '<span>\uC6D0</span><button type="button" class="pb-all" id="pbAll">\uC804\uC561</button></div>'
-    + '<div class="pb-note">\uACB0\uC81C \uAE08\uC561(\uBC30\uC1A1\uBE44 \uD3EC\uD568)\uC5D0\uC11C \uCC28\uAC10\uB429\uB2C8\uB2E4.</div>';
-  var anchor = document.querySelector(".pay-method") || document.getElementById("submitBtn");
-  if (anchor) anchor.parentNode.insertBefore(box, anchor);
-
-  function won(n) { return (n || 0).toLocaleString("ko-KR"); }
-  fetch(API + "/api/account/me", { credentials: "include" })
-    .then(function (r) { return r.json(); })
-    .then(function (j) {
-      if (j && j.ok && j.account && j.account.points > 0) {
-        balance = j.account.points;
-        document.getElementById("pbBal").textContent = won(balance);
-        document.getElementById("pbAmt").value = balance;
-        document.getElementById("pbAmt").max = balance;
-        box.style.display = "block";
-      }
-    }).catch(function () {});
-  document.getElementById("pbChk").addEventListener("change", function () {
-    document.getElementById("pbUse").classList.toggle("show", this.checked);
-  });
-  document.getElementById("pbAll").addEventListener("click", function () {
-    document.getElementById("pbAmt").value = balance;
-  });
-
-  function chosenUse() {
-    if (!document.getElementById("pbChk").checked) return 0;
-    var v = parseInt(document.getElementById("pbAmt").value, 10) || 0;
-    return Math.max(0, Math.min(v, balance));
-  }
-
-  window.__edenPointsRequest = function (order_no, total) {
-    var use = chosenUse();
-    if (!use) return Promise.resolve(total);
-    return fetch(API + "/api/account/apply-points", {
-      method: "POST", credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ order_no: order_no, use_amount: use })
-    }).then(function (r) { return r.json(); })
-      .then(function (res) {
-        if (!res || !res.ok) return total;
-        var pa = document.getElementById("payAmount");
-        if (pa) pa.textContent = won(res.pay_amount);
-        var bank = document.querySelector("#doneStage .bank");
-        if (bank && !document.getElementById("pbApplied")) {
-          var note = document.createElement("p");
-          note.id = "pbApplied";
-          note.style.cssText = "font-size:.85rem;color:#8B6F47;margin-top:8px;";
-          note.textContent = "\uC801\uB9BD\uAE08 " + won(res.points_used)
-            + "\uC6D0\uC774 \uCC28\uAC10\uB418\uC5C8\uC2B5\uB2C8\uB2E4.";
-          bank.appendChild(note);
-        }
-        return res.pay_amount;
-      }).catch(function () { return total; });
-  };
-
-  // 무통장 흐름: 주문 성공 시 직접 적용
-  var _pf = window.fetch;
-  window.fetch = function (url, init) {
-    var u = String(url);
-    var isOrder = u.indexOf("/api/orders") > -1 || u.indexOf("/api/cart-order") > -1;
-    var p = _pf(url, init);
-    if (isOrder && chosenUse() > 0) {
-      p.then(function (r) { return r.clone().json(); }).then(function (j) {
-        if (!j || j.ok === false || !j.order_no) return;
-        var sel = document.querySelector('input[name="payMethod"]:checked');
-        if (!sel || sel.value !== "card") window.__edenPointsRequest(j.order_no, null);
-      }).catch(function () {});
-    }
-    return p;
-  };
-})();
-</script>
-<!-- ===== 적립금 위젯 끝 ===== -->
-
-  <footer class="edenwon-footer">
-    <div class="footer__brand">
-      <img src="images/logo-symbol-white.png" alt="" class="footer__symbol" />
-      <div class="footer__mark">영동에덴원</div>
-    </div>
-    <div class="footer__legal">
-      농업회사법인 주식회사 에프엔엘바이오푸드 <span class="footer__sep">|</span> 대표 길우관<br />
-      사업자등록번호 550-87-01994 <span class="footer__sep">|</span> 통신판매업 2021-충북영동-0123<br />
-      충청북도 영동군 학산면 모리2길 3-1<br />
-      010-5126-7578 <span class="footer__sep">|</span> kwg7978@naver.com<br />
-      <a href="terms.html">이용약관</a> <span class="footer__sep">|</span>
-      <a href="privacy.html">개인정보처리방침</a> <span class="footer__sep">|</span>
-      <a href="refund.html">교환·반품·환불 안내</a><br />
-      <span style="opacity:0.5;">ⓒ 2026 영동에덴원 · All rights reserved.</span>
-    </div>
-  </footer>
+</footer>
 </body>
 </html>

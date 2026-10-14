@@ -102,6 +102,12 @@
       return true;
     },
     _n: null,
+    addGift: function (set, items) {   // 세트는 한 묶음이 한 줄(합치지 않음)
+      var c = Cart.read();
+      c.push({ gift: set, items: items.map(function (x) { return { key: x.key, option: x.option }; }), qty: 1, checked: true });
+      Cart.write(c);
+      return true;
+    },
     render: function () {
       var n = Cart.count(), up = Cart._n !== null && n > Cart._n;
       Cart._n = n;
@@ -619,6 +625,37 @@
   }
   var root = function () { return document.documentElement.getAttribute("data-root") || ""; };
 
+  /* ── 선물세트 묶음(2-B-3 개정 2-3): 장바구니 줄 {gift:"jam", items:[{key, option}×4], qty:1, checked}.
+     세트 정의(허용 품목·할인)는 products.json 의 gift(서버 GIFT_SETS 와 같은 값). 금액은 표시용 — 주문 때 서버가 다시 정한다. ── */
+  function giftView(P, it) {
+    var G = P && P.gift, d = G && G.sets[it.gift];
+    if (!d || !Array.isArray(it.items) || it.items.length !== G.slots) return null;
+    var parts = [], sum = 0, so = false;
+    for (var k = 0; k < it.items.length; k++) {
+      var x = it.items[k], h = x && optOf(P, x.key, x.option);
+      if (!h || d.allow.indexOf(x.key) < 0) return null;
+      parts.push(h); sum += h.o.price; so = so || !!h.o.sold_out;
+    }
+    var off = Math.min(G.discount, sum);
+    return { name: d.name, img: d.img, href: "giftset.html?set=" + it.gift, parts: parts, sum: sum, off: off, price: sum - off, so: so,
+             label: parts.map(function (h) { return h.p.name + " " + h.o.label; }).join(" · ") };
+  }
+  function lineInfo(P, it) {   // 장바구니·주문서 공통: 일반 줄과 세트 줄을 같은 모양으로
+    if (it && it.gift) {
+      var g = giftView(P, it);
+      return g && { gift: g, name: g.name, opt: "구성 " + g.parts.length + "가지", price: g.price, so: g.so, img: g.img, href: g.href };
+    }
+    var h = it && optOf(P, it.key, it.option);
+    return h && { name: h.p.name, opt: h.o.label, price: h.o.price, so: !!h.o.sold_out, img: h.p.img, href: h.p.href, h: h };
+  }
+  function giftList(g) {
+    var ul = document.createElement("ul"); ul.className = "set-parts";
+    g.parts.forEach(function (h) {
+      var li = document.createElement("li"); li.textContent = h.p.name + " " + h.o.label + (h.o.sold_out ? " (품절)" : ""); ul.appendChild(li);
+    });
+    return ul;
+  }
+
   /* ── 장바구니 (Cart2) ── */
   function initCartPage(page) {
     var list = page.querySelector("[data-cart-list]"), tpl = document.getElementById("cart-row");
@@ -633,32 +670,38 @@
       list.innerHTML = "";
       var sub = 0, sel = 0, avail = 0;
       items.forEach(function (it, i) {
-        var hit = optOf(P, it.key, it.option), so = hit.o.sold_out;
+        var hit = lineInfo(P, it), so = hit.so;
         var row = tpl.content.firstElementChild.cloneNode(true);
-        var name = hit.p.name, opt = hit.o.label;
+        var name = hit.name, opt = hit.opt;
         row.classList.toggle("is-soldout", so);
-        row.querySelectorAll("[data-row-link]").forEach(function (a) { a.href = root() + hit.p.href; });
-        row.querySelector(".crow__img img").src = root() + "images/v2/" + hit.p.img.replace(/\.jpg$/, "") + "-480.jpg";
+        row.querySelectorAll("[data-row-link]").forEach(function (a) { a.href = root() + hit.href; });
+        row.querySelector(".crow__img img").src = root() + "images/v2/" + hit.img.replace(/\.jpg$/, "") + "-480.jpg";
         row.querySelector(".crow__name").textContent = name;
-        row.querySelector(".crow__opt").textContent = opt + " · " + won(hit.o.price);
+        row.querySelector(".crow__opt").textContent = opt + " · " + won(hit.price);
+        if (hit.gift) {   // 세트: 펼치면 구성이 보인다
+          var dt = document.createElement("details"), sm = document.createElement("summary");
+          dt.className = "crow__set"; sm.textContent = "구성 보기 · 합산가 " + won(hit.gift.sum) + "에서 " + won(hit.gift.off) + " 할인";
+          dt.appendChild(sm); dt.appendChild(giftList(hit.gift));
+          row.querySelector(".crow__opt").insertAdjacentElement("afterend", dt);
+        }
         row.querySelector(".crow__soldout").hidden = !so;
         var chk = row.querySelector("[data-row-check]");
         chk.checked = !so && it.checked !== false; chk.disabled = so;
         chk.setAttribute("aria-label", name + " " + opt + " 선택");
         row.querySelector(".qty__n").textContent = String(it.qty);
-        row.querySelector(".crow__sum").textContent = won(hit.o.price * it.qty);
+        row.querySelector(".crow__sum").textContent = won(hit.price * it.qty);
         var dec = row.querySelector("[data-dec]"), inc = row.querySelector("[data-inc]"), del = row.querySelector("[data-row-del]");
         dec.setAttribute("aria-label", name + " " + opt + " 수량 줄이기");
         inc.setAttribute("aria-label", name + " " + opt + " 수량 늘리기");
         del.setAttribute("aria-label", name + " " + opt + " 삭제");
-        dec.disabled = it.qty <= 1 || so; inc.disabled = it.qty >= Cart.MAX_QTY || so;
+        dec.disabled = it.qty <= 1 || so; inc.disabled = it.qty >= Cart.MAX_QTY || so || !!it.gift;   // 세트는 한 줄에 1개(더 담으면 새 줄)
         function upd(f, focus) { var cur = Cart.read(); f(cur); Cart.write(cur); render(focus); }
         chk.addEventListener("change", function () { upd(function (c) { c[i].checked = chk.checked; }); });
         dec.addEventListener("click", function () { upd(function (c) { c[i].qty = Math.max(1, c[i].qty - 1); }, { i: i, s: "[data-dec]" }); });
         inc.addEventListener("click", function () { upd(function (c) { c[i].qty = Math.min(Cart.MAX_QTY, c[i].qty + 1); }, { i: i, s: "[data-inc]" }); });
         del.addEventListener("click", function () { upd(function (c) { c.splice(i, 1); }, { s: "[data-check-all]" }); });
         list.appendChild(row);
-        if (!so) { avail++; if (chk.checked) { sel++; sub += hit.o.price * it.qty; } }
+        if (!so) { avail++; if (chk.checked) { sel++; sub += hit.price * it.qty; } }
       });
       page.querySelector("[data-sel-count]").textContent = String(sel);
       page.querySelector("[data-line-count]").textContent = String(items.length);
@@ -672,22 +715,22 @@
     }
     all.addEventListener("change", function () {
       var c = Cart.read();
-      c.forEach(function (it) { var h = optOf(P, it.key, it.option); if (h && !h.o.sold_out) it.checked = all.checked; });
+      c.forEach(function (it) { var h = lineInfo(P, it); if (h && !h.so) it.checked = all.checked; });
       Cart.write(c); render();
     });
     page.querySelector("[data-del-selected]").addEventListener("click", function () {
-      var c = Cart.read().filter(function (it) { var h = optOf(P, it.key, it.option); return h.o.sold_out || it.checked === false; });
+      var c = Cart.read().filter(function (it) { var h = lineInfo(P, it); return h.so || it.checked === false; });
       Cart.write(c); render({ s: "[data-check-all]" });
     });
     function go(e, onlySelected) {
-      var ok = Cart.read().some(function (it) { var h = optOf(P, it.key, it.option); return !h.o.sold_out && (!onlySelected || it.checked !== false); });
+      var ok = Cart.read().some(function (it) { var h = lineInfo(P, it); return !h.so && (!onlySelected || it.checked !== false); });
       if (!ok) { e.preventDefault(); say(onlySelected ? "주문할 상품을 골라 주세요." : "주문할 수 있는 상품이 없습니다(품절)."); }
     }
     page.querySelector("[data-go-selected]").addEventListener("click", function (e) { go(e, true); });
     page.querySelector("[data-go-all]").addEventListener("click", function (e) { go(e, false); });
     loadProducts(page.getAttribute("data-products")).then(function (data) {
       P = data;
-      var c = Cart.read(), kept = c.filter(function (it) { return optOf(P, it.key, it.option) && it.qty > 0; });
+      var c = Cart.read(), kept = c.filter(function (it) { return lineInfo(P, it) && it.qty > 0; });
       if (kept.length !== c.length) {
         Cart.write(kept);
         notice.textContent = "판매가 끝났거나 바뀐 상품 " + (c.length - kept.length) + "개를 장바구니에서 뺐습니다.";
@@ -717,7 +760,7 @@
   function initCheckout(page) {
     var form = page.querySelector("[data-co-form]"), empty = page.querySelector("[data-co-empty]");
     var FEE = +page.getAttribute("data-ship-fee"), FREE = +page.getAttribute("data-ship-free");
-    var u = new URLSearchParams(location.search), lines = [], fromBuyNow = u.get("buy") === "now";
+    var u = new URLSearchParams(location.search), lines = [], gifts = [], fromBuyNow = u.get("buy") === "now";
     var $ = function (s) { return form.querySelector(s); };
     var member = null, q = null, qSeq = 0, qTimer = null, busy = false, pending = null, idem = API ? newKey() : "";
     var btn = $("[data-co-submit]"), errBox = $("[data-co-error]"), failBox = $("[data-cardfail]");
@@ -732,17 +775,23 @@
     function pay() { return $("[data-pay]:checked").value; }
     function ptsVal() { var el = $("[data-pts]"); return el ? parseInt(digitsOf(el.value) || "0", 10) : 0; }
     function reqLines() { return lines.map(function (l) { return { key: l.key, option_id: l.o.id, qty: l.qty }; }); }
+    function reqGifts() {   // 선물세트 묶음(서버 /api/v2 의 gifts). 세트 한 줄 = 묶음 1개
+      return gifts.map(function (g) { return { set: g.it.gift, items: g.it.items.map(function (x) { return { key: x.key, option_id: x.option }; }) }; });
+    }
+    function withGifts(b) { if (gifts.length) b.gifts = reqGifts(); return b; }
     function say(t) { if (!errBox) return; errBox.textContent = t; errBox.hidden = !t; }
     function localQuote() {
-      var goods = 0; lines.forEach(function (l) { goods += l.o.price * l.qty; });
-      var s = ship() === "parcel" && goods < FREE ? FEE : 0;
-      return { goods: goods, discount: 0, shipping: s, points: 0, amount: goods + s };
+      var goods = 0, gift = 0; lines.forEach(function (l) { goods += l.o.price * l.qty; });
+      gifts.forEach(function (g) { goods += g.v.sum; gift += g.v.off; });
+      var s = ship() === "parcel" && goods < FREE ? FEE : 0;   // 배송비는 선물세트 할인 전 금액 기준(기존 선물세트 주문과 같게)
+      return { goods: goods, discount: 0, gift: gift, shipping: s, points: 0, amount: goods - gift + s, giftOk: true };
     }
     function paint() {
       var v = q || localQuote(), parcel = ship() === "parcel", after = v.goods - v.discount;
       $("[data-co-subtotal]").textContent = won(v.goods);
       $("[data-co-ship]").textContent = parcel ? (v.shipping ? won(v.shipping) : "무료") : "0원 (직접 수령)";
       $("[data-co-disc]").textContent = "−" + won(v.discount);
+      $("[data-co-gift-row]").hidden = !v.gift; $("[data-co-gift]").textContent = "−" + won(v.gift || 0);
       $("[data-co-seg]").textContent = v.seg ? " (" + v.seg + ")" : "";
       $("[data-co-pts]").textContent = "−" + won(v.points);
       var hint = $("[data-co-freehint]");
@@ -769,16 +818,18 @@
       clearTimeout(qTimer);
       qTimer = setTimeout(function () {
         var my = ++qSeq;
-        call("POST", "/api/v2/quote", { lines: reqLines(), receive: { method: ship() }, buyer: { phone: $("#buyer-phone").value },
-                                         points_use: ptsVal() }, true).then(function (j) {
+        call("POST", "/api/v2/quote", withGifts({ lines: reqLines(), receive: { method: ship() }, buyer: { phone: $("#buyer-phone").value },
+                                         points_use: ptsVal() }), true).then(function (j) {
           if (my !== qSeq) return;
           if (j.ok) {
             var b = j.breakdown;
-            q = { goods: b.goods, discount: b.discount, shipping: b.shipping, points: b.points, amount: j.amount, max: j.points_max,
-                  seg: j.segment && member && member.segment_label ? member.segment_label : "" };
+            q = { goods: b.goods, discount: b.discount, gift: b.gift || 0, shipping: b.shipping, points: b.points, amount: j.amount, max: j.points_max,
+                  seg: j.segment && member && member.segment_label ? member.segment_label : "",
+                  giftOk: !gifts.length || typeof b.gift === "number" };   // 세트를 모르는 서버면 할인이 빠진다 — 접수를 막는다
+            if (!q.giftOk) { say("지금은 선물세트 주문을 받을 수 없습니다. 잠시 뒤 다시 시도하시거나 전화로 주문해 주세요."); errBox.setAttribute("data-from", "quote"); }
             var el = $("[data-pts]");
             if (el && ptsVal() !== b.points) el.value = String(b.points);
-            if (errBox && errBox.getAttribute("data-from") === "quote") say("");
+            if (errBox && errBox.getAttribute("data-from") === "quote" && (!gifts.length || typeof b.gift === "number")) say("");
             affNotes(j.lines);
           } else {
             q = null;
@@ -933,6 +984,7 @@
       e.preventDefault();
       if (!API || busy || pending) return;
       if (!validate()) return;
+      if (gifts.length && !(q && q.giftOk)) { say("선물세트 금액을 확인하는 중입니다. 잠시 뒤 다시 눌러 주세요."); requote(true); return; }
       setBusy(true); say("");
       var body = {
         idempotency_key: idem, lines: reqLines(),
@@ -940,6 +992,7 @@
         receive: { method: ship(), memo: memo(), recipient: { name: $("#rcv-name").value.trim(), phone: $("#rcv-phone").value,
                    zip: $("#zip").value.trim(), addr1: $("#addr1").value.trim(), addr2: $("#addr2").value.trim() } },
         payment: { method: pay() }, points_use: q ? q.points : 0, agree: true };
+      withGifts(body);
       call("POST", "/api/v2/orders", body, true).then(function (j) {
         if (!j.ok) {
           setBusy(false);
@@ -947,7 +1000,8 @@
           if (j.code === "points" || j.code === "sold_out") requote(true);
           return;
         }
-        pending = { order_no: j.order_no, view_token: j.view_token, phone: body.buyer.phone, buynow: fromBuyNow, items: body.lines };
+        pending = { order_no: j.order_no, view_token: j.view_token, phone: body.buyer.phone, buynow: fromBuyNow, items: body.lines,
+                    gifts: gifts.map(function (g) { return g.it; }) };
         try { sessionStorage.setItem(PENDING, JSON.stringify(pending)); } catch (e2) {}
         saveBook().then(function () { if (j.next === "card") startCard(); else goDone(); });
       }, function () {
@@ -985,11 +1039,16 @@
     loadProducts(page.getAttribute("data-products")).then(function (P) {
       var src = source(), dropped = 0;
       src.forEach(function (it) {
+        if (it && it.gift) {
+          var gv = giftView(P, it);
+          if (!gv || gv.so) { dropped++; return; }
+          gifts.push({ it: it, v: gv }); return;
+        }
         var h = optOf(P, it.key, it.option);
         if (!h || h.o.sold_out || !(it.qty > 0)) { dropped++; return; }
         lines.push({ key: it.key, p: h.p, o: h.o, qty: Math.min(Cart.MAX_QTY, it.qty) });
       });
-      if (!lines.length) { empty.hidden = false; return; }
+      if (!lines.length && !gifts.length) { empty.hidden = false; return; }
       form.hidden = false;
       var ul = $("[data-co-items]"), tpl = document.getElementById("co-item"), n = 0;
       lines.forEach(function (l) {
@@ -1001,7 +1060,15 @@
         ul.appendChild(li); l.li = li;
         n += l.qty;
       });
-      $("[data-co-count]").textContent = lines.length + "종 · " + n + "개";
+      gifts.forEach(function (g) {
+        var li = tpl.content.firstElementChild.cloneNode(true);
+        li.querySelector("img").src = root() + "images/v2/" + g.v.img.replace(/\.jpg$/, "") + "-480.jpg";
+        li.querySelector(".co__item-name").textContent = g.v.name;
+        li.querySelector(".co__item-opt").textContent = g.v.label + " · 합산가에서 " + won(g.v.off) + " 할인";
+        li.querySelector(".co__item-sum").textContent = won(g.v.price);
+        ul.appendChild(li); n += 1;
+      });
+      $("[data-co-count]").textContent = (lines.length + gifts.length) + "종 · " + n + "개";
       if (dropped) { var nt = $("[data-co-notice]"); nt.textContent = "품절이거나 판매가 끝난 상품 " + dropped + "개는 주문서에서 뺐습니다."; nt.hidden = false; }
       paint();
       if (API) {
@@ -1024,7 +1091,10 @@
     if (!p || p.order_no !== no) return;
     if (p.buynow) { try { sessionStorage.removeItem("edenwon_buynow_v2"); } catch (e) {} }
     else {
+      var sig = function (g) { return g.gift + ":" + g.items.map(function (x) { return x.key + "/" + x.option; }).join(","); };
+      var done = (p.gifts || []).map(sig);
       Cart.write(Cart.read().filter(function (it) {
+        if (it.gift) { var k = done.indexOf(sig(it)); if (k >= 0) { done.splice(k, 1); return false; } return true; }
         return !p.items.some(function (l) { return l.key === it.key && l.option_id === it.option; });
       }));
     }
@@ -1140,6 +1210,142 @@
     load(1);
   }
 
+  /* ── 선물세트 고르기(2-B-3 개정 2-3): 세트 2종 · 4칸 · 칸을 누르면 아래에서 시트(허용 품목만, 품절은 흐리게·선택 불가, 옵션이 있으면 옵션까지).
+     구성품 합 − 할인을 바로 보여 주고, 담기(장바구니 한 줄) · 바로 구매. 주소 ?set= 으로 세트를 고른다(옛 giftset.html 링크 그대로). ── */
+  function initGift(page) {
+    var sheet = document.querySelector("[data-sheet]"), panel = sheet.querySelector(".sheet__panel");
+    var slotsEl = page.querySelector("[data-slots]"), err = page.querySelector("[data-gift-err]");
+    var P = null, G = null, set = null, picks = [], cur = -1, lastFocus = null;
+    var want = new URLSearchParams(location.search).get("set");
+    function d() { return G.sets[set]; }
+    function img(h) { return root() + "images/v2/" + h.p.img.replace(/\.jpg$/, "") + "-480.jpg"; }
+    function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+    function choose(id) {
+      if (!G.sets[id]) id = Object.keys(G.sets)[0];
+      set = id; picks = new Array(G.slots).fill(null);
+      page.querySelectorAll("[data-set]").forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-set") === id ? "true" : "false"); });
+      paint();
+    }
+    function paint() {
+      slotsEl.innerHTML = "";
+      var sum = 0, n = 0;
+      picks.forEach(function (x, i) {
+        var li = el("li", "gift__slot-li"), b = el("button", "gift__slot" + (x ? " is-full" : ""));
+        b.type = "button"; b.setAttribute("data-slot", i);
+        if (x) {
+          var h = optOf(P, x.key, x.option);
+          var im = document.createElement("img"); im.src = img(h); im.alt = ""; im.width = 240; im.height = 240; im.loading = "lazy";
+          b.appendChild(im);
+          b.appendChild(el("span", "sr-only", (i + 1) + "번째 칸: "));
+          var t = el("span", "gift__slot-t"); t.appendChild(el("span", "gift__slot-n", h.p.name)); t.appendChild(el("span", "gift__slot-o muted", h.o.label + " · " + won(h.o.price)));
+          b.appendChild(t); b.appendChild(el("span", "gift__slot-ch", "바꾸기"));
+          sum += h.o.price; n++;
+        } else {
+          b.appendChild(el("span", "gift__slot-plus", "+"));
+          b.appendChild(el("span", "gift__slot-empty", (i + 1) + "번째 칸 고르기"));
+        }
+        b.addEventListener("click", function () { open(i, b); });
+        li.appendChild(b); slotsEl.appendChild(li);
+      });
+      var full = n === G.slots, off = full ? Math.min(G.discount, sum) : 0;
+      page.querySelector("[data-gift-goods]").textContent = won(sum);
+      page.querySelector("[data-gift-off]").textContent = "−" + won(off);
+      page.querySelector("[data-gift-total]").textContent = won(sum - off);
+      page.querySelector("[data-gift-hint]").textContent = full ? "구성을 다 고르셨습니다. 칸을 누르면 바꿀 수 있습니다." : (G.slots - n) + "칸 남았습니다. 칸을 누르면 담을 수 있는 상품이 아래에서 올라옵니다.";
+      page.querySelector("[data-gift-cart]").disabled = !full; page.querySelector("[data-gift-buy]").disabled = !full;
+      err.hidden = true;
+    }
+    function open(i, from) {
+      cur = i; lastFocus = from;
+      sheet.querySelector("[data-sheet-slot]").textContent = String(i + 1);
+      var ul = sheet.querySelector("[data-sheet-list]"); ul.innerHTML = ""; ul.hidden = false;
+      sheet.querySelector("[data-sheet-opts]").hidden = true;
+      d().allow.forEach(function (k) {
+        var p = P.products[k]; if (!p) return;
+        var avail = p.options.filter(function (o) { return !o.sold_out; });
+        var li = el("li"), b = el("button", "sheet__item" + (avail.length ? "" : " is-soldout"));
+        b.type = "button"; b.disabled = !avail.length;
+        var im = document.createElement("img"); im.src = root() + "images/v2/" + p.img.replace(/\.jpg$/, "") + "-480.jpg"; im.alt = ""; im.width = 96; im.height = 96; im.loading = "lazy";
+        var prices = (avail.length ? avail : p.options).map(function (o) { return o.price; }).sort(function (a, b2) { return a - b2; });
+        b.appendChild(im);
+        var t = el("span", "sheet__t"); t.appendChild(el("span", "sheet__n", p.name));
+        t.appendChild(el("span", "sheet__p muted", avail.length ? won(prices[0]) + (prices[0] !== prices[prices.length - 1] ? "~" : "") + (p.options.length > 1 ? " · 옵션 " + p.options.length + "가지" : "") : "품절"));
+        b.appendChild(t);
+        b.addEventListener("click", function () { if (p.options.length === 1) pick(k, p.options[0].id); else opts(k); });
+        li.appendChild(b); ul.appendChild(li);
+      });
+      sheet.hidden = false; document.body.classList.add("sheet-open");
+      requestAnimationFrame(function () { sheet.classList.add("is-open"); var f = ul.querySelector("button:not([disabled])"); (f || panel).focus(); });
+    }
+    function opts(k) {
+      var p = P.products[k], box = sheet.querySelector("[data-sheet-opts]"), ul = box.querySelector("[data-sheet-opt-list]");
+      sheet.querySelector("[data-sheet-list]").hidden = true; box.hidden = false;
+      box.querySelector("[data-sheet-opt-h]").textContent = p.name + " — 옵션을 골라 주세요";
+      ul.innerHTML = "";
+      p.options.forEach(function (o) {
+        var li = el("li"), b = el("button", "sheet__opt" + (o.sold_out ? " is-soldout" : ""), o.label + " · " + (o.sold_out ? "품절" : won(o.price)));
+        b.type = "button"; b.disabled = !!o.sold_out;
+        b.addEventListener("click", function () { pick(k, o.id); });
+        li.appendChild(b); ul.appendChild(li);
+      });
+      var f = ul.querySelector("button:not([disabled])"); if (f) f.focus();
+    }
+    function close() {
+      sheet.classList.remove("is-open"); document.body.classList.remove("sheet-open");
+      sheet.hidden = true;
+      var t = slotsEl.querySelector('[data-slot="' + cur + '"]') || lastFocus; if (t) t.focus();
+    }
+    function pick(k, id) { picks[cur] = { key: k, option: id }; var i = cur; paint(); cur = i; close(); }
+    sheet.querySelectorAll("[data-sheet-close]").forEach(function (b) { b.addEventListener("click", close); });
+    sheet.querySelector("[data-sheet-back]").addEventListener("click", function () {
+      sheet.querySelector("[data-sheet-opts]").hidden = true; var ul = sheet.querySelector("[data-sheet-list]"); ul.hidden = false;
+      var f = ul.querySelector("button:not([disabled])"); if (f) f.focus();
+    });
+    sheet.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { e.preventDefault(); close(); return; }
+      if (e.key !== "Tab") return;
+      var f = [].filter.call(panel.querySelectorAll("button:not([disabled])"), function (x) { return x.offsetParent !== null; });
+      if (!f.length) return;
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    });
+    page.querySelectorAll("[data-set]").forEach(function (b) {
+      b.addEventListener("click", function () { if (b.getAttribute("aria-checked") !== "true") choose(b.getAttribute("data-set")); });
+    });
+    page.querySelector("[data-gift-fill]").addEventListener("click", function () {
+      d().def.forEach(function (x, i) {
+        var p = P.products[x[0]]; if (!p || i >= G.slots) return;
+        var o = p.options.filter(function (o) { return o.id === x[1] && !o.sold_out; })[0] || p.options.filter(function (o) { return !o.sold_out; })[0];
+        if (o && !picks[i]) picks[i] = { key: x[0], option: o.id };
+      });
+      paint();
+    });
+    function ready() {
+      var bad = picks.some(function (x) { var h = x && optOf(P, x.key, x.option); return !h || h.o.sold_out; });
+      if (bad || picks.length !== G.slots) { err.textContent = "품절이거나 고르지 않은 칸이 있습니다."; err.hidden = false; return false; }
+      return true;
+    }
+    page.querySelector("[data-gift-cart]").addEventListener("click", function (e) {
+      if (!ready()) return;
+      Cart.addGift(set, picks);
+      Added.show(d().name + " 1세트(구성 " + G.slots + "가지)", e.currentTarget);
+      choose(set);
+    });
+    page.querySelector("[data-gift-buy]").addEventListener("click", function () {
+      if (!ready()) return;
+      try { sessionStorage.setItem("edenwon_buynow_v2", JSON.stringify({ at: Date.now(), items: [{ gift: set, items: picks.slice(), qty: 1, checked: true }] })); } catch (e) {}
+      location.href = root() + "checkout.html?buy=now";
+    });
+    loadProducts(root() + "assets/v2/products.json").then(function (data) {
+      P = data; G = P.gift;
+      Object.keys(G.sets).forEach(function (id) {
+        var x = page.querySelector('[data-set-desc="' + id + '"]');
+        if (x) x.textContent = G.sets[id].allow.map(function (k) { return P.products[k] ? P.products[k].name : k; }).join(" · ") + " 중에서 " + G.slots + "가지";
+      });
+      choose(want);
+    });
+  }
+
   /* ── 옛 장바구니 옮기기(2-C L3): 옛 화면의 edenwon_cart 에 담긴 것을 새 장바구니로 한 번만 옮긴다.
      옛 값은 지우지 않는다(되돌리기 때 옛 화면 장바구니가 그대로 남게) — 옮긴 내용을 edenwon_cart_moved 에 적어 같은 내용은 다시 옮기지 않는다.
      공개 중인 상품·옵션(products.json + 실시간 값)이고 품절이 아닌 것만. 못 옮긴 것이 있으면 안내 한 줄. ── */
@@ -1230,6 +1436,7 @@
     document.querySelectorAll("[data-buy]").forEach(initBuy);
     document.querySelectorAll("[data-like]").forEach(initLike);
     document.querySelectorAll("[data-reviews]").forEach(initReviews);
+    document.querySelectorAll("[data-gift]").forEach(initGift);
     showCartMoved();
     migrateOldCart();
     initSecNav();
