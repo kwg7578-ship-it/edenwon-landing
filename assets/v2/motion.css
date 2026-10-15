@@ -15,6 +15,9 @@ a,button,.btn,.pill,.gnb a,.cats__item,.card__text{transition:color .2s ease-out
 @media (hover:hover){
   .card__img{transition:transform .4s var(--ease-out)}
   .card:hover .card__img,.card:focus-within .card__img{transform:scale(1.04)}
+  /* 두 번째 사진(개정 3-2): 같은 자리·같은 비율로 위에 겹쳐 0.4초 동안 나타난다(주소는 app.js 가 카드가 화면에 들어오면 채움) */
+  .card__alt{display:block;position:absolute;inset:0;opacity:0;transition:opacity .4s var(--ease-out);pointer-events:none}
+  .card:hover .card__alt.is-ready,.card:focus-within .card__alt.is-ready{opacity:1}
 }
 
 /* 장바구니 담기: 숫자 배지가 한 번 톡, «담았습니다» 안내가 미끄러져 나온다 */

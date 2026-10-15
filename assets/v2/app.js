@@ -433,14 +433,46 @@
 
   /* ── 상세: 사진 고르기 ── */
   function initGallery(g) {
-    var thumbs = g.querySelectorAll("[data-thumb]"), shots = g.querySelectorAll("[data-shot]");
+    var thumbs = g.querySelectorAll("[data-thumb]"), shots = g.querySelectorAll("[data-shot]"), cur = 0;
+    function show(k) {
+      cur = k;
+      thumbs.forEach(function (x) { x.setAttribute("aria-pressed", String(+x.getAttribute("data-thumb") === k)); });
+      shots.forEach(function (s) { s.hidden = +s.getAttribute("data-shot") !== k; });
+    }
     thumbs.forEach(function (t) {
-      t.addEventListener("click", function () {
-        var k = t.getAttribute("data-thumb");
-        thumbs.forEach(function (x) { x.setAttribute("aria-pressed", String(x === t)); });
-        shots.forEach(function (s) { s.hidden = s.getAttribute("data-shot") !== k; });
-      });
+      t.addEventListener("click", function () { show(+t.getAttribute("data-thumb")); });
     });
+    /* 휴대폰: 큰 사진을 손가락으로 좌우로 넘겨 본다(개정 3-2). 세로로 끌면 그대로 스크롤 */
+    var main = g.querySelector(".gallery__main"), x0 = null, y0 = null;
+    if (!main || shots.length < 2) return;
+    main.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    main.addEventListener("touchend", function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) show((cur + (dx < 0 ? 1 : shots.length - 1)) % shots.length);
+      x0 = y0 = null;
+    }, { passive: true });
+  }
+
+  /* ── 상품 카드 두 번째 사진(개정 3-2): 마우스 기기에서만, 첫 화면을 다 그린 뒤 카드가 화면 근처에 오면 주소를 채운다 ── */
+  function initAltPhotos() {
+    var alts = document.querySelectorAll(".card__alt");
+    if (!alts.length || !(window.matchMedia && window.matchMedia("(hover:hover)").matches)) return;
+    function fill(pic) {
+      pic.querySelectorAll("[data-srcset]").forEach(function (el) { el.setAttribute("srcset", el.getAttribute("data-srcset")); el.removeAttribute("data-srcset"); });
+      var img = pic.querySelector("img");
+      if (img.complete && img.naturalWidth) pic.classList.add("is-ready");
+      else img.addEventListener("load", function () { pic.classList.add("is-ready"); }, { once: true });
+    }
+    function start() {
+      if (!("IntersectionObserver" in window)) { alts.forEach(fill); return; }
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); fill(e.target.querySelector(".card__alt")); } });
+      }, { rootMargin: "200px 0px" });
+      alts.forEach(function (a) { io.observe(a.closest(".card__photo")); });   // 사진 상자를 본다(.card__alt 는 CSS 가 늦게 오면 크기 0)
+    }
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start);
   }
 
   /* ── 상세: 옵션을 고르면 아래 상자에 줄로 쌓인다(오설록 방식). 옵션별 수량·삭제 ── */
@@ -1454,6 +1486,7 @@
     initCardAdd();
     document.querySelectorAll("[data-catalog]").forEach(initCatalog);
     document.querySelectorAll("[data-gallery]").forEach(initGallery);
+    initAltPhotos();
     document.querySelectorAll("[data-buy]").forEach(initBuy);
     document.querySelectorAll("[data-like]").forEach(initLike);
     document.querySelectorAll("[data-reviews]").forEach(initReviews);
