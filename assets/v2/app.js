@@ -181,6 +181,46 @@
      일시정지 버튼 필수(WCAG 2.2.2). 마우스를 올리거나 포커스가 들어오면, 화면 밖이거나 탭이 숨겨지면 멈춘다.
      움직임 줄이기 설정이면 자동 전환 없음(첫 장 고정, 손으로만 넘김). 그 전까지는 첫 장만 있고 나머지 사진은 늦게 불러온다. ── */
   var REDUCE = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var SAVE_DATA = !!(navigator.connection && navigator.connection.saveData);
+
+  /* ── 영상 자리(개정 3-1): 주소는 data- 에만. 처음 재생할 때 source 를 채운다. 움직임 줄이기·데이터 절약이면 아무것도 받지 않는다(포스터 사진만) ── */
+  var VIDEO_OK = !REDUCE && !SAVE_DATA;
+  function videoSet(v, on) {
+    if (!v || !VIDEO_OK) return;
+    if (on) {
+      if (!v._filled) {
+        v._filled = true; v.muted = true;
+        ["webm", "mp4"].forEach(function (k) {
+          var u = v.getAttribute("data-" + k);
+          if (u) { var src = document.createElement("source"); src.src = u; src.type = "video/" + k; v.appendChild(src); }
+        });
+        v.addEventListener("playing", function () { v.classList.add("is-playing"); });
+        v.load();
+      }
+      var pr = v.play(); if (pr && pr.catch) pr.catch(function () {});
+    } else if (v._filled) v.pause();
+  }
+  function initVslot(fig) {
+    var v = fig.querySelector("video"), btn = fig.querySelector("[data-vpause]");
+    if (!v || !VIDEO_OK) return;
+    var st = { user: false, vis: false, tab: false, ready: false };
+    function sync() { videoSet(v, st.ready && st.vis && !st.tab && !st.user); }
+    if (btn) {
+      btn.hidden = false;
+      btn.addEventListener("click", function () {
+        st.user = !st.user;
+        btn.classList.toggle("is-paused", st.user); btn.setAttribute("aria-pressed", st.user ? "true" : "false");
+        btn.setAttribute("aria-label", st.user ? "영상 다시 재생" : "영상 멈춤");
+        sync();
+      });
+    }
+    document.addEventListener("visibilitychange", function () { st.tab = document.hidden; sync(); });
+    if ("IntersectionObserver" in window)
+      new IntersectionObserver(function (es) { st.vis = es[0].isIntersecting; sync(); }, { threshold: 0.25 }).observe(fig);
+    else st.vis = true;
+    function go() { st.ready = true; sync(); }
+    if (document.readyState === "complete") go(); else window.addEventListener("load", go);
+  }
   function initCarousel(root) {
     var slides = root.querySelectorAll("[data-slide]");
     var dots = root.querySelectorAll("[data-dot]");
@@ -189,7 +229,10 @@
     var n = slides.length, i = 0, fade = false, timer = null, DWELL = 6000;
     var st = { user: false, hover: false, focus: false, off: false, tab: false };
     function running() { return fade && n > 1 && !st.user && !st.hover && !st.focus && !st.off && !st.tab; }
-    function schedule() { clearTimeout(timer); timer = running() ? setTimeout(function () { go(i + 1); }, DWELL) : null; }
+    function schedule() {
+      clearTimeout(timer); timer = running() ? setTimeout(function () { go(i + 1); }, DWELL) : null;
+      slides.forEach(function (s, j) { videoSet(s.querySelector("video"), fade && j === i && !st.user && !st.off && !st.tab); });   // 영상은 지금 장·보일 때·멈추지 않았을 때만
+    }
     function go(k) {
       i = (k + n) % n;
       slides.forEach(function (s, j) { if (fade) s.classList.toggle("is-on", j === i); else s.hidden = j !== i; });
@@ -220,7 +263,8 @@
     if (n < 2 || REDUCE) return;
     function paint() {
       pause.classList.toggle("is-paused", st.user); pause.setAttribute("aria-pressed", st.user ? "true" : "false");
-      pause.setAttribute("aria-label", st.user ? "배너 자동 넘김 다시 시작" : "배너 자동 넘김 멈춤");
+      var hv = !!root.querySelector("video");
+      pause.setAttribute("aria-label", st.user ? (hv ? "배너 자동 넘김·영상 다시 시작" : "배너 자동 넘김 다시 시작") : (hv ? "배너 자동 넘김·영상 멈춤" : "배너 자동 넘김 멈춤"));
     }
     if (pause) pause.addEventListener("click", function () { st.user = !st.user; paint(); schedule(); });
     root.addEventListener("mouseenter", function () { st.hover = true; schedule(); });
@@ -1502,6 +1546,7 @@
     initDrawer();
     initSearch();
     document.querySelectorAll("[data-carousel]").forEach(initCarousel);
+    document.querySelectorAll("[data-vslot]").forEach(initVslot);
     document.querySelectorAll("[data-tabs=picks]").forEach(initPickTabs);
   });
 })();

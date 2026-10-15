@@ -7,6 +7,8 @@
 .hero__slide--light{background:var(--photo)}
 .hero__slide picture{position:absolute;inset:0}
 .hero__img{width:100%;height:100%;object-fit:cover}
+.hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease-out}   /* 영상 자리(개정 3-1): 재생이 시작되면 포스터(사진) 위로 나타남 */
+.hero__video.is-playing{opacity:1}
 .hero__scrim{position:absolute;inset:0;background:var(--scrim)}
 .hero__slide--light .hero__scrim{background:transparent}
 .hero__inner{position:absolute;inset:0;display:flex;justify-content:center}
@@ -895,6 +897,11 @@
 .brand__photo{margin:0;grid-column:span 2;background:var(--photo);aspect-ratio:4/3;overflow:hidden}
 .brand__photo--1,.brand__photo--2{grid-column:span 3}
 .brand__photo picture{display:block;width:100%;height:100%}
+.vslot{position:relative}
+.brand__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease-out}
+.brand__video.is-playing{opacity:1}
+.vslot__pause{position:absolute;right:12px;bottom:12px;margin:0;color:#FFFFFF;background:rgba(20,16,12,.5)}
+.vslot__text{position:absolute;left:12px;right:68px;bottom:12px;margin:0;color:#FFFFFF;font-size:13px;line-height:1.5;text-shadow:0 1px 3px rgba(0,0,0,.7)}
 .brand__img{display:block;width:100%;height:100%;object-fit:cover}
 @media (max-width:768px){
   .brand__photos{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
