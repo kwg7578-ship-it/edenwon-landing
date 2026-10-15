@@ -302,7 +302,7 @@
     if (REDUCE || !("IntersectionObserver" in window)) return;
     if (!/\bpage-(home|products|detail|story)\b/.test(document.body.className)) return;
     var vh = window.innerHeight, list = [];
-    document.querySelectorAll("main .card, main > section:not(.hero), main .sb, main .story-block, main .cats__item").forEach(function (el) {
+    document.querySelectorAll("main .card, main > section:not(.hero), main .sb, main .story-block, main .cats__item, main .gx").forEach(function (el) {
       if (el.closest(".rv") || (el.tagName === "SECTION" && el.querySelector(".card"))) return;
       if (el.getBoundingClientRect().top < vh) return;
       el.classList.add("rv"); list.push(el);
@@ -1300,6 +1300,7 @@
       if (!G.sets[id]) id = Object.keys(G.sets)[0];
       set = id; picks = new Array(G.slots).fill(null); openInfo = {};
       page.querySelectorAll("[data-set]").forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-set") === id ? "true" : "false"); });
+      document.querySelectorAll("[data-gift-story]").forEach(function (s) { s.hidden = s.getAttribute("data-gift-story") !== id; });   // 2-G: 세트마다 본문
       paint();
     }
     function paint() {

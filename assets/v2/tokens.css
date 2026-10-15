@@ -10,6 +10,9 @@
   --scrim:rgba(20,15,12,.42);      /* 사진 위 글자 가림막: 단색만, 그라데이션 금지 */
   --serif:'Noto Serif KR',serif; --sans:'Noto Sans KR',sans-serif;
   --container:1360px; --gutter:40px;
+  /* 2-G 테이스팅 빛깔 견본(정해진 8색만 — blocks.json swatches) */
+  --sw-amber:#B7792B; --sw-honey:#D9A441; --sw-plum:#8E3B46; --sw-tomato:#B5452E;
+  --sw-grape:#A9B65A; --sw-doenjang:#6B4A2E; --sw-chili:#9C2F24; --sw-vinegar:#D8C27A;
 }
 html[data-season="spring"]{--accent:#4F6B27}
 html[data-season="summer"]{--accent:#2C6680}
