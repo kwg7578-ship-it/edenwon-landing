@@ -476,26 +476,58 @@
   }
 
   /* ── 상세: 사진 고르기 ── */
+  /* 2장 이상(개정 2 §6-4): PC 는 작은 사진 누름·마우스 올림·화살표 키로 크로스페이드, 휴대폰·태블릿(<1024)은 큰 사진 가로 스냅 트랙을 밀어 넘긴다
+     (개정 3-2 의 손가락 넘기기를 이 트랙이 맡는다). 둘째 장부터 큰 사진은 넘길 때(그 장·양옆)와 한가할 때 주소를 채운다. */
   function initGallery(g) {
     var thumbs = g.querySelectorAll("[data-thumb]"), shots = g.querySelectorAll("[data-shot]"), cur = 0;
-    function show(k) {
+    var main = g.querySelector("[data-track]"), count = g.querySelector("[data-count]");
+    if (!main || shots.length < 2) return;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function load(k) {
+      var s = shots[k];
+      if (!s) return;
+      s.querySelectorAll("[data-srcset]").forEach(function (el) { el.setAttribute("srcset", el.getAttribute("data-srcset")); el.removeAttribute("data-srcset"); });
+    }
+    var narrow = window.matchMedia("(max-width:1023px)");   // 휴대폰·태블릿 = 스냅 트랙(pages.css 와 같은 기준)
+    function swipe() { return narrow.matches; }
+    function mark(k) {
       cur = k;
-      thumbs.forEach(function (x) { x.setAttribute("aria-pressed", String(+x.getAttribute("data-thumb") === k)); });
-      shots.forEach(function (s) { s.hidden = +s.getAttribute("data-shot") !== k; });
+      thumbs.forEach(function (x) { if (+x.getAttribute("data-thumb") === k) x.setAttribute("aria-current", "true"); else x.removeAttribute("aria-current"); });
+      shots.forEach(function (s) { s.classList.toggle("is-on", +s.getAttribute("data-shot") === k); });
+      if (count) count.textContent = String(k + 1);
+      load(k); load(k + 1); load(k - 1);
+    }
+    function show(k, fromTrack) {
+      k = (k + shots.length) % shots.length;
+      if (k === cur && !fromTrack) return;
+      mark(k);
+      var t = thumbs[k];
+      if (t && t.parentNode.scrollHeight > t.parentNode.clientHeight + 1 || t && t.parentNode.scrollWidth > t.parentNode.clientWidth + 1) {
+        t.parentNode.scrollTo({ top: t.offsetTop - t.parentNode.offsetTop - 10, left: t.offsetLeft - t.parentNode.offsetLeft - 10, behavior: reduce ? "auto" : "smooth" });
+      }
+      if (!fromTrack && swipe()) main.scrollTo({ left: k * main.clientWidth, behavior: reduce ? "auto" : "smooth" });
     }
     thumbs.forEach(function (t) {
       t.addEventListener("click", function () { show(+t.getAttribute("data-thumb")); });
+      t.addEventListener("mouseenter", function () { if (window.matchMedia("(hover:hover)").matches && !swipe()) show(+t.getAttribute("data-thumb")); });
     });
-    /* 휴대폰: 큰 사진을 손가락으로 좌우로 넘겨 본다(개정 3-2). 세로로 끌면 그대로 스크롤 */
-    var main = g.querySelector(".gallery__main"), x0 = null, y0 = null;
-    if (!main || shots.length < 2) return;
-    main.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
-    main.addEventListener("touchend", function (e) {
-      if (x0 === null) return;
-      var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) show((cur + (dx < 0 ? 1 : shots.length - 1)) % shots.length);
-      x0 = y0 = null;
+    g.addEventListener("keydown", function (e) {
+      var d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (!d) return;
+      e.preventDefault();
+      show(cur + d);
+      if (document.activeElement && document.activeElement.hasAttribute("data-thumb")) thumbs[cur].focus();
+    });
+    var tick = null;
+    main.addEventListener("scroll", function () {   // 손가락으로 민 트랙 → 숫자·작은 사진 표시를 따라간다
+      if (!swipe()) return;
+      clearTimeout(tick);
+      tick = setTimeout(function () { var k = Math.round(main.scrollLeft / main.clientWidth); if (k !== cur) show(k, true); }, 60);
+      load(Math.round(main.scrollLeft / main.clientWidth) + 1);
     }, { passive: true });
+    function idle() { shots.forEach(function (s, k) { load(k); }); }
+    function later() { if (window.requestIdleCallback) requestIdleCallback(idle, { timeout: 4000 }); else setTimeout(idle, 1500); }
+    if (document.readyState === "complete") later(); else window.addEventListener("load", later);
   }
 
   /* ── 상품 카드 두 번째 사진(개정 3-2): 마우스 기기에서만, 첫 화면을 다 그린 뒤 카드가 화면 근처에 오면 주소를 채운다 ── */
