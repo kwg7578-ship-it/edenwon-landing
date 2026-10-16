@@ -530,6 +530,49 @@
     if (document.readyState === "complete") later(); else window.addEventListener("load", later);
   }
 
+  /* ── 과정 따라가기(2-G 개정 2 §6-3): 단계 줄(tablist)·이전·다음·화살표 키·휴대폰 밀기·«자동으로 보기»(4초, 다시 누르면 멈춤 — 기본 꺼짐).
+     움직임은 CSS(0.45초 크로스페이드, 글 0.25초 늦게, 진행 선 0.4초). 사진은 lazy(겹친 패널이라 블록이 화면에 들어오면 같이 받는다) ── */
+  function initPJ(root) {
+    var tabs = root.querySelectorAll("[data-pj-tab]"), panels = root.querySelectorAll("[data-pj-panel]"), rail = root.querySelector("[data-pj-rail]");
+    var n = tabs.length, cur = 0, timer = null, auto = root.querySelector("[data-pj-auto]");
+    if (n < 2) return;
+    function go(k, focus) {
+      k = (k + n) % n; cur = k;
+      tabs.forEach(function (t, i) {
+        t.setAttribute("aria-selected", String(i === k)); t.tabIndex = i === k ? 0 : -1; t.classList.toggle("is-past", i < k);
+      });
+      panels.forEach(function (p, i) { p.classList.toggle("is-on", i === k); });
+      rail.style.setProperty("--p", String(k / (n - 1)));
+      if (rail.scrollWidth > rail.clientWidth + 1) rail.scrollTo({ left: tabs[k].offsetLeft - 20, behavior: "smooth" });
+      if (focus) tabs[k].focus();
+    }
+    function stop() {
+      if (!timer) return;
+      clearInterval(timer); timer = null; auto.setAttribute("aria-pressed", "false"); auto.textContent = "자동으로 보기";
+    }
+    tabs.forEach(function (t, i) { t.addEventListener("click", function () { stop(); go(i); }); });
+    rail.addEventListener("keydown", function (e) {
+      var k = { ArrowRight: cur + 1, ArrowDown: cur + 1, ArrowLeft: cur - 1, ArrowUp: cur - 1, Home: 0, End: n - 1 }[e.key];
+      if (k === undefined) return;
+      e.preventDefault(); stop(); go(Math.max(0, Math.min(n - 1, k)), true);
+    });
+    root.querySelector("[data-pj-prev]").addEventListener("click", function () { stop(); go(cur - 1); });
+    root.querySelector("[data-pj-next]").addEventListener("click", function () { stop(); go(cur + 1); });
+    auto.addEventListener("click", function () {
+      if (timer) { stop(); return; }
+      auto.setAttribute("aria-pressed", "true"); auto.textContent = "멈춤";
+      timer = setInterval(function () { if (!document.hidden) go(cur + 1); }, 4000);
+    });
+    var box = root.querySelector("[data-pj-panels]"), x0 = null, y0 = null;   // 휴대폰: 패널을 좌우로 밀어 넘긴다(세로로 끌면 그대로 스크롤)
+    box.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    box.addEventListener("touchend", function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { stop(); go(cur + (dx < 0 ? 1 : -1)); }
+      x0 = y0 = null;
+    }, { passive: true });
+  }
+
   /* ── 상품 카드 두 번째 사진(개정 3-2): 마우스 기기에서만, 첫 화면을 다 그린 뒤 카드가 화면 근처에 오면 주소를 채운다 ── */
   function initAltPhotos() {
     var alts = document.querySelectorAll(".card__alt");
@@ -1563,6 +1606,7 @@
     initCardAdd();
     document.querySelectorAll("[data-catalog]").forEach(initCatalog);
     document.querySelectorAll("[data-gallery]").forEach(initGallery);
+    document.querySelectorAll("[data-pj]").forEach(initPJ);
     initAltPhotos();
     document.querySelectorAll("[data-buy]").forEach(initBuy);
     document.querySelectorAll("[data-like]").forEach(initLike);

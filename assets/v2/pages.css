@@ -1370,3 +1370,49 @@ body.sheet-open{overflow:hidden}
   .sb-text--chapter .sb-text__title{font-size:21px}
   .gift-story{padding-bottom:64px}
 }
+
+/* 과정 따라가기(2-G 개정 2 §6-3) — 단계 줄 + 겹친 패널(grid, 높이 고정 → CLS 0). 자바스크립트가 꺼지면 noscript 스타일로 세로로 펼친다(partials/pj.html) */
+.pj{max-width:1160px;margin:96px auto;padding:0 var(--gutter);color:var(--ink)}
+.pj__head{max-width:720px;display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+.pj__h{font-family:var(--serif);font-weight:600;font-size:30px;line-height:1.4;text-wrap:balance}
+.pj__body{display:grid;grid-template-columns:240px minmax(0,1fr);gap:48px;align-items:start}
+.pj__rail{position:relative;display:flex;flex-direction:column;gap:4px;padding-left:24px}
+.pj__track{position:absolute;left:5px;top:16px;bottom:16px;width:2px;background:var(--line)}
+.pj__fill{position:absolute;inset:0;background:var(--accent);transform-origin:top;transform:scaleY(var(--p,0));transition:transform .4s ease}
+.pj__tab{position:relative;display:flex;align-items:baseline;gap:12px;padding:10px 0;background:none;border:0;text-align:left;color:var(--muted);font:inherit;font-size:15px;line-height:1.45;cursor:pointer}
+.pj__tab::before{content:"";position:absolute;left:-24px;top:15px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--line);box-sizing:border-box;transition:border-color .3s ease,background .3s ease}
+.pj__tab.is-past::before,.pj__tab[aria-selected="true"]::before{border-color:var(--accent)}
+.pj__tab[aria-selected="true"]::before{background:var(--accent)}
+.pj__tab[aria-selected="true"]{color:var(--ink);font-weight:600}
+.pj__tab:focus-visible,.pj__btn:focus-visible,.pj__auto:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.pj__no{font-variant-numeric:tabular-nums;font-size:12px;letter-spacing:.08em;color:var(--accent)}
+.pj__panels{display:grid}
+.pj__panel{grid-area:1/1;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .45s ease,transform .45s ease,visibility 0s linear .45s}
+.pj__panel.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .45s ease,transform .45s ease,visibility 0s}
+.pj__panel .pj__text{opacity:0;transition:opacity .35s ease}
+.pj__panel.is-on .pj__text{opacity:1;transition-delay:.25s}
+.pj__media{aspect-ratio:3/2;background:var(--photo);overflow:hidden}
+.pj__media picture,.pj__img{display:block;width:100%;height:100%;object-fit:cover}
+.pj__need{height:100%;display:flex;align-items:flex-end;padding:14px;color:var(--muted);font-size:13px;border:1px dashed var(--line)}
+.pj__numtile{height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:72px;color:var(--accent);opacity:.45}
+.pj__text{padding-top:22px;display:flex;flex-direction:column;gap:8px;max-width:620px}
+.pj__count{font-size:12px;letter-spacing:.1em;color:var(--muted);font-variant-numeric:tabular-nums}
+.pj__title{font-family:var(--serif);font-weight:600;font-size:22px;line-height:1.45}
+.pj__desc{font-size:16px;line-height:1.8;color:var(--muted);white-space:pre-line}
+.pj__nav{display:flex;align-items:center;gap:8px;margin-top:20px}
+.pj__btn{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.pj__auto{margin-left:auto;min-height:44px;padding:0 16px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:13px;cursor:pointer}
+.pj__auto[aria-pressed="true"]{border-color:var(--ink)}
+@media (max-width:1023px){
+  .pj{margin:64px auto}
+  .pj__media{aspect-ratio:4/3}
+  .pj__body{grid-template-columns:minmax(0,1fr);gap:20px}
+  .pj__rail{flex-direction:row;gap:22px;padding:0 0 12px;overflow-x:auto;scrollbar-width:none}
+  .pj__rail::-webkit-scrollbar{display:none}
+  .pj__track{left:0;top:auto;bottom:0;height:2px;width:100%}
+  .pj__fill{transform-origin:left;transform:scaleX(var(--p,0))}
+  .pj__tab{flex:0 0 auto;padding:6px 0;white-space:nowrap}
+  .pj__tab::before{display:none}
+  .pj__h{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){.pj__panel,.pj__panel.is-on,.pj__panel .pj__text,.pj__panel.is-on .pj__text,.pj__fill,.pj__tab::before{transition:none!important}}
