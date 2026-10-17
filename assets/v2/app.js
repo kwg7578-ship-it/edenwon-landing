@@ -573,6 +573,13 @@
     }, { passive: true });
   }
 
+  /* ── 계절 자동(2-H H1-1): head 스크립트가 손님 날짜로 맞춘 data-season 에 계절 이름 글자를 맞춘다(빌드 값과 같으면 그대로) ── */
+  function initSeasonWords() {
+    var ko = { spring: "봄", summer: "여름", autumn: "가을", winter: "겨울" }[document.documentElement.getAttribute("data-season")];
+    if (!ko) return;
+    document.querySelectorAll("[data-season-ko]").forEach(function (el) { if (el.textContent !== ko) el.textContent = ko; });
+  }
+
   /* ── 상품 카드 두 번째 사진(개정 3-2): 마우스 기기에서만, 첫 화면을 다 그린 뒤 카드가 화면 근처에 오면 주소를 채운다 ── */
   function initAltPhotos() {
     var alts = document.querySelectorAll(".card__alt");
@@ -1595,6 +1602,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    initSeasonWords();
     initMember();
     initMotion();
     initMemberPrice();
