@@ -38,6 +38,14 @@ html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   
 .hero[data-tone="light"][data-sea="spring"]{--sea:#4F6B27}.hero[data-tone="light"][data-sea="summer"]{--sea:#2C6680}.hero[data-tone="light"][data-sea="autumn"]{--sea:#A4532A}.hero[data-tone="light"][data-sea="winter"]{--sea:#4C5866}
 .hero[data-sea] .hero__dot[aria-current="true"] span{background:var(--sea,currentColor)}
 .hero[data-sea] .hero__num b{color:var(--sea,inherit)}
+/* 2-H H1-3: 24절기 한 줄 — 배너 바로 아래 띠 */
+.term{background:var(--surface);border-bottom:1px solid var(--line)}
+.term__in{display:grid;grid-template-columns:6em 21em minmax(0,1fr);align-items:baseline;padding-top:14px;padding-bottom:14px;font-size:14px;line-height:1.6}   /* 칸 너비를 고정 — 글꼴이 늦게 바뀌어도 뜻·대표 줄의 시작 자리가 그대로(밀림 0) */
+.term__name{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--accent);letter-spacing:.04em}
+.term__mean{color:var(--muted)}
+.term__mean::before{content:"·";margin-right:10px}
+.term__line{color:var(--ink)}
+.term__line::before{content:"·";margin-right:10px;color:var(--muted)}
 .hero__arrow{width:44px;height:44px;border:1px solid currentColor;background:none;color:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
 .cats{padding-top:72px;padding-bottom:24px;display:flex;flex-wrap:wrap;justify-content:center;gap:24px 56px}
@@ -123,6 +131,10 @@ html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   
   .hero__controls-in{padding:0 20px;gap:12px}
   .hero__arrows{display:none}
   .hero__dot{width:32px}
+  .term__in{font-size:13px;padding-top:12px;padding-bottom:12px}
+  .term__in{grid-template-columns:5.6em minmax(0,1fr)}
+  .term__line{grid-column:1/-1}
+  .term__line::before{content:none}
   .hero[data-sea] .hero__num{display:none}   /* 2-H: 휴대폰은 계절 표시가 번호 자리(점 6개까지 한 줄) */
   .hero[data-tone="light"][data-sea="spring"]{--sea:#B9CF94}.hero[data-tone="light"][data-sea="summer"]{--sea:#9FCBDF}.hero[data-tone="light"][data-sea="autumn"]{--sea:#E0A27E}.hero[data-tone="light"][data-sea="winter"]{--sea:#BCC6D2}
 
