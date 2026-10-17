@@ -28,6 +28,16 @@
 .hero__dot span{display:block;width:100%;height:2px;background:currentColor;opacity:.35}
 .hero__dot[aria-current="true"] span{opacity:1}
 .hero__arrows{display:flex;gap:4px;margin-left:8px}
+/* 2-H H1-2: 계절 배너 — 진행 표시 옆 계절 표시(계절 색 바탕) · 지금 점·번호 색 = 그 장 계절(어두운 장은 밝은 계절 색). 사계절 장은 예전 그대로 */
+html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   /* 손님 계절 ≠ 빌드 계절: 배너 뒤 인라인 스크립트가 순서를 정할 때까지(배경색만 보임, 밀림 없음) */
+.hero__sea{display:grid;font-size:12px;line-height:1.5;letter-spacing:.12em;font-weight:500}
+.hero__sea span{grid-area:1/1;padding:2px 9px;color:#FFFFFF;opacity:0}
+.hero__sea [data-s="spring"]{background:#4F6B27}.hero__sea [data-s="summer"]{background:#2C6680}.hero__sea [data-s="autumn"]{background:#A4532A}.hero__sea [data-s="winter"]{background:#4C5866}
+.hero[data-sea="spring"] [data-s="spring"],.hero[data-sea="summer"] [data-s="summer"],.hero[data-sea="autumn"] [data-s="autumn"],.hero[data-sea="winter"] [data-s="winter"]{opacity:1}
+.hero[data-sea="spring"]{--sea:#B9CF94}.hero[data-sea="summer"]{--sea:#9FCBDF}.hero[data-sea="autumn"]{--sea:#E0A27E}.hero[data-sea="winter"]{--sea:#BCC6D2}
+.hero[data-tone="light"][data-sea="spring"]{--sea:#4F6B27}.hero[data-tone="light"][data-sea="summer"]{--sea:#2C6680}.hero[data-tone="light"][data-sea="autumn"]{--sea:#A4532A}.hero[data-tone="light"][data-sea="winter"]{--sea:#4C5866}
+.hero[data-sea] .hero__dot[aria-current="true"] span{background:var(--sea,currentColor)}
+.hero[data-sea] .hero__num b{color:var(--sea,inherit)}
 .hero__arrow{width:44px;height:44px;border:1px solid currentColor;background:none;color:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
 .cats{padding-top:72px;padding-bottom:24px;display:flex;flex-wrap:wrap;justify-content:center;gap:24px 56px}
@@ -113,6 +123,8 @@
   .hero__controls-in{padding:0 20px;gap:12px}
   .hero__arrows{display:none}
   .hero__dot{width:32px}
+  .hero[data-sea] .hero__num{display:none}   /* 2-H: 휴대폰은 계절 표시가 번호 자리(점 6개까지 한 줄) */
+  .hero[data-tone="light"][data-sea="spring"]{--sea:#B9CF94}.hero[data-tone="light"][data-sea="summer"]{--sea:#9FCBDF}.hero[data-tone="light"][data-sea="autumn"]{--sea:#E0A27E}.hero[data-tone="light"][data-sea="winter"]{--sea:#BCC6D2}
 
   /* 분류 원형: 가로 스크롤 한 줄 */
   .cats{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;padding-top:32px;padding-bottom:8px;scrollbar-width:none}

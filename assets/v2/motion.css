@@ -23,6 +23,10 @@ a,button,.btn,.pill,.gnb a,.cats__item,.card__text{transition:color .2s ease-out
   .gift__set:hover .card__alt.is-ready,.gift__set:focus-visible .card__alt.is-ready{opacity:1}
 }
 
+/* 계절 배너(2-H H1-2): 장이 바뀌면 계절 표시·진행 색이 0.6초 동안 겹쳐 바뀐다 */
+.hero__sea span{transition:opacity .6s ease-out}
+.hero[data-sea] .hero__dot span,.hero[data-sea] .hero__num b{transition:background-color .6s ease-out,color .6s ease-out,opacity .6s ease-out}
+
 /* 장바구니 담기: 숫자 배지가 한 번 톡, «담았습니다» 안내가 미끄러져 나온다 */
 @keyframes ed-pop{0%{transform:scale(1)}40%{transform:scale(1.28)}100%{transform:scale(1)}}
 .hd__count.is-pop{animation:ed-pop .4s var(--ease-out) 1}

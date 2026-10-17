@@ -240,6 +240,7 @@
       if (num) num.textContent = (i + 1 < 10 ? "0" : "") + (i + 1);
       root.setAttribute("data-tone", slides[i].classList.contains("hero__slide--light") ? "light" : "dark");
       root.setAttribute("data-index", String(i));
+      if (slides[i].hasAttribute("data-sea")) root.setAttribute("data-sea", slides[i].getAttribute("data-sea"));   // 2-H H1-2: 계절 표시·진행 색
       schedule();
     }
     var prev = root.querySelector("[data-prev]"), next = root.querySelector("[data-next]");
@@ -575,6 +576,7 @@
 
   /* ── 계절 자동(2-H H1-1): head 스크립트가 손님 날짜로 맞춘 data-season 에 계절 이름 글자를 맞춘다(빌드 값과 같으면 그대로) ── */
   function initSeasonWords() {
+    document.documentElement.removeAttribute("data-season-moved");   // 홈 배너 스크립트가 못 지웠을 때를 위한 안전장치(H1-2)
     var ko = { spring: "봄", summer: "여름", autumn: "가을", winter: "겨울" }[document.documentElement.getAttribute("data-season")];
     if (!ko) return;
     document.querySelectorAll("[data-season-ko]").forEach(function (el) { if (el.textContent !== ko) el.textContent = ko; });
