@@ -588,7 +588,7 @@
       var io = new IntersectionObserver(function (es) {
         es.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); fill(e.target.querySelector(".card__alt")); } });
       }, { rootMargin: "200px 0px" });
-      alts.forEach(function (a) { io.observe(a.closest(".card__photo")); });   // 사진 상자를 본다(.card__alt 는 CSS 가 늦게 오면 크기 0)
+      alts.forEach(function (a) { io.observe(a.closest(".card__photo, .gift__set-img")); });   // 사진 상자를 본다(.card__alt 는 CSS 가 늦게 오면 크기 0)
     }
     if (document.readyState === "complete") start();
     else window.addEventListener("load", start);
