@@ -582,6 +582,67 @@
     document.querySelectorAll("[data-season-ko]").forEach(function (el) { if (el.textContent !== ko) el.textContent = ko; });
   }
 
+  /* ── 계절 갤러리(2-H H1-4): 탭(?s= 또는 손님 계절) · 크게 보기(dialog — 열 때만 큰 사진, ←/→·Esc·밀어 넘기기, 닫으면 누른 사진으로) ── */
+  function initSeasonGallery(root) {
+    var tabs = [].slice.call(root.querySelectorAll("[role=tab]")), panels = root.querySelectorAll("[role=tabpanel]");
+    function show(s, focus, push) {
+      tabs.forEach(function (t) {
+        var on = t.getAttribute("data-s") === s;
+        t.setAttribute("aria-selected", on ? "true" : "false"); t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      panels.forEach(function (p) { p.hidden = p.getAttribute("data-s") !== s; });
+      if (push) try { var u = new URL(location.href); u.searchParams.set("s", s); history.replaceState(null, "", u); } catch (e) {}
+    }
+    var want = new URLSearchParams(location.search).get("s"), ok = function (s) { return tabs.some(function (t) { return t.getAttribute("data-s") === s; }); };
+    show(ok(want) ? want : (ok(document.documentElement.getAttribute("data-season")) ? document.documentElement.getAttribute("data-season") : tabs[0].getAttribute("data-s")), false, false);
+    tabs.forEach(function (t, i) {
+      t.addEventListener("click", function () { show(t.getAttribute("data-s"), false, true); });
+      t.addEventListener("keydown", function (e) {
+        var j = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+        if (j === undefined) return;
+        e.preventDefault(); show(tabs[(j + tabs.length) % tabs.length].getAttribute("data-s"), true, true);
+      });
+    });
+    var lb = document.querySelector("[data-lb]");
+    if (!lb || typeof lb.showModal !== "function") return;   // dialog 를 모르는 옛 브라우저: 사진 격자만
+    var img = lb.querySelector("[data-lb-img]"), cap = lb.querySelector("[data-lb-cap]"), num = lb.querySelector("[data-lb-num]"), list = [], k = 0, opener = null;
+    function paint() {
+      var b = list[k];
+      img.removeAttribute("srcset"); img.alt = b.getAttribute("data-alt"); img.setAttribute("srcset", b.getAttribute("data-full"));
+      cap.textContent = b.getAttribute("data-cap") || "";
+      num.textContent = (k + 1) + " / " + list.length;
+    }
+    function move(d) { k = (k + d + list.length) % list.length; paint(); }
+    root.addEventListener("click", function (e) {
+      var b = e.target.closest(".sgal__open");
+      if (!b) return;
+      list = [].slice.call(b.closest("[role=tabpanel]").querySelectorAll(".sgal__open")); k = list.indexOf(b); opener = b;
+      paint(); lb.showModal();
+    });
+    lb.querySelector("[data-lb-prev]").addEventListener("click", function () { move(-1); });
+    lb.querySelector("[data-lb-next]").addEventListener("click", function () { move(1); });
+    lb.querySelector("[data-lb-close]").addEventListener("click", function () { lb.close(); });
+    lb.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); move(1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); move(-1); }
+      else if (e.key === "Tab") {   // 포커스 갇힘: 단추 셋 안에서만 돈다(브라우저 주소창으로 나가지 않게)
+        var f = [].slice.call(lb.querySelectorAll("button")), i = f.indexOf(document.activeElement);
+        e.preventDefault(); f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+      }
+    });
+    lb.addEventListener("click", function (e) { if (e.target === lb) lb.close(); });   // 사진 밖(어두운 곳)을 누르면 닫힘
+    lb.addEventListener("close", function () { if (opener) opener.focus(); });
+    var x0 = null, y0 = null;
+    lb.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    lb.addEventListener("touchend", function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) move(dx < 0 ? 1 : -1);
+      x0 = y0 = null;
+    }, { passive: true });
+  }
+
   /* ── 상품 카드 두 번째 사진(개정 3-2): 마우스 기기에서만, 첫 화면을 다 그린 뒤 카드가 화면 근처에 오면 주소를 채운다 ── */
   function initAltPhotos() {
     var alts = document.querySelectorAll(".card__alt");
@@ -1605,6 +1666,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     initSeasonWords();
+    document.querySelectorAll("[data-sgal]").forEach(initSeasonGallery);
     initMember();
     initMotion();
     initMemberPrice();
