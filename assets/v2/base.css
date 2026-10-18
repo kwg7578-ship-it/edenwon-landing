@@ -103,8 +103,9 @@ body.is-locked{overflow:hidden}
 .card__alt{display:none}   /* 두 번째 사진(개정 3-2): 마우스 기기에서만 motion.css 가 겹쳐 보인다 */
 /* 2-I 빠른 단추 «담기 +»(옵션 1개) / «옵션 고르기»(상세로): 마우스 기기에서는 카드에 올리거나 카드 안에 포커스가 오면 아래에서 올라온다. 휴대폰(hover 없음)은 표시 안 함(지시서 기본 — 대표 확인) */
 .card__bag{position:absolute;left:16px;right:16px;bottom:16px;height:44px;background:#FFFFFF;border:0;padding:0 16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:14px;font-weight:500;text-decoration:none}
-@media (hover:hover){.card__bag{opacity:0;transform:translateY(10px);pointer-events:none}.card:hover .card__bag,.card:focus-within .card__bag{opacity:1;transform:none;pointer-events:auto}.card__bag:hover,.card__bag:focus-visible{background:var(--primary);color:var(--on-primary)}}
-@media (hover:none){.card__bag{display:none}}
+@media (hover:hover){.card__bag svg{display:none}.card__bag{opacity:0;transform:translateY(10px);pointer-events:none}.card:hover .card__bag,.card:focus-within .card__bag{opacity:1;transform:none;pointer-events:auto}.card__bag:hover,.card__bag:focus-visible{background:var(--primary);color:var(--on-primary)}}
+/* 휴대폰 등 hover 없는 기기(대표 결정 10-19): 예전 둥근 장바구니 아이콘을 늘 보인다(44px 터치 영역) */
+@media (hover:none){.card .card__bag{left:auto;right:16px;bottom:16px;width:44px;height:44px;border-radius:22px;padding:0}.card__bag-t{display:none}}
 .badge--soldout{background:var(--foot);color:#FFFFFF}
 .card__text{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink)}
 .card__name{font-size:16px}
@@ -156,6 +157,7 @@ body.is-locked{overflow:hidden}
   .card__price{font-size:16px}
   .badge{top:10px;left:10px;font-size:11px;padding:4px 8px}
   .card__bag{left:10px;right:10px;bottom:10px;height:40px}
+  .card .card__bag{right:10px;bottom:10px}
   .h2{font-size:26px}.h2--lg{font-size:28px}.h2--sm{font-size:24px}
   .ft__nav{column-gap:20px}
   .ft__nav a{padding:12px 0;min-height:44px;display:inline-flex;align-items:center}
