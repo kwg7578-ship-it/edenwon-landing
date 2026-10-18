@@ -27,6 +27,17 @@ main:focus{outline:none}
 .sec-head--row{flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px}
 .sec-head__sub{font-size:16px;color:var(--muted)}
 .link-under{font-size:15px;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+/* 2-I 밑줄·채움 층(쉬는 상태는 보이지 않음 — 움직임은 motion.css). 크기·위치는 움직이지 않는다 */
+.link-under,.gnb a,.ft__nav a,.cats__label{position:relative}
+.link-under::after,.gnb a::after,.ft__nav a::after,.cats__label::after{content:"";position:absolute;left:0;right:0;height:1px;bottom:-1px;background:var(--accent);transform:scaleX(0);transform-origin:left;pointer-events:none}
+.gnb a::after{height:2px;bottom:-2px}
+.ft__nav a::after{background:var(--foot-ink);bottom:16px}
+.cats__label::after{bottom:-3px;background:currentColor}
+.btn{position:relative;isolation:isolate;overflow:hidden}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;transform:scaleX(0);transform-origin:left;pointer-events:none}
+.btn--dark::before{background:var(--accent)}
+.btn--line::before{background:var(--ink)}
+.btn--line-white::before{background:#FFFFFF}
 
 /* 버튼: 각진 모서리, 높이 52~60 */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 32px;border:1px solid transparent;border-radius:0;font-size:15px;font-weight:500;text-decoration:none;cursor:pointer;background:none}
@@ -74,7 +85,12 @@ main:focus{outline:none}
 .drawer__util{display:flex;flex-direction:column;padding-top:8px}
 .drawer__util a{display:flex;align-items:center;min-height:44px;font-size:14px;color:var(--muted);text-decoration:none}
 body.is-locked{overflow:hidden}
-@media (prefers-reduced-motion:reduce){.drawer__panel{transition:none}}
+/* 2-I 서랍이 열리면 항목이 0.04초 간격으로 차례로 */
+@keyframes ed-drawer-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.drawer.is-open .drawer__nav a,.drawer.is-open .drawer__util>a,.drawer.is-open .drawer__util .hd__member>:not([hidden]){animation:ed-drawer-in var(--dur-mid) var(--ease) both}
+.drawer.is-open .drawer__nav a:nth-child(2){animation-delay:.04s}.drawer.is-open .drawer__nav a:nth-child(3){animation-delay:.08s}.drawer.is-open .drawer__nav a:nth-child(4){animation-delay:.12s}
+.drawer.is-open .drawer__util>a,.drawer.is-open .drawer__util .hd__member>*{animation-delay:.16s}
+@media (prefers-reduced-motion:reduce){.drawer__panel{transition:none}.drawer.is-open .drawer__nav a,.drawer.is-open .drawer__util>a,.drawer.is-open .drawer__util .hd__member>*{animation:none}}
 
 /* 상품 카드 */
 .grid4{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:48px 24px}
@@ -85,8 +101,10 @@ body.is-locked{overflow:hidden}
 .card__img{width:100%;height:100%;object-fit:cover}
 .card__photo picture{height:100%}
 .card__alt{display:none}   /* 두 번째 사진(개정 3-2): 마우스 기기에서만 motion.css 가 겹쳐 보인다 */
-.card__bag{position:absolute;right:16px;bottom:16px;width:44px;height:44px;border-radius:22px;background:#FFFFFF;border:0;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink)}
-.card__bag:hover{background:var(--primary);color:var(--on-primary)}
+/* 2-I 빠른 단추 «담기 +»(옵션 1개) / «옵션 고르기»(상세로): 마우스 기기에서는 카드에 올리거나 카드 안에 포커스가 오면 아래에서 올라온다. 휴대폰(hover 없음)은 표시 안 함(지시서 기본 — 대표 확인) */
+.card__bag{position:absolute;left:16px;right:16px;bottom:16px;height:44px;background:#FFFFFF;border:0;padding:0 16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:14px;font-weight:500;text-decoration:none}
+@media (hover:hover){.card__bag{opacity:0;transform:translateY(10px);pointer-events:none}.card:hover .card__bag,.card:focus-within .card__bag{opacity:1;transform:none;pointer-events:auto}.card__bag:hover,.card__bag:focus-visible{background:var(--primary);color:var(--on-primary)}}
+@media (hover:none){.card__bag{display:none}}
 .badge--soldout{background:var(--foot);color:#FFFFFF}
 .card__text{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink)}
 .card__name{font-size:16px}
@@ -137,7 +155,7 @@ body.is-locked{overflow:hidden}
   .card__name{font-size:14px}
   .card__price{font-size:16px}
   .badge{top:10px;left:10px;font-size:11px;padding:4px 8px}
-  .card__bag{right:10px;bottom:10px;width:36px;height:36px}
+  .card__bag{left:10px;right:10px;bottom:10px;height:40px}
   .h2{font-size:26px}.h2--lg{font-size:28px}.h2--sm{font-size:24px}
   .ft__nav{column-gap:20px}
   .ft__nav a{padding:12px 0;min-height:44px;display:inline-flex;align-items:center}

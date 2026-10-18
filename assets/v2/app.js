@@ -221,7 +221,22 @@
     function go() { st.ready = true; sync(); }
     if (document.readyState === "complete") go(); else window.addEventListener("load", go);
   }
+  /* 2-I 배너 사진이 마우스를 따라 최대 10px(마우스 기기·움직임 줄이기 아님) — 값만 바꾸고 이동은 CSS(motion.css). 장 순서·겹침과 무관 */
+  function initHeroFollow(root) {
+    if (!(window.matchMedia && window.matchMedia("(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)").matches)) return;
+    var x = 0, y = 0, ticking = false;
+    function paint() { ticking = false; root.style.setProperty("--hx", x.toFixed(3)); root.style.setProperty("--hy", y.toFixed(3)); }
+    function ask() { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }
+    root.addEventListener("mousemove", function (e) {
+      var r = root.getBoundingClientRect();
+      x = Math.max(-1, Math.min(1, (e.clientX - r.left) / r.width * 2 - 1));
+      y = Math.max(-1, Math.min(1, (e.clientY - r.top) / r.height * 2 - 1));
+      ask();
+    });
+    root.addEventListener("mouseleave", function () { x = y = 0; ask(); });
+  }
   function initCarousel(root) {
+    initHeroFollow(root);
     var slides = root.querySelectorAll("[data-slide]");
     var dots = root.querySelectorAll("[data-dot]");
     var num = root.querySelector("[data-num]");
@@ -382,6 +397,8 @@
         if (!box) return;
         last = from || document.activeElement;
         box.querySelector("[data-added-item]").textContent = text;
+        var live = document.querySelector("[data-added-live]");   // 2-I 화면 읽기 알림
+        if (live) { live.textContent = ""; setTimeout(function () { live.textContent = "장바구니에 담았습니다. " + text; }, 60); }
         box.hidden = false;
         box.querySelector("a,button").focus();
       }

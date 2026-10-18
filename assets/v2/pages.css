@@ -19,6 +19,16 @@
 .hero__title{font-family:var(--serif);font-weight:500;font-size:56px;line-height:1.3;letter-spacing:-.01em;white-space:pre-line;max-width:640px}
 .hero__sub{font-size:18px;line-height:1.7;max-width:520px}
 .hero__cta{margin-top:12px;display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 30px;border:1px solid currentColor;color:inherit;text-decoration:none;font-size:15px;font-weight:500}
+/* 2-I 쉬는 상태 층: 배너 CTA 채움(흰 판, 밝은 장은 먹색) · 사진 따라오기용으로 사진 층을 12px 넓게(마우스 기기·움직임 줄이기 아님일 때만, 처음부터) */
+.hero__cta{position:relative;isolation:isolate;overflow:hidden}
+.hero__cta::before{content:"";position:absolute;inset:0;z-index:-1;background:#FFFFFF;transform:scaleX(0);transform-origin:left;pointer-events:none}
+.hero__slide--light .hero__cta::before{background:var(--ink)}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .hero__slide picture{inset:-12px;max-width:none}
+  .hero__video{inset:-12px;width:calc(100% + 24px);height:calc(100% + 24px);max-width:none}
+}
+.tile__cta::after{content:"→";display:inline-block;margin-left:8px}
+.journal__item picture{display:block;overflow:hidden}
 .hero__controls{position:absolute;left:0;right:0;bottom:40px;display:flex;justify-content:center;pointer-events:none}
 .hero__controls-in{width:100%;max-width:var(--container);padding:0 80px;display:flex;align-items:center;gap:20px;color:#FFFFFF;pointer-events:auto}
 .hero[data-tone="light"] .hero__controls-in{color:var(--ink)}
