@@ -228,7 +228,7 @@ html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   
 .gallery__stage{flex:1;min-width:0;position:relative}
 .gallery--multi .gallery__main{width:100%}
 .gallery--multi .gallery__thumbs{max-height:554px;overflow-y:auto;scrollbar-width:thin}
-.gallery--multi .gallery__thumb{opacity:.6;transition:opacity .2s ease,border-color .2s ease}
+.gallery--multi .gallery__thumb{flex:none;opacity:.6;transition:opacity .2s ease,border-color .2s ease}   /* flex:none — 7장 이상이면 줄어들지 않고 줄 안에서 스크롤(G6-4b) */
 .gallery--multi .gallery__thumb:hover{opacity:1}
 .gallery--multi .gallery__thumb[aria-current="true"]{border-color:var(--ink);opacity:1}
 .gallery--multi .gallery__slide{opacity:0;transform:scale(1.02);transition:opacity .35s ease,transform .35s ease;pointer-events:none}
