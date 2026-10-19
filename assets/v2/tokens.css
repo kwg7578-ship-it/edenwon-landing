@@ -11,6 +11,7 @@
   --serif:'Noto Serif KR',serif; --sans:'Noto Sans KR',sans-serif;
   --container:1360px; --gutter:40px;
   --ease:cubic-bezier(.2,.7,.2,1); --dur-fast:.2s; --dur-mid:.35s; --dur-slow:.8s;   /* 2-I 커서 반응 */
+  --ts-sm:.85; --ts-lg:1.15;       /* 2-J-3 제목·큰 문구 글자 크기 단계(부모 글 크기에 곱함) */
   /* 2-G 테이스팅 빛깔 견본(정해진 8색만 — blocks.json swatches) */
   --sw-amber:#B7792B; --sw-honey:#D9A441; --sw-plum:#8E3B46; --sw-tomato:#B5452E;
   --sw-grape:#A9B65A; --sw-doenjang:#6B4A2E; --sw-chili:#9C2F24; --sw-vinegar:#D8C27A;
