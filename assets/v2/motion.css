@@ -86,6 +86,36 @@ a,button,.btn,.pill,.gnb a,.cats__item,.card__text{transition:color .2s ease-out
 .added:not([hidden]){animation:ed-slide-down .32s var(--ease-out) 1}
 @media (max-width:768px){.added:not([hidden]){animation-name:ed-slide-up}}
 
+/* 2-K-4 홈 배너 4장 «광고형»(대표 10-19 — 배너만 예외: 튀는 곡선·빛 스침·점 깜빡임). .is-play = 장이 들어올 때(app.js 가 되감음), .is-txt = 글 움직임(1장 첫 표시는 없음),
+   카드 .is-in·.is-out = 묶음 들어옴·빠짐. 일시정지([data-held])면 배너 안 움직임 모두 멈춤. 1장 사진 다가옴은 pages.css */
+@media (prefers-reduced-motion:no-preference){
+  .hero[data-b4-src].is-fade .hero__slide{transition:opacity .8s var(--ease-out),visibility 0s linear .8s}
+  .hero[data-b4-src].is-fade .hero__slide.is-on{transition:opacity .8s var(--ease-out),visibility 0s}
+  .hero[data-b4-src].is-fade .hero__text>*{opacity:1;transform:none;transition:none}
+  .hero[data-b4-src] .is-txt :is(.hero__eyebrow,.b4__eyebrow)::before{animation:b4draw .6s var(--ease-out) .1s backwards}
+  .hero[data-b4-src] .is-txt .b4-ln>span{animation:b4rise .8s var(--ease-out) backwards}
+  .hero[data-b4-src] .is-txt .b4-ln:nth-child(2)>span{animation-delay:.12s}
+  .hero[data-b4-src] .is-txt .b4-ln:nth-child(n+3)>span{animation-delay:.24s}
+  .hero[data-b4-src] .is-txt :is(.hero__sub,.b4__sub){animation:b4fade .7s var(--ease-out) .35s backwards}
+  .hero[data-b4-src] .is-txt :is(.hero__text,.b4__text)>.hero__cta{animation:b4fade .7s var(--ease-out) .5s backwards}
+  .hero[data-b4-src] .is-txt .b4__month{animation:b4month .9s cubic-bezier(.22,1.25,.36,1) backwards}
+  .hero[data-b4-src] .is-txt .b4__soonline{animation:b4fade .6s var(--ease-out) 1s backwards}
+  .hero[data-b4-src] .is-play .b4__live i{animation:b4pulse 1.6s ease-out infinite}
+  .hero[data-b4-src] .b4[data-b4-grp] .b4__item.is-in .b4__card{animation:b4cardIn .75s cubic-bezier(.22,1.25,.36,1) var(--d,0s) backwards}
+  .hero[data-b4-src] .b4[data-b4-grp] .b4__item.is-out .b4__card{animation:b4cardOut .45s var(--ease-out) var(--d,0s) forwards}
+  .hero[data-b4-src] .b4[data-b4-grp] .b4__card::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-130%);pointer-events:none}
+  .hero[data-b4-src] .b4[data-b4-grp] .b4__item.is-in .b4__card::after{animation:b4shine 1s ease-out calc(var(--d,0s) + .7s) both}
+  .hero[data-b4-src][data-held] *,.hero[data-b4-src][data-held] *::before,.hero[data-b4-src][data-held] *::after{animation-play-state:paused!important}
+}
+@keyframes b4draw{from{transform:scaleX(0)}}
+@keyframes b4rise{from{transform:translateY(105%)}}
+@keyframes b4fade{from{opacity:0;transform:translateY(12px)}}
+@keyframes b4month{from{opacity:0;transform:translateY(30px) scale(.8)}}
+@keyframes b4pulse{0%{box-shadow:0 0 0 0 rgba(79,107,39,.55)}100%{box-shadow:0 0 0 10px rgba(79,107,39,0)}}
+@keyframes b4cardIn{from{opacity:0;transform:translate(90px,calc(var(--y,0px) + 40px)) scale(.86)}to{opacity:1;transform:translate(0,var(--y,0px)) scale(1)}}
+@keyframes b4cardOut{to{opacity:0;transform:translate(-60px,var(--y,0px)) scale(.94)}}
+@keyframes b4shine{to{transform:translateX(130%)}}
+
 /* 움직임 줄이기: 모두 끈다 */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}

@@ -263,19 +263,28 @@
     });
     var drop = t.querySelector('[data-b4="' + (gift ? "onggi" : "gift") + '"]'); if (drop) drop.remove();
     var f = t.querySelector('[data-b4="farm"]');
-    if (f) {
+    if (f) {   // 2-K-4: 이번 달 수확 = «수확 중» 카드 + «곧 만나요» 줄(다음 수확 1~2개), 없으면 «곧 만나요» 카드(장은 늘 있음)
       var items = [].slice.call(f.querySelectorAll("[data-months]")), has = function (li, m) { return li.getAttribute("data-months").split(",").indexOf(String(m)) >= 0; };
       var now = items.filter(function (li) { return has(li, M); }), soon = [];
-      if (!now.length) for (var d = 1; d < 12 && soon.length < 2; d++) {
+      for (var d = 1; d < 12 && soon.length < 2; d++) {
         var m = (M - 1 + d) % 12 + 1;
-        items.forEach(function (li) { if (soon.length < 2 && soon.indexOf(li) < 0 && has(li, m)) { soon.push(li); li.setAttribute("data-soon", m); } });
+        items.forEach(function (li) { if (soon.length < 2 && now.indexOf(li) < 0 && !soon.some(function (o) { return o.li === li; }) && has(li, m)) soon.push({ li: li, m: m }); });
       }
-      var show = now.length ? now : soon;
+      var show = now.length ? now : soon.map(function (o) { return o.li; });
       items.forEach(function (li) {
         li.hidden = show.indexOf(li) < 0;
-        var b = li.querySelector(".b4__soon"); if (b) b.remove();
-        if (!now.length && !li.hidden) { var s = document.createElement("span"); s.className = "b4__soon"; s.textContent = "곧 만나요 · " + li.getAttribute("data-soon") + "월"; li.querySelector(".b4__ph").appendChild(s); }
+        [].forEach.call(li.querySelectorAll(".b4__soon,.b4__live"), function (b) { b.remove(); });
+        if (li.hidden) return;
+        var s = document.createElement("span");
+        if (now.length) { s.className = "b4__live"; s.innerHTML = "<i></i>수확 중"; }
+        else { s.className = "b4__soon"; s.textContent = "곧 만나요 · " + soon.filter(function (o) { return o.li === li; })[0].m + "월"; }
+        li.querySelector(".b4__ph").appendChild(s);
       });
+      var sl = f.querySelector("[data-b4-soonline]");
+      if (sl) {
+        sl.hidden = !(now.length && soon.length);
+        sl.textContent = "곧 만나요 · " + soon.map(function (o) { return o.li.querySelector(".b4__n").textContent + "(" + o.m + "월)"; }).join(" · ");
+      }
       f.querySelector("[data-b4-month]").textContent = String(M);
       f.querySelector("[data-b4-title]").textContent = now.length ? "지금 밭에서 거두는 것" : "곧 만나요";
       f.querySelector("[data-b4-sub]").textContent = now.length ? "발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다" : "다음 수확을 기다리는 작물입니다";
@@ -292,24 +301,45 @@
   function b4Per(s) { return parseInt(getComputedStyle(s).getPropertyValue("--per"), 10) || 4; }
   function b4Groups(s) {
     var v = s.querySelectorAll(".b4__item:not([hidden])").length, p = b4Per(s);
-    return v < p ? 1 : Math.min(3, Math.ceil(v / p));
+    return Math.max(1, Math.min(3, Math.ceil(v / p)));
   }
-  function b4Show(s, g) {   // 카드 묶음 g 를 보이고, 그 묶음 카드를 0.08초 간격으로 나타나게(되감은 뒤)
-    var row = s.querySelector(".b4__row"), vis = [].slice.call(s.querySelectorAll(".b4__item:not([hidden])")), p = b4Per(s), w = row.parentNode.clientWidth;
-    var few = vis.length < p, gap = parseFloat(getComputedStyle(row).columnGap) || 0;
-    s.classList.toggle("b4--few", few);
-    s.classList.toggle("hero__slide--light", !(few && s.classList.contains("b4--farm")));   // 적은 카드 + 밭 사진이면 어두운 장
-    row.style.transform = REDUCE || few ? "" : "translateX(" + (-g * (w + gap)) + "px)";
-    var on = [];
+  /* 2-K-4 광고형: 묶음 g 의 카드만 보이고([data-b4-grp]), 오른쪽에서 0.15초 간격으로 튀어 들어오게(.is-in 을 되감음). PC(한 묶음 4장)는 2·4번째가 22px 위.
+     움직임 줄이기면 묶음 없이 줄 하나(손으로 밀기) — 지금 규칙 그대로 */
+  function b4Show(s, g) {
+    var vis = [].slice.call(s.querySelectorAll(".b4__item:not([hidden])")), p = b4Per(s), G = b4Groups(s), cnt = s.querySelector("[data-b4-count]");
+    if (cnt) cnt.textContent = !REDUCE && G > 1 ? (g + 1) + " / " + G : "";
+    if (REDUCE) return;
+    var base = s.classList.contains("b4--farm") ? 0.35 : 0.05;   // 3장은 달 숫자가 먼저
+    s.setAttribute("data-b4-grp", "");
+    s.toggleAttribute("data-b4-few", vis.length < p); s.style.setProperty("--n", String(Math.max(1, vis.length)));   // 한 묶음보다 적으면 조금 크게 가운데
     vis.forEach(function (li, k) {
-      var j = k - (few ? 0 : g * p);
-      if (j >= 0 && (few || j < p)) {
-        li.style.setProperty("--d", (REDUCE ? 0 : j * 0.08).toFixed(2) + "s");
-        var c = li.firstElementChild; c.style.transition = "none"; li.classList.remove("is-in"); void c.offsetWidth; c.style.transition = ""; on.push(li);
-      }
+      var j = k - g * p, on = j >= 0 && j < p;
+      li.classList.remove("is-in", "is-out"); li.classList.toggle("is-grp", on);
+      if (on) { li.style.setProperty("--d", (base + j * 0.15).toFixed(2) + "s"); li.style.setProperty("--y", p >= 4 && j % 2 ? "-22px" : "0px"); }
     });
-    if (REDUCE) vis.forEach(function (li) { li.classList.add("is-in"); });
-    else requestAnimationFrame(function () { on.forEach(function (li) { li.classList.add("is-in"); }); });
+    void s.offsetWidth;
+    vis.forEach(function (li) { if (li.classList.contains("is-grp")) li.classList.add("is-in"); });
+  }
+  function b4Out(s) {   // 지금 묶음이 왼쪽으로 빠짐(0.45초)
+    [].forEach.call(s.querySelectorAll(".b4__item.is-in"), function (li, j) { li.style.setProperty("--d", (j * 0.05).toFixed(2) + "s"); li.classList.remove("is-in"); li.classList.add("is-out"); });
+  }
+  function b4Lines(s) {   // 제목을 줄마다 감싼다(줄마다 아래에서 올라오게) — 편집기 칸 표시가 있으면 그대로
+    [].forEach.call(s.querySelectorAll(".hero__title,.b4__title"), function (h) {
+      if (h.hasAttribute("data-ln") || h.querySelector("[data-ed]")) return;
+      var ls = [""];
+      [].forEach.call(h.childNodes, function (nd) {
+        if (nd.nodeType === 3) { var q = nd.nodeValue.split("\n"); ls[ls.length - 1] += q[0]; for (var z = 1; z < q.length; z++) ls.push(q[z]); }
+        else if (nd.nodeType === 1 && getComputedStyle(nd).display !== "none") { if (nd.nodeName === "BR" || nd.querySelector("br")) ls.push(""); else ls[ls.length - 1] += nd.textContent; }
+      });
+      h.textContent = "";
+      ls.filter(function (x) { return x.trim(); }).forEach(function (x) { var a = document.createElement("span"), b = document.createElement("span"); a.className = "b4-ln"; b.textContent = x; a.appendChild(b); h.appendChild(a); });
+      h.setAttribute("data-ln", "");
+    });
+  }
+  function b4Play(sl, i, was) {   // 들어오는 장의 움직임을 처음부터(.is-play 사진·점, .is-txt 글). 나가는 장은 겹쳐 사라지는 동안 그대로, 나머지는 끔
+    [].forEach.call(sl, function (s, j) { if (j !== i && j !== was) s.classList.remove("is-play", "is-txt"); });
+    var s = sl[i]; b4Lines(s);
+    s.classList.remove("is-play", "is-txt"); void s.offsetWidth; s.classList.add("is-play", "is-txt");
   }
   function initCarousel(root) {
     initHeroFollow(root);
@@ -322,19 +352,25 @@
     var n = slides.length, i = 0, fade = false, timer = null, DWELL = 6000;
     var st = { user: false, hover: false, focus: false, off: false, tab: false };
     function running() { return fade && n > 1 && !st.user && !st.hover && !st.focus && !st.off && !st.tab; }
-    var gi = 0;   // 2-K-3 카드 장의 지금 묶음
+    var gi = 0, pend = null;   // 2-K-3 카드 장의 지금 묶음 · 2-K-4 빠지는 중(0.45초)에 놓을 다음 묶음
+    function flush() { if (pend) { var f = pend; pend = null; f(); } }
     function schedule() {
-      var cs = B4 && slides[i].hasAttribute("data-b4-cards");
-      clearTimeout(timer); timer = !running() ? null : cs ? setTimeout(function () {   // 카드 장: 3초마다 다음 묶음, 다 돌면 다음 장(일시정지·마우스 올림이면 둘 다 멈춤)
-        if (gi + 1 < b4Groups(slides[i])) { gi++; b4Show(slides[i], gi); schedule(); } else go(i + 1);
-      }, 3000) : setTimeout(function () { go(i + 1); }, DWELL);
+      var cs = B4 && slides[i].hasAttribute("data-b4-cards"), G = cs ? b4Groups(slides[i]) : 1;
+      clearTimeout(timer); flush();   // 빠지는 중에 멈추거나 다시 정하면 다음 묶음을 바로 놓는다(빈 무대 없음)
+      timer = !running() ? null : cs ? setTimeout(function () {   // 카드 장: 3.4초마다 묶음이 빠지고 다음 묶음, 다 돌면 다음 장(묶음 하나면 6.5초) — 일시정지·마우스 올림이면 둘 다 멈춤
+        if (gi + 1 < G) {
+          var s = slides[i]; b4Out(s); pend = function () { gi++; b4Show(s, gi); };
+          timer = setTimeout(function () { flush(); schedule(); }, REDUCE ? 0 : 450);
+        } else go(i + 1);
+      }, G > 1 ? 3400 : 6500) : setTimeout(function () { go(i + 1); }, DWELL);
       slides.forEach(function (s, j) { videoSet(s.querySelector("video"), fade && j === i && !st.user && !st.off && !st.tab); });   // 영상은 지금 장·보일 때·멈추지 않았을 때만
     }
     function go(k) {
-      i = (k + n) % n;
+      var was = i; i = (k + n) % n; pend = null;
       slides.forEach(function (s, j) { if (fade) s.classList.toggle("is-on", j === i); else s.hidden = j !== i; });
       if (B4) {
         gi = 0;
+        if (!REDUCE && (i !== was || !slides[i].classList.contains("is-play"))) b4Play(slides, i, was);   // 2-K-4: 1장 첫 표시는 사진 다가옴만(글은 그대로)
         if (slides[i].hasAttribute("data-b4-cards")) b4Show(slides[i], 0);
         root.toggleAttribute("data-b4-card", slides[i].hasAttribute("data-b4-cards") && slides[i].classList.contains("hero__slide--light"));
       }
@@ -377,6 +413,7 @@
     if ((n < 2 && !B4) || REDUCE) return;
     function paint() {
       pause.classList.toggle("is-paused", st.user); pause.setAttribute("aria-pressed", st.user ? "true" : "false");
+      root.toggleAttribute("data-held", st.user);   // 2-K-4: 일시정지면 배너 안 움직임(사진 다가옴·빛·점 깜빡임)도 멈춤
       var hv = !!root.querySelector("video");
       pause.setAttribute("aria-label", st.user ? (hv ? "배너 자동 넘김·영상 다시 시작" : "배너 자동 넘김 다시 시작") : (hv ? "배너 자동 넘김·영상 멈춤" : "배너 자동 넘김 멈춤"));
     }
