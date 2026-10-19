@@ -3,6 +3,10 @@
    서버 호출은 <html data-api> 가 있을 때만(LOCAL=1 리허설 · PREVIEW=0 출시). PREVIEW=1 미리보기는 아무것도 보내지 않는다. */
 (function () {
   "use strict";
+  /* 2-J-1 고정 문구: 편집기에서 바꾼 글 {원래 글: 바꾼 글}(쪽의 #ed-texts — 바꾼 글이 없으면 덩어리도 없음). T(원래 글), Tf(«{0}칸 …», 값) */
+  var TXM = (function () { var e = document.getElementById("ed-texts"); try { return e ? JSON.parse(e.textContent) : {}; } catch (x) { return {}; } })();
+  function T(d) { return Object.prototype.hasOwnProperty.call(TXM, d) ? TXM[d] : d; }
+  function Tf(d) { var a = arguments; return T(d).replace(/\{(\d)\}/g, function (m, k) { return a[+k + 1]; }); }
   var CART_KEY = "edenwon_cart_v2";
   var API = document.documentElement.getAttribute("data-api") || "";
 
@@ -566,7 +570,7 @@
     }
     function stop() {
       if (!timer) return;
-      clearInterval(timer); timer = null; auto.setAttribute("aria-pressed", "false"); auto.textContent = "자동으로 보기";
+      clearInterval(timer); timer = null; auto.setAttribute("aria-pressed", "false"); auto.textContent = T("자동으로 보기");
     }
     tabs.forEach(function (t, i) { t.addEventListener("click", function () { stop(); go(i); }); });
     rail.addEventListener("keydown", function (e) {
@@ -1492,14 +1496,14 @@
       page.querySelector("[data-gift-goods]").textContent = won(sum);
       page.querySelector("[data-gift-off]").textContent = "−" + won(off);
       page.querySelector("[data-gift-total]").textContent = won(sum - off);
-      page.querySelector("[data-gift-hint]").textContent = full ? "구성을 다 고르셨습니다. 칸을 누르면 바꿀 수 있습니다." : (G.slots - n) + "칸 남았습니다. 칸을 누르면 담을 수 있는 상품이 아래에서 올라옵니다.";
+      page.querySelector("[data-gift-hint]").textContent = full ? T("구성을 다 고르셨습니다. 칸을 누르면 바꿀 수 있습니다.") : Tf("{0}칸 남았습니다. 칸을 누르면 담을 수 있는 상품이 아래에서 올라옵니다.", G.slots - n);
       page.querySelector("[data-gift-cart]").disabled = !full; page.querySelector("[data-gift-buy]").disabled = !full;
       err.hidden = true;
     }
     /* 고른 구성품의 상품정보제공고시 — 누르면 그 자리에서 표가 펼쳐진다(상세 화면의 고시 표와 같은 행) */
     function infoBox(i, key) {
       var n = G.notice && G.notice[key], wrap = el("div", "gift__info"), id = "gift-info-" + i;
-      var t = el("button", "gift__info-btn", openInfo[i] ? "상품정보 접기" : "상품정보 보기");
+      var t = el("button", "gift__info-btn", openInfo[i] ? T("상품정보 접기") : T("상품정보 보기"));
       t.type = "button"; t.setAttribute("aria-expanded", openInfo[i] ? "true" : "false"); t.setAttribute("aria-controls", id);
       var box = el("div", "gift__info-box"); box.id = id; box.hidden = !openInfo[i];
       if (n) {
@@ -1510,7 +1514,7 @@
       }
       t.addEventListener("click", function () {
         openInfo[i] = !openInfo[i]; box.hidden = !openInfo[i];
-        t.setAttribute("aria-expanded", openInfo[i] ? "true" : "false"); t.textContent = openInfo[i] ? "상품정보 접기" : "상품정보 보기";
+        t.setAttribute("aria-expanded", openInfo[i] ? "true" : "false"); t.textContent = openInfo[i] ? T("상품정보 접기") : T("상품정보 보기");
       });
       wrap.appendChild(t); wrap.appendChild(box);
       return wrap;
