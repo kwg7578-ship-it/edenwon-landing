@@ -612,19 +612,21 @@
     var IV = (+root.getAttribute("data-feed-iv") || 3) * 1000, N = +root.getAttribute("data-feed-n") || 8;   // H2b: 간격(초)·띄울 글 수
     // H2b 계절: 날짜(KST) → [계절, 계절 해](1·2월은 앞 해 겨울). 손님 날짜 = 한국 시각 오늘(H1-1 과 같은 기준)
     function sea(iso) { var m = /^(\d{4})-(\d{2})-\d{2}$/.exec(iso || ""); return m ? [["winter", "spring", "summer", "autumn"][(+m[2]) % 12 / 3 | 0], +m[1] - (+m[2] <= 2 ? 1 : 0)] : null; }
-    function pick(j) {   // build.py feed_pick 과 같은 규칙: 지금 계절 글 ≥3 → 그 글만, 모자라면 + 작년 같은 계절 + 최근 글
+    var kst = new Date(Date.now() + 324e5), T = sea(kst.getUTCFullYear() + "-" + ("0" + (kst.getUTCMonth() + 1)).slice(-2) + "-01");
+    function pick(j) {   // build.py feed_pick 과 같은 규칙: 지금 계절 글 ≥3 → 그 글만, 모자라면 + 그 계절 글 중 가장 최근 해(H2b-2) + 최근 글
       if (!j.seasons) return (j.items || []).slice(0, N);
-      var n = new Date(Date.now() + 324e5), t = sea(n.getUTCFullYear() + "-" + ("0" + (n.getUTCMonth() + 1)).slice(-2) + "-01");
-      var box = j.seasons[t[0]] || [], is = function (y) { return function (it) { var s = sea(it.date); return s && s[0] === t[0] && s[1] === y; }; };
-      var now = box.filter(is(t[1]));
+      var box = j.seasons[T[0]] || [], is = function (y) { return function (it) { var s = sea(it.date); return s && s[0] === T[0] && s[1] === y; }; };
+      var now = box.filter(is(T[1])), past = null;
       if (now.length >= 3) return now.slice(0, N);
+      box.forEach(function (it) { var s = sea(it.date); if (s && s[0] === T[0] && s[1] < T[1] && (past === null || s[1] > past)) past = s[1]; });
       var out = [], seen = {};
-      now.concat(box.filter(is(t[1] - 1)), j.recent || j.items || []).forEach(function (it) { if (it.url && !seen[it.url]) { seen[it.url] = 1; out.push(it); } });
+      now.concat(past === null ? [] : box.filter(is(past)), j.recent || j.items || []).forEach(function (it) { if (it.url && !seen[it.url]) { seen[it.url] = 1; out.push(it); } });
       return out.slice(0, N);
     }
-    function day(iso) {
-      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); if (!m) return "";
-      return (+m[1] === new Date(Date.now() + 324e5).getUTCFullYear() ? "" : m[1] + "년 ") + (+m[2]) + "월 " + (+m[3]) + "일";
+    function day(iso) {   // build.py feed_when 과 같은 규칙: 올해 글·지금 계절 글은 «10월 17일», 지난해 글은 «2024 가을»
+      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""), s = sea(iso); if (!m) return "";
+      if (+m[1] === kst.getUTCFullYear() || (s[0] === T[0] && s[1] === T[1])) return (+m[2]) + "월 " + (+m[3]) + "일";
+      return s[1] + " " + { spring: "봄", summer: "여름", autumn: "가을", winter: "겨울" }[s[0]];
     }
     function mk(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
     function render(items) {
