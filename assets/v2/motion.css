@@ -87,7 +87,7 @@ a,button,.btn,.pill,.gnb a,.cats__item,.card__text{transition:color .2s ease-out
 @media (max-width:768px){.added:not([hidden]){animation-name:ed-slide-up}}
 
 /* 2-K-4 홈 배너 4장 «광고형»(대표 10-19 — 배너만 예외: 튀는 곡선·빛 스침·점 깜빡임). .is-play = 장이 들어올 때(app.js 가 되감음), .is-txt = 글 움직임(1장 첫 표시는 없음),
-   카드 .is-in·.is-out = 묶음 들어옴·빠짐. 일시정지([data-held])면 배너 안 움직임 모두 멈춤. 1장 사진 다가옴은 pages.css */
+   카드 .is-in·.is-out = 묶음 들어옴·빠짐. 일시정지([data-held])면 사진 다가옴·점 깜빡임 멈춤(들어오는 움직임은 끝까지). 1장 사진 다가옴은 pages.css */
 @media (prefers-reduced-motion:no-preference){
   .hero[data-b4-src].is-fade .hero__slide{transition:opacity .8s var(--ease-out),visibility 0s linear .8s}
   .hero[data-b4-src].is-fade .hero__slide.is-on{transition:opacity .8s var(--ease-out),visibility 0s}
@@ -105,7 +105,9 @@ a,button,.btn,.pill,.gnb a,.cats__item,.card__text{transition:color .2s ease-out
   .hero[data-b4-src] .b4[data-b4-grp] .b4__item.is-out .b4__card{animation:b4cardOut .45s var(--ease-out) var(--d,0s) forwards}
   .hero[data-b4-src] .b4[data-b4-grp] .b4__card::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-130%);pointer-events:none}
   .hero[data-b4-src] .b4[data-b4-grp] .b4__item.is-in .b4__card::after{animation:b4shine 1s ease-out calc(var(--d,0s) + .7s) both}
-  .hero[data-b4-src][data-held] *,.hero[data-b4-src][data-held] *::before,.hero[data-b4-src][data-held] *::after{animation-play-state:paused!important}
+  /* 일시정지: 오래·되풀이 도는 움직임(사진 다가옴 7초·수확 중 점)만 멈춘다. 장·카드가 들어오는 움직임(1초 안팎)까지 멈추면 첫 프레임(투명·줄 밖)에 서서
+     멈춘 채로 다른 장으로 가면 글·카드가 안 보인다 — 2-K-4b(편집기는 처음부터 일시정지라 2장이 빈 화면으로 보였음) */
+  .hero[data-b4-src][data-held] .hero__img,.hero[data-b4-src][data-held] .b4__live i{animation-play-state:paused}
 }
 @keyframes b4draw{from{transform:scaleX(0)}}
 @keyframes b4rise{from{transform:translateY(105%)}}

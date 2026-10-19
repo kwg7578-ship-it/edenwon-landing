@@ -286,8 +286,9 @@
         sl.textContent = "곧 만나요 · " + soon.map(function (o) { return o.li.querySelector(".b4__n").textContent + "(" + o.m + "월)"; }).join(" · ");
       }
       f.querySelector("[data-b4-month]").textContent = String(M);
-      f.querySelector("[data-b4-title]").textContent = now.length ? "지금 밭에서 거두는 것" : "곧 만나요";
-      f.querySelector("[data-b4-sub]").textContent = now.length ? "발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다" : "다음 수확을 기다리는 작물입니다";
+      var setT = function (el, x) { if (el.textContent !== x) el.textContent = x; };   // 2-K-4b: 같은 글이면 덮지 않음(편집기의 편집 칸 표시 유지)
+      setT(f.querySelector("[data-b4-title]"), now.length ? "지금 밭에서 거두는 것" : "곧 만나요");
+      setT(f.querySelector("[data-b4-sub]"), now.length ? "발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다" : "다음 수확을 기다리는 작물입니다");
       if (!show.length) f.remove();
     }
     var all = t.querySelectorAll("[data-slide]"), n = all.length, nn = (n < 10 ? "0" : "") + n;
@@ -413,7 +414,7 @@
     if ((n < 2 && !B4) || REDUCE) return;
     function paint() {
       pause.classList.toggle("is-paused", st.user); pause.setAttribute("aria-pressed", st.user ? "true" : "false");
-      root.toggleAttribute("data-held", st.user);   // 2-K-4: 일시정지면 배너 안 움직임(사진 다가옴·빛·점 깜빡임)도 멈춤
+      root.toggleAttribute("data-held", st.user);   // 2-K-4: 일시정지면 사진 다가옴·점 깜빡임도 멈춤(들어오는 움직임은 끝까지 — 2-K-4b)
       var hv = !!root.querySelector("video");
       pause.setAttribute("aria-label", st.user ? (hv ? "배너 자동 넘김·영상 다시 시작" : "배너 자동 넘김 다시 시작") : (hv ? "배너 자동 넘김·영상 멈춤" : "배너 자동 넘김 멈춤"));
     }
