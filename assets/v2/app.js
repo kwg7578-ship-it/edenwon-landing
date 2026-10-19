@@ -504,6 +504,7 @@
     var thumbs = g.querySelectorAll("[data-thumb]"), shots = g.querySelectorAll("[data-shot]"), cur = 0;
     var main = g.querySelector("[data-track]"), count = g.querySelector("[data-count]");
     if (!main || shots.length < 2) return;
+    g._mark = function () { mark(cur); };   // H3: 옵션 사진 겹을 내릴 때 옆 사진 줄 선택 표시 되돌리기
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     function load(k) {
       var s = shots[k];
@@ -767,6 +768,49 @@
   }
 
   /* ── 상세: 옵션을 고르면 아래 상자에 줄로 쌓인다(오설록 방식). 옵션별 수량·삭제 ── */
+  /* ── 옵션별 사진(H3): 상세에서 옵션을 고르면 큰 사진 위에 그 옵션 사진 겹(0.35초 크로스페이드, 움직임 줄이기면 바로 — CSS).
+     겹은 absolute(밀림 0)·누름 통과(휴대폰 밀기 그대로). 사진 없는 옵션·옆 사진 누름·밀기·화살표 키 → 겹 내림, 옆 사진 줄 선택 표시 되돌림.
+     편집 화면에는 «ed:opt» 알림(어느 옵션인지) ── */
+  function initOptPhoto(data) {
+    var gal = document.querySelector("[data-gallery]"), OI = data.opt_img || {}, layer = null;
+    if (!gal) return function () {};
+    var main = gal.querySelector(".gallery__main"), box = gal.querySelector(".gallery__stage") || main, count = gal.querySelector(".gallery__count");
+    function drop(x) { x.classList.remove("is-on"); setTimeout(function () { if (x.parentNode) x.parentNode.removeChild(x); }, 400); }
+    function hide() {
+      if (!layer) return;
+      drop(layer); layer = null;
+      if (count) count.style.visibility = "";
+      if (gal._mark) gal._mark();
+    }
+    function show(id) {
+      var o = OI[id];
+      if (data.options.length > 1) {
+        var lb = (data.options.filter(function (x) { return x.id === id; })[0] || {}).label || id;
+        try { document.dispatchEvent(new CustomEvent("ed:opt", { detail: { key: data.key, option: id, label: lb, has: !!o } })); } catch (e) {}
+      }
+      if (!o) { hide(); return; }
+      if (layer && layer.getAttribute("data-opt-img") === id) return;
+      var x = document.createElement("div"), pic = document.createElement("picture"), s = document.createElement("source"), im = document.createElement("img");
+      x.className = "gallery__opt"; x.setAttribute("data-opt-img", id);
+      s.type = "image/webp"; s.srcset = o.webp; s.sizes = "(max-width: 768px) 100vw, 640px";
+      im.src = o.src; im.srcset = o.jpg; im.sizes = s.sizes; im.width = o.w; im.height = o.h; im.alt = o.alt || ""; im.className = "gallery__img"; im.decoding = "async";
+      if (o.pos) im.style.objectPosition = o.pos;
+      pic.appendChild(s); pic.appendChild(im); x.appendChild(pic);
+      box.insertBefore(x, count && count.parentNode === box ? count : null);
+      var old = layer; layer = x;
+      gal.querySelectorAll("[data-thumb]").forEach(function (t) { t.removeAttribute("aria-current"); });
+      if (count) count.style.visibility = "hidden";
+      function on() { if (layer !== x) return; requestAnimationFrame(function () { requestAnimationFrame(function () { x.classList.add("is-on"); if (old) drop(old); }); }); }
+      if (im.complete) on(); else { im.addEventListener("load", on); im.addEventListener("error", function () { if (layer === x) hide(); if (old) drop(old); }); }   // 못 받으면 제품 사진으로
+    }
+    gal.querySelectorAll("[data-thumb]").forEach(function (t) {
+      t.addEventListener("click", hide);
+      t.addEventListener("mouseenter", function () { if (window.matchMedia("(hover:hover)").matches) hide(); });
+    });
+    gal.addEventListener("keydown", function (e) { if (/^Arrow/.test(e.key)) hide(); });
+    if (main) main.addEventListener("scroll", hide, { passive: true });
+    return show;
+  }
   function initBuy(buy) {
     var data = JSON.parse(document.getElementById("product-data").textContent);
     var byId = {}; data.options.forEach(function (o) { byId[o.id] = o; });
@@ -809,9 +853,10 @@
       if (hit) hit.qty = Math.min(Cart.MAX_QTY, hit.qty + 1); else lines.push({ option: id, qty: 1 });
       render();
     }
+    var optPhoto = initOptPhoto(data);
     if (sel) {
       if (data.options.length === 1 && !data.options[0].sold_out) { pick(data.options[0].id); }
-      sel.addEventListener("change", function () { pick(sel.value); if (data.options.length > 1) sel.value = ""; });
+      sel.addEventListener("change", function () { optPhoto(sel.value); pick(sel.value); if (data.options.length > 1) sel.value = ""; });
     }
     function picked() {
       if (!lines.length) {
@@ -968,9 +1013,10 @@
       var g = giftView(P, it);
       return g && { gift: g, name: g.name, opt: "구성 " + g.parts.length + "가지", price: g.price, so: g.so, img: g.img, href: g.href };
     }
-    var h = it && optOf(P, it.key, it.option);
-    return h && { name: h.p.name, opt: h.o.label, price: h.o.price, so: !!h.o.sold_out, img: h.p.img, href: h.p.href, h: h };
+    var h = it && optOf(P, it.key, it.option), oi = h && optPic(h.p, h.o.id);
+    return h && { name: h.p.name, opt: h.o.label, price: h.o.price, so: !!h.o.sold_out, img: oi ? oi.img : h.p.img, pos: oi && oi.pos, href: h.p.href, h: h };
   }
+  function optPic(p, id) { var x = p && p.opt_img && p.opt_img[id]; return x && x.img ? x : null; }   // H3: 옵션별 사진(products.json opt_img — 없으면 null)
   function giftList(g) {
     var ul = document.createElement("ul"); ul.className = "set-parts";
     g.parts.forEach(function (h) {
@@ -999,6 +1045,7 @@
         row.classList.toggle("is-soldout", so);
         row.querySelectorAll("[data-row-link]").forEach(function (a) { a.href = root() + hit.href; });
         row.querySelector(".crow__img img").src = root() + "images/v2/" + hit.img.replace(/\.jpg$/, "") + "-480.jpg";
+        if (hit.pos) row.querySelector(".crow__img img").style.objectPosition = hit.pos;
         row.querySelector(".crow__name").textContent = name;
         row.querySelector(".crow__opt").textContent = opt + " · " + won(hit.price);
         if (hit.gift) {   // 세트: 펼치면 구성이 보인다
@@ -1376,7 +1423,9 @@
       var ul = $("[data-co-items]"), tpl = document.getElementById("co-item"), n = 0;
       lines.forEach(function (l) {
         var li = tpl.content.firstElementChild.cloneNode(true);
-        li.querySelector("img").src = root() + "images/v2/" + l.p.img.replace(/\.jpg$/, "") + "-480.jpg";
+        var oi = optPic(l.p, l.o.id);   // H3: 옵션별 사진이 있으면 그것(글은 그대로)
+        li.querySelector("img").src = root() + "images/v2/" + (oi ? oi.img : l.p.img).replace(/\.jpg$/, "") + "-480.jpg";
+        if (oi && oi.pos) li.querySelector("img").style.objectPosition = oi.pos;
         li.querySelector(".co__item-name").textContent = l.p.name;
         li.querySelector(".co__item-opt").textContent = l.o.label + " · " + l.qty + "개";
         li.querySelector(".co__item-sum").textContent = won(l.o.price * l.qty);
@@ -1543,12 +1592,15 @@
     function d() { return G.sets[set]; }
     function img(h) { return root() + "images/v2/" + h.p.img.replace(/\.jpg$/, "") + "-480.jpg"; }
     // G7e: 선물세트 화면 전용 구성품 사진(G.goods[키] — 없으면 상품 사진). 초점·대체 글, 편집 화면이 누를 곳 표시(data-gift-good)
-    function goodImg(im, key, p) {
-      var g = G.goods && G.goods[key];
+    // H3: 옵션을 고른 칸은 옵션 사진 → 선물세트 전용 사진 → 상품 사진(opt 없으면 지금 그대로)
+    function goodImg(im, key, p, opt) {
+      var g = G.goods && G.goods[key], oi = opt && optPic(p, opt);
+      if (oi) g = oi;
       im.src = root() + "images/v2/" + ((g && g.img) || p.img).replace(/\.jpg$/, "") + "-480.jpg";
       im.alt = (g && g.alt) || "";
       if (g && g.pos) im.style.objectPosition = g.pos;
       im.setAttribute("data-gift-good", key);
+      if (oi) im.setAttribute("data-gift-opt", opt);
     }
     function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
     function choose(id) {
@@ -1566,7 +1618,7 @@
         b.type = "button"; b.setAttribute("data-slot", i);
         if (x) {
           var h = optOf(P, x.key, x.option);
-          var im = document.createElement("img"); goodImg(im, x.key, h.p); im.width = 240; im.height = 240; im.loading = "lazy";
+          var im = document.createElement("img"); goodImg(im, x.key, h.p, x.option); im.width = 240; im.height = 240; im.loading = "lazy";
           b.appendChild(im);
           b.appendChild(el("span", "sr-only", (i + 1) + "번째 칸: "));
           var t = el("span", "gift__slot-t"); t.appendChild(el("span", "gift__slot-n", h.p.name)); t.appendChild(el("span", "gift__slot-o muted", h.o.label + " · " + won(h.o.price)));

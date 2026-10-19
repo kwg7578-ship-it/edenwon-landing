@@ -241,6 +241,11 @@ html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   
   .gallery--multi .gallery__slide{position:relative;flex:0 0 100%;scroll-snap-align:start;opacity:1;transform:none;transition:none;pointer-events:auto}
 }
 @media (prefers-reduced-motion:reduce){.gallery--multi .gallery__slide,.gallery--multi .gallery__thumb{transition:none}}
+/* H3 옵션별 사진 겹(app.js initOptPhoto — 사진 있는 옵션을 고를 때만 생김): 큰 사진 칸 위 absolute(밀림 0), 누름 통과 */
+.gallery__opt{position:absolute;inset:0;z-index:2;background:var(--photo);opacity:0;transition:opacity .35s ease;pointer-events:none}
+.gallery__opt.is-on{opacity:1}
+.gallery__opt picture,.gallery__opt .gallery__img{display:block;width:100%;height:100%;object-fit:cover}
+@media (prefers-reduced-motion:reduce){.gallery__opt{transition:none}}
 .buy{flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:28px}
 .buy__head{display:flex;flex-direction:column;gap:14px}
 .buy__cat{font-size:13px;letter-spacing:.1em;color:var(--accent);font-weight:500}
