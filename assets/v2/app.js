@@ -779,23 +779,155 @@
     var IV = (+root.getAttribute("data-feed-iv") || 3) * 1000, N = +root.getAttribute("data-feed-n") || 8;   // H2b: 간격(초)·띄울 글 수
     // H2b 계절: 날짜(KST) → [계절, 계절 해](1·2월은 앞 해 겨울). 손님 날짜 = 한국 시각 오늘(H1-1 과 같은 기준)
     function sea(iso) { var m = /^(\d{4})-(\d{2})-\d{2}$/.exec(iso || ""); return m ? [["winter", "spring", "summer", "autumn"][(+m[2]) % 12 / 3 | 0], +m[1] - (+m[2] <= 2 ? 1 : 0)] : null; }
-    var kst = new Date(Date.now() + 324e5), T = sea(kst.getUTCFullYear() + "-" + ("0" + (kst.getUTCMonth() + 1)).slice(-2) + "-01");
+    var kst = new Date(Date.now() + 324e5), SN = sea(kst.getUTCFullYear() + "-" + ("0" + (kst.getUTCMonth() + 1)).slice(-2) + "-01");   // ③: 이름 SN(예전 T 가 문구표 T() 를 가려 멈춤 단추가 오류 — ① 실수)
     function pick(j) {   // build.py feed_pick 과 같은 규칙: 지금 계절 글 ≥3 → 그 글만, 모자라면 + 그 계절 글 중 가장 최근 해(H2b-2) + 최근 글
       if (!j.seasons) return (j.items || []).slice(0, N);
-      var box = j.seasons[T[0]] || [], is = function (y) { return function (it) { var s = sea(it.date); return s && s[0] === T[0] && s[1] === y; }; };
-      var now = box.filter(is(T[1])), past = null;
+      var box = j.seasons[SN[0]] || [], is = function (y) { return function (it) { var s = sea(it.date); return s && s[0] === SN[0] && s[1] === y; }; };
+      var now = box.filter(is(SN[1])), past = null;
       if (now.length >= 3) return now.slice(0, N);
-      box.forEach(function (it) { var s = sea(it.date); if (s && s[0] === T[0] && s[1] < T[1] && (past === null || s[1] > past)) past = s[1]; });
+      box.forEach(function (it) { var s = sea(it.date); if (s && s[0] === SN[0] && s[1] < SN[1] && (past === null || s[1] > past)) past = s[1]; });
       var out = [], seen = {};
       now.concat(past === null ? [] : box.filter(is(past)), j.recent || j.items || []).forEach(function (it) { if (it.url && !seen[it.url]) { seen[it.url] = 1; out.push(it); } });
       return out.slice(0, N);
     }
     function day(iso) {   // build.py feed_when 과 같은 규칙: 올해 글·지금 계절 글은 «10월 17일», 지난해 글은 «2024 가을»
       var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""), s = sea(iso); if (!m) return "";
-      if (+m[1] === kst.getUTCFullYear() || (s[0] === T[0] && s[1] === T[1])) return (+m[2]) + "월 " + (+m[3]) + "일";   /* 자동 값 */
+      if (+m[1] === kst.getUTCFullYear() || (s[0] === SN[0] && s[1] === SN[1])) return (+m[2]) + "월 " + (+m[3]) + "일";   /* 자동 값 */
       return s[1] + " " + { spring: "봄", summer: "여름", autumn: "가을", winter: "겨울" }[s[0]];   /* 자동 값 */
     }
     function mk(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+    var mag = root.querySelector("[data-mag]");
+    if (mag) return initMag();
+    /* ③ 매거진형(home.feed.layout mag — 시안A): 큰 사진 + 같은 글 목록(최대 8). IV 마다 다음 글 — 큰 사진은 오른쪽에서 걷힘(clip-path 1초)·천천히 다가와 자리 잡기, 글은 차례로 올라옴,
+       목록 지금 줄 아래 진행 선. «멈춤»·마우스 올림·포커스·화면 밖·탭 숨김이면 멈춤(쌓인 시간은 그대로), 움직임 줄이기면 자동 넘김 없음(«자동 넘기기 켜기»)·효과 없음,
+       휴대폰 밀어 넘기기. 큰 사진은 첫 글만 주소 — 화면에 들어오면·글이 바뀌면 다음 글 사진만 미리. 편집 빌드(data-mag-still)는 멈춘 채 다 보이게 */
+    function initMag() {
+      var body = mag.querySelector("[data-mag-body]"), stage = mag.querySelector("[data-mag-stage]"), ol = mag.querySelector("[data-mag-list]");
+      var feat = mag.querySelector("[data-mag-feat]"), txt = mag.querySelector("[data-mag-txt]"), cnt = mag.querySelector("[data-mag-count]");
+      var pb = mag.querySelector("[data-mag-pause]"), tagEl = mag.querySelector("[data-mag-tag]");
+      var STILL = mag.hasAttribute("data-mag-still"), FX = !REDUCE && !STILL, FB = mag.getAttribute("data-mag-fb");
+      var posts = [], i = 0, st = { held: REDUCE || STILL, hover: false, focus: false, vis: false }, el = 0, last = 0, raf = 0, outT = 0, seen = false;
+      function pad(n) { return (n < 10 ? "0" : "") + n; }
+      function read() {
+        posts = [].map.call(ol.children, function (li) { return { url: li.getAttribute("data-u"), d: li.getAttribute("data-d") || "", s: li.getAttribute("data-s") || "", t: li.querySelector(".mag__rt").textContent }; });
+      }
+      var L0 = pb.textContent;   // «멈춤»은 쪽 글(템플릿 조각) 그대로
+      function label() { pb.textContent = st.held ? (REDUCE && !st.on ? T("자동 넘기기 켜기") : T("다시 넘기기")) : L0; pb.setAttribute("aria-pressed", String(st.held)); }
+      function load(k) {   // data-* 에만 둔 큰 사진 주소를 채움(지금·다음 글만)
+        var ph = stage.children[k]; if (!ph) return;
+        ph.querySelectorAll("[data-srcset]").forEach(function (x) { x.setAttribute("srcset", x.getAttribute("data-srcset")); x.removeAttribute("data-srcset"); });
+        ph.querySelectorAll("img[data-src]").forEach(function (x) { x.src = x.getAttribute("data-src"); x.removeAttribute("data-src"); });
+      }
+      function bar(f) { var l = ol.children[i] && ol.children[i].querySelector(".mag__line"); if (l) l.style.transform = "scaleX(" + Math.min(f, 1) + ")"; }
+      function going() { return !st.held && !st.hover && !st.focus && st.vis && !document.hidden && posts.length > 1; }
+      function loop(now) {
+        raf = 0; if (!going()) return;
+        el += now - last; last = now; bar(el / IV);
+        if (el >= IV) go(i + 1);
+        raf = requestAnimationFrame(loop);
+      }
+      function sync() { if (going() && !raf) { last = performance.now(); raf = requestAnimationFrame(loop); } }
+      function go(k) {
+        var n = posts.length; if (!n) return;
+        k = (k + n) % n; bar(0); el = 0;
+        if (k === i) return;
+        var ps = stage.children, prev = i; i = k;
+        [].forEach.call(ps, function (p) { p.classList.remove("was"); });
+        ps[prev].classList.remove("is-on"); if (FX) ps[prev].classList.add("was");
+        load(k); load((k + 1) % n); void ps[k].offsetWidth; ps[k].classList.add("is-on");
+        [].forEach.call(ol.children, function (li, j) { li.classList.toggle("is-on", j === k); var b = li.querySelector("button"); if (j === k) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current"); });
+        cnt.firstChild.textContent = pad(k + 1); feat.href = posts[k].url; mag.setAttribute("data-i", k);
+        clearTimeout(outT);
+        var put = function () {
+          var p = posts[i], ex = txt.querySelector("[data-mag-ex]");
+          txt.querySelector("[data-mag-date]").textContent = p.d; txt.querySelector("[data-mag-t]").textContent = p.t; ex.textContent = p.s; ex.hidden = !p.s;
+          txt.classList.remove("is-out");
+        };
+        if (FX) { txt.classList.add("is-out"); outT = setTimeout(put, 320); } else put();
+      }
+      function img(it, big) {   // 피드 사진(webp + jpg 대체) — 없으면 사이트 기본 사진(오류여도 기본 사진: 아래 error)
+        var pic = document.createElement("picture"), so = document.createElement("source"), im = document.createElement("img"), b = api + "/api/v2/feed/thumb/";
+        var ok = it.thumb_480 && /^[0-9a-f]{16}-480$/.test(it.thumb_480) && /^[0-9a-f]{16}-960$/.test(it.thumb_960 || "");
+        var w = ok ? b + it.thumb_480 + ".webp 480w, " + b + it.thumb_960 + ".webp 960w" : mag.getAttribute("data-mag-fb-webp");
+        var j = ok ? b + it.thumb_480 + ".jpg 480w, " + b + it.thumb_960 + ".jpg 960w" : mag.getAttribute("data-mag-fb-jpg");
+        var src = ok ? b + it.thumb_960 + ".jpg" : FB;
+        if (!src) return null;
+        if (!ok) pic.setAttribute("data-mag-fbp", "");
+        so.type = "image/webp"; im.alt = ""; im.decoding = "async";
+        if (big) {
+          so.sizes = im.sizes = "(max-width:860px) 100vw, 58vw"; im.width = 960; im.height = 600; im.className = "mag__img";
+          so.setAttribute("data-srcset", w); im.setAttribute("data-srcset", j); im.setAttribute("data-src", src);
+        } else {
+          so.sizes = im.sizes = "72px"; so.srcset = ok ? b + it.thumb_480 + ".webp" : w; if (ok) im.src = b + it.thumb_480 + ".jpg"; else { im.srcset = j; im.src = src; }
+          im.width = im.height = 72; im.loading = "lazy";
+        }
+        pic.appendChild(so); pic.appendChild(im); return pic;
+      }
+      function draw(items) {   // API 글로 다시 그림 — 같은 글·같은 차례면 날짜만 맞춤(사진 다시 받지 않음)
+        var keep = items.filter(function (it) { return /^https:\/\/(m\.)?blog\.naver\.com\//.test(it.url || ""); });
+        if (!keep.length) return;
+        mag.classList.toggle("mag--sum", keep.some(function (it) { return !!it.summary; }));   // 요약 줄 자리(서버가 summary 를 보낼 때만)
+        var same = keep.length === posts.length && keep.every(function (it, k) { return it.url === posts[k].url; });
+        if (same) {
+          keep.forEach(function (it, k) { var d = day(it.date); posts[k].d = d; ol.children[k].querySelector(".mag__date").textContent = d; });
+          txt.querySelector("[data-mag-date]").textContent = posts[i].d;
+        } else {
+          stage.textContent = ""; ol.textContent = ""; i = 0;
+          keep.forEach(function (it, k) {
+            var ph = mk("span", "mag__ph" + (k ? "" : " is-on")), bp = img(it, true); if (bp) ph.appendChild(bp); stage.appendChild(ph);
+            var li = mk("li", "mag__li" + (k ? "" : " is-on")), bt = mk("button", "mag__row"), rp = mk("span", "mag__rph"), me = mk("span", "mag__meta"), sp = img(it, false);
+            li.setAttribute("data-u", it.url); li.setAttribute("data-d", day(it.date)); li.setAttribute("data-s", String(it.summary || "").slice(0, 200));
+            bt.type = "button"; if (!k) bt.setAttribute("aria-current", "true");
+            if (sp) rp.appendChild(sp);
+            me.appendChild(mk("span", "mag__date", day(it.date))); me.appendChild(mk("span", "mag__rt", String(it.title || "").slice(0, 120)));
+            bt.appendChild(rp); bt.appendChild(me); li.appendChild(bt); li.appendChild(mk("span", "mag__line")); li.lastChild.setAttribute("aria-hidden", "true"); ol.appendChild(li);
+          });
+          read(); load(0); if (seen) load(1 % posts.length);
+          cnt.firstChild.textContent = "01"; cnt.lastChild.textContent = " / " + pad(posts.length); mag.setAttribute("data-i", 0);
+          feat.href = posts[0].url; txt.querySelector("[data-mag-date]").textContent = posts[0].d; txt.querySelector("[data-mag-t]").textContent = posts[0].t;
+          var ex = txt.querySelector("[data-mag-ex]"); ex.textContent = posts[0].s; ex.hidden = !posts[0].s;
+        }
+        var ys = keep.map(function (it) { return sea(it.date); }).filter(function (s) { return s && s[0] === SN[0]; }).map(function (s) { return s[1]; });
+        var tg = ys.length ? Math.max.apply(null, ys) + " " + { spring: "봄", summer: "여름", autumn: "가을", winter: "겨울" }[SN[0]] : "";   /* 자동 값 */
+        if (tagEl.textContent !== tg) tagEl.textContent = tg;
+        tagEl.hidden = !tg;
+        body.hidden = false; empty.hidden = true; el = 0; bar(0); sync();
+      }
+      read();
+      mag.addEventListener("error", function (e) {   // 피드 사진을 못 받으면(404 등) 사이트 기본 사진
+        var im = e.target; if (!im || im.tagName !== "IMG" || !FB || im.hasAttribute("data-fb")) return;
+        var pic = im.parentNode, so = pic.querySelector("source"); im.setAttribute("data-fb", "");
+        if (so) pic.removeChild(so);
+        im.srcset = mag.getAttribute("data-mag-fb-jpg") || ""; im.src = FB;
+      }, true);
+      mag.setAttribute("data-i", 0);
+      if (api && window.fetch && window.AbortController) {
+        var ac = new AbortController(), to = setTimeout(function () { ac.abort(); }, 4000);
+        fetch(api + "/api/v2/feed?source=" + encodeURIComponent(src) + "&view=season", { signal: ac.signal, credentials: "omit" })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (j) { clearTimeout(to); var p = j && j.items ? pick(j) : []; if (p.length) draw(p.slice(0, Math.min(N, 8))); })
+          .catch(function () { clearTimeout(to); });   // 실패하면 빌드 때 받은 글(또는 단추) 그대로
+      }
+      if (REDUCE && !STILL) { label(); pb.addEventListener("click", function () { st.on = true; }, true); }   // 움직임 줄이기: «자동 넘기기 켜기» — 한 번 켜면 그 뒤로는 멈춤/다시 넘기기
+      pb.addEventListener("click", function () { st.held = !st.held; label(); sync(); });
+      mag.querySelector("[data-mag-prev]").addEventListener("click", function () { go(i - 1); sync(); });
+      mag.querySelector("[data-mag-next]").addEventListener("click", function () { go(i + 1); sync(); });
+      ol.addEventListener("click", function (e) { var li = e.target.closest && e.target.closest(".mag__li"); if (li) { go([].indexOf.call(ol.children, li)); sync(); } });
+      body.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") st.hover = true; });   // 손가락 누름은 마우스 올림이 아님
+      body.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") { st.hover = false; sync(); } });
+      body.addEventListener("focusin", function (e) { st.focus = e.target !== pb && !!(e.target.matches && e.target.matches(":focus-visible")); sync(); });   // 키보드 포커스만(마우스로 누른 단추는 아님)
+      body.addEventListener("focusout", function (e) { if (!body.contains(e.relatedTarget)) { st.focus = false; sync(); } });
+      document.addEventListener("visibilitychange", sync);
+      var x0 = null;   // 손가락으로 밀어 넘기기
+      stage.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+      stage.addEventListener("touchend", function (e) {
+        if (x0 == null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null;
+        if (Math.abs(dx) > 40) { e.preventDefault(); go(i + (dx < 0 ? 1 : -1)); sync(); }
+      });
+      var see = function (on) { st.vis = on; if (on && !seen) { seen = true; if (posts.length > 1) load(1); } sync(); };
+      if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { see(es[0].isIntersecting); }, { threshold: 0.3 }).observe(body);
+      else see(true);
+    }
     function render(items) {
       track.textContent = "";
       items.forEach(function (it) {
