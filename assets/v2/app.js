@@ -1527,6 +1527,14 @@
     var want = new URLSearchParams(location.search).get("set");
     function d() { return G.sets[set]; }
     function img(h) { return root() + "images/v2/" + h.p.img.replace(/\.jpg$/, "") + "-480.jpg"; }
+    // G7e: 선물세트 화면 전용 구성품 사진(G.goods[키] — 없으면 상품 사진). 초점·대체 글, 편집 화면이 누를 곳 표시(data-gift-good)
+    function goodImg(im, key, p) {
+      var g = G.goods && G.goods[key];
+      im.src = root() + "images/v2/" + ((g && g.img) || p.img).replace(/\.jpg$/, "") + "-480.jpg";
+      im.alt = (g && g.alt) || "";
+      if (g && g.pos) im.style.objectPosition = g.pos;
+      im.setAttribute("data-gift-good", key);
+    }
     function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
     function choose(id) {
       if (!G.sets[id]) id = Object.keys(G.sets)[0];
@@ -1543,7 +1551,7 @@
         b.type = "button"; b.setAttribute("data-slot", i);
         if (x) {
           var h = optOf(P, x.key, x.option);
-          var im = document.createElement("img"); im.src = img(h); im.alt = ""; im.width = 240; im.height = 240; im.loading = "lazy";
+          var im = document.createElement("img"); goodImg(im, x.key, h.p); im.width = 240; im.height = 240; im.loading = "lazy";
           b.appendChild(im);
           b.appendChild(el("span", "sr-only", (i + 1) + "번째 칸: "));
           var t = el("span", "gift__slot-t"); t.appendChild(el("span", "gift__slot-n", h.p.name)); t.appendChild(el("span", "gift__slot-o muted", h.o.label + " · " + won(h.o.price)));
@@ -1595,7 +1603,7 @@
         var avail = p.options.filter(function (o) { return !o.sold_out; });
         var li = el("li"), b = el("button", "sheet__item" + (avail.length ? "" : " is-soldout"));
         b.type = "button"; b.disabled = !avail.length;
-        var im = document.createElement("img"); im.src = root() + "images/v2/" + p.img.replace(/\.jpg$/, "") + "-480.jpg"; im.alt = ""; im.width = 96; im.height = 96; im.loading = "lazy";
+        var im = document.createElement("img"); goodImg(im, k, p); im.width = 96; im.height = 96; im.loading = "lazy";
         var prices = (avail.length ? avail : p.options).map(function (o) { return o.price; }).sort(function (a, b2) { return a - b2; });
         b.appendChild(im);
         var t = el("span", "sheet__t"); t.appendChild(el("span", "sheet__n", p.name));
