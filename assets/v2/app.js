@@ -603,12 +603,25 @@
     document.querySelectorAll("[data-season-ko]").forEach(function (el) { if (el.textContent !== ko) el.textContent = ko; });
   }
 
-  /* ── 소식 띠(H2): API(최신) → 빌드 때 받은 목록 → «블로그에서 보기» 단추. 5초마다 한 칸(띠 안 스크롤 — 밀림 0),
+  /* ── 소식 띠(H2·H2b): API(계절별 — 손님 날짜의 계절 글) → 빌드 때 받은 목록 → «블로그에서 보기» 단추. 3초(편집기 3~8초)마다 한 칸(띠 안 스크롤 — 밀림 0),
      일시정지(WCAG 2.2.2)·마우스 올림/포커스 멈춤·화면 밖·탭 숨김 멈춤·움직임 줄이기면 자동 넘김 없음, 새 탭 ── */
   function initFeed(root) {
     var vp = root.querySelector("[data-feed-viewport]"), track = root.querySelector("[data-feed-track]");
     var ctrl = root.querySelector("[data-feed-ctrl]"), empty = root.querySelector("[data-feed-empty]"), pause = root.querySelector("[data-feed-pause]");
     var api = root.getAttribute("data-feed-api"), src = root.getAttribute("data-feed-src"), label = root.getAttribute("data-feed-label") || "";
+    var IV = (+root.getAttribute("data-feed-iv") || 3) * 1000, N = +root.getAttribute("data-feed-n") || 8;   // H2b: 간격(초)·띄울 글 수
+    // H2b 계절: 날짜(KST) → [계절, 계절 해](1·2월은 앞 해 겨울). 손님 날짜 = 한국 시각 오늘(H1-1 과 같은 기준)
+    function sea(iso) { var m = /^(\d{4})-(\d{2})-\d{2}$/.exec(iso || ""); return m ? [["winter", "spring", "summer", "autumn"][(+m[2]) % 12 / 3 | 0], +m[1] - (+m[2] <= 2 ? 1 : 0)] : null; }
+    function pick(j) {   // build.py feed_pick 과 같은 규칙: 지금 계절 글 ≥3 → 그 글만, 모자라면 + 작년 같은 계절 + 최근 글
+      if (!j.seasons) return (j.items || []).slice(0, N);
+      var n = new Date(Date.now() + 324e5), t = sea(n.getUTCFullYear() + "-" + ("0" + (n.getUTCMonth() + 1)).slice(-2) + "-01");
+      var box = j.seasons[t[0]] || [], is = function (y) { return function (it) { var s = sea(it.date); return s && s[0] === t[0] && s[1] === y; }; };
+      var now = box.filter(is(t[1]));
+      if (now.length >= 3) return now.slice(0, N);
+      var out = [], seen = {};
+      now.concat(box.filter(is(t[1] - 1)), j.recent || j.items || []).forEach(function (it) { if (it.url && !seen[it.url]) { seen[it.url] = 1; out.push(it); } });
+      return out.slice(0, N);
+    }
     function day(iso) {
       var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); if (!m) return "";
       return (+m[1] === new Date(Date.now() + 324e5).getUTCFullYear() ? "" : m[1] + "년 ") + (+m[2]) + "월 " + (+m[3]) + "일";
@@ -635,9 +648,9 @@
     }
     if (api && window.fetch && window.AbortController) {
       var ac = new AbortController(), to = setTimeout(function () { ac.abort(); }, 4000);
-      fetch(api + "/api/v2/feed?source=" + encodeURIComponent(src), { signal: ac.signal, credentials: "omit" })
+      fetch(api + "/api/v2/feed?source=" + encodeURIComponent(src) + "&view=season", { signal: ac.signal, credentials: "omit" })
         .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (j) { clearTimeout(to); if (j && j.items && j.items.length) render(j.items.slice(0, 8)); })
+        .then(function (j) { clearTimeout(to); var p = j && j.items ? pick(j) : []; if (p.length) render(p); })
         .catch(function () { clearTimeout(to); });   // 실패하면 빌드 때 받은 목록(또는 단추) 그대로
     }
     var st = { paused: false, hover: false, focus: false, vis: false }, timer = null;
@@ -650,7 +663,7 @@
     function tick() {
       clearInterval(timer); timer = null;
       if (!REDUCE && !st.paused && !st.hover && !st.focus && st.vis && !document.hidden && track.children.length > 1 && vp.scrollWidth > vp.clientWidth + 2)
-        timer = setInterval(function () { step(1); }, 5000);
+        timer = setInterval(function () { step(1); }, IV);
     }
     root.querySelector("[data-feed-prev]").addEventListener("click", function () { step(-1); });
     root.querySelector("[data-feed-next]").addEventListener("click", function () { step(1); });
