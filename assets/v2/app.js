@@ -555,10 +555,43 @@
 
   /* ── 과정 따라가기(2-G 개정 2 §6-3): 단계 줄(tablist)·이전·다음·화살표 키·휴대폰 밀기·«자동으로 보기»(4초, 다시 누르면 멈춤 — 기본 꺼짐).
      움직임은 CSS(0.45초 크로스페이드, 글 0.25초 늦게, 진행 선 0.4초). 사진은 lazy(겹친 패널이라 블록이 화면에 들어오면 같이 받는다) ── */
+  /* ── 2-K-1 과정 «전체 펼쳐 보기»: 넘김 줄(이전·다음·자동 줄)에 단추를 넣는다(같은 줄 — 높이 변화 0). 펼치면 단계가 0.06초 간격으로 나타나고(CSS 0.35초),
+     접으면 따라가기로 돌아와 블록 머리로 이동. 단계 «자세히»는 grid-template-rows 0fr → 1fr(0.3초), + ↔ −. 움직임 줄이기면 전환 없이 바로 ── */
+  function initPJAll(root, onOpen) {
+    var nav = root.querySelector(".pj__nav"), box = root.querySelector("[data-pj-panels]"), panels = root.querySelectorAll("[data-pj-panel]");
+    if (!nav || !box) return;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!box.id) box.id = root.id + "-panels";
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "pj__all"; b.setAttribute("data-pj-all", ""); b.setAttribute("aria-controls", box.id);
+    function paint() { var on = root.classList.contains("is-open"); b.setAttribute("aria-expanded", String(on)); b.textContent = on ? "접기" : "과정 전체 펼쳐 보기"; }
+    panels.forEach(function (p, i) { p.style.setProperty("--d", (i * 0.06).toFixed(2) + "s"); });
+    b.addEventListener("click", function () {
+      if (root.classList.contains("is-open")) {
+        root.classList.remove("is-open", "is-enter"); paint();
+        root.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });   // [data-sec] scroll-margin-top 이 머리글 높이를 비워 둔다
+      } else {
+        onOpen();
+        root.classList.add("is-open");
+        if (!reduce) { root.classList.add("is-enter"); void root.offsetHeight; requestAnimationFrame(function () { root.classList.remove("is-enter"); }); }
+        paint();
+      }
+    });
+    nav.insertBefore(b, nav.querySelector("[data-pj-auto]"));
+    paint();
+    root.querySelectorAll("[data-pj-more]").forEach(function (m) {
+      var mb = m.querySelector("[data-pj-more-btn]"), pm = m.querySelector(".pj__pm");
+      mb.addEventListener("click", function () {
+        var on = !m.classList.contains("is-on");
+        m.classList.toggle("is-on", on); mb.setAttribute("aria-expanded", String(on)); pm.textContent = on ? "−" : "+";
+      });
+    });
+  }
   function initPJ(root) {
     var tabs = root.querySelectorAll("[data-pj-tab]"), panels = root.querySelectorAll("[data-pj-panel]"), rail = root.querySelector("[data-pj-rail]");
     var n = tabs.length, cur = 0, timer = null, auto = root.querySelector("[data-pj-auto]");
     if (n < 2) return;
+    initPJAll(root, function () { stop(); });
     function go(k, focus) {
       k = (k + n) % n; cur = k;
       tabs.forEach(function (t, i) {

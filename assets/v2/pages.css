@@ -1464,6 +1464,30 @@ body.sheet-open{overflow:hidden}
   .pj__h{font-size:24px}
 }
 @media (prefers-reduced-motion:reduce){.pj__panel,.pj__panel.is-on,.pj__panel .pj__text,.pj__panel.is-on .pj__text,.pj__fill,.pj__tab::before{transition:none!important}}
+/* 2-K-1 «과정 전체 펼쳐 보기»(app.js 가 넘김 줄에 단추를 넣음 — 같은 줄이라 높이 변화 0) · 펼친 화면 · 단계 «자세히» */
+.pj__all{margin-left:auto;min-height:44px;padding:0 16px;border:1px solid var(--ink);background:var(--bg);color:var(--ink);font:inherit;font-size:13px;cursor:pointer}
+.pj__all + .pj__auto{margin-left:0}
+.pj__all:focus-visible,.pj__more-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.pj.is-open .pj__rail,.pj.is-open .pj__btn,.pj.is-open .pj__auto{display:none}
+.pj.is-open .pj__body{grid-template-columns:minmax(0,1fr)}
+.pj.is-open .pj__panels{display:flex;flex-direction:column;gap:56px}
+.pj.is-open .pj__panel,.pj.is-open .pj__panel.is-on{grid-area:auto;visibility:visible;opacity:1;transform:none;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:36px;align-items:start;
+  transition:opacity .35s ease var(--d,0s),transform .35s ease var(--d,0s)}
+.pj.is-open .pj__panel .pj__text{opacity:1;padding-top:0;transition:none}
+.pj.is-open.is-enter .pj__panel{opacity:0;transform:translateY(12px);transition:none}
+.pj__more{display:none;margin-top:6px}
+.pj.is-open .pj__more{display:block}
+.pj__more-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0;border:0;background:none;color:var(--ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.pj__pm{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border:1px solid var(--line);font-weight:400;line-height:1}
+.pj__more-box{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.pj__more-in{min-height:0;overflow:hidden;visibility:hidden;transition:visibility 0s linear .3s}
+.pj__more.is-on .pj__more-box{grid-template-rows:1fr}
+.pj__more.is-on .pj__more-in{visibility:visible;transition:visibility 0s}
+.pj__more-t{padding-top:6px;font-size:15px;line-height:1.85;color:var(--ink);white-space:pre-line}
+.pj__more-in picture,.pj__more-img{display:block;width:100%;height:auto;margin-top:14px}
+@media (max-width:1023px){.pj.is-open .pj__panel,.pj.is-open .pj__panel.is-on{grid-template-columns:minmax(0,1fr);gap:16px}.pj.is-open .pj__panels{gap:40px}
+  .pj__nav .pj__all,.pj__nav .pj__all + .pj__auto{padding:0 10px;font-size:12px}}   /* 휴대폰: 넘김 줄 한 줄 유지(390 폭에서 두 단추가 한 줄) */
+@media (prefers-reduced-motion:reduce){.pj.is-open .pj__panel,.pj__more-box,.pj__more-in{transition:none!important}}
 
 /* 2-H H1-4 계절 갤러리 — 탭 4개 · 엇갈린 열(PC 4·3열, 휴대폰 2열) · 크게 보기 dialog */
 .sgal{padding-top:80px;padding-bottom:120px}
