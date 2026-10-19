@@ -4,7 +4,9 @@
 (function () {
   "use strict";
   var E = window.Eden || {}, API = E.API || "", acall = E.acall;
-  var won = function (n) { return (n || 0).toLocaleString("ko-KR") + "원"; };
+  /* ① 문구표: app.js 의 T·Tf(편집기에서 바꾼 글). 없으면 원래 글 그대로 */
+  var T = E.T || function (d) { return d; }, Tf = E.Tf || function (d) { var a = arguments; return d.replace(/\{(\d)\}/g, function (m, k) { return a[+k + 1]; }); };
+  var won = function (n) { return (n || 0).toLocaleString("ko-KR") + "원"; };   /* 자동 값 */
   var digits = function (v) { return String(v || "").replace(/\D/g, ""); };
   function fmtPhone(v) {
     var d = digits(v).slice(0, 11);
@@ -13,7 +15,7 @@
     return d.length === 11 ? d.slice(0, 3) + "-" + d.slice(3, 7) + "-" + d.slice(7) : d.slice(0, 3) + "-" + d.slice(3, 6) + "-" + d.slice(6);
   }
   var root = function () { return document.documentElement.getAttribute("data-root") || ""; };
-  var NET = "연결이 원활하지 않습니다. 잠시 뒤 다시 시도해 주세요.";
+  var NET = T("연결이 원활하지 않습니다. 잠시 뒤 다시 시도해 주세요.");
 
   /* 돌아갈 주소: 같은 사이트 경로만(/ 로 시작, // 아님, 공백·역슬래시 없음). 서버도 같은 규칙으로 다시 거른다. */
   function nextParam() {
@@ -33,7 +35,7 @@
     scope.querySelectorAll("[data-pw-toggle]").forEach(function (b) {
       b.addEventListener("click", function () {
         var i = document.getElementById(b.getAttribute("aria-controls")), show = i.type === "password";
-        i.type = show ? "text" : "password"; b.setAttribute("aria-pressed", String(show)); b.textContent = show ? "숨기기" : "보기";
+        i.type = show ? "text" : "password"; b.setAttribute("aria-pressed", String(show)); b.textContent = show ? T("숨기기") : T("보기");
       });
     });
   }
@@ -64,7 +66,7 @@
     return true;
   }
   function busy(btn, on, label) {
-    if (on) { btn.setAttribute("data-label", btn.textContent); btn.textContent = label || "처리 중…"; }
+    if (on) { btn.setAttribute("data-label", btn.textContent); btn.textContent = label || T("처리 중…"); }
     else if (btn.getAttribute("data-label")) btn.textContent = btn.getAttribute("data-label");
     btn.disabled = on; btn.setAttribute("aria-busy", String(on));
   }
@@ -78,35 +80,35 @@
     var st = { token: null, phone: null }, cool = null;
     function cooldown(sec) {
       clearInterval(cool);
-      var left = sec; send.disabled = true; send.textContent = "다시 받기 (" + left + "초)";
+      var left = sec; send.disabled = true; send.textContent = Tf("다시 받기 ({0}초)", left);
       cool = setInterval(function () {
         left--;
-        if (left <= 0) { clearInterval(cool); send.disabled = false; send.textContent = "다시 받기"; }
-        else send.textContent = "다시 받기 (" + left + "초)";
+        if (left <= 0) { clearInterval(cool); send.disabled = false; send.textContent = T("다시 받기"); }
+        else send.textContent = Tf("다시 받기 ({0}초)", left);
       }, 1000);
     }
     send.addEventListener("click", function () {
       if (send.disabled) return;
       setErr(form, pre + "-phone", ""); msg.hidden = true;
       var d = digits(phone.value);
-      if (!/^01[016789]\d{7,8}$/.test(d)) { setErr(form, pre + "-phone", "휴대폰 번호를 정확히 입력해 주세요. 예: 010-1234-5678"); phone.focus(); return; }
-      send.disabled = true; send.textContent = "보내는 중…";
+      if (!/^01[016789]\d{7,8}$/.test(d)) { setErr(form, pre + "-phone", T("휴대폰 번호를 정확히 입력해 주세요. 예: 010-1234-5678")); phone.focus(); return; }
+      send.disabled = true; send.textContent = T("보내는 중…");
       acall("POST", "/api/v2/auth/verify/send", { phone: d, purpose: purpose }).then(function (j) {
-        if (!j.ok) { send.disabled = false; send.textContent = "인증번호 받기"; setErr(form, pre + "-phone", j.error || NET); return; }
+        if (!j.ok) { send.disabled = false; send.textContent = T("인증번호 받기"); setErr(form, pre + "-phone", j.error || NET); return; }
         msg.textContent = j.message; msg.hidden = false; codeBox.hidden = false; code.value = ""; code.focus();
         st.phone = d; cooldown(30);
-      }, function () { send.disabled = false; send.textContent = "인증번호 받기"; setErr(form, pre + "-phone", NET); });
+      }, function () { send.disabled = false; send.textContent = T("인증번호 받기"); setErr(form, pre + "-phone", NET); });
     });
     chk.addEventListener("click", function () {
       if (chk.disabled) return;
       setErr(form, pre + "-code", "");
-      if (!/^\d{6}$/.test(code.value.trim())) { setErr(form, pre + "-code", "문자로 받은 6자리 숫자를 입력해 주세요."); code.focus(); return; }
-      busy(chk, true, "확인 중…");
+      if (!/^\d{6}$/.test(code.value.trim())) { setErr(form, pre + "-code", T("문자로 받은 6자리 숫자를 입력해 주세요.")); code.focus(); return; }
+      busy(chk, true, T("확인 중…"));
       acall("POST", "/api/v2/auth/verify/check", { phone: st.phone || digits(phone.value), purpose: purpose, code: code.value.trim() }).then(function (j) {
         busy(chk, false);
         if (!j.ok) { setErr(form, pre + "-code", j.error || NET); code.focus(); return; }
         st.token = j.token; clearInterval(cool);
-        phone.readOnly = code.readOnly = true; send.disabled = chk.disabled = true; send.textContent = "인증번호 받기";
+        phone.readOnly = code.readOnly = true; send.disabled = chk.disabled = true; send.textContent = T("인증번호 받기");
         msg.hidden = true; ok.hidden = false;
         if (onDone) onDone();
       }, function () { busy(chk, false); setErr(form, pre + "-code", NET); });
@@ -115,7 +117,7 @@
     return {
       token: function () { return st.token; },
       reset: function () {
-        st.token = null; phone.readOnly = code.readOnly = false; send.disabled = chk.disabled = false; send.textContent = "인증번호 받기";
+        st.token = null; phone.readOnly = code.readOnly = false; send.disabled = chk.disabled = false; send.textContent = T("인증번호 받기");
         ok.hidden = true; codeBox.hidden = true; code.value = "";
       }
     };
@@ -129,8 +131,8 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault(); if (btn.disabled) return; clearErrs(form);
       var ph = digits(form.querySelector("#login-phone").value), pw = form.querySelector("#login-pw").value;
-      if (!check(form, [["login-phone", "휴대폰 번호를 정확히 입력해 주세요.", /^\d{10,11}$/.test(ph)], ["login-pw", "비밀번호를 입력해 주세요.", pw]])) return;
-      busy(btn, true, "로그인 중…");
+      if (!check(form, [["login-phone", T("휴대폰 번호를 정확히 입력해 주세요."), /^\d{10,11}$/.test(ph)], ["login-pw", T("비밀번호를 입력해 주세요."), pw]])) return;
+      busy(btn, true, T("로그인 중…"));
       // next 가 없으면 마이페이지, 있는데 같은 사이트 경로가 아니면 홈(지시서 §2)
       var nx = new URLSearchParams(location.search).get("next") === null ? new URL("index.html", location.href).pathname : (nextParam() || "/");
       acall("POST", "/api/v2/auth/login", { phone: ph, password: pw, next: nx }).then(function (j) {
@@ -150,15 +152,15 @@
       e.preventDefault(); if (btn.disabled) return; clearErrs(form);
       var pw = form.querySelector("#su-pw").value, pw2 = form.querySelector("#su-pw2").value, name = form.querySelector("#su-name").value.trim();
       var terms = form.querySelector("#agree-terms").checked, priv = form.querySelector("#agree-privacy").checked;
-      if (!check(form, [["su-phone", "휴대폰 인증을 먼저 마쳐 주세요.", v.token()],
-                        ["su-pw", "비밀번호는 6자 이상으로 정해 주세요.", pw.length >= 6],
-                        ["su-pw2", "비밀번호가 서로 다릅니다. 한 번 더 확인해 주세요.", pw === pw2],
-                        ["su-name", "이름을 입력해 주세요.", name && name.length <= 40]])) return;
+      if (!check(form, [["su-phone", T("휴대폰 인증을 먼저 마쳐 주세요."), v.token()],
+                        ["su-pw", T("비밀번호는 6자 이상으로 정해 주세요."), pw.length >= 6],
+                        ["su-pw2", T("비밀번호가 서로 다릅니다. 한 번 더 확인해 주세요."), pw === pw2],
+                        ["su-name", T("이름을 입력해 주세요."), name && name.length <= 40]])) return;
       if (!terms || !priv) {
-        var p = errOf(form, "agree"); p.textContent = !terms ? "이용약관에 동의해 주세요." : "개인정보 수집·이용에 동의해 주세요."; p.hidden = false;
+        var p = errOf(form, "agree"); p.textContent = !terms ? T("이용약관에 동의해 주세요.") : T("개인정보 수집·이용에 동의해 주세요."); p.hidden = false;
         form.querySelector(!terms ? "#agree-terms" : "#agree-privacy").focus(); return;
       }
-      busy(btn, true, "가입하는 중…");
+      busy(btn, true, T("가입하는 중…"));
       acall("POST", "/api/v2/auth/signup", { token: v.token(), password: pw, name: name, terms_agree: true, privacy_agree: true,
                                             marketing_consent: mkt.checked, night_consent: night.checked }).then(function (j) {
         busy(btn, false);
@@ -172,7 +174,7 @@
         var done = page.querySelector("[data-signup-done]");
         done.querySelector("[data-done-name]").textContent = j.name;
         var nx = nextParam(), go = done.querySelector("[data-go-next]");
-        if (nx) { go.href = nx; go.textContent = /checkout/.test(nx) ? "주문서로 돌아가기" : "보던 화면으로 돌아가기"; }
+        if (nx) { go.href = nx; go.textContent = /checkout/.test(nx) ? T("주문서로 돌아가기") : T("보던 화면으로 돌아가기"); }
         done.hidden = false; done.focus();
         if (E.member) E.paintMember({ name: j.name });
       }, function () { busy(btn, false); formErr(form, NET); });
@@ -186,10 +188,10 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault(); if (btn.disabled) return; clearErrs(form);
       var pw = form.querySelector("#fd-pw").value, pw2 = form.querySelector("#fd-pw2").value;
-      if (!check(form, [["fd-phone", "휴대폰 인증을 먼저 마쳐 주세요.", v.token()],
-                        ["fd-pw", "비밀번호는 6자 이상으로 정해 주세요.", pw.length >= 6],
-                        ["fd-pw2", "비밀번호가 서로 다릅니다. 한 번 더 확인해 주세요.", pw === pw2]])) return;
-      busy(btn, true, "바꾸는 중…");
+      if (!check(form, [["fd-phone", T("휴대폰 인증을 먼저 마쳐 주세요."), v.token()],
+                        ["fd-pw", T("비밀번호는 6자 이상으로 정해 주세요."), pw.length >= 6],
+                        ["fd-pw2", T("비밀번호가 서로 다릅니다. 한 번 더 확인해 주세요."), pw === pw2]])) return;
+      busy(btn, true, T("바꾸는 중…"));
       acall("POST", "/api/v2/auth/password/reset", { token: v.token(), password: pw }).then(function (j) {
         busy(btn, false);
         if (!j.ok) { if (j.code === "token") { v.reset(); after.hidden = true; setErr(form, "fd-phone", j.error); } else formErr(form, j.error || NET); return; }
@@ -200,8 +202,8 @@
   }
 
   /* ── 마이페이지 ── */
-  var STATE = { active: "적용 중", expired: "만료", revoked: "할인 중지", pending: "승인 대기" };
-  var LB = { card: "카드", bank: "무통장 입금" };
+  var STATE = { active: T("적용 중"), expired: T("만료"), revoked: T("할인 중지"), pending: T("승인 대기") };
+  var LB = { card: T("카드"), bank: T("무통장 입금") };
   function pageMy(page) {
     var panes = {}, links = {};
     page.querySelectorAll("[data-pane]").forEach(function (p) { panes[p.getAttribute("data-pane")] = p; });
@@ -244,7 +246,7 @@
       if (old) old.remove();
       if (!x) return;
       var s = document.createElement("span"); s.className = "my__rvb" + (x.state === "written" ? " is-done" : "");
-      s.textContent = x.state === "written" ? "후기 작성함" : "후기 쓰기"; li.querySelector("a").appendChild(s);
+      s.textContent = x.state === "written" ? T("후기 작성함") : T("후기 쓰기"); li.querySelector("a").appendChild(s);
     }
     function loadOrders(n) {
       loaded.orders = true;
@@ -274,12 +276,12 @@
         if (!j.ok) { location.hash = "#orders"; return; }
         var o = j.order, b = o.breakdown;
         q("[data-od-no]").textContent = o.order_no; q("[data-od-status]").textContent = o.status; q("[data-od-date]").textContent = o.created_at;
-        q("[data-od-receive]").textContent = o.receive === "parcel" ? "택배 배송" : "영동 농장 직접 수령";
-        q("[data-od-pay]").textContent = LB[o.payment] + (o.payment === "card" ? (o.paid ? " · 결제 완료" : " · 결제 전") : "");
+        q("[data-od-receive]").textContent = o.receive === "parcel" ? T("택배 배송") : T("영동 농장 직접 수령");
+        q("[data-od-pay]").textContent = LB[o.payment] + (o.payment === "card" ? (o.paid ? T(" · 결제 완료") : T(" · 결제 전")) : "");
         var ul = q("[data-od-items]"); ul.innerHTML = "";
         o.items.forEach(function (it) {
           var li = document.createElement("li"), a = document.createElement("span"), m = document.createElement("span"), w = document.createElement("b");
-          a.textContent = it.product + " "; m.className = "muted"; m.textContent = it.option_label + " · " + it.count + "개"; a.appendChild(m);
+          a.textContent = it.product + " "; m.className = "muted"; m.textContent = Tf("{0} · {1}개", it.option_label, it.count); a.appendChild(m);
           w.textContent = won(it.line_amount); li.appendChild(a); li.appendChild(w); ul.appendChild(li);
         });
         q("[data-od-goods]").textContent = won(b.goods); q("[data-od-disc]").textContent = "−" + won(b.discount);
@@ -299,10 +301,10 @@
       sec.hidden = !x; form.hidden = true; sec.setAttribute("data-no", no);
       if (!x) return;
       if (x.state === "written") {
-        state.textContent = "후기를 남기셨습니다(별점 " + x.rating + "점" + (x.date ? " · " + x.date : "") + "). 관리자 확인 뒤 상품 화면에 보입니다.";
+        state.textContent = Tf("후기를 남기셨습니다(별점 {0}점{1}). 관리자 확인 뒤 상품 화면에 보입니다.", x.rating, x.date ? " · " + x.date : "");
         open.hidden = true;
       } else {
-        state.textContent = "받아 보신 상품은 어떠셨나요? 후기를 남겨 주세요.";
+        state.textContent = T("받아 보신 상품은 어떠셨나요? 후기를 남겨 주세요.");
         open.hidden = false;
       }
     }
@@ -316,24 +318,24 @@
         e.preventDefault();
         var r = form.querySelector("input[name=rv-rating]:checked"), body = form.querySelector("#rv-body").value.trim();
         var fail = function (m) { err.textContent = m; err.hidden = false; };
-        if (!r) return fail("별점을 골라 주세요.");
-        if (body.length < 2) return fail("후기 내용을 두 글자 이상 적어 주세요.");
+        if (!r) return fail(T("별점을 골라 주세요."));
+        if (body.length < 2) return fail(T("후기 내용을 두 글자 이상 적어 주세요."));
         var btn = form.querySelector("[data-rv-save]"), no = sec.getAttribute("data-no");
         btn.disabled = true; err.hidden = true;
         acall("POST", "/api/v2/account/reviews", { order_no: no, rating: +r.value, body: body }).then(function (j) {
           btn.disabled = false;
-          if (!j.ok) return fail(j.error || "저장하지 못했습니다. 잠시 뒤 다시 시도해 주세요.");
+          if (!j.ok) return fail(j.error || T("저장하지 못했습니다. 잠시 뒤 다시 시도해 주세요."));
           rv.map[no] = { order_no: no, state: "written", rating: +r.value, date: "" };
           form.reset(); rvPaint(no);
-          if (j.points) sec.querySelector("[data-rv-state]").textContent += " 적립금 " + won(j.points) + "을 드렸습니다.";
+          if (j.points) sec.querySelector("[data-rv-state]").textContent += Tf(" 적립금 {0}을 드렸습니다.", won(j.points));
           var li = page.querySelector('[data-orders] li[data-order-no="' + no + '"]'); if (li) rvBadge(li, no);
-        }, function () { btn.disabled = false; fail("연결이 원활하지 않습니다. 잠시 뒤 다시 시도해 주세요."); });
+        }, function () { btn.disabled = false; fail(T("연결이 원활하지 않습니다. 잠시 뒤 다시 시도해 주세요.")); });
       });
     })();
     page.querySelector("[data-od-copy]").addEventListener("click", function (e) {
       var v = e.currentTarget.getAttribute("data-copy"), out = page.querySelector("[data-od-copied]");
-      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(v).then(function () { out.textContent = "복사했습니다"; }, function () { out.textContent = "길게 눌러 직접 복사해 주세요"; });
-      else out.textContent = "계좌번호: " + v;
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(v).then(function () { out.textContent = T("복사했습니다"); }, function () { out.textContent = T("길게 눌러 직접 복사해 주세요"); });
+      else out.textContent = Tf("계좌번호: {0}", v);
     });
 
     // 적립금
@@ -365,15 +367,15 @@
         page.querySelector("[data-addr-count]").textContent = "(" + addrs.length + "/" + addrMax + ")";
         addrs.forEach(function (a) {
           var li = document.createElement("li"); li.setAttribute("data-addr-id", a.id);
-          var p1 = document.createElement("p"), t = document.createElement("b"); t.textContent = a.label || "배송지"; p1.appendChild(t);
-          if (a.is_default) { var d = document.createElement("span"); d.className = "my__badge"; d.textContent = "기본 배송지"; p1.appendChild(document.createTextNode(" ")); p1.appendChild(d); }
+          var p1 = document.createElement("p"), t = document.createElement("b"); t.textContent = a.label || T("배송지"); p1.appendChild(t);
+          if (a.is_default) { var d = document.createElement("span"); d.className = "my__badge"; d.textContent = T("기본 배송지"); p1.appendChild(document.createTextNode(" ")); p1.appendChild(d); }
           var p2 = document.createElement("p"); p2.textContent = a.recipient_name + " · " + fmtPhone(a.recipient_phone);
           var p3 = document.createElement("p"); p3.className = "muted"; p3.textContent = "(" + a.zip + ") " + a.address1 + " " + a.address2;
           var acts = document.createElement("div"); acts.className = "my__acts";
-          [["수정", "edit"], a.is_default ? null : ["기본으로", "default"], ["삭제", "del"]].forEach(function (x) {
+          [[T("수정"), "edit"], a.is_default ? null : [T("기본으로"), "default"], [T("삭제"), "del"]].forEach(function (x) {
             if (!x) return;
             var b = document.createElement("button"); b.type = "button"; b.className = "btn-small"; b.textContent = x[0];
-            b.setAttribute("data-addr-" + x[1], a.id); b.setAttribute("aria-label", (a.label || "배송지") + " " + x[0]); acts.appendChild(b);
+            b.setAttribute("data-addr-" + x[1], a.id); b.setAttribute("aria-label", Tf("{0} {1}", a.label || T("배송지"), x[0])); acts.appendChild(b);
           });
           li.appendChild(p1); li.appendChild(p2); li.appendChild(p3); li.appendChild(acts); ul.appendChild(li);
         });
@@ -386,7 +388,7 @@
       af.querySelector("#ad-phone").value = a ? fmtPhone(a.recipient_phone) : (me ? fmtPhone(me.phone) : "");
       af.querySelector("#ad-zip").value = a ? a.zip : ""; af.querySelector("#ad-addr1").value = a ? a.address1 : ""; af.querySelector("#ad-addr2").value = a ? a.address2 : "";
       af.querySelector("#ad-default").checked = a ? a.is_default : false;
-      af.querySelector("[data-addr-form-h]").textContent = a ? "배송지 고치기" : "새 배송지";
+      af.querySelector("[data-addr-form-h]").textContent = a ? T("배송지 고치기") : T("새 배송지");
       af.querySelector("[data-addr-cancel]").hidden = !a;
     }
     page.querySelector("[data-addr-list]").addEventListener("click", function (e) {
@@ -394,7 +396,7 @@
       var id = +(b.getAttribute("data-addr-edit") || b.getAttribute("data-addr-default") || b.getAttribute("data-addr-del"));
       var a = addrs.filter(function (x) { return x.id === id; })[0]; if (!a) return;
       if (b.hasAttribute("data-addr-edit")) { editing = a; af.hidden = false; fillAddr(a); af.querySelector("#ad-name").focus(); return; }
-      if (b.hasAttribute("data-addr-del") && !window.confirm((a.label || "배송지") + "를 지울까요?")) return;
+      if (b.hasAttribute("data-addr-del") && !window.confirm(Tf("{0}를 지울까요?", a.label || T("배송지")))) return;
       b.disabled = true;
       (b.hasAttribute("data-addr-del") ? acall("DELETE", "/api/v2/account/addresses/" + id)
         : acall("PATCH", "/api/v2/account/addresses/" + id, { is_default: true })).then(function () { if (editing && editing.id === id) { editing = null; fillAddr(null); } loadAddrs(); });
@@ -403,12 +405,12 @@
     af.addEventListener("submit", function (e) {
       e.preventDefault(); var btn = af.querySelector("[data-addr-save]"); if (btn.disabled) return; clearErrs(af);
       var g = function (id) { return af.querySelector("#" + id).value.trim(); };
-      if (!check(af, [["ad-name", "받는 분 이름을 입력해 주세요.", g("ad-name")], ["ad-phone", "받는 분 휴대폰 번호를 정확히 입력해 주세요.", /^\d{10,11}$/.test(digits(g("ad-phone")))],
-                      ["ad-zip", "우편번호를 입력해 주세요(우편번호 찾기).", g("ad-zip")], ["ad-addr1", "주소를 입력해 주세요.", g("ad-addr1")],
-                      ["ad-addr2", "상세 주소를 입력해 주세요.", g("ad-addr2")]])) return;
+      if (!check(af, [["ad-name", T("받는 분 이름을 입력해 주세요."), g("ad-name")], ["ad-phone", T("받는 분 휴대폰 번호를 정확히 입력해 주세요."), /^\d{10,11}$/.test(digits(g("ad-phone")))],
+                      ["ad-zip", T("우편번호를 입력해 주세요(우편번호 찾기)."), g("ad-zip")], ["ad-addr1", T("주소를 입력해 주세요."), g("ad-addr1")],
+                      ["ad-addr2", T("상세 주소를 입력해 주세요."), g("ad-addr2")]])) return;
       var body = { label: g("ad-label"), recipient_name: g("ad-name"), recipient_phone: g("ad-phone"), zip: g("ad-zip"), address1: g("ad-addr1"),
                    address2: g("ad-addr2"), is_default: af.querySelector("#ad-default").checked };
-      busy(btn, true, "저장 중…");
+      busy(btn, true, T("저장 중…"));
       (editing ? acall("PATCH", "/api/v2/account/addresses/" + editing.id, body) : acall("POST", "/api/v2/account/addresses", body)).then(function (j) {
         busy(btn, false);
         if (!j.ok) { formErr(af, j.error || NET); return; }
@@ -422,7 +424,7 @@
       };
       if (window.daum && window.daum.Postcode) { go(); return; }
       var s = document.createElement("script"); s.src = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"; s.onload = go;
-      s.onerror = function () { formErr(af, "우편번호 검색을 불러오지 못했습니다. 직접 입력해 주세요."); }; document.head.appendChild(s);
+      s.onerror = function () { formErr(af, T("우편번호 검색을 불러오지 못했습니다. 직접 입력해 주세요.")); }; document.head.appendChild(s);
     });
 
     // 내 소속
@@ -454,12 +456,12 @@
           t.textContent = a.label; s.className = "my__badge" + (a.state === "active" ? "" : " my__badge--warn"); s.setAttribute("data-aff-state", ""); s.textContent = STATE[a.state] || a.state;
           p.appendChild(t); p.appendChild(document.createTextNode(" ")); p.appendChild(s); li.appendChild(p);
           var p2 = document.createElement("p"); p2.className = "muted";
-          if (a.expires_at) { var ex = document.createElement("span"); ex.setAttribute("data-aff-exp", ""); ex.textContent = a.expires_at; p2.appendChild(ex); p2.appendChild(document.createTextNode("까지")); }
-          else p2.textContent = "만료 없음";
-          if (a.renew_due) p2.appendChild(document.createTextNode(" · 3월 31일까지 다시 신고해 주세요"));
+          if (a.expires_at) { var ex = document.createElement("span"); ex.setAttribute("data-aff-exp", ""); ex.textContent = a.expires_at; p2.appendChild(ex); p2.appendChild(document.createTextNode(T("까지"))); }
+          else p2.textContent = T("만료 없음");
+          if (a.renew_due) p2.appendChild(document.createTextNode(T(" · 3월 31일까지 다시 신고해 주세요")));
           li.appendChild(p2);
-          if (a.state === "revoked") { var p3 = document.createElement("p"); p3.textContent = "확인되지 않아 할인이 중지되었습니다. 문의: 고객센터"; li.appendChild(p3); }
-          if (a.state === "expired") { var p4 = document.createElement("p"); p4.textContent = "만료되었습니다. 아래에서 다시 신고하시면 바로 적용됩니다."; li.appendChild(p4); }
+          if (a.state === "revoked") { var p3 = document.createElement("p"); p3.textContent = T("확인되지 않아 할인이 중지되었습니다. 문의: 고객센터"); li.appendChild(p3); }
+          if (a.state === "expired") { var p4 = document.createElement("p"); p4.textContent = T("만료되었습니다. 아래에서 다시 신고하시면 바로 적용됩니다."); li.appendChild(p4); }
           ul.appendChild(li);
         });
         page.querySelector("[data-aff-empty]").hidden = j.affiliations.length > 0;
@@ -470,9 +472,9 @@
       e.preventDefault(); var btn = ff.querySelector("[data-aff-submit]"); if (btn.disabled || !afc.checked) return; clearErrs(ff);
       var d = defs.filter(function (x) { return x.id === sel.value; })[0]; if (!d) return;
       var sid = ff.querySelector("#af-sid").value.trim(), dept = ff.querySelector("#af-dept").value.trim();
-      if (!check(ff, [["af-sid", "학번은 9자리 숫자로 입력해 주세요.", d.needs.indexOf("student_id") < 0 || /^\d{9}$/.test(sid)],
-                      ["af-dept", "학과를 입력해 주세요.", d.needs.indexOf("department") < 0 || dept]])) return;
-      busy(btn, true, "신고하는 중…");
+      if (!check(ff, [["af-sid", T("학번은 9자리 숫자로 입력해 주세요."), d.needs.indexOf("student_id") < 0 || /^\d{9}$/.test(sid)],
+                      ["af-dept", T("학과를 입력해 주세요."), d.needs.indexOf("department") < 0 || dept]])) return;
+      busy(btn, true, T("신고하는 중…"));
       acall("POST", "/api/v2/account/affiliations", { affiliation: d.id, student_id: sid, department: dept, consent: afc.checked === true }).then(function (j) {
         busy(btn, false); affReady();
         if (!j.ok) { if (j.code === "student_id") setErr(ff, "af-sid", j.error); else if (j.code === "department") setErr(ff, "af-dept", j.error); else formErr(ff, j.error || NET); return; }
@@ -486,38 +488,38 @@
     function loadProfile() {
       pf.querySelector("#pf-name").value = me.name; pf.querySelector("#pf-email").value = me.email || "";
       pmkt.checked = me.marketing_consent; pnight.checked = me.night_consent; pnight.disabled = !me.marketing_consent;
-      page.querySelector("[data-pf-phone]").textContent = "(지금 " + fmtPhone(me.phone) + ")";
+      page.querySelector("[data-pf-phone]").textContent = Tf("(지금 {0})", fmtPhone(me.phone));
     }
     pf.addEventListener("submit", function (e) {
       e.preventDefault(); var btn = pf.querySelector("[data-pf-save]"); if (btn.disabled) return; clearErrs(pf); okMsg(pf, "");
       var name = pf.querySelector("#pf-name").value.trim(), email = pf.querySelector("#pf-email").value.trim();
-      if (!check(pf, [["pf-name", "이름을 입력해 주세요.", name], ["pf-email", "이메일 주소를 확인해 주세요.", !email || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)]])) return;
-      busy(btn, true, "저장 중…");
+      if (!check(pf, [["pf-name", T("이름을 입력해 주세요."), name], ["pf-email", T("이메일 주소를 확인해 주세요."), !email || /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)]])) return;
+      busy(btn, true, T("저장 중…"));
       acall("PATCH", "/api/v2/account", { name: name, email: email, marketing_consent: pmkt.checked, night_consent: pnight.checked }).then(function (j) {
         busy(btn, false);
         if (!j.ok) { if (j.code === "email") setErr(pf, "pf-email", j.error); else formErr(pf, j.error || NET); return; }
-        me = j.account; paintHello(); okMsg(pf, "저장했습니다."); if (E.paintMember) E.paintMember({ name: me.name });
+        me = j.account; paintHello(); okMsg(pf, T("저장했습니다.")); if (E.paintMember) E.paintMember({ name: me.name });
       }, function () { busy(btn, false); formErr(pf, NET); });
     });
     var phf = page.querySelector("[data-phone-form]"), pv = Verify(phf);
     phf.addEventListener("submit", function (e) {
       e.preventDefault(); var btn = phf.querySelector("[data-phone-save]"); if (btn.disabled) return; clearErrs(phf);
-      if (!check(phf, [["pf-phone", "새 번호로 휴대폰 인증을 먼저 마쳐 주세요.", pv.token()]])) return;
-      busy(btn, true, "바꾸는 중…");
+      if (!check(phf, [["pf-phone", T("새 번호로 휴대폰 인증을 먼저 마쳐 주세요."), pv.token()]])) return;
+      busy(btn, true, T("바꾸는 중…"));
       acall("PATCH", "/api/v2/account", { phone_token: pv.token() }).then(function (j) {
         busy(btn, false);
         if (!j.ok) { pv.reset(); setErr(phf, "pf-phone", j.error || NET); return; }
         me = j.account; pv.reset(); phf.querySelector("#pf-phone").value = "";
-        page.querySelector("[data-pf-phone]").textContent = "(지금 " + fmtPhone(me.phone) + " — 바꿨습니다)";
+        page.querySelector("[data-pf-phone]").textContent = Tf("(지금 {0} — 바꿨습니다)", fmtPhone(me.phone));
       }, function () { busy(btn, false); formErr(phf, NET); });
     });
     var pwf = page.querySelector("[data-pw-form]");
     pwf.addEventListener("submit", function (e) {
       e.preventDefault(); var btn = pwf.querySelector("[data-pw-save]"); if (btn.disabled) return; clearErrs(pwf); okMsg(pwf, "");
       var cur = pwf.querySelector("#pf-cur").value, nw = pwf.querySelector("#pf-new").value, nw2 = pwf.querySelector("#pf-new2").value;
-      if (!check(pwf, [["pf-cur", "현재 비밀번호를 입력해 주세요.", cur], ["pf-new", "새 비밀번호는 6자 이상으로 정해 주세요.", nw.length >= 6],
-                       ["pf-new2", "새 비밀번호가 서로 다릅니다.", nw === nw2]])) return;
-      busy(btn, true, "바꾸는 중…");
+      if (!check(pwf, [["pf-cur", T("현재 비밀번호를 입력해 주세요."), cur], ["pf-new", T("새 비밀번호는 6자 이상으로 정해 주세요."), nw.length >= 6],
+                       ["pf-new2", T("새 비밀번호가 서로 다릅니다."), nw === nw2]])) return;
+      busy(btn, true, T("바꾸는 중…"));
       acall("POST", "/api/v2/account/password", { current_password: cur, new_password: nw }).then(function (j) {
         busy(btn, false);
         if (!j.ok) { if (j.code === "password" && j._status === 401) setErr(pwf, "pf-cur", j.error); else formErr(pwf, j.error || NET); return; }
@@ -538,9 +540,9 @@
     wf.addEventListener("submit", function (e) {
       e.preventDefault(); var btn = wf.querySelector("[data-wd-submit]"); if (btn.disabled) return; clearErrs(wf);
       var pw = wf.querySelector("#wd-pw").value;
-      if (!check(wf, [["wd-pw", "비밀번호를 입력해 주세요.", pw]])) return;
-      if (!window.confirm("탈퇴하면 적립금이 소멸하고 되돌릴 수 없습니다. 탈퇴할까요?")) return;
-      busy(btn, true, "처리 중…");
+      if (!check(wf, [["wd-pw", T("비밀번호를 입력해 주세요."), pw]])) return;
+      if (!window.confirm(T("탈퇴하면 적립금이 소멸하고 되돌릴 수 없습니다. 탈퇴할까요?"))) return;
+      busy(btn, true, T("처리 중…"));
       acall("POST", "/api/v2/account/withdraw", { password: pw }).then(function (j) {
         busy(btn, false);
         if (!j.ok) { if (j.code === "password") setErr(wf, "wd-pw", j.error); else formErr(wf, j.error || NET); return; }
@@ -558,23 +560,23 @@
     var err = page.querySelector("[data-lookup-err]"), res = page.querySelector("[data-lookup-result]");
     if (E.member && E.member.ready) E.member.ready.then(function (me) {
       if (!me) return;
-      var a = page.querySelector("[data-lookup-login]"); a.href = root() + "account/#orders"; a.textContent = "내 주문 보기";
+      var a = page.querySelector("[data-lookup-login]"); a.href = root() + "account/#orders"; a.textContent = T("내 주문 보기");
     });
     form.addEventListener("submit", function (e) {
       e.preventDefault(); if (btn.disabled) return; clearErrs(form); err.hidden = true;
       var no = form.querySelector("#lk-no").value.trim().toUpperCase(), ph = digits(form.querySelector("#lk-phone").value);
-      if (!check(form, [["lk-no", "주문번호를 입력해 주세요.", no], ["lk-phone", "휴대폰 번호를 정확히 입력해 주세요.", /^\d{10,11}$/.test(ph)]])) return;
-      busy(btn, true, "조회 중…");
+      if (!check(form, [["lk-no", T("주문번호를 입력해 주세요."), no], ["lk-phone", T("휴대폰 번호를 정확히 입력해 주세요."), /^\d{10,11}$/.test(ph)]])) return;
+      busy(btn, true, T("조회 중…"));
       acall("POST", "/api/v2/orders/lookup", { order_no: no, phone: ph }).then(function (j) {
         busy(btn, false);
         if (!j.ok) { res.hidden = true; err.textContent = j.error || NET; err.hidden = false; return; }
         var o = j.order, q = function (s) { return res.querySelector(s); };
         q("[data-lk-no]").textContent = o.order_no; q("[data-lk-status]").textContent = o.status; q("[data-lk-date]").textContent = o.created_at;
-        q("[data-lk-receive]").textContent = o.receive === "parcel" ? "택배 배송" : "영동 농장 직접 수령";
+        q("[data-lk-receive]").textContent = o.receive === "parcel" ? T("택배 배송") : T("영동 농장 직접 수령");
         var ul = q("[data-lk-items]"); ul.innerHTML = "";
         o.items.forEach(function (it) {
           var li = document.createElement("li"), a = document.createElement("span"), m = document.createElement("span"), w = document.createElement("b");
-          a.textContent = it.product + " "; m.className = "muted"; m.textContent = it.option_label + " · " + it.count + "개"; a.appendChild(m);
+          a.textContent = it.product + " "; m.className = "muted"; m.textContent = Tf("{0} · {1}개", it.option_label, it.count); a.appendChild(m);
           w.textContent = won(it.line_amount); li.appendChild(a); li.appendChild(w); ul.appendChild(li);
         });
         q("[data-lk-amount]").textContent = won(o.amount);

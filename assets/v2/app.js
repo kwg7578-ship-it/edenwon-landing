@@ -49,7 +49,7 @@
       box.querySelectorAll("[data-m-anon]").forEach(function (el) { el.hidden = !!me; });
       box.querySelectorAll("[data-m-in]").forEach(function (el) { el.hidden = !me; });
       var n = box.querySelector("[data-hd-name], [data-dr-name]");
-      if (n) n.textContent = me ? me.name + "님" : "";
+      if (n) n.textContent = me ? Tf("{0}님", me.name) : "";
     });
   }
   function loginHref() {
@@ -72,7 +72,7 @@
       }, function () { b.disabled = false; });
     });
   }
-  window.Eden = { API: API, acall: acall, clearMember: clearMember, paintMember: paintMember, member: Member };
+  window.Eden = { API: API, acall: acall, clearMember: clearMember, paintMember: paintMember, member: Member, T: T, Tf: Tf };   // T·Tf: account.js 도 같은 문구표(①)
 
   /* ── 장바구니 저장소 ── */
   var Cart = {
@@ -121,7 +121,7 @@
         if (up) { el.classList.remove("is-pop"); void el.offsetWidth; el.classList.add("is-pop"); }   // 담을 때 한 번 톡
       });
       document.querySelectorAll("[data-cart-sr]").forEach(function (el) {
-        el.textContent = n ? "장바구니 " + n + "개" : "장바구니";
+        el.textContent = n ? Tf("장바구니 {0}개", n) : T("장바구니");
       });
     }
   };
@@ -214,7 +214,7 @@
       btn.addEventListener("click", function () {
         st.user = !st.user;
         btn.classList.toggle("is-paused", st.user); btn.setAttribute("aria-pressed", st.user ? "true" : "false");
-        btn.setAttribute("aria-label", st.user ? "영상 다시 재생" : "영상 멈춤");
+        btn.setAttribute("aria-label", st.user ? T("영상 다시 재생") : T("영상 멈춤"));
         sync();
       });
     }
@@ -276,19 +276,19 @@
         [].forEach.call(li.querySelectorAll(".b4__soon,.b4__live"), function (b) { b.remove(); });
         if (li.hidden) return;
         var s = document.createElement("span");
-        if (now.length) { s.className = "b4__live"; s.innerHTML = "<i></i>수확 중"; }
-        else { s.className = "b4__soon"; s.textContent = "곧 만나요 · " + soon.filter(function (o) { return o.li === li; })[0].m + "월"; }
+        if (now.length) { s.className = "b4__live"; s.innerHTML = "<i></i>"; s.appendChild(document.createTextNode(T("수확 중"))); }
+        else { s.className = "b4__soon"; s.textContent = Tf("곧 만나요 · {0}월", soon.filter(function (o) { return o.li === li; })[0].m); }
         li.querySelector(".b4__ph").appendChild(s);
       });
       var sl = f.querySelector("[data-b4-soonline]");
       if (sl) {
         sl.hidden = !(now.length && soon.length);
-        sl.textContent = "곧 만나요 · " + soon.map(function (o) { return o.li.querySelector(".b4__n").textContent + "(" + o.m + "월)"; }).join(" · ");
+        sl.textContent = Tf("곧 만나요 · {0}", soon.map(function (o) { return Tf("{0}({1}월)", o.li.querySelector(".b4__n").textContent, o.m); }).join(" · "));
       }
       f.querySelector("[data-b4-month]").textContent = String(M);
       var setT = function (el, x) { if (el.textContent !== x) el.textContent = x; };   // 2-K-4b: 같은 글이면 덮지 않음(편집기의 편집 칸 표시 유지)
-      setT(f.querySelector("[data-b4-title]"), now.length ? "지금 밭에서 거두는 것" : "곧 만나요");
-      setT(f.querySelector("[data-b4-sub]"), now.length ? "발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다" : "다음 수확을 기다리는 작물입니다");
+      setT(f.querySelector("[data-b4-title]"), now.length ? T("지금 밭에서 거두는 것") : T("곧 만나요"));
+      setT(f.querySelector("[data-b4-sub]"), now.length ? T("발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다") : T("다음 수확을 기다리는 작물입니다"));
       if (!show.length) f.remove();
     }
     var all = t.querySelectorAll("[data-slide]"), n = all.length, nn = (n < 10 ? "0" : "") + n;
@@ -296,7 +296,7 @@
     var dots = root.querySelector(".hero__dots"), tpl = dots.querySelector("[data-dot]");
     while (dots.children.length > n) dots.lastElementChild.remove();
     while (dots.children.length < n) { var x = tpl.cloneNode(true); x.removeAttribute("aria-current"); dots.appendChild(x); }
-    [].forEach.call(dots.children, function (x, j) { x.setAttribute("data-dot", String(j)); x.setAttribute("aria-label", (j + 1) + "번째 배너"); });
+    [].forEach.call(dots.children, function (x, j) { x.setAttribute("data-dot", String(j)); x.setAttribute("aria-label", Tf("{0}번째 배너", j + 1)); });
     var nEl = root.querySelector("[data-num-n]"); if (nEl) nEl.textContent = nn;
   }
   function b4Per(s) { return parseInt(getComputedStyle(s).getPropertyValue("--per"), 10) || 4; }
@@ -416,7 +416,7 @@
       pause.classList.toggle("is-paused", st.user); pause.setAttribute("aria-pressed", st.user ? "true" : "false");
       root.toggleAttribute("data-held", st.user);   // 2-K-4: 일시정지면 사진 다가옴·점 깜빡임도 멈춤(들어오는 움직임은 끝까지 — 2-K-4b)
       var hv = !!root.querySelector("video");
-      pause.setAttribute("aria-label", st.user ? (hv ? "배너 자동 넘김·영상 다시 시작" : "배너 자동 넘김 다시 시작") : (hv ? "배너 자동 넘김·영상 멈춤" : "배너 자동 넘김 멈춤"));
+      pause.setAttribute("aria-label", st.user ? (hv ? T("배너 자동 넘김·영상 다시 시작") : T("배너 자동 넘김 다시 시작")) : (hv ? T("배너 자동 넘김·영상 멈춤") : T("배너 자동 넘김 멈춤")));
     }
     if (pause) pause.addEventListener("click", function () { st.user = !st.user; paint(); schedule(); });
     root.addEventListener("mouseenter", function () { st.hover = true; schedule(); });
@@ -516,7 +516,7 @@
     setTimeout(go, 3000);
   }
 
-  var won = function (n) { return n.toLocaleString("ko-KR") + "원"; };
+  var won = function (n) { return n.toLocaleString("ko-KR") + "원"; };   /* 자동 값 */
 
   /* ── 담은 뒤 안내: «장바구니로 가기 / 계속 보기» ── */
   var Added = (function () {
@@ -534,7 +534,7 @@
         last = from || document.activeElement;
         box.querySelector("[data-added-item]").textContent = text;
         var live = document.querySelector("[data-added-live]");   // 2-I 화면 읽기 알림
-        if (live) { live.textContent = ""; setTimeout(function () { live.textContent = "장바구니에 담았습니다. " + text; }, 60); }
+        if (live) { live.textContent = ""; setTimeout(function () { live.textContent = Tf("장바구니에 담았습니다. {0}", text); }, 60); }
         box.hidden = false;
         box.querySelector("a,button").focus();
       }
@@ -547,7 +547,7 @@
       var btn = e.target.closest("[data-add]");
       if (!btn) return;
       var ok = Cart.add([{ key: btn.getAttribute("data-add"), option: btn.getAttribute("data-add-option"), qty: 1 }]);
-      if (ok) Added.show(btn.getAttribute("aria-label").replace(/ 장바구니에 담기$/, "") + " · 1개", btn);
+      if (ok) Added.show(Tf("{0} · 1개", btn.getAttribute("aria-label").replace(/ 장바구니에 담기$/, "")), btn);   /* 글 아님(정규식) */
     });
   }
 
@@ -586,8 +586,9 @@
       var slides = banner.querySelectorAll("[data-banner]"), cur = null;
       slides.forEach(function (sl) { var on = sl.getAttribute("data-banner") === st.cat; sl.hidden = !on; if (on) cur = sl; });
       banner.className = "pbanner pbanner--" + cur.getAttribute("data-tone");
-      banner.querySelector("[data-banner-title]").textContent = cur.getAttribute("data-title");
-      banner.querySelector("[data-banner-sub]").textContent = cur.getAttribute("data-sub");
+      [["[data-banner-title]", "data-title"], ["[data-banner-sub]", "data-sub"]].forEach(function (x) {   // 같은 글이면 덮지 않음(① 편집기의 편집 칸 표시 유지)
+        var e = banner.querySelector(x[0]), t = cur.getAttribute(x[1]); if (e.textContent !== t) e.textContent = t;
+      });
       var q = st.q.toLowerCase(), n = 0;
       cards.forEach(function (c) {
         var ok = (st.cat === "all" || c.getAttribute("data-cat") === st.cat) &&
@@ -608,7 +609,7 @@
       countEl.textContent = String(n);
       empty.hidden = n !== 0;
       qNote.hidden = !st.q;
-      qNote.textContent = st.q ? "«" + st.q + "» 검색 결과 ·" : "";
+      qNote.textContent = st.q ? Tf("«{0}» 검색 결과 ·", st.q) : "";
       var qi = document.getElementById("q"); if (qi && st.q) qi.value = st.q;
     }
     function go(patch) {
@@ -696,7 +697,7 @@
     if (!box.id) box.id = root.id + "-panels";
     var b = document.createElement("button");
     b.type = "button"; b.className = "pj__all"; b.setAttribute("data-pj-all", ""); b.setAttribute("aria-controls", box.id);
-    function paint() { var on = root.classList.contains("is-open"); b.setAttribute("aria-expanded", String(on)); b.textContent = on ? "접기" : "과정 전체 펼쳐 보기"; }
+    function paint() { var on = root.classList.contains("is-open"); b.setAttribute("aria-expanded", String(on)); b.textContent = on ? T("접기") : T("과정 전체 펼쳐 보기"); }
     panels.forEach(function (p, i) { p.style.setProperty("--d", (i * 0.06).toFixed(2) + "s"); });
     b.addEventListener("click", function () {
       if (root.classList.contains("is-open")) {
@@ -748,7 +749,7 @@
     root.querySelector("[data-pj-next]").addEventListener("click", function () { stop(); go(cur + 1); });
     auto.addEventListener("click", function () {
       if (timer) { stop(); return; }
-      auto.setAttribute("aria-pressed", "true"); auto.textContent = "멈춤";
+      auto.setAttribute("aria-pressed", "true"); auto.textContent = T("멈춤");
       timer = setInterval(function () { if (!document.hidden) go(cur + 1); }, 4000);
     });
     var box = root.querySelector("[data-pj-panels]"), x0 = null, y0 = null;   // 휴대폰: 패널을 좌우로 밀어 넘긴다(세로로 끌면 그대로 스크롤)
@@ -764,7 +765,7 @@
   /* ── 계절 자동(2-H H1-1): head 스크립트가 손님 날짜로 맞춘 data-season 에 계절 이름 글자를 맞춘다(빌드 값과 같으면 그대로) ── */
   function initSeasonWords() {
     document.documentElement.removeAttribute("data-season-moved");   // 홈 배너 스크립트가 못 지웠을 때를 위한 안전장치(H1-2)
-    var ko = { spring: "봄", summer: "여름", autumn: "가을", winter: "겨울" }[document.documentElement.getAttribute("data-season")];
+    var ko = { spring: "봄", summer: "여름", autumn: "가을", winter: "겨울" }[document.documentElement.getAttribute("data-season")];   /* 자동 값 */
     if (!ko) return;
     document.querySelectorAll("[data-season-ko]").forEach(function (el) { if (el.textContent !== ko) el.textContent = ko; });
   }
@@ -791,8 +792,8 @@
     }
     function day(iso) {   // build.py feed_when 과 같은 규칙: 올해 글·지금 계절 글은 «10월 17일», 지난해 글은 «2024 가을»
       var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""), s = sea(iso); if (!m) return "";
-      if (+m[1] === kst.getUTCFullYear() || (s[0] === T[0] && s[1] === T[1])) return (+m[2]) + "월 " + (+m[3]) + "일";
-      return s[1] + " " + { spring: "봄", summer: "여름", autumn: "가을", winter: "겨울" }[s[0]];
+      if (+m[1] === kst.getUTCFullYear() || (s[0] === T[0] && s[1] === T[1])) return (+m[2]) + "월 " + (+m[3]) + "일";   /* 자동 값 */
+      return s[1] + " " + { spring: "봄", summer: "여름", autumn: "가을", winter: "겨울" }[s[0]];   /* 자동 값 */
     }
     function mk(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
     function render(items) {
@@ -860,7 +861,7 @@
     root.querySelector("[data-feed-next]").addEventListener("click", function () { step(1); });
     pause.addEventListener("click", function () {
       st.paused = !st.paused; pause.classList.toggle("is-paused", st.paused); pause.setAttribute("aria-pressed", String(st.paused));
-      pause.setAttribute("aria-label", st.paused ? "소식 자동 넘김 다시 시작" : "소식 자동 넘김 멈춤"); tick();
+      pause.setAttribute("aria-label", st.paused ? T("소식 자동 넘김 다시 시작") : T("소식 자동 넘김 멈춤")); tick();
     });
     if (REDUCE) { pause.hidden = true; }   // 자동 넘김이 없으니 멈춤 단추도 필요 없음
     vp.addEventListener("keydown", function (e) { var d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (d) { e.preventDefault(); step(d); } });
@@ -1020,9 +1021,9 @@
         li.querySelector(".qty__n").textContent = String(l.qty);
         li.querySelector(".line__sum").textContent = won(o.price * l.qty);
         var del = li.querySelector("[data-del]"), dec = li.querySelector("[data-dec]"), inc = li.querySelector("[data-inc]");
-        del.setAttribute("aria-label", o.label + " 선택 삭제");
-        dec.setAttribute("aria-label", o.label + " 수량 줄이기");
-        inc.setAttribute("aria-label", o.label + " 수량 늘리기");
+        del.setAttribute("aria-label", Tf("{0} 선택 삭제", o.label));
+        dec.setAttribute("aria-label", Tf("{0} 수량 줄이기", o.label));
+        inc.setAttribute("aria-label", Tf("{0} 수량 늘리기", o.label));
         dec.disabled = l.qty <= 1; inc.disabled = l.qty >= Cart.MAX_QTY;
         del.addEventListener("click", function () { lines.splice(i, 1); render(); if (sel) sel.focus(); });
         dec.addEventListener("click", function () { l.qty = Math.max(1, l.qty - 1); render(); list.querySelectorAll("[data-dec]")[i].focus(); });
@@ -1048,7 +1049,7 @@
     }
     function picked() {
       if (!lines.length) {
-        say((sel && sel.labels && sel.labels[0] ? sel.labels[0].textContent.trim() : "옵션") + "을(를) 먼저 골라 주세요.");
+        say(Tf("{0}을(를) 먼저 골라 주세요.", sel && sel.labels && sel.labels[0] ? sel.labels[0].textContent.trim() : T("옵션")));
         if (sel) { sel.scrollIntoView({ block: "center" }); sel.focus(); }
         return null;
       }
@@ -1059,7 +1060,7 @@
         var ls = picked(); if (!ls) return;
         if (Cart.add(ls, soldOut)) {
           var n = ls.reduce(function (a, l) { return a + l.qty; }, 0);
-          Added.show(data.name + " · " + ls.length + "가지 " + n + "개", b);
+          Added.show(Tf("{0} · {1}가지 {2}개", data.name, ls.length, n), b);
         }
       });
     });
@@ -1069,7 +1070,7 @@
       lp.options.forEach(function (o) { if (byId[o.id]) { byId[o.id].price = o.price; byId[o.id].sold_out = o.sold_out; } });
       if (sel) Array.prototype.forEach.call(sel.options, function (op) {
         var o = byId[op.value]; if (!o) return;
-        op.disabled = o.sold_out; op.textContent = o.label + " · " + won(o.price) + (o.sold_out ? " (품절)" : "");
+        op.disabled = o.sold_out; op.textContent = o.label + " · " + won(o.price) + (o.sold_out ? T(" (품절)") : "");
       });
       lines = lines.filter(function (l) { return !byId[l.option].sold_out; });
       render();
@@ -1102,10 +1103,11 @@
         box.textContent = "";
         rows.forEach(function (o, i) {
           var m = o.member, t = rows.length > 1 ? o.label + " — " : "";   // 회원가 옵션이 둘 이상이면 옵션 이름을 앞에
-          if (m.left === 0) t += m.label + " 할인 한도(1인 " + m.limit + "개" + (m.period === "yearly" ? ", 해마다" : "") + ")를 모두 쓰셔서 정가로 계산됩니다.";
+          var yr = m.period === "yearly" ? T(", 해마다") : "";
+          if (m.left === 0) t += Tf("{0} 할인 한도(1인 {1}개{2})를 모두 쓰셔서 정가로 계산됩니다.", m.label, m.limit, yr);
           else {
-            t += m.label + " 회원가 " + won(m.price);
-            if (m.limit !== null) t += " · 남은 할인 " + m.left + "개 (1인 " + m.limit + "개" + (m.period === "yearly" ? ", 해마다" : "") + "까지)";
+            t += Tf("{0} 회원가 {1}", m.label, won(m.price));
+            if (m.limit !== null) t += Tf(" · 남은 할인 {0}개 (1인 {1}개{2}까지)", m.left, m.limit, yr);
           }
           if (i) box.appendChild(document.createElement("br"));
           box.appendChild(document.createTextNode(t));
@@ -1199,7 +1201,7 @@
   function lineInfo(P, it) {   // 장바구니·주문서 공통: 일반 줄과 세트 줄을 같은 모양으로
     if (it && it.gift) {
       var g = giftView(P, it);
-      return g && { gift: g, name: g.name, opt: "구성 " + g.parts.length + "가지", price: g.price, so: g.so, img: g.img, href: g.href };
+      return g && { gift: g, name: g.name, opt: Tf("구성 {0}가지", g.parts.length), price: g.price, so: g.so, img: g.img, href: g.href };
     }
     var h = it && optOf(P, it.key, it.option), oi = h && optPic(h.p, h.o.id);
     return h && { name: h.p.name, opt: h.o.label, price: h.o.price, so: !!h.o.sold_out, img: oi ? oi.img : h.p.img, pos: oi && oi.pos, href: h.p.href, h: h };
@@ -1208,7 +1210,7 @@
   function giftList(g) {
     var ul = document.createElement("ul"); ul.className = "set-parts";
     g.parts.forEach(function (h) {
-      var li = document.createElement("li"); li.textContent = h.p.name + " " + h.o.label + (h.o.sold_out ? " (품절)" : ""); ul.appendChild(li);
+      var li = document.createElement("li"); li.textContent = h.p.name + " " + h.o.label + (h.o.sold_out ? T(" (품절)") : ""); ul.appendChild(li);
     });
     return ul;
   }
@@ -1238,20 +1240,20 @@
         row.querySelector(".crow__opt").textContent = opt + " · " + won(hit.price);
         if (hit.gift) {   // 세트: 펼치면 구성이 보인다
           var dt = document.createElement("details"), sm = document.createElement("summary");
-          dt.className = "crow__set"; sm.textContent = "구성 보기 · 합산가 " + won(hit.gift.sum) + "에서 " + won(hit.gift.off) + " 할인";
+          dt.className = "crow__set"; sm.textContent = Tf("구성 보기 · 합산가 {0}에서 {1} 할인", won(hit.gift.sum), won(hit.gift.off));
           dt.appendChild(sm); dt.appendChild(giftList(hit.gift));
           row.querySelector(".crow__opt").insertAdjacentElement("afterend", dt);
         }
         row.querySelector(".crow__soldout").hidden = !so;
         var chk = row.querySelector("[data-row-check]");
         chk.checked = !so && it.checked !== false; chk.disabled = so;
-        chk.setAttribute("aria-label", name + " " + opt + " 선택");
+        chk.setAttribute("aria-label", Tf("{0} {1} 선택", name, opt));
         row.querySelector(".qty__n").textContent = String(it.qty);
         row.querySelector(".crow__sum").textContent = won(hit.price * it.qty);
         var dec = row.querySelector("[data-dec]"), inc = row.querySelector("[data-inc]"), del = row.querySelector("[data-row-del]");
-        dec.setAttribute("aria-label", name + " " + opt + " 수량 줄이기");
-        inc.setAttribute("aria-label", name + " " + opt + " 수량 늘리기");
-        del.setAttribute("aria-label", name + " " + opt + " 삭제");
+        dec.setAttribute("aria-label", Tf("{0} {1} 수량 줄이기", name, opt));
+        inc.setAttribute("aria-label", Tf("{0} {1} 수량 늘리기", name, opt));
+        del.setAttribute("aria-label", Tf("{0} {1} 삭제", name, opt));
         dec.disabled = it.qty <= 1 || so; inc.disabled = it.qty >= Cart.MAX_QTY || so || !!it.gift;   // 세트는 한 줄에 1개(더 담으면 새 줄)
         function upd(f, focus) { var cur = Cart.read(); f(cur); Cart.write(cur); render(focus); }
         chk.addEventListener("change", function () { upd(function (c) { c[i].checked = chk.checked; }); });
@@ -1282,7 +1284,7 @@
     });
     function go(e, onlySelected) {
       var ok = Cart.read().some(function (it) { var h = lineInfo(P, it); return !h.so && (!onlySelected || it.checked !== false); });
-      if (!ok) { e.preventDefault(); say(onlySelected ? "주문할 상품을 골라 주세요." : "주문할 수 있는 상품이 없습니다(품절)."); }
+      if (!ok) { e.preventDefault(); say(onlySelected ? T("주문할 상품을 골라 주세요.") : T("주문할 수 있는 상품이 없습니다(품절).")); }
     }
     page.querySelector("[data-go-selected]").addEventListener("click", function (e) { go(e, true); });
     page.querySelector("[data-go-all]").addEventListener("click", function (e) { go(e, false); });
@@ -1291,11 +1293,11 @@
       var c = Cart.read(), kept = c.filter(function (it) { return lineInfo(P, it) && it.qty > 0; });
       if (kept.length !== c.length) {
         Cart.write(kept);
-        notice.textContent = "판매가 끝났거나 바뀐 상품 " + (c.length - kept.length) + "개를 장바구니에서 뺐습니다.";
+        notice.textContent = Tf("판매가 끝났거나 바뀐 상품 {0}개를 장바구니에서 뺐습니다.", c.length - kept.length);
         notice.hidden = false;
       }
       render();
-    }).catch(function () { notice.textContent = "상품 정보를 불러오지 못했습니다. 잠시 뒤 다시 열어 주세요."; notice.hidden = false; full.hidden = false; empty.hidden = true; });
+    }).catch(function () { notice.textContent = T("상품 정보를 불러오지 못했습니다. 잠시 뒤 다시 열어 주세요."); notice.hidden = false; full.hidden = false; empty.hidden = true; });
   }
 
   /* ── 주문서 (Checkout2)
@@ -1347,16 +1349,16 @@
     function paint() {
       var v = q || localQuote(), parcel = ship() === "parcel", after = v.goods - v.discount;
       $("[data-co-subtotal]").textContent = won(v.goods);
-      $("[data-co-ship]").textContent = parcel ? (v.shipping ? won(v.shipping) : "무료") : "0원 (직접 수령)";
+      $("[data-co-ship]").textContent = parcel ? (v.shipping ? won(v.shipping) : T("무료")) : T("0원 (직접 수령)");
       $("[data-co-disc]").textContent = "−" + won(v.discount);
       $("[data-co-gift-row]").hidden = !v.gift; $("[data-co-gift]").textContent = "−" + won(v.gift || 0);
       $("[data-co-seg]").textContent = v.seg ? " (" + v.seg + ")" : "";
       $("[data-co-pts]").textContent = "−" + won(v.points);
       var hint = $("[data-co-freehint]");
       hint.hidden = !(parcel && after < FREE);
-      hint.textContent = won(FREE - after) + " 더 담으면 무료 배송";
+      hint.textContent = Tf("{0} 더 담으면 무료 배송", won(FREE - after));
       $("[data-co-total]").textContent = won(v.amount);
-      $("[data-co-cta]").textContent = busy ? "주문 접수 중…" : won(v.amount) + (pay() === "bank" || v.amount === 0 ? " 주문하기" : " 결제하기");
+      $("[data-co-cta]").textContent = busy ? T("주문 접수 중…") : (pay() === "bank" || v.amount === 0 ? Tf("{0} 주문하기", won(v.amount)) : Tf("{0} 결제하기", won(v.amount)));
       $("[data-bank-note]").hidden = pay() !== "bank";
       var addr = $("[data-addr]");
       addr.hidden = !parcel;
@@ -1365,10 +1367,10 @@
     function ptsHint() {
       var have = $("[data-pts-have]"), hint = $("[data-pts-hint]");
       if (!member || !hint) return;
-      have.textContent = "(보유 " + won(member.points) + ")";
+      have.textContent = Tf("(보유 {0})", won(member.points));
       hint.textContent = q && member.points > 0 && q.max === 0 && digitsOf($("#buyer-phone").value) !== member.phone
-        ? "주문하시는 분 휴대폰이 회원 번호와 달라 적립금을 쓸 수 없습니다."
-        : "주문하시는 분 휴대폰이 회원 번호와 같을 때 쓸 수 있습니다.";
+        ? T("주문하시는 분 휴대폰이 회원 번호와 달라 적립금을 쓸 수 없습니다.")
+        : T("주문하시는 분 휴대폰이 회원 번호와 같을 때 쓸 수 있습니다.");
     }
     function requote(now) {
       paint();
@@ -1384,7 +1386,7 @@
             q = { goods: b.goods, discount: b.discount, gift: b.gift || 0, shipping: b.shipping, points: b.points, amount: j.amount, max: j.points_max,
                   seg: j.segment && member && member.segment_label ? member.segment_label : "",
                   giftOk: !gifts.length || typeof b.gift === "number" };   // 세트를 모르는 서버면 할인이 빠진다 — 접수를 막는다
-            if (!q.giftOk) { say("지금은 선물세트 주문을 받을 수 없습니다. 잠시 뒤 다시 시도하시거나 전화로 주문해 주세요."); errBox.setAttribute("data-from", "quote"); }
+            if (!q.giftOk) { say(T("지금은 선물세트 주문을 받을 수 없습니다. 잠시 뒤 다시 시도하시거나 전화로 주문해 주세요.")); errBox.setAttribute("data-from", "quote"); }
             var el = $("[data-pts]");
             if (el && ptsVal() !== b.points) el.value = String(b.points);
             if (errBox && errBox.getAttribute("data-from") === "quote" && (!gifts.length || typeof b.gift === "number")) say("");
@@ -1411,7 +1413,7 @@
         if (!p.value) { p.value = fmtPhone(member.phone); filled = true; }
         var af = $("[data-autofill]");
         if (filled) {
-          af.textContent = "회원 정보로 자동 입력했습니다." + (member.segment_label ? " " + member.segment_label + " 가격이 적용됩니다." : "");
+          af.textContent = T("회원 정보로 자동 입력했습니다.") + (member.segment_label ? Tf(" {0} 가격이 적용됩니다.", member.segment_label) : "");
           af.hidden = false;
         }
         ptsHint();
@@ -1431,7 +1433,7 @@
         book.forEach(function (a) {
           var li = document.createElement("li"), b = document.createElement("button"), t = document.createElement("b"), m = document.createElement("span");
           b.type = "button"; b.setAttribute("data-pick-id", a.id);
-          t.textContent = (a.label || "배송지") + (a.is_default ? " · 기본" : "");
+          t.textContent = (a.label || T("배송지")) + (a.is_default ? T(" · 기본") : "");
           m.className = "muted"; m.textContent = a.recipient_name + " · " + fmtPhone(a.recipient_phone) + " · (" + a.zip + ") " + a.address1 + " " + a.address2;
           b.appendChild(t); b.appendChild(m); li.appendChild(b); list.appendChild(li);
           b.addEventListener("click", function () {
@@ -1458,11 +1460,11 @@
         if (!el) return;
         var t = "";
         if (x && x.aff_parts && x.aff_parts.length) {
-          t = x.aff_parts.map(function (p) { return p.label + " 할인 " + p.qty + "개"; }).join(" · ");
-          if (x.regular_qty) t += " · 정가 " + x.regular_qty + "개";
-          if (x.limit_left_after !== null && x.limit_left_after !== undefined) t += " — 이번 주문 뒤 남는 할인 " + x.limit_left_after + "개";
+          t = x.aff_parts.map(function (p) { return Tf("{0} 할인 {1}개", p.label, p.qty); }).join(" · ");
+          if (x.regular_qty) t += Tf(" · 정가 {0}개", x.regular_qty);
+          if (x.limit_left_after !== null && x.limit_left_after !== undefined) t += Tf(" — 이번 주문 뒤 남는 할인 {0}개", x.limit_left_after);
         } else if (x && member && x.limit_left_after === 0) {
-          t = "소속 할인 한도를 모두 쓰셔서 정가로 계산됩니다.";
+          t = T("소속 할인 한도를 모두 쓰셔서 정가로 계산됩니다.");
         }
         el.textContent = t; el.hidden = !t;
       });
@@ -1472,16 +1474,16 @@
       var bad = null;
       function need(sel, msg, ok) { if (!bad && !ok) bad = { el: $(sel), msg: msg }; }
       var nm = $("#buyer-name").value.trim(), ph = digitsOf($("#buyer-phone").value);
-      need("#buyer-name", "주문하시는 분 이름을 입력해 주세요.", nm && nm.length <= 40);
-      need("#buyer-phone", "주문하시는 분 휴대폰 번호를 정확히 입력해 주세요.", ph.length >= 10 && ph.length <= 11);
+      need("#buyer-name", T("주문하시는 분 이름을 입력해 주세요."), nm && nm.length <= 40);
+      need("#buyer-phone", T("주문하시는 분 휴대폰 번호를 정확히 입력해 주세요."), ph.length >= 10 && ph.length <= 11);
       if (ship() === "parcel") {
-        need("#rcv-name", "받는 분 이름을 입력해 주세요.", $("#rcv-name").value.trim());
-        need("#rcv-phone", "받는 분 휴대폰 번호를 정확히 입력해 주세요.", /^\d{10,11}$/.test(digitsOf($("#rcv-phone").value)));
-        need("#zip", "우편번호를 입력해 주세요(우편번호 찾기).", $("#zip").value.trim());
-        need("#addr1", "주소를 입력해 주세요.", $("#addr1").value.trim());
-        need("#addr2", "상세 주소를 입력해 주세요.", $("#addr2").value.trim());
+        need("#rcv-name", T("받는 분 이름을 입력해 주세요."), $("#rcv-name").value.trim());
+        need("#rcv-phone", T("받는 분 휴대폰 번호를 정확히 입력해 주세요."), /^\d{10,11}$/.test(digitsOf($("#rcv-phone").value)));
+        need("#zip", T("우편번호를 입력해 주세요(우편번호 찾기)."), $("#zip").value.trim());
+        need("#addr1", T("주소를 입력해 주세요."), $("#addr1").value.trim());
+        need("#addr2", T("상세 주소를 입력해 주세요."), $("#addr2").value.trim());
       }
-      need("[data-agree]", "주문 내용 확인과 결제 동의에 체크해 주세요.", $("[data-agree]").checked);
+      need("[data-agree]", T("주문 내용 확인과 결제 동의에 체크해 주세요."), $("[data-agree]").checked);
       form.querySelectorAll("[aria-invalid]").forEach(function (e) { e.removeAttribute("aria-invalid"); });
       if (bad) { say(bad.msg); errBox.removeAttribute("data-from"); bad.el.setAttribute("aria-invalid", "true"); bad.el.focus(); }
       return !bad;
@@ -1493,16 +1495,16 @@
     function cardFail(msg) {
       setBusy(false);
       btn.hidden = true;
-      failBox.querySelector("[data-cardfail-msg]").textContent = msg + "주문은 아직 결제 전입니다.";
+      failBox.querySelector("[data-cardfail-msg]").textContent = msg + T("주문은 아직 결제 전입니다.");
       failBox.hidden = false;
       failBox.querySelector("[data-to-bank]").focus();
     }
     function startCard() {
       call("POST", "/api/nicepay/params", { order_no: pending.order_no, phone: pending.phone }).then(function (j) {
-        if (!j.ok || !j.params) { cardFail((j.error ? j.error + " " : "카드 결제를 시작하지 못했습니다. ")); return; }
-        if (!/^https:\/\/pg-web\.nicepay\.co\.kr\//.test(j.js || "")) { cardFail("카드 결제창 주소가 올바르지 않습니다. "); return; }
+        if (!j.ok || !j.params) { cardFail((j.error ? j.error + " " : T("카드 결제를 시작하지 못했습니다. "))); return; }
+        if (!/^https:\/\/pg-web\.nicepay\.co\.kr\//.test(j.js || "")) { cardFail(T("카드 결제창 주소가 올바르지 않습니다. ")); return; }
         loadScript(j.js).then(function () {
-          if (typeof window.goPay !== "function") { cardFail("카드 결제창을 열지 못했습니다. "); return; }
+          if (typeof window.goPay !== "function") { cardFail(T("카드 결제창을 열지 못했습니다. ")); return; }
           var old = document.getElementById("nicepayForm"); if (old) old.remove();
           var f = document.createElement("form");
           f.id = f.name = "nicepayForm"; f.method = "post"; f.acceptCharset = "euc-kr"; f.action = j.params.ReturnURL;
@@ -1511,10 +1513,10 @@
           });
           document.body.appendChild(f);
           window.nicepaySubmit = function () { f.submit(); };   // 결제창 인증 성공 → 서버(/nicepay/return)가 승인 뒤 완료 화면으로 보낸다
-          window.nicepayClose = function () { cardFail("카드 결제창이 닫혔습니다. "); };
+          window.nicepayClose = function () { cardFail(T("카드 결제창이 닫혔습니다. ")); };
           window.goPay(f);
-        }, function () { cardFail("카드 결제창을 불러오지 못했습니다. "); });
-      }, function () { cardFail("연결이 원활하지 않아 카드 결제를 시작하지 못했습니다. "); });
+        }, function () { cardFail(T("카드 결제창을 불러오지 못했습니다. ")); });
+      }, function () { cardFail(T("연결이 원활하지 않아 카드 결제를 시작하지 못했습니다. ")); });
     }
     if (failBox) {
       failBox.querySelector("[data-to-bank]").addEventListener("click", function (e) {
@@ -1522,27 +1524,27 @@
         call("POST", "/api/nicepay/to-bank", { order_no: pending.order_no, phone: pending.phone }).then(function (j) {
           if (j.ok) { goDone(); return; }
           b.disabled = false;
-          failBox.querySelector("[data-cardfail-msg]").textContent = "무통장 입금으로 바꾸지 못했습니다. 주문번호 " + pending.order_no + " 로 문의해 주세요.";
-        }, function () { b.disabled = false; failBox.querySelector("[data-cardfail-msg]").textContent = "연결이 원활하지 않습니다. 다시 눌러 주세요."; });
+          failBox.querySelector("[data-cardfail-msg]").textContent = Tf("무통장 입금으로 바꾸지 못했습니다. 주문번호 {0} 로 문의해 주세요.", pending.order_no);
+        }, function () { b.disabled = false; failBox.querySelector("[data-cardfail-msg]").textContent = T("연결이 원활하지 않습니다. 다시 눌러 주세요."); });
       });
       failBox.querySelector("[data-abandon]").addEventListener("click", function (e) {
         var b = e.currentTarget; b.disabled = true;
         call("POST", "/api/nicepay/abandon", { order_no: pending.order_no, phone: pending.phone }).then(function (j) {
           b.disabled = false;
-          if (!j.ok) { failBox.querySelector("[data-cardfail-msg]").textContent = j.error || "주문을 취소하지 못했습니다."; return; }
+          if (!j.ok) { failBox.querySelector("[data-cardfail-msg]").textContent = j.error || T("주문을 취소하지 못했습니다."); return; }
           try { sessionStorage.removeItem(PENDING); } catch (e2) {}
           pending = null; idem = newKey();       // 취소된 주문은 지워지므로 새 키로 다시 주문
           failBox.hidden = true; btn.hidden = false;
-          say("주문을 취소했습니다. 장바구니는 그대로입니다."); errBox.removeAttribute("data-from");
+          say(T("주문을 취소했습니다. 장바구니는 그대로입니다.")); errBox.removeAttribute("data-from");
           btn.focus();
-        }, function () { b.disabled = false; failBox.querySelector("[data-cardfail-msg]").textContent = "연결이 원활하지 않습니다. 다시 눌러 주세요."; });
+        }, function () { b.disabled = false; failBox.querySelector("[data-cardfail-msg]").textContent = T("연결이 원활하지 않습니다. 다시 눌러 주세요."); });
       });
     }
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!API || busy || pending) return;
       if (!validate()) return;
-      if (gifts.length && !(q && q.giftOk)) { say("선물세트 금액을 확인하는 중입니다. 잠시 뒤 다시 눌러 주세요."); requote(true); return; }
+      if (gifts.length && !(q && q.giftOk)) { say(T("선물세트 금액을 확인하는 중입니다. 잠시 뒤 다시 눌러 주세요.")); requote(true); return; }
       setBusy(true); say("");
       var body = {
         idempotency_key: idem, lines: reqLines(),
@@ -1554,7 +1556,7 @@
       call("POST", "/api/v2/orders", body, true).then(function (j) {
         if (!j.ok) {
           setBusy(false);
-          say(j.error || "주문을 접수하지 못했습니다. 잠시 뒤 다시 눌러 주세요."); errBox.removeAttribute("data-from");
+          say(j.error || T("주문을 접수하지 못했습니다. 잠시 뒤 다시 눌러 주세요.")); errBox.removeAttribute("data-from");
           if (j.code === "points" || j.code === "sold_out") requote(true);
           return;
         }
@@ -1564,7 +1566,7 @@
         saveBook().then(function () { if (j.next === "card") startCard(); else goDone(); });
       }, function () {
         setBusy(false);
-        say("연결이 원활하지 않습니다. 잠시 뒤 다시 눌러 주세요. 여러 번 눌러도 주문은 한 번만 접수됩니다."); errBox.removeAttribute("data-from");
+        say(T("연결이 원활하지 않습니다. 잠시 뒤 다시 눌러 주세요. 여러 번 눌러도 주문은 한 번만 접수됩니다.")); errBox.removeAttribute("data-from");
       });
     });
     form.querySelectorAll("[data-ship]").forEach(function (r) { r.addEventListener("change", function () { requote(); }); });
@@ -1592,7 +1594,7 @@
         } }).open();
       };
       if (window.daum && window.daum.Postcode) go();
-      else loadScript("https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js").then(go, function () { say("우편번호 검색을 불러오지 못했습니다. 직접 입력해 주세요."); });
+      else loadScript("https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js").then(go, function () { say(T("우편번호 검색을 불러오지 못했습니다. 직접 입력해 주세요.")); });
     });
     loadProducts(page.getAttribute("data-products")).then(function (P) {
       var src = source(), dropped = 0;
@@ -1615,7 +1617,7 @@
         li.querySelector("img").src = root() + "images/v2/" + (oi ? oi.img : l.p.img).replace(/\.jpg$/, "") + "-480.jpg";
         if (oi && oi.pos) li.querySelector("img").style.objectPosition = oi.pos;
         li.querySelector(".co__item-name").textContent = l.p.name;
-        li.querySelector(".co__item-opt").textContent = l.o.label + " · " + l.qty + "개";
+        li.querySelector(".co__item-opt").textContent = Tf("{0} · {1}개", l.o.label, l.qty);
         li.querySelector(".co__item-sum").textContent = won(l.o.price * l.qty);
         ul.appendChild(li); l.li = li;
         n += l.qty;
@@ -1624,12 +1626,12 @@
         var li = tpl.content.firstElementChild.cloneNode(true);
         li.querySelector("img").src = root() + "images/v2/" + g.v.img.replace(/\.jpg$/, "") + "-480.jpg";
         li.querySelector(".co__item-name").textContent = g.v.name;
-        li.querySelector(".co__item-opt").textContent = g.v.label + " · 합산가에서 " + won(g.v.off) + " 할인";
+        li.querySelector(".co__item-opt").textContent = Tf("{0} · 합산가에서 {1} 할인", g.v.label, won(g.v.off));
         li.querySelector(".co__item-sum").textContent = won(g.v.price);
         ul.appendChild(li); n += 1;
       });
-      $("[data-co-count]").textContent = (lines.length + gifts.length) + "종 · " + n + "개";
-      if (dropped) { var nt = $("[data-co-notice]"); nt.textContent = "품절이거나 판매가 끝난 상품 " + dropped + "개는 주문서에서 뺐습니다."; nt.hidden = false; }
+      $("[data-co-count]").textContent = Tf("{0}종 · {1}개", lines.length + gifts.length, n);
+      if (dropped) { var nt = $("[data-co-notice]"); nt.textContent = Tf("품절이거나 판매가 끝난 상품 {0}개는 주문서에서 뺐습니다.", dropped); nt.hidden = false; }
       paint();
       if (API) {
         loadMe().then(function () { requote(true); });
@@ -1641,7 +1643,7 @@
           paint();
         }, function () {});
       }
-    }).catch(function () { empty.hidden = false; empty.querySelector(".cart-empty__msg").textContent = "상품 정보를 불러오지 못했습니다."; });
+    }).catch(function () { empty.hidden = false; empty.querySelector(".cart-empty__msg").textContent = T("상품 정보를 불러오지 못했습니다."); });
   }
 
   /* ── 주문 완료 — 실제 주문(data-api): 주소의 o·t 로 조회해 채우고, 접수한 장바구니 품목을 비운다 ── */
@@ -1663,37 +1665,37 @@
   function initDoneLive(box) {
     var u = new URLSearchParams(location.search), o = u.get("o"), t = u.get("t");
     var msg = document.querySelector("[data-done-msg]"), title = document.querySelector("[data-done-title]"), lead = document.querySelector("[data-done-lead]");
-    function fail(text) { title.textContent = "주문 정보를 확인하지 못했습니다"; lead.textContent = ""; msg.textContent = text; msg.hidden = false; }
-    if (!o || !t) { fail("주소에 주문 정보가 없습니다. 문자로 받은 주문번호로 «주문 내역 보기»에서 확인해 주세요."); return; }
+    function fail(text) { title.textContent = T("주문 정보를 확인하지 못했습니다"); lead.textContent = ""; msg.textContent = text; msg.hidden = false; }
+    if (!o || !t) { fail(T("주소에 주문 정보가 없습니다. 문자로 받은 주문번호로 «주문 내역 보기»에서 확인해 주세요.")); return; }
     call("GET", "/api/v2/orders/" + encodeURIComponent(o) + "?t=" + encodeURIComponent(t)).then(function (j) {
       if (!j.ok) {
-        fail(j._status === 404 ? "주문을 찾을 수 없습니다. 주소가 만료되었을 수 있습니다. 문자로 받은 주문번호로 «주문 내역 보기»에서 확인해 주세요."
-                               : (j.error || "주문 정보를 불러오지 못했습니다. 새로고침해 주세요."));
+        fail(j._status === 404 ? T("주문을 찾을 수 없습니다. 주소가 만료되었을 수 있습니다. 문자로 받은 주문번호로 «주문 내역 보기»에서 확인해 주세요.")
+                               : (j.error || T("주문 정보를 불러오지 못했습니다. 새로고침해 주세요.")));
         return;
       }
       var card = j.payment === "card", unpaidCard = card && !j.paid;
-      title.textContent = unpaidCard ? "카드 결제가 끝나지 않았습니다" : card ? "결제가 완료되었습니다" : "주문이 접수되었습니다";
-      lead.textContent = unpaidCard ? "주문은 결제 전 상태입니다. 다시 결제하시려면 주문서에서 새로 주문해 주세요."
-        : card ? "주문번호를 문자로 보내드렸습니다.\n준비를 시작하면 다시 알려드립니다."
-        : j.amount === 0 ? "적립금으로 결제가 끝났습니다.\n준비를 시작하면 다시 알려드립니다."
-        : "주문번호와 입금 안내를 문자로 보내드렸습니다.\n입금이 확인되면 준비를 시작하고 다시 알려드립니다.";
+      title.textContent = unpaidCard ? T("카드 결제가 끝나지 않았습니다") : card ? T("결제가 완료되었습니다") : T("주문이 접수되었습니다");
+      lead.textContent = unpaidCard ? T("주문은 결제 전 상태입니다. 다시 결제하시려면 주문서에서 새로 주문해 주세요.")
+        : card ? T("주문번호를 문자로 보내드렸습니다.\n준비를 시작하면 다시 알려드립니다.")
+        : j.amount === 0 ? T("적립금으로 결제가 끝났습니다.\n준비를 시작하면 다시 알려드립니다.")
+        : T("주문번호와 입금 안내를 문자로 보내드렸습니다.\n입금이 확인되면 준비를 시작하고 다시 알려드립니다.");
       box.querySelector("[data-done-no]").textContent = j.order_no;
       box.querySelector("[data-done-copyno]").setAttribute("data-copy", j.order_no);
-      box.querySelector("[data-done-amount-label]").textContent = card ? "결제 금액" : "입금 금액";
+      box.querySelector("[data-done-amount-label]").textContent = card ? T("결제 금액") : T("입금 금액");
       box.querySelector("[data-done-amount]").textContent = won(j.amount);
       box.querySelectorAll("[data-bank-row]").forEach(function (el) { el.hidden = card || j.amount === 0; });
-      box.querySelector("[data-done-receive]").textContent = j.receive === "parcel" ? "택배 배송" : "영동 농장 직접 수령";
+      box.querySelector("[data-done-receive]").textContent = j.receive === "parcel" ? T("택배 배송") : T("영동 농장 직접 수령");
       box.querySelector("[data-done-status]").textContent = j.status;
       var ul = box.querySelector("[data-done-items]"), n = 0;
       j.items.forEach(function (it) {
         var li = document.createElement("li"), a = document.createElement("span"), b = document.createElement("b"), m = document.createElement("span");
-        a.textContent = it.product + " "; m.className = "muted"; m.textContent = it.option_label + " · " + it.count + "개"; a.appendChild(m);
+        a.textContent = it.product + " "; m.className = "muted"; m.textContent = Tf("{0} · {1}개", it.option_label, it.count); a.appendChild(m);
         b.textContent = won(it.line_amount); li.appendChild(a); li.appendChild(b); ul.appendChild(li); n += it.count;
       });
-      box.querySelector("[data-done-count]").textContent = j.items.length + "종 · " + n + "개";
+      box.querySelector("[data-done-count]").textContent = Tf("{0}종 · {1}개", j.items.length, n);
       box.hidden = false;
       if (!unpaidCard) finishPending(j.order_no);
-    }, function () { fail("연결이 원활하지 않습니다. 새로고침해 주세요."); });
+    }, function () { fail(T("연결이 원활하지 않습니다. 새로고침해 주세요.")); });
   }
 
   /* ── 주문 완료 (Done2): 복사 버튼 · 문자 바이트 ── */
@@ -1702,7 +1704,7 @@
     document.querySelectorAll("[data-copy]").forEach(function (b) {
       b.addEventListener("click", function () {
         var v = b.getAttribute("data-copy");
-        function done(ok) { if (out) out.textContent = ok ? "복사했습니다: " + v : "복사하지 못했습니다. 길게 눌러 직접 복사해 주세요."; }
+        function done(ok) { if (out) out.textContent = ok ? Tf("복사했습니다: {0}", v) : T("복사하지 못했습니다. 길게 눌러 직접 복사해 주세요."); }
         if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(v).then(function () { done(true); }, function () { done(false); });
         else {
           var t = document.createElement("textarea"); t.value = v; t.setAttribute("readonly", ""); t.style.position = "fixed"; t.style.opacity = "0";
@@ -1714,10 +1716,10 @@
     if (sms) {
       var text = sms.textContent, bytes = 0;
       for (var i = 0; i < text.length; i++) bytes += text.charCodeAt(i) < 128 ? 1 : 2;   // 문자 바이트(한글 2, 영문·숫자 1)
-      document.querySelector("[data-sms-bytes]").textContent = (bytes <= 90 ? "SMS" : "LMS") + " · " + bytes + "바이트";
+      document.querySelector("[data-sms-bytes]").textContent = Tf("{0} · {1}바이트", bytes <= 90 ? "SMS" : "LMS", bytes);
       document.querySelector("[data-sms-note]").textContent = bytes <= 90
-        ? "90바이트 이하라 단문(SMS)으로 나갑니다. 내용이 길어지면 자동으로 장문(LMS)으로 바뀝니다."
-        : "90바이트를 넘어 장문(LMS)으로 나갑니다.";
+        ? T("90바이트 이하라 단문(SMS)으로 나갑니다. 내용이 길어지면 자동으로 장문(LMS)으로 바뀝니다.")
+        : T("90바이트를 넘어 장문(LMS)으로 나갑니다.");
     }
   }
 
@@ -1741,25 +1743,25 @@
           if (s.count) {
             sec.querySelector("[data-rv-avg]").textContent = s.average.toFixed(1);
             sec.querySelector("[data-rv-stars]").textContent = stars(Math.round(s.average));
-            sec.querySelector("[data-rv-count]").textContent = "후기 " + s.count + "개";
+            sec.querySelector("[data-rv-count]").textContent = Tf("후기 {0}개", s.count);
             var d = sec.querySelector("[data-rv-dist]"); d.innerHTML = "";
             [5, 4, 3, 2, 1].forEach(function (k) {
               var row = el("div"), bar = el("span", "rv-sum__bar"), fill = el("span", "rv-sum__fill"), c = s.distribution[String(k)] || 0;
               fill.style.width = (s.count ? Math.round(c * 100 / s.count) : 0) + "%"; bar.appendChild(fill);
-              row.appendChild(el("span", null, k + "점")); row.appendChild(bar); row.appendChild(el("span", "muted", c + "개"));
-              row.setAttribute("aria-label", k + "점 " + c + "개"); d.appendChild(row);
+              row.appendChild(el("span", null, Tf("{0}점", k))); row.appendChild(bar); row.appendChild(el("span", "muted", Tf("{0}개", c)));
+              row.setAttribute("aria-label", Tf("{0}점 {1}개", k, c)); d.appendChild(row);
             });
             var b = document.querySelector("[data-rv-badge]");
-            if (b) { b.querySelector("[data-rv-badge-avg]").textContent = s.average.toFixed(1); b.querySelector("[data-rv-badge-n]").textContent = "· 후기 " + s.count + "개"; b.hidden = false; }
+            if (b) { b.querySelector("[data-rv-badge-avg]").textContent = s.average.toFixed(1); b.querySelector("[data-rv-badge-n]").textContent = Tf("· 후기 {0}개", s.count); b.hidden = false; }
           }
         }
         j.reviews.forEach(function (r) {
           var li = el("li", "rv-item"), head = el("p", "rv-item__head");
-          var st = el("span", "rv-item__stars", stars(r.rating)); st.setAttribute("aria-label", "별점 " + r.rating + "점");
+          var st = el("span", "rv-item__stars", stars(r.rating)); st.setAttribute("aria-label", Tf("별점 {0}점", r.rating));
           head.appendChild(st); head.appendChild(el("span", "rv-item__who", r.author)); head.appendChild(el("span", "muted", r.date));
           li.appendChild(head); li.appendChild(el("p", "rv-item__body", r.body));
-          if (r.products && r.products.length > 1) li.appendChild(el("p", "rv-item__items muted", "함께 주문: " + r.products.join(", ")));
-          if (r.reply) { var rp = el("div", "rv-item__reply"); rp.appendChild(el("p", "rv-item__reply-h", "영동에덴원 답글")); rp.appendChild(el("p", null, r.reply)); li.appendChild(rp); }
+          if (r.products && r.products.length > 1) li.appendChild(el("p", "rv-item__items muted", Tf("함께 주문: {0}", r.products.join(", "))));
+          if (r.reply) { var rp = el("div", "rv-item__reply"); rp.appendChild(el("p", "rv-item__reply-h", T("영동에덴원 답글"))); rp.appendChild(el("p", null, r.reply)); li.appendChild(rp); }
           list.appendChild(li);
         });
         page = j.page; more.hidden = j.page >= j.pages;
@@ -1808,13 +1810,13 @@
           var h = optOf(P, x.key, x.option);
           var im = document.createElement("img"); goodImg(im, x.key, h.p, x.option); im.width = 240; im.height = 240; im.loading = "lazy";
           b.appendChild(im);
-          b.appendChild(el("span", "sr-only", (i + 1) + "번째 칸: "));
+          b.appendChild(el("span", "sr-only", Tf("{0}번째 칸: ", i + 1)));
           var t = el("span", "gift__slot-t"); t.appendChild(el("span", "gift__slot-n", h.p.name)); t.appendChild(el("span", "gift__slot-o muted", h.o.label + " · " + won(h.o.price)));
-          b.appendChild(t); b.appendChild(el("span", "gift__slot-ch", "바꾸기"));
+          b.appendChild(t); b.appendChild(el("span", "gift__slot-ch", T("바꾸기")));
           sum += h.o.price; n++;
         } else {
           b.appendChild(el("span", "gift__slot-plus", "+"));
-          b.appendChild(el("span", "gift__slot-empty", (i + 1) + "번째 칸 고르기"));
+          b.appendChild(el("span", "gift__slot-empty", Tf("{0}번째 칸 고르기", i + 1)));
         }
         b.addEventListener("click", function () { open(i, b); });
         li.appendChild(b);
@@ -1836,7 +1838,7 @@
       t.type = "button"; t.setAttribute("aria-expanded", openInfo[i] ? "true" : "false"); t.setAttribute("aria-controls", id);
       var box = el("div", "gift__info-box"); box.id = id; box.hidden = !openInfo[i];
       if (n) {
-        box.appendChild(el("p", "gift__info-cat muted", "상품정보제공고시 · " + n.category));
+        box.appendChild(el("p", "gift__info-cat muted", Tf("상품정보제공고시 · {0}", n.category)));
         var dl = el("dl", "gift__info-dl");
         n.rows.forEach(function (r) { dl.appendChild(el("dt", null, r[0])); dl.appendChild(el("dd", null, r[1])); });
         box.appendChild(dl);
@@ -1862,7 +1864,7 @@
         var prices = (avail.length ? avail : p.options).map(function (o) { return o.price; }).sort(function (a, b2) { return a - b2; });
         b.appendChild(im);
         var t = el("span", "sheet__t"); t.appendChild(el("span", "sheet__n", p.name));
-        t.appendChild(el("span", "sheet__p muted", avail.length ? won(prices[0]) + (prices[0] !== prices[prices.length - 1] ? "~" : "") + (p.options.length > 1 ? " · 옵션 " + p.options.length + "가지" : "") : "품절"));
+        t.appendChild(el("span", "sheet__p muted", avail.length ? won(prices[0]) + (prices[0] !== prices[prices.length - 1] ? "~" : "") + (p.options.length > 1 ? Tf(" · 옵션 {0}가지", p.options.length) : "") : T("품절")));
         b.appendChild(t);
         b.addEventListener("click", function () { if (p.options.length === 1) pick(k, p.options[0].id); else opts(k); });
         li.appendChild(b); ul.appendChild(li);
@@ -1873,10 +1875,10 @@
     function opts(k) {
       var p = P.products[k], box = sheet.querySelector("[data-sheet-opts]"), ul = box.querySelector("[data-sheet-opt-list]");
       sheet.querySelector("[data-sheet-list]").hidden = true; box.hidden = false;
-      box.querySelector("[data-sheet-opt-h]").textContent = p.name + " — 옵션을 골라 주세요";
+      box.querySelector("[data-sheet-opt-h]").textContent = Tf("{0} — 옵션을 골라 주세요", p.name);
       ul.innerHTML = "";
       p.options.forEach(function (o) {
-        var li = el("li"), b = el("button", "sheet__opt" + (o.sold_out ? " is-soldout" : ""), o.label + " · " + (o.sold_out ? "품절" : won(o.price)));
+        var li = el("li"), b = el("button", "sheet__opt" + (o.sold_out ? " is-soldout" : ""), o.label + " · " + (o.sold_out ? T("품절") : won(o.price)));
         b.type = "button"; b.disabled = !!o.sold_out;
         b.addEventListener("click", function () { pick(k, o.id); });
         li.appendChild(b); ul.appendChild(li);
@@ -1915,13 +1917,13 @@
     });
     function ready() {
       var bad = picks.some(function (x) { var h = x && optOf(P, x.key, x.option); return !h || h.o.sold_out; });
-      if (bad || picks.length !== G.slots) { err.textContent = "품절이거나 고르지 않은 칸이 있습니다."; err.hidden = false; return false; }
+      if (bad || picks.length !== G.slots) { err.textContent = T("품절이거나 고르지 않은 칸이 있습니다."); err.hidden = false; return false; }
       return true;
     }
     page.querySelector("[data-gift-cart]").addEventListener("click", function (e) {
       if (!ready()) return;
       Cart.addGift(set, picks);
-      Added.show(d().name + " 1세트(구성 " + G.slots + "가지)", e.currentTarget);
+      Added.show(Tf("{0} 1세트(구성 {1}가지)", d().name, G.slots), e.currentTarget);
       choose(set);
     });
     page.querySelector("[data-gift-buy]").addEventListener("click", function () {
@@ -1933,7 +1935,7 @@
       P = data; G = P.gift;
       Object.keys(G.sets).forEach(function (id) {
         var x = page.querySelector('[data-set-desc="' + id + '"]');
-        if (x) x.textContent = G.sets[id].allow.map(function (k) { return P.products[k] ? P.products[k].name : k; }).join(" · ") + " 중에서 " + G.slots + "가지";
+        if (x) x.textContent = Tf("{0} 중에서 {1}가지", G.sets[id].allow.map(function (k) { return P.products[k] ? P.products[k].name : k; }).join(" · "), G.slots);
       });
       choose(want);
     });
@@ -1957,7 +1959,7 @@
       });
       if (ok.length) Cart.add(ok);
       try { localStorage.setItem(OLD_CART_KEY + "_moved", raw); } catch (e) {}
-      var msg = dropped ? "예전 장바구니에서 " + (ok.length ? ok.length + "개 품목을 옮겼습니다. " : "") + "판매가 끝났거나 품절된 " + dropped + "개 품목은 옮기지 못했습니다." : "";
+      var msg = dropped ? Tf("예전 장바구니에서 {0}판매가 끝났거나 품절된 {1}개 품목은 옮기지 못했습니다.", ok.length ? Tf("{0}개 품목을 옮겼습니다. ", ok.length) : "", dropped) : "";
       if (ok.length && document.querySelector("[data-cart-page]")) {   // 장바구니 화면은 다시 그려야 옮긴 품목이 보인다
         try { if (msg) sessionStorage.setItem("edenwon_cart_moved", msg); } catch (e) {}
         location.reload(); return;
@@ -1999,7 +2001,7 @@
         sel.scrollIntoView({ block: "center", behavior: "smooth" });
         sel.focus({ preventScroll: true });
         var msg = document.querySelector("[data-buy-msg]");
-        if (msg) { msg.textContent = a.getAttribute("data-choose") + " 계열에서 골라 주세요."; msg.hidden = false; }
+        if (msg) { msg.textContent = Tf("{0} 계열에서 골라 주세요.", a.getAttribute("data-choose")); msg.hidden = false; }
       });
     });
   }
