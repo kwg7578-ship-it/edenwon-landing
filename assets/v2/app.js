@@ -603,6 +603,72 @@
     document.querySelectorAll("[data-season-ko]").forEach(function (el) { if (el.textContent !== ko) el.textContent = ko; });
   }
 
+  /* ── 소식 띠(H2): API(최신) → 빌드 때 받은 목록 → «블로그에서 보기» 단추. 5초마다 한 칸(띠 안 스크롤 — 밀림 0),
+     일시정지(WCAG 2.2.2)·마우스 올림/포커스 멈춤·화면 밖·탭 숨김 멈춤·움직임 줄이기면 자동 넘김 없음, 새 탭 ── */
+  function initFeed(root) {
+    var vp = root.querySelector("[data-feed-viewport]"), track = root.querySelector("[data-feed-track]");
+    var ctrl = root.querySelector("[data-feed-ctrl]"), empty = root.querySelector("[data-feed-empty]"), pause = root.querySelector("[data-feed-pause]");
+    var api = root.getAttribute("data-feed-api"), src = root.getAttribute("data-feed-src"), label = root.getAttribute("data-feed-label") || "";
+    function day(iso) {
+      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); if (!m) return "";
+      return (+m[1] === new Date(Date.now() + 324e5).getUTCFullYear() ? "" : m[1] + "년 ") + (+m[2]) + "월 " + (+m[3]) + "일";
+    }
+    function mk(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+    function render(items) {
+      track.textContent = "";
+      items.forEach(function (it) {
+        if (!/^https:\/\/(m\.)?blog\.naver\.com\//.test(it.url || "")) return;
+        var li = mk("li", "feed__item"), a = mk("a", "feed__card"), ph = mk("span", "feed__ph"), meta = mk("span", "feed__meta");
+        a.href = it.url; a.target = "_blank"; a.rel = "noopener";
+        if (it.thumb_480 && /^[0-9a-f]{16}-480$/.test(it.thumb_480)) {
+          var im = document.createElement("img"), b = api + "/api/v2/feed/thumb/";
+          im.src = b + it.thumb_480 + ".webp"; im.srcset = b + it.thumb_480 + ".webp 480w, " + b + it.thumb_960 + ".webp 960w";
+          im.sizes = "(max-width:768px) 80vw, 25vw"; im.alt = ""; im.loading = "lazy"; im.decoding = "async"; im.width = 480; im.height = 360;
+          ph.appendChild(im);
+        }
+        meta.appendChild(mk("span", "feed__src", label)); meta.appendChild(mk("span", "feed__date", day(it.date)));
+        a.appendChild(ph); a.appendChild(meta); a.appendChild(mk("span", "feed__title", it.title || ""));
+        li.appendChild(a); track.appendChild(li);
+      });
+      var has = track.children.length > 0;
+      vp.hidden = ctrl.hidden = !has; empty.hidden = has; tick();
+    }
+    if (api && window.fetch && window.AbortController) {
+      var ac = new AbortController(), to = setTimeout(function () { ac.abort(); }, 4000);
+      fetch(api + "/api/v2/feed?source=" + encodeURIComponent(src), { signal: ac.signal, credentials: "omit" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) { clearTimeout(to); if (j && j.items && j.items.length) render(j.items.slice(0, 8)); })
+        .catch(function () { clearTimeout(to); });   // 실패하면 빌드 때 받은 목록(또는 단추) 그대로
+    }
+    var st = { paused: false, hover: false, focus: false, vis: false }, timer = null;
+    function step(d) {
+      var c = track.children; if (!c.length) return;
+      var w = c[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0), max = vp.scrollWidth - vp.clientWidth, x = vp.scrollLeft + d * w;
+      if (x > max + 2) x = 0; else if (x < -2) x = max;
+      vp.scrollTo({ left: x, behavior: REDUCE ? "auto" : "smooth" });
+    }
+    function tick() {
+      clearInterval(timer); timer = null;
+      if (!REDUCE && !st.paused && !st.hover && !st.focus && st.vis && !document.hidden && track.children.length > 1 && vp.scrollWidth > vp.clientWidth + 2)
+        timer = setInterval(function () { step(1); }, 5000);
+    }
+    root.querySelector("[data-feed-prev]").addEventListener("click", function () { step(-1); });
+    root.querySelector("[data-feed-next]").addEventListener("click", function () { step(1); });
+    pause.addEventListener("click", function () {
+      st.paused = !st.paused; pause.classList.toggle("is-paused", st.paused); pause.setAttribute("aria-pressed", String(st.paused));
+      pause.setAttribute("aria-label", st.paused ? "소식 자동 넘김 다시 시작" : "소식 자동 넘김 멈춤"); tick();
+    });
+    if (REDUCE) { pause.hidden = true; }   // 자동 넘김이 없으니 멈춤 단추도 필요 없음
+    vp.addEventListener("keydown", function (e) { var d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (d) { e.preventDefault(); step(d); } });
+    root.addEventListener("mouseenter", function () { st.hover = true; tick(); });
+    root.addEventListener("mouseleave", function () { st.hover = false; tick(); });
+    root.addEventListener("focusin", function (e) { st.focus = e.target !== pause; tick(); });
+    root.addEventListener("focusout", function (e) { if (!root.contains(e.relatedTarget)) { st.focus = false; tick(); } });
+    document.addEventListener("visibilitychange", tick);
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { st.vis = es[0].isIntersecting; tick(); }, { threshold: 0.3 }).observe(root);
+    else { st.vis = true; tick(); }
+  }
+
   /* ── 계절 갤러리(2-H H1-4): 탭(?s= 또는 손님 계절) · 크게 보기(dialog — 열 때만 큰 사진, ←/→·Esc·밀어 넘기기, 닫으면 누른 사진으로) ── */
   function initSeasonGallery(root) {
     var tabs = [].slice.call(root.querySelectorAll("[role=tab]")), panels = root.querySelectorAll("[role=tabpanel]");
@@ -1688,6 +1754,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     initSeasonWords();
     document.querySelectorAll("[data-sgal]").forEach(initSeasonGallery);
+    document.querySelectorAll("[data-feed]").forEach(initFeed);
     initMember();
     initMotion();
     initMemberPrice();
