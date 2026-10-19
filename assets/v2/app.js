@@ -680,15 +680,38 @@
         li.appendChild(a); track.appendChild(li);
       });
       var has = track.children.length > 0;
-      vp.hidden = ctrl.hidden = !has; empty.hidden = has; tick();
+      vp.hidden = ctrl.hidden = !has; empty.hidden = has || !!(list && list.children.length); tick();
+    }
+    // 2-K-2 목록형(home.feed.layout list·both): 최신 글 6줄(새 글이 위) — 작은 사진 64px + 제목 + 날짜, 새 탭
+    var side = root.querySelector("[data-feed-side]"), list = root.querySelector("[data-feed-list]");
+    function renderList(items) {
+      list.textContent = "";
+      items.forEach(function (it) {
+        if (!/^https:\/\/(m\.)?blog\.naver\.com\//.test(it.url || "") || list.children.length >= 6) return;
+        var li = mk("li"), a = mk("a", "feed__row"), ph = mk("span", "feed__rph");
+        a.href = it.url; a.target = "_blank"; a.rel = "noopener";
+        if (it.thumb_480 && /^[0-9a-f]{16}-480$/.test(it.thumb_480)) {
+          var im = document.createElement("img"); im.src = api + "/api/v2/feed/thumb/" + it.thumb_480 + ".webp";
+          im.alt = ""; im.width = 64; im.height = 64; im.loading = "lazy"; im.decoding = "async"; ph.appendChild(im);
+        }
+        a.appendChild(ph); a.appendChild(mk("span", "feed__rt", it.title || "")); a.appendChild(mk("span", "feed__rd", day(it.date)));
+        li.appendChild(a); list.appendChild(li);
+      });
+      side.hidden = !list.children.length;
+      empty.hidden = list.children.length > 0 || !!(track && track.children.length);
     }
     if (api && window.fetch && window.AbortController) {
       var ac = new AbortController(), to = setTimeout(function () { ac.abort(); }, 4000);
       fetch(api + "/api/v2/feed?source=" + encodeURIComponent(src) + "&view=season", { signal: ac.signal, credentials: "omit" })
         .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (j) { clearTimeout(to); var p = j && j.items ? pick(j) : []; if (p.length) render(p); })
+        .then(function (j) {
+          clearTimeout(to); var p = j && j.items ? pick(j) : [];
+          if (p.length && vp) render(p);
+          if (list && j && j.items) { var r = (j.recent || j.items).slice(); if (r.length) renderList(r); }   // 옛 응답이면 items(최신 순)
+        })
         .catch(function () { clearTimeout(to); });   // 실패하면 빌드 때 받은 목록(또는 단추) 그대로
     }
+    if (!vp) return;   // 목록형(띠 없음) — 아래는 카드 띠 넘김
     var st = { paused: false, hover: false, focus: false, vis: false }, timer = null;
     function step(d) {
       var c = track.children; if (!c.length) return;
