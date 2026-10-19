@@ -239,8 +239,82 @@
     });
     root.addEventListener("mouseleave", function () { x = y = 0; ask(); });
   }
+  /* ── 2-K-3 홈 배너 4장(home.banner4): 손님 날짜(KST)로 장을 맞춘다 — 1장 = 사진 장 첫 장(H1-2 순서 그대로, 나머지 사진 장은 뺌),
+     3장 = 수확 달이 이번 달인 농산물(없으면 다음 수확 1~2개 «곧 만나요», 그것도 없으면 장을 뺌), 4장 = 설·추석 35일 전~다음 날 선물세트, 그 밖엔 옹기 이야기 ── */
+  function b4Trim(root) {   // 1장 = 사진 장 첫 장(H1-2 순서 그대로 — 손님 계절 첫 장), 나머지 사진 장은 뺀다(받지도 않음)
+    var t = root.querySelector(".hero__track");
+    var photos = [].slice.call(t.querySelectorAll("[data-slide]:not([data-b4])")), first = photos.filter(function (s) { return !s.hidden; })[0] || photos[0];
+    photos.forEach(function (s) { if (s !== first) s.remove(); });
+    t.insertBefore(first, t.firstChild);
+  }
+  function b4Load(root, done) {   // 2~4장 조각(같은 사이트 빌드 파일) — 못 받으면 1장만 그대로
+    if (!window.fetch) return;
+    fetch(root.getAttribute("data-b4-src"), { credentials: "same-origin" })
+      .then(function (r) { return r.ok ? r.text() : ""; })
+      .then(function (h) { if (!h) return; root.querySelector(".hero__track").insertAdjacentHTML("beforeend", h); b4Prep(root); done(); })
+      .catch(function () {});
+  }
+  function b4Prep(root) {
+    var t = root.querySelector(".hero__track"), kst = new Date(Date.now() + 324e5), M = kst.getUTCMonth() + 1;
+    b4Trim(root);
+    var day = Date.UTC(kst.getUTCFullYear(), kst.getUTCMonth(), kst.getUTCDate());
+    var gift = (root.getAttribute("data-b4-hol") || "").split(",").some(function (h) {
+      var d = Date.parse(h + "T00:00:00Z"); return day >= d - 35 * 864e5 && day <= d + 864e5;
+    });
+    var drop = t.querySelector('[data-b4="' + (gift ? "onggi" : "gift") + '"]'); if (drop) drop.remove();
+    var f = t.querySelector('[data-b4="farm"]');
+    if (f) {
+      var items = [].slice.call(f.querySelectorAll("[data-months]")), has = function (li, m) { return li.getAttribute("data-months").split(",").indexOf(String(m)) >= 0; };
+      var now = items.filter(function (li) { return has(li, M); }), soon = [];
+      if (!now.length) for (var d = 1; d < 12 && soon.length < 2; d++) {
+        var m = (M - 1 + d) % 12 + 1;
+        items.forEach(function (li) { if (soon.length < 2 && soon.indexOf(li) < 0 && has(li, m)) { soon.push(li); li.setAttribute("data-soon", m); } });
+      }
+      var show = now.length ? now : soon;
+      items.forEach(function (li) {
+        li.hidden = show.indexOf(li) < 0;
+        var b = li.querySelector(".b4__soon"); if (b) b.remove();
+        if (!now.length && !li.hidden) { var s = document.createElement("span"); s.className = "b4__soon"; s.textContent = "곧 만나요 · " + li.getAttribute("data-soon") + "월"; li.querySelector(".b4__ph").appendChild(s); }
+      });
+      f.querySelector("[data-b4-month]").textContent = String(M);
+      f.querySelector("[data-b4-title]").textContent = now.length ? "지금 밭에서 거두는 것" : "곧 만나요";
+      f.querySelector("[data-b4-sub]").textContent = now.length ? "발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다" : "다음 수확을 기다리는 작물입니다";
+      if (!show.length) f.remove();
+    }
+    var all = t.querySelectorAll("[data-slide]"), n = all.length, nn = (n < 10 ? "0" : "") + n;
+    all.forEach(function (s, j) { var a = s.getAttribute("aria-label") || ""; s.setAttribute("aria-label", (j + 1) + " / " + n + (a.indexOf(" · ") > 0 ? a.slice(a.indexOf(" · ")) : "")); });
+    var dots = root.querySelector(".hero__dots"), tpl = dots.querySelector("[data-dot]");
+    while (dots.children.length > n) dots.lastElementChild.remove();
+    while (dots.children.length < n) { var x = tpl.cloneNode(true); x.removeAttribute("aria-current"); dots.appendChild(x); }
+    [].forEach.call(dots.children, function (x, j) { x.setAttribute("data-dot", String(j)); x.setAttribute("aria-label", (j + 1) + "번째 배너"); });
+    var nEl = root.querySelector("[data-num-n]"); if (nEl) nEl.textContent = nn;
+  }
+  function b4Per(s) { return parseInt(getComputedStyle(s).getPropertyValue("--per"), 10) || 4; }
+  function b4Groups(s) {
+    var v = s.querySelectorAll(".b4__item:not([hidden])").length, p = b4Per(s);
+    return v < p ? 1 : Math.min(3, Math.ceil(v / p));
+  }
+  function b4Show(s, g) {   // 카드 묶음 g 를 보이고, 그 묶음 카드를 0.08초 간격으로 나타나게(되감은 뒤)
+    var row = s.querySelector(".b4__row"), vis = [].slice.call(s.querySelectorAll(".b4__item:not([hidden])")), p = b4Per(s), w = row.parentNode.clientWidth;
+    var few = vis.length < p, gap = parseFloat(getComputedStyle(row).columnGap) || 0;
+    s.classList.toggle("b4--few", few);
+    s.classList.toggle("hero__slide--light", !(few && s.classList.contains("b4--farm")));   // 적은 카드 + 밭 사진이면 어두운 장
+    row.style.transform = REDUCE || few ? "" : "translateX(" + (-g * (w + gap)) + "px)";
+    var on = [];
+    vis.forEach(function (li, k) {
+      var j = k - (few ? 0 : g * p);
+      if (j >= 0 && (few || j < p)) {
+        li.style.setProperty("--d", (REDUCE ? 0 : j * 0.08).toFixed(2) + "s");
+        var c = li.firstElementChild; c.style.transition = "none"; li.classList.remove("is-in"); void c.offsetWidth; c.style.transition = ""; on.push(li);
+      }
+    });
+    if (REDUCE) vis.forEach(function (li) { li.classList.add("is-in"); });
+    else requestAnimationFrame(function () { on.forEach(function (li) { li.classList.add("is-in"); }); });
+  }
   function initCarousel(root) {
     initHeroFollow(root);
+    var B4 = root.hasAttribute("data-b4-src");
+    if (B4) b4Trim(root);   // 사진 장은 첫 장만(2~4장은 load 뒤 조각 파일로)
     var slides = root.querySelectorAll("[data-slide]");
     var dots = root.querySelectorAll("[data-dot]");
     var num = root.querySelector("[data-num]");
@@ -248,13 +322,22 @@
     var n = slides.length, i = 0, fade = false, timer = null, DWELL = 6000;
     var st = { user: false, hover: false, focus: false, off: false, tab: false };
     function running() { return fade && n > 1 && !st.user && !st.hover && !st.focus && !st.off && !st.tab; }
+    var gi = 0;   // 2-K-3 카드 장의 지금 묶음
     function schedule() {
-      clearTimeout(timer); timer = running() ? setTimeout(function () { go(i + 1); }, DWELL) : null;
+      var cs = B4 && slides[i].hasAttribute("data-b4-cards");
+      clearTimeout(timer); timer = !running() ? null : cs ? setTimeout(function () {   // 카드 장: 3초마다 다음 묶음, 다 돌면 다음 장(일시정지·마우스 올림이면 둘 다 멈춤)
+        if (gi + 1 < b4Groups(slides[i])) { gi++; b4Show(slides[i], gi); schedule(); } else go(i + 1);
+      }, 3000) : setTimeout(function () { go(i + 1); }, DWELL);
       slides.forEach(function (s, j) { videoSet(s.querySelector("video"), fade && j === i && !st.user && !st.off && !st.tab); });   // 영상은 지금 장·보일 때·멈추지 않았을 때만
     }
     function go(k) {
       i = (k + n) % n;
       slides.forEach(function (s, j) { if (fade) s.classList.toggle("is-on", j === i); else s.hidden = j !== i; });
+      if (B4) {
+        gi = 0;
+        if (slides[i].hasAttribute("data-b4-cards")) b4Show(slides[i], 0);
+        root.toggleAttribute("data-b4-card", slides[i].hasAttribute("data-b4-cards") && slides[i].classList.contains("hero__slide--light"));
+      }
       dots.forEach(function (d, j) { if (j === i) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
       if (num) num.textContent = (i + 1 < 10 ? "0" : "") + (i + 1);
       root.setAttribute("data-tone", slides[i].classList.contains("hero__slide--light") ? "light" : "dark");
@@ -265,7 +348,10 @@
     var prev = root.querySelector("[data-prev]"), next = root.querySelector("[data-next]");
     if (prev) prev.addEventListener("click", function () { go(i - 1); });
     if (next) next.addEventListener("click", function () { go(i + 1); });
-    dots.forEach(function (d) { d.addEventListener("click", function () { go(+d.getAttribute("data-dot")); }); });
+    if (B4) {   // 2-K-3: 점은 조각을 끼운 뒤 다시 만들어지므로 묶음에서 받는다
+      var dw = root.querySelector(".hero__dots");
+      if (dw) dw.addEventListener("click", function (e) { var d = e.target.closest("[data-dot]"); if (d) go(+d.getAttribute("data-dot")); });
+    } else dots.forEach(function (d) { d.addEventListener("click", function () { go(+d.getAttribute("data-dot")); }); });
     root.addEventListener("keydown", function (e) {
       if (e.target.closest("input,textarea,select")) return;
       if (e.key === "ArrowLeft") { e.preventDefault(); go(i - 1); }
@@ -280,7 +366,15 @@
       x0 = y0 = null;
     }, { passive: true });
     go(0);
-    if (n < 2 || REDUCE) return;
+    if (B4) {   // 2-K-3: 첫 화면을 다 그린 뒤(load + 0.4초) 2~4장 조각을 받아 끼운다
+      var ld = function () { setTimeout(function () { b4Load(root, function () {
+        slides = root.querySelectorAll("[data-slide]"); dots = root.querySelectorAll("[data-dot]"); n = slides.length;
+        slides.forEach(function (s, j) { if (fade) { s.hidden = false; s.classList.toggle("is-on", j === i); } else s.hidden = j !== i; });
+        root.setAttribute("data-b4-ready", ""); schedule();
+      }); }, 400); };
+      if (document.readyState === "complete") ld(); else window.addEventListener("load", ld);
+    }
+    if ((n < 2 && !B4) || REDUCE) return;
     function paint() {
       pause.classList.toggle("is-paused", st.user); pause.setAttribute("aria-pressed", st.user ? "true" : "false");
       var hv = !!root.querySelector("video");

@@ -1570,4 +1570,39 @@ body.sheet-open{overflow:hidden}
 .feed--both .feed__track{grid-auto-columns:calc((100% - 2 * 20px) / 3)}
 @media (max-width:1023px){.feed__both{grid-template-columns:minmax(0,1fr);gap:8px}.feed--both .feed__track{grid-auto-columns:calc((100% - 2 * 20px) / 3)}}
 @media (max-width:768px){.feed--both .feed__track{grid-auto-columns:80%}.feed__row{gap:12px}.feed__rt{font-size:14px}}
+/* 2-K-3 홈 배너 4장(home.banner4 — 2~4장: 카드 장·옹기 장). 카드는 한 번에 PC 4 · 태블릿 3 · 휴대폰 2, 0.08초 간격 등장, 묶음은 transform 으로 */
+.b4{--per:4;background:var(--bg);color:var(--ink)}
+.b4__in{position:absolute;inset:0;display:flex;justify-content:center;z-index:1}
+.b4__box{width:100%;max-width:var(--container);padding:56px 80px 120px;display:flex;flex-direction:column;gap:28px;min-width:0}
+.b4__head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
+.b4__eyebrow{font-size:13px;letter-spacing:.14em;font-weight:500;color:var(--accent)}
+.b4__title{font-family:var(--serif);font-weight:500;font-size:40px;line-height:1.3;margin-top:8px}
+.b4__sub{font-size:16px;color:var(--muted);margin-top:8px}
+.b4__more{flex:none;font-size:14px;color:inherit;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:2px}
+.b4__vp{overflow:hidden;min-width:0}
+.b4__row{list-style:none;margin:0;padding:0;display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - (var(--per) - 1) * 20px) / var(--per));gap:20px;transition:transform .7s var(--ease)}
+.b4__item[hidden]{display:none}
+.b4__card{display:flex;flex-direction:column;gap:8px;color:var(--ink);text-decoration:none;opacity:0;transform:translateY(16px);transition:opacity .4s ease var(--d,0s),transform .4s var(--ease) var(--d,0s)}
+.b4__item.is-in .b4__card{opacity:1;transform:none}
+.b4__ph{position:relative;display:block;aspect-ratio:4/3;background:var(--photo);overflow:hidden}
+.b4__ph picture,.b4__img{display:block;width:100%;height:100%;object-fit:cover}
+.b4__soon{position:absolute;left:10px;top:10px;padding:3px 10px;font-size:12px;font-weight:600;background:var(--ink);color:var(--bg)}
+.b4__n{font-size:16px;font-weight:600;line-height:1.4}
+.b4__l{font-size:13px;color:var(--muted);line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b4--few .b4__row{justify-content:center;grid-auto-columns:min(340px,calc((100% - 20px) / 2))}
+.b4__bg{display:none;position:absolute;inset:0}
+.b4__bg-s{display:none;position:absolute;inset:0}
+.b4__bg-s picture,.b4__bg-img{display:block;width:100%;height:100%;object-fit:cover}
+.b4__bg-scrim{position:absolute;inset:0;background:rgba(20,15,12,.38)}
+.b4--farm.b4--few .b4__bg{display:block}
+:root[data-season="spring"] .b4__bg-s[data-s="spring"],:root[data-season="summer"] .b4__bg-s[data-s="summer"],:root[data-season="autumn"] .b4__bg-s[data-s="autumn"],:root[data-season="winter"] .b4__bg-s[data-s="winter"]{display:block}
+.b4--farm.b4--few{color:#FFFFFF}
+.b4--farm.b4--few .b4__eyebrow{color:var(--accent-on-dark)}
+.b4--farm.b4--few .b4__sub{color:rgba(255,255,255,.86)}
+.b4--farm.b4--few .b4__card{background:var(--bg);padding-bottom:14px}
+.b4--farm.b4--few .b4__n,.b4--farm.b4--few .b4__l{padding:0 14px}
+@media (max-width:1023px){.b4{--per:3}.b4__box{padding:40px 40px 110px}}
+@media (max-width:768px){.b4{--per:2}.b4__box{padding:28px 20px 96px;gap:18px}.b4__title{font-size:26px}.b4__sub{font-size:14px}.b4__head{flex-direction:column;align-items:flex-start;gap:10px}
+  .hero[data-b4-card] .hero__controls-in{color:var(--ink)}.b4--few .b4__row{grid-auto-columns:calc((100% - 12px) / 2)}.b4__row{gap:12px;grid-auto-columns:calc((100% - (var(--per) - 1) * 12px) / var(--per))}}
+@media (prefers-reduced-motion:reduce){.b4__card,.b4__row{transition:none!important}.b4__card{opacity:1;transform:none}.b4__vp{overflow-x:auto;scrollbar-width:thin}}
 @media (hover:hover) and (prefers-reduced-motion:no-preference){.feed__ph img{transition:transform var(--dur-slow) var(--ease)}.feed__card:hover .feed__ph img,.feed__card:focus-visible .feed__ph img{transform:scale(1.05)}}
