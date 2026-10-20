@@ -195,6 +195,128 @@
     document.addEventListener("click", function (e) { if (!(e.target.closest && e.target.closest("[data-gnb-item]"))) closeAll(null); });
   }
 
+  /* ── K13 이야기 쪽(시안 v2): «그림책으로 보기»(한 장면씩 — 첫 모양은 쪽 안 인라인 스크립트가 켬)·«펼쳐서 읽기», 장 목차·진행 선·크게 보기 ── */
+  function initStory(sv) {
+    var R = document.documentElement, reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches, edit = sv.hasAttribute("data-sv-edit");
+    var scenes = Array.prototype.slice.call(sv.querySelectorAll(".sv-scene")), N = scenes.length;
+    if (!N) return;
+    var links = Array.prototype.slice.call(sv.querySelectorAll(".sv-toc__nav a"));
+    var chaps = links.map(function (a) { return sv.querySelector(a.getAttribute("href")); });
+    var chName = links.map(function (a) { return a.textContent.replace(/^\d+/, ""); });
+    var prog = sv.querySelector("[data-sv-prog]"), nav = sv.querySelector(".sv-toc__nav"), story = sv.querySelector("[data-sv-story]");
+    var ths = Array.prototype.slice.call(sv.querySelectorAll(".sv-th")), endEl = sv.querySelector(".sv-end");
+    var prevB = sv.querySelector("[data-sv-prev]"), nextB = sv.querySelector("[data-sv-next]"), goA = sv.querySelector("[data-sv-go]");
+    var curN = sv.querySelector("[data-sv-curn]"), chn = sv.querySelector("[data-sv-chn]"), modeBox = sv.querySelector("[data-sv-mode]");
+    var cur = 0, mode = R.classList.contains("sv-book") ? "book" : "scroll";
+    scenes.forEach(function (s, i) { if (R.getAttribute("data-sv-cur") === s.id) cur = i; });
+    modeBox.hidden = false;
+    var two = function (n) { return (n < 10 ? "0" : "") + n; };
+    function mark(ci) {
+      links.forEach(function (a, i) {
+        if (i === ci) { if (!a.hasAttribute("aria-current")) { a.setAttribute("aria-current", "location"); try { nav.scrollTo({ left: a.offsetLeft - 24, behavior: reduce ? "auto" : "smooth" }); } catch (e) {} } }
+        else a.removeAttribute("aria-current");
+      });
+    }
+    // 그림책 무대 높이: PC 는 CSS 가 장면을 한 칸에 겹쳐 가장 긴 장면에 맞춤(스크립트로 재지 않음 — 밀림 0), 휴대폰은 장면 높이대로
+    function go(i, dir) {
+      i = Math.max(0, Math.min(N - 1, i));
+      scenes[cur].classList.remove("sv-dn", "sv-dp");
+      cur = i;
+      var s = scenes[cur];
+      R.setAttribute("data-sv-cur", s.id);
+      if (dir && !reduce) { void s.offsetWidth; s.classList.add(dir > 0 ? "sv-dn" : "sv-dp"); }
+      var ci = +s.getAttribute("data-ch") - 1;
+      curN.textContent = two(cur + 1);
+      chn.textContent = two(ci + 1) + " " + (chName[ci] || "");
+      prevB.disabled = cur === 0;
+      var last = cur === N - 1;
+      nextB.hidden = last; goA.hidden = !last;
+      ths.forEach(function (t, k) {
+        if (k === cur) { t.setAttribute("aria-current", "step"); var p = t.parentNode; try { p.scrollTo({ left: t.offsetLeft - p.clientWidth / 2 + t.clientWidth / 2, behavior: reduce ? "auto" : "smooth" }); } catch (e) {} }
+        else t.removeAttribute("aria-current");
+      });
+      mark(ci);
+      prog.style.transform = "scaleX(" + (cur + 1) / N + ")";
+      if (dir) {
+        if (!edit) try { history.replaceState(null, "", "#" + s.id); } catch (e) {}
+        var top = story.getBoundingClientRect().top;
+        var off = 70 + (parseFloat(getComputedStyle(R).getPropertyValue("--hd-vis")) || 0);   // 붙는 머리글 + 목차 아래
+        if (top < off - 1 || top > window.innerHeight * 0.4) window.scrollTo({ top: window.pageYOffset + top - off, behavior: reduce ? "auto" : "smooth" });
+      }
+    }
+    prevB.addEventListener("click", function () { go(cur - 1, -1); });
+    nextB.addEventListener("click", function () { go(cur + 1, 1); });
+    ths.forEach(function (t) { t.addEventListener("click", function () { var i = +t.getAttribute("data-i"); go(i, i >= cur ? 1 : -1); }); });
+    document.addEventListener("keydown", function (e) {
+      if (mode !== "book" || sv.querySelector("dialog[open]") || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName) || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.key === "ArrowRight") { go(cur + 1, 1); e.preventDefault(); }
+      if (e.key === "ArrowLeft") { go(cur - 1, -1); e.preventDefault(); }
+    });
+    var x0 = null, y0 = 0;
+    story.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    story.addEventListener("touchend", function (e) {
+      if (mode !== "book" || x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.3) go(cur + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+    });
+    links.forEach(function (a, i) {
+      a.addEventListener("click", function (e) {
+        if (mode !== "book") return;
+        e.preventDefault();
+        var k = 0; scenes.some(function (s, j) { if (+s.getAttribute("data-ch") === i + 1) { k = j; return true; } return false; });
+        go(k, k >= cur ? 1 : -1);
+      });
+    });
+    // 펼쳐서 읽기: 지금 장 표시 + 진행 선 + 등장(처음에 화면 밖이던 장면만)
+    var ticking = false;
+    function onScroll() {
+      ticking = false;
+      if (mode !== "scroll") return;
+      var y = window.pageYOffset + 120, c = -1;
+      chaps.forEach(function (el, i) { if (el && el.getBoundingClientRect().top + window.pageYOffset <= y) c = i; });
+      mark(c);
+      var top = chaps[0].getBoundingClientRect().top + window.pageYOffset, end = endEl.getBoundingClientRect().top + window.pageYOffset - window.innerHeight * 0.5;
+      prog.style.transform = "scaleX(" + Math.max(0, Math.min(1, (window.pageYOffset - top + 200) / Math.max(1, end - top))) + ")";
+    }
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+    var io = (!reduce && "IntersectionObserver" in window) ? new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove("sv-pre"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -12% 0px" }) : null;
+    function setMode(m, keepPlace) {
+      mode = m;
+      R.classList.toggle("sv-book", m === "book");
+      modeBox.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-mode") === m)); });
+      if (keepPlace) try { localStorage.setItem("story-mode", m); } catch (e) {}
+      if (m === "book") {
+        scenes.forEach(function (s) { s.classList.remove("sv-pre"); if (io) io.unobserve(s); });
+        go(cur, 0);
+      } else {
+        scenes.forEach(function (s) { s.classList.remove("sv-dn", "sv-dp"); });
+        if (keepPlace) scenes[cur].scrollIntoView({ block: "start" });
+        if (io) { var vh = window.innerHeight; scenes.forEach(function (s) { if (s.getBoundingClientRect().top > vh * 0.9) { s.classList.add("sv-pre"); io.observe(s); } }); }
+        onScroll();
+      }
+    }
+    modeBox.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { if (b.getAttribute("data-mode") !== mode) setMode(b.getAttribute("data-mode"), true); }); });
+    var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(function () { if (mode === "scroll") onScroll(); }, 150); });
+    window.addEventListener("hashchange", function () {   // 같은 쪽에서 #s5 로 오면(링크·주소 고침) 그 장면으로
+      var m = /^#s(\d+)$/.exec(location.hash);
+      if (m && mode === "book") { var i = Math.max(0, Math.min(N - 1, +m[1] - 1)); if (i !== cur) go(i, i > cur ? 1 : -1); }
+    });
+    setMode(mode, false);
+    // 크게 보기(사이트 안) — 편집기 화면에서는 사진 누름이 «사진 바꾸기»라 열지 않음
+    var lb = sv.querySelector("[data-sv-lb]"), lbi = sv.querySelector("[data-sv-lb-img]"), lbc = sv.querySelector("[data-sv-lb-cap]");
+    sv.addEventListener("click", function (e) {
+      var b = e.target.closest && e.target.closest(".sv-fig");
+      if (!b || edit || !lb.showModal) return;
+      var im = b.querySelector("img");
+      lbi.src = b.getAttribute("data-full"); lbi.alt = im.alt; lbc.textContent = im.alt;
+      lb.showModal();
+    });
+    sv.querySelector("[data-sv-lb-x]").addEventListener("click", function () { lb.close(); });
+    lb.addEventListener("click", function (e) { if (e.target === lb) lb.close(); });
+  }
+
   /* ── 검색 열기/닫기 ── */
   function initSearch() {
     var btn = document.querySelector("[data-search-toggle]");
@@ -2218,6 +2340,7 @@
     Cart.render();
     initDrawer();
     initGnb();
+    document.querySelectorAll("[data-sv]").forEach(initStory);
     initSearch();
     document.querySelectorAll("[data-carousel]").forEach(initCarousel);
     document.querySelectorAll("[data-vslot]").forEach(initVslot);
