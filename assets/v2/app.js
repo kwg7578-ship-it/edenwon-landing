@@ -586,7 +586,7 @@
     function state() {
       var u = new URLSearchParams(location.search);
       var c = u.get("cat"), s = u.get("sort"), sub = u.get("sub") || "";
-      if (CMAP.hasOwnProperty(c)) { sub = c; c = CMAP[c]; }
+      if (CMAP.hasOwnProperty(c)) { sub = CMAP[c][1]; c = CMAP[c][0]; }   // [대분류, 소분류("" = 대분류 전체 — 옛 묶음 이름이던 분류)]
       c = CATS.indexOf(c) >= 0 ? c : "all";
       return { cat: c, sub: subsOf(c).indexOf(sub) > 0 ? sub : "", sort: (s === "low" || s === "high") ? s : "rec", q: (u.get("q") || "").trim() };
     }
