@@ -1161,9 +1161,17 @@
       render();
     }
     var optPhoto = initOptPhoto(data);
+    // LO 옵션별 고시: 고른 옵션의 고시 값만 보이게(표 칸 [data-lopt-cell] 안 옵션마다 글). 옵션별 고시가 없는 상품은 아무 일 없음
+    var optLegal = function (id) {
+      if (!id) return;
+      document.querySelectorAll("[data-lopt-cell]").forEach(function (c) {
+        var hit = c.querySelector('[data-lopt="' + id + '"]');
+        if (hit) [].forEach.call(c.querySelectorAll("[data-lopt]"), function (s) { s.hidden = s !== hit; });
+      });
+    };
     if (sel) {
       if (data.options.length === 1 && !data.options[0].sold_out) { pick(data.options[0].id); }
-      sel.addEventListener("change", function () { optPhoto(sel.value); pick(sel.value); if (data.options.length > 1) sel.value = ""; });
+      sel.addEventListener("change", function () { optPhoto(sel.value); optLegal(sel.value); pick(sel.value); if (data.options.length > 1) sel.value = ""; });
     }
     function picked() {
       if (!lines.length) {

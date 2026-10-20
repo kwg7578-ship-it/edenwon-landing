@@ -1700,3 +1700,11 @@ body.sheet-open{overflow:hidden}
   .ssum__in{grid-template-columns:minmax(0,1fr);padding-top:72px;padding-bottom:72px;gap:32px}
   .ssum__grid{gap:10px}.ssum__ph{aspect-ratio:3/4;margin-bottom:6px}
   .ssum__eb{font-size:10px;letter-spacing:.12em}.ssum__t{font-size:13px}}
+/* LO 옵션별 고시 — «전체 옵션 고시 보기»(옵션 × 옵션마다 다름 칸). 넓으면 표만 가로로 밀림(쪽은 안 넘침) */
+.lopt{margin:0 0 24px;border-top:1px solid var(--line)}
+.lopt__sum{cursor:pointer;padding:14px 0;font-size:14px;font-weight:500}
+.lopt__wrap{overflow-x:auto}
+.lopt__table{width:100%;min-width:480px;border-collapse:collapse;font-size:13px;line-height:1.6}
+.lopt__table th,.lopt__table td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.lopt__table thead th{background:var(--surface);font-weight:500}
+.lopt__table tbody th{font-weight:500;white-space:nowrap}
