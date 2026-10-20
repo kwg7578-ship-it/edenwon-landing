@@ -1682,3 +1682,21 @@ body.sheet-open{overflow:hidden}
   .b4[data-b4-few] .b4__row,.b4--farm[data-b4-few] .b4__row{grid-template-columns:repeat(var(--n),calc((100% - 12px) / 2))}
   .hero[data-b4-card] .hero__controls-in{color:var(--ink)}}
 @media (hover:hover) and (prefers-reduced-motion:no-preference){.feed__ph img{transition:transform var(--dur-slow) var(--ease)}.feed__card:hover .feed__ph img,.feed__card:focus-visible .feed__ph img{transform:scale(1.05)}}
+/* ⓒ 영동에덴원 이야기(요약판) — 홈 섹션 «바꾸기»로 넣을 때만. 머리(왼쪽) + 사진 3장(세 축). 사진 칸 비율 고정(밀림 0) */
+.ssum{background:var(--surface)}
+.ssum__in{padding-top:112px;padding-bottom:112px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:56px;align-items:center}
+.ssum__head{display:flex;flex-direction:column;gap:20px}
+.ssum__title{font-family:var(--serif);font-weight:500;text-wrap:balance}
+.ssum__lead{font-size:16px;line-height:1.8;color:var(--muted);max-width:30em}
+.ssum__head .btn{align-self:flex-start;margin-top:8px}
+.ssum__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.ssum__item{display:flex;flex-direction:column;gap:6px;min-width:0}
+.ssum__ph{display:block;aspect-ratio:3/4;background:var(--photo);overflow:hidden;margin-bottom:10px}
+.ssum__ph picture{display:block;width:100%;height:100%}
+.ssum__img{display:block;width:100%;height:100%;object-fit:cover}
+.ssum__eb{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.ssum__t{font-size:17px;line-height:1.5;font-weight:500}
+@media (max-width:768px){
+  .ssum__in{grid-template-columns:minmax(0,1fr);padding-top:72px;padding-bottom:72px;gap:32px}
+  .ssum__grid{gap:10px}.ssum__ph{aspect-ratio:3/4;margin-bottom:6px}
+  .ssum__eb{font-size:10px;letter-spacing:.12em}.ssum__t{font-size:13px}}
