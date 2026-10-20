@@ -225,20 +225,7 @@
     function go() { st.ready = true; sync(); }
     if (document.readyState === "complete") go(); else window.addEventListener("load", go);
   }
-  /* 2-I 배너 사진이 마우스를 따라 최대 10px(마우스 기기·움직임 줄이기 아님) — 값만 바꾸고 이동은 CSS(motion.css). 장 순서·겹침과 무관 */
-  function initHeroFollow(root) {
-    if (!(window.matchMedia && window.matchMedia("(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)").matches)) return;
-    var x = 0, y = 0, ticking = false;
-    function paint() { ticking = false; root.style.setProperty("--hx", x.toFixed(3)); root.style.setProperty("--hy", y.toFixed(3)); }
-    function ask() { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }
-    root.addEventListener("mousemove", function (e) {
-      var r = root.getBoundingClientRect();
-      x = Math.max(-1, Math.min(1, (e.clientX - r.left) / r.width * 2 - 1));
-      y = Math.max(-1, Math.min(1, (e.clientY - r.top) / r.height * 2 - 1));
-      ask();
-    });
-    root.addEventListener("mouseleave", function () { x = y = 0; ask(); });
-  }
+  /* ⓐ(10-20): 2-I «배너 사진이 마우스를 따라 10px»는 뺐다 — 배너 안 사진은 마우스에 반응하지 않는다(단추·카드 hover 는 그대로) */
   /* ── 2-K-3 홈 배너 4장(home.banner4): 손님 날짜(KST)로 장을 맞춘다 — 1장 = 사진 장 첫 장(H1-2 순서 그대로, 나머지 사진 장은 뺌),
      3장 = 수확 달이 이번 달인 농산물(없으면 다음 수확 1~2개 «곧 만나요», 그것도 없으면 장을 뺌), 4장 = 설·추석 35일 전~다음 날 선물세트, 그 밖엔 옹기 이야기 ── */
   function b4Trim(root) {   // 1장 = 사진 장 첫 장(H1-2 순서 그대로 — 손님 계절 첫 장), 나머지 사진 장은 뺀다(받지도 않음)
@@ -343,7 +330,6 @@
     s.classList.remove("is-play", "is-txt"); void s.offsetWidth; s.classList.add("is-play", "is-txt");
   }
   function initCarousel(root) {
-    initHeroFollow(root);
     var B4 = root.hasAttribute("data-b4-src");
     if (B4) b4Trim(root);   // 사진 장은 첫 장만(2~4장은 load 뒤 조각 파일로)
     var slides = root.querySelectorAll("[data-slide]");

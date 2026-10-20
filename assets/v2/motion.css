@@ -76,11 +76,7 @@ a,button,.btn,.pill,.gnb a,.cats__item,.card__text{transition:color .2s ease-out
   .tile:hover .tile__scrim,.tile:focus-visible .tile__scrim{opacity:.72}
   .tile:hover .tile__cta::after,.tile:focus-visible .tile__cta::after{transform:translateX(5px)}
 }
-/* 배너 사진이 마우스를 따라 최대 10px(app.js 가 --hx·--hy 를 −1~1 로) — 사진 층은 pages.css 에서 미리 12px 넓다 */
-@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
-  .hero__slide picture{transform:translate3d(calc(var(--hx,0) * -10px),calc(var(--hy,0) * -10px),0);transition:transform .9s var(--ease)}
-  .hero__video{transform:translate3d(calc(var(--hx,0) * -10px),calc(var(--hy,0) * -10px),0);transition:transform .9s var(--ease),opacity .6s ease-out}
-}
+/* ⓐ(10-20): 배너 사진 마우스 따라오기(2-I)는 뺐다 — 사진 층 12px 넓힘(pages.css)은 쉴 때 자리와 같아 그대로 둔다 */
 @keyframes ed-slide-down{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
 @keyframes ed-slide-up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .added:not([hidden]){animation:ed-slide-down .32s var(--ease-out) 1}
