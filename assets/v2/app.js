@@ -285,6 +285,8 @@
     function setMode(m, keepPlace) {
       mode = m;
       R.classList.toggle("sv-book", m === "book");
+      var sz = sv.getAttribute(m === "book" ? "data-sv-sizes" : "data-sv-sizes-wide");   // 넓은 장면 삽화 크기: 그림책은 보통 칸, 펼쳐서 읽기는 넓은 칸
+      if (sz) sv.querySelectorAll(".sv-scene--wide source, .sv-scene--wide img").forEach(function (e) { if (e.getAttribute("sizes") !== sz) e.setAttribute("sizes", sz); });
       modeBox.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-mode") === m)); });
       if (keepPlace) try { localStorage.setItem("story-mode", m); } catch (e) {}
       if (m === "book") {

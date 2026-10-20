@@ -1873,6 +1873,7 @@ html.sv-book .sv-scene.sv-dn .sv-txt,html.sv-book .sv-scene.sv-dp .sv-txt{animat
   .sv-open{padding-top:56px;padding-bottom:44px}
   .sv-open__in{grid-template-columns:minmax(0,1fr);gap:28px}
   .sv-open__lead{border-left:0;padding-left:0;font-size:16px}
+  @media (max-width:480px){.sv-open__lead p{min-height:5.7em}}   /* 소개 문단 3줄 자리(글꼴이 삽화보다 늦게 와 2줄 → 3줄이 될 때 아래가 밀리지 않게) */
   .sv-chap{padding-top:64px;padding-bottom:0}
   .sv-chap__h{gap:18px}
   .sv-scene,.sv-scene--wide .sv-txt{grid-template-columns:minmax(0,1fr);gap:24px}
