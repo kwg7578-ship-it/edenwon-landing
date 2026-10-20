@@ -283,6 +283,7 @@ html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   
 .line{display:flex;flex-direction:column;gap:14px;background:var(--surface);padding:20px}
 .line__top,.line__bottom{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .line__name{font-size:15px}
+.line__unit,.crow__unit{display:block;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}   /* K15 단위가격 */
 .line__del{width:44px;height:44px;margin:-10px -12px -10px 0;padding:0;background:none;border:0;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center}
 .line__sum{font-weight:700}
 .qty{display:flex;align-items:center;border:1px solid var(--line);background:var(--bg)}

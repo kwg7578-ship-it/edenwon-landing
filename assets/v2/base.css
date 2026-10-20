@@ -153,6 +153,7 @@ body.is-locked{overflow:hidden}
 .card__desc{font-size:13px;color:var(--muted)}
 .card.is-soldout .card__img{opacity:.55}
 .card.is-soldout .card__price{color:var(--muted)}
+.card__unit{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}   /* K15 단위가격(작게·보조색) */
 
 /* 푸터 (Footer2) */
 .ft{background:var(--foot);color:var(--foot-ink)}

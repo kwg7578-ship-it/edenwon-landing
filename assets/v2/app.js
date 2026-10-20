@@ -1287,6 +1287,12 @@
     if (main) main.addEventListener("scroll", hide, { passive: true });
     return show;
   }
+  /* K15 단위가격: 용량 [n, 단위](g·kg → 100g당, ml·L → 100ml당, 원 단위 반올림) — 빌드가 켰을 때만 용량을 넣음(build.py unit_price 와 같은 규칙) */
+  function unitPrice(price, s) {
+    if (!s || !price || ["g", "kg", "ml", "L"].indexOf(s[1]) < 0) return "";
+    var base = s[0] * (s[1] === "kg" || s[1] === "L" ? 1000 : 1);
+    return Tf("{0}당 {1}", "100" + (s[1] === "g" || s[1] === "kg" ? "g" : "ml"), won(Math.floor(price * 100 / base + 0.5)));
+  }
   function initBuy(buy) {
     var data = JSON.parse(document.getElementById("product-data").textContent);
     var byId = {}; data.options.forEach(function (o) { byId[o.id] = o; });
@@ -1305,6 +1311,8 @@
         var o = byId[l.option], li = tpl.content.firstElementChild.cloneNode(true);
         var label = data.name + " · " + o.label;
         li.querySelector(".line__name").textContent = label;
+        var up = unitPrice(o.price, o.size);   // K15 고른 옵션 옆 단위가격
+        if (up) { var us = document.createElement("span"); us.className = "line__unit"; us.textContent = up; li.querySelector(".line__name").appendChild(us); }
         li.querySelector(".qty__n").textContent = String(l.qty);
         li.querySelector(".line__sum").textContent = won(o.price * l.qty);
         var del = li.querySelector("[data-del]"), dec = li.querySelector("[data-dec]"), inc = li.querySelector("[data-inc]");
@@ -1365,7 +1373,8 @@
       lp.options.forEach(function (o) { if (byId[o.id]) { byId[o.id].price = o.price; byId[o.id].sold_out = o.sold_out; } });
       if (sel) Array.prototype.forEach.call(sel.options, function (op) {
         var o = byId[op.value]; if (!o) return;
-        op.disabled = o.sold_out; op.textContent = o.label + " · " + won(o.price) + (o.sold_out ? T(" (품절)") : "");
+        var up = unitPrice(o.price, o.size);   // K15 실시간 가격으로 단위가격 다시
+        op.disabled = o.sold_out; op.textContent = o.label + " · " + won(o.price) + (up ? " (" + up + ")" : "") + (o.sold_out ? T(" (품절)") : "");
       });
       lines = lines.filter(function (l) { return !byId[l.option].sold_out; });
       render();
@@ -1533,6 +1542,8 @@
         if (hit.pos) row.querySelector(".crow__img img").style.objectPosition = hit.pos;
         row.querySelector(".crow__name").textContent = name;
         row.querySelector(".crow__opt").textContent = opt + " · " + won(hit.price);
+        var cup = hit.h && !hit.gift ? unitPrice(hit.price, (hit.h.p.size || {})[hit.h.o.id]) : "";   // K15 장바구니 단위가격(세트 줄은 없음)
+        if (cup) { var cu = document.createElement("span"); cu.className = "crow__unit"; cu.textContent = cup; row.querySelector(".crow__opt").insertAdjacentElement("afterend", cu); }
         if (hit.gift) {   // 세트: 펼치면 구성이 보인다
           var dt = document.createElement("details"), sm = document.createElement("summary");
           dt.className = "crow__set"; sm.textContent = Tf("구성 보기 · 합산가 {0}에서 {1} 할인", won(hit.gift.sum), won(hit.gift.off));
