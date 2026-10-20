@@ -154,6 +154,10 @@
     }
     opener.addEventListener("click", open);
     drawer.querySelectorAll("[data-drawer-close]").forEach(function (el) { el.addEventListener("click", close); });
+    drawer.querySelectorAll("[data-dr-tog]").forEach(function (b) {   // K12 대분류 눌러 소분류 펼침·접음
+      var sub = document.getElementById(b.getAttribute("aria-controls"));
+      b.addEventListener("click", function () { var on = b.getAttribute("aria-expanded") !== "true"; b.setAttribute("aria-expanded", String(on)); sub.hidden = !on; });
+    });
     drawer.addEventListener("keydown", function (e) {
       if (e.key === "Escape") { e.preventDefault(); close(); return; }
       if (e.key !== "Tab") return;
@@ -162,7 +166,33 @@
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
-    window.matchMedia("(min-width: 769px)").addEventListener("change", function (m) { if (m.matches && !drawer.hidden) close(); });
+    window.matchMedia(document.querySelector(".hd--groups") ? "(min-width: 1024px)" : "(min-width: 769px)").addEventListener("change", function (m) { if (m.matches && !drawer.hidden) close(); });   // K12 두 단계 메뉴는 1023 까지 서랍
+  }
+
+  /* ── K12 위 메뉴(PC): 대분류에 마우스 올리면 소분류 펼침(마우스 기기만), 펼침 단추로 키보드 열고 닫기, Esc·밖 누름·초점 떠남 닫기 ── */
+  function initGnb() {
+    var items = Array.prototype.slice.call(document.querySelectorAll("[data-gnb-item]"));
+    if (!items.length) return;
+    var hover = window.matchMedia("(hover: hover)");
+    function set(it, on) {
+      var b = it.querySelector("[data-gnb-tog]"), s = document.getElementById(b.getAttribute("aria-controls"));
+      b.setAttribute("aria-expanded", String(on)); s.hidden = !on; it.classList.toggle("is-open", on);
+    }
+    function closeAll(but) { items.forEach(function (it) { if (it !== but) set(it, false); }); }
+    items.forEach(function (it) {
+      var b = it.querySelector("[data-gnb-tog]"), t = null;
+      b.addEventListener("click", function (e) {   // 마우스로 누르면 펼친 채로(올림으로 이미 열림), 키보드(Enter·Space)는 열고 닫기
+        var on = (e.detail > 0 && hover.matches) || b.getAttribute("aria-expanded") !== "true";
+        closeAll(it); set(it, on);
+      });
+      it.addEventListener("mouseenter", function () { if (!hover.matches) return; clearTimeout(t); closeAll(it); set(it, true); });
+      it.addEventListener("mouseleave", function () { if (!hover.matches) return; clearTimeout(t); t = setTimeout(function () { set(it, false); }, 150); });
+      it.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && b.getAttribute("aria-expanded") === "true") { e.preventDefault(); set(it, false); b.focus(); }
+      });
+      it.addEventListener("focusout", function (e) { if (!e.relatedTarget || !it.contains(e.relatedTarget)) { if (!(hover.matches && it.matches(":hover"))) set(it, false); } });
+    });
+    document.addEventListener("click", function (e) { if (!(e.target.closest && e.target.closest("[data-gnb-item]"))) closeAll(null); });
   }
 
   /* ── 검색 열기/닫기 ── */
@@ -473,7 +503,7 @@
       panel.setAttribute("aria-labelledby", tab.id);
       var id = tab.getAttribute("data-tab"), shown = 0;
       cards.forEach(function (c) {
-        var ok = (id === "all" || c.getAttribute("data-cat") === id) && shown < limit;
+        var ok = (id === "all" || c.getAttribute("data-cat") === id || c.getAttribute("data-top") === id) && shown < limit;   // K12: 탭이 대분류여도
         c.hidden = !ok; if (ok) shown++;
       });
       if (focus) tab.focus();
@@ -549,14 +579,21 @@
     var qNote = root.querySelector("[data-query-note]");
     var banner = root.querySelector("[data-pbanner]");
     var CATS = tabs.map(function (t) { return t.getAttribute("data-cat"); });
+    // K12 분류 두 단계: 소분류 칩 줄(대분류마다) · 옛 주소 ?cat=소분류 → ?cat=대분류&sub=소분류(data-cat-map). 한 단계면 칩 줄·지도 없음(예전 그대로)
+    var rows = Array.prototype.slice.call(root.querySelectorAll("[data-subs]")), CMAP = {};
+    try { CMAP = JSON.parse(root.getAttribute("data-cat-map") || "{}"); } catch (e) {}
+    function subsOf(c) { var r = rows.filter(function (x) { return x.getAttribute("data-subs") === c; })[0]; return r ? Array.prototype.map.call(r.querySelectorAll("[data-sub]"), function (b) { return b.getAttribute("data-sub"); }) : []; }
     function state() {
       var u = new URLSearchParams(location.search);
-      var c = u.get("cat"), s = u.get("sort");
-      return { cat: CATS.indexOf(c) >= 0 ? c : "all", sort: (s === "low" || s === "high") ? s : "rec", q: (u.get("q") || "").trim() };
+      var c = u.get("cat"), s = u.get("sort"), sub = u.get("sub") || "";
+      if (CMAP.hasOwnProperty(c)) { sub = c; c = CMAP[c]; }
+      c = CATS.indexOf(c) >= 0 ? c : "all";
+      return { cat: c, sub: subsOf(c).indexOf(sub) > 0 ? sub : "", sort: (s === "low" || s === "high") ? s : "rec", q: (u.get("q") || "").trim() };
     }
     function url(st) {
       var u = new URLSearchParams();
       if (st.cat !== "all") u.set("cat", st.cat);
+      if (st.cat !== "all" && st.sub) u.set("sub", st.sub);
       if (st.sort !== "rec") u.set("sort", st.sort);
       if (st.q) u.set("q", st.q);
       var qs = u.toString();
@@ -569,15 +606,20 @@
         if (on) panel.setAttribute("aria-labelledby", t.id);
       });
       sorts.forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-sort") === st.sort)); });
+      rows.forEach(function (r) {
+        r.hidden = r.getAttribute("data-subs") !== st.cat;
+        r.querySelectorAll("[data-sub]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-sub") === st.sub)); });
+      });
       var slides = banner.querySelectorAll("[data-banner]"), cur = null;
-      slides.forEach(function (sl) { var on = sl.getAttribute("data-banner") === st.cat; sl.hidden = !on; if (on) cur = sl; });
+      var bid = [st.sub, st.cat, "all"].filter(function (x) { return x && banner.querySelector('[data-banner="' + x + '"]'); })[0];   // 소분류 배너 → 대분류 배너 → 전체
+      slides.forEach(function (sl) { var on = sl.getAttribute("data-banner") === bid; sl.hidden = !on; if (on) cur = sl; });
       banner.className = "pbanner pbanner--" + cur.getAttribute("data-tone");
       [["[data-banner-title]", "data-title"], ["[data-banner-sub]", "data-sub"]].forEach(function (x) {   // 같은 글이면 덮지 않음(① 편집기의 편집 칸 표시 유지)
         var e = banner.querySelector(x[0]), t = cur.getAttribute(x[1]); if (e.textContent !== t) e.textContent = t;
       });
       var q = st.q.toLowerCase(), n = 0;
       cards.forEach(function (c) {
-        var ok = (st.cat === "all" || c.getAttribute("data-cat") === st.cat) &&
+        var ok = (st.cat === "all" || (c.getAttribute("data-top") || c.getAttribute("data-cat")) === st.cat) && (!st.sub || c.getAttribute("data-cat") === st.sub) &&
                  (!q || c.getAttribute("data-name").toLowerCase().indexOf(q) >= 0);
         c.hidden = !ok; if (ok) n++;
       });
@@ -605,15 +647,18 @@
       apply(st);
     }
     tabs.forEach(function (t, k) {
-      t.addEventListener("click", function () { go({ cat: t.getAttribute("data-cat") }); });
+      t.addEventListener("click", function () { go({ cat: t.getAttribute("data-cat"), sub: "" }); });
       t.addEventListener("keydown", function (e) {
         var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
-        if (d) { e.preventDefault(); var nt = tabs[(k + d + tabs.length) % tabs.length]; go({ cat: nt.getAttribute("data-cat") }); nt.focus(); }
+        if (d) { e.preventDefault(); var nt = tabs[(k + d + tabs.length) % tabs.length]; go({ cat: nt.getAttribute("data-cat"), sub: "" }); nt.focus(); }
       });
     });
+    rows.forEach(function (r) { r.querySelectorAll("[data-sub]").forEach(function (b) { b.addEventListener("click", function () { go({ sub: b.getAttribute("data-sub") }); }); }); });
     sorts.forEach(function (b) { b.addEventListener("click", function () { go({ sort: b.getAttribute("data-sort") }); }); });
     window.addEventListener("popstate", function () { apply(state()); });
-    apply(state());
+    var st0 = state();
+    if (CMAP.hasOwnProperty(new URLSearchParams(location.search).get("cat"))) try { history.replaceState(null, "", url(st0)); } catch (e) {}   // 옛 주소 → 새 주소
+    apply(st0);
   }
 
   /* ── 상세: 사진 고르기 ── */
@@ -2172,6 +2217,7 @@
     if (API) document.querySelectorAll("[data-done]").forEach(initDoneLive);
     Cart.render();
     initDrawer();
+    initGnb();
     initSearch();
     document.querySelectorAll("[data-carousel]").forEach(initCarousel);
     document.querySelectorAll("[data-vslot]").forEach(initVslot);

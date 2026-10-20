@@ -201,6 +201,26 @@ html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   
 .ptabs__in{display:flex;flex-wrap:wrap;justify-content:center;column-gap:48px}
 .ptab{min-height:64px;padding:0 2px;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;font-size:16px;color:var(--muted);cursor:pointer}
 .ptab[aria-selected="true"]{border-bottom-color:var(--ink);color:var(--ink);font-weight:700}
+/* K12 소분류 칩 줄(고른 대분류의 줄만 — 첫 그림 전에 주소로 펼침) */
+.psubs__row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding-top:20px}
+.psubs__row[hidden]{display:none}
+.psub{min-height:40px;padding:0 18px;border-radius:20px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.psub[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg);font-weight:500}
+@media (hover:hover){.psub[aria-pressed="false"]:hover{border-color:var(--ink)}}
+.psub:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* K12 홈 «둘러보기» — 대분류 카드 + 소분류 칩 */
+.browse{padding-top:96px;padding-bottom:24px;display:flex;flex-direction:column;gap:40px}
+.browse__grid{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.browse__card{display:flex;flex-direction:column;gap:12px;padding:20px;border:1px solid var(--line);background:var(--bg);min-width:0}
+.browse__head{display:flex;flex-direction:column;align-items:flex-start;gap:14px;text-decoration:none;color:var(--ink)}
+.browse__img{display:block;width:100%;aspect-ratio:4/3;max-width:100%;overflow:hidden;background:var(--photo)}
+.browse__img picture,.browse__img img{width:100%;height:100%;object-fit:cover;display:block}
+.browse__name{font-family:var(--serif);font-size:20px;font-weight:600}
+.browse__desc{margin:0;font-size:14px;line-height:1.6;color:var(--muted)}
+.browse__chips{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.browse__chip{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--line);font-size:14px;color:var(--ink);text-decoration:none}
+@media (hover:hover){.browse__chip:hover,.browse__head:hover .browse__name{color:var(--accent)}.browse__chip:hover{border-color:var(--accent)}}
+.browse__chip:focus-visible,.browse__head:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .plist{padding-top:32px;padding-bottom:140px;display:flex;flex-direction:column;gap:32px}
 .plist__bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px}
 .plist__count{font-size:15px}
@@ -334,6 +354,16 @@ html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   
   .ptabs__in{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;column-gap:24px;scrollbar-width:none}
   .ptabs__in::-webkit-scrollbar{display:none}
   .ptab{flex:0 0 auto;min-height:52px;font-size:15px}
+  .psubs__row{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;padding-top:14px;scrollbar-width:none}
+  .psubs__row::-webkit-scrollbar{display:none}
+  .psub{flex:0 0 auto;min-height:38px;padding:0 14px}
+  .browse{padding-top:48px;gap:24px}
+  .browse__grid{grid-template-columns:1fr;gap:12px}
+  .browse__card{padding:14px;gap:10px}
+  .browse__head{flex-direction:row;align-items:center;gap:14px}
+  .browse__img{flex:0 0 auto;width:72px;height:72px;aspect-ratio:auto}
+  .browse__name{font-size:17px}
+  .browse__desc,.browse__chips{padding-left:86px}
   .plist{padding-top:20px;padding-bottom:80px;gap:20px}
   .sorts{gap:14px}
   .grid4--list{gap:36px 12px}
@@ -1708,3 +1738,4 @@ body.sheet-open{overflow:hidden}
 .lopt__table th,.lopt__table td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 .lopt__table thead th{background:var(--surface);font-weight:500}
 .lopt__table tbody th{font-weight:500;white-space:nowrap}
+.lopt__table .lopt__grp th{padding-top:14px;font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--muted);background:var(--bg)}   /* D 갈래 머리 */
