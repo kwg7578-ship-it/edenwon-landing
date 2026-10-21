@@ -1721,6 +1721,8 @@ body.sheet-open{overflow:hidden}
 .ssum__title{font-family:var(--serif);font-weight:500;text-wrap:balance}
 .ssum__lead{font-size:16px;line-height:1.8;color:var(--muted);max-width:30em}
 .ssum__head .btn{align-self:flex-start;margin-top:8px}
+.ssum__ctas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:8px;max-width:420px}.ssum__ctas .btn{margin-top:0;align-self:stretch;padding-inline:16px;white-space:nowrap}   /* K16b «이야기 보기» · «농사 이야기» 같은 크기 */
+.ssum__more{border-color:var(--line);color:var(--muted)}   /* 보조 모양(같은 크기 — 누르거나 올리면 «이야기 보기»와 같은 채움) */
 .ssum__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .ssum__item{display:flex;flex-direction:column;gap:6px;min-width:0}
 .ssum__ph{display:block;aspect-ratio:3/2;background:var(--photo);overflow:hidden;margin-bottom:10px}   /* K13 이야기 삽화(3:2)를 자르지 않게 */
