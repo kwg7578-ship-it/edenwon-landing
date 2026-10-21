@@ -1316,10 +1316,18 @@
     var st = sizeStr(s), n = function (t) { return String(t || "").replace(/\s+/g, "").toLowerCase(); };
     return !st || n(label).indexOf(n(st)) >= 0 ? label : label + " · " + st;
   }
+  /* K17 장바구니·주문서·세트 줄의 옵션 글: 옵션 하나인 상품은 «용량»(없으면 옵션 이름) — 줄 전체가 «상품 이름 · 용량» */
+  function pOpt(p, o) {
+    var s = (p.size || {})[o.id];
+    return p.options && p.options.length === 1 ? (sizeStr(s) || o.label) : optText(o.label, s);
+  }
   function initBuy(buy) {
     var data = JSON.parse(document.getElementById("product-data").textContent);
     var byId = {}; data.options.forEach(function (o) { byId[o.id] = o; });
-    var sel = buy.querySelector("[data-opt-select]");
+    var sel = null;   // K17: 옵션 고르기는 줄 목록([data-opt] 단추) — select 없음
+    var optBtns = Array.prototype.slice.call(buy.querySelectorAll("[data-opt]"));
+    var wonEl = buy.querySelector("[data-buy-won]"), unitEl = buy.querySelector("[data-buy-unit]");
+    var lineText = function (o) { return data.one ? (sizeStr(o.size) || o.label) : optText(o.label, o.size); };   // K17 옵션 하나면 «상품 이름 · 용량»
     var list = buy.querySelector("[data-lines]");
     var tpl = document.getElementById("line-tpl");
     var msg = buy.querySelector("[data-buy-msg]");
@@ -1332,7 +1340,7 @@
       var tq = 0, tw = 0;
       lines.forEach(function (l, i) {
         var o = byId[l.option], li = tpl.content.firstElementChild.cloneNode(true);
-        var label = data.name + " · " + optText(o.label, o.size);   // K15b «이름 · 용량»
+        var label = data.name + " · " + lineText(o);   // K15b «이름 · 용량»
         li.querySelector(".line__name").textContent = label;
         var up = data.up ? unitPrice(o.price, o.size) : "";   // K15 고른 옵션 옆 단위가격(켰을 때만)
         if (up) { var us = document.createElement("span"); us.className = "line__unit"; us.textContent = up; li.querySelector(".line__name").appendChild(us); }
@@ -1343,7 +1351,7 @@
         dec.setAttribute("aria-label", Tf("{0} 수량 줄이기", o.label));
         inc.setAttribute("aria-label", Tf("{0} 수량 늘리기", o.label));
         dec.disabled = l.qty <= 1; inc.disabled = l.qty >= Cart.MAX_QTY;
-        del.addEventListener("click", function () { lines.splice(i, 1); render(); if (sel) sel.focus(); });
+        del.addEventListener("click", function () { lines.splice(i, 1); render(); var b = optBtns.filter(function (x) { return x.getAttribute("data-opt") === o.id; })[0]; if (b) b.focus(); });
         dec.addEventListener("click", function () { l.qty = Math.max(1, l.qty - 1); render(); list.querySelectorAll("[data-dec]")[i].focus(); });
         inc.addEventListener("click", function () { l.qty = Math.min(Cart.MAX_QTY, l.qty + 1); render(); list.querySelectorAll("[data-inc]")[i].focus(); });
         list.appendChild(li);
@@ -1352,12 +1360,18 @@
       var tqEl = buy.querySelector("[data-total-qty]"), twEl = buy.querySelector("[data-total]");
       if (tqEl) tqEl.textContent = String(tq);
       if (twEl) twEl.textContent = won(tw);
+      optBtns.forEach(function (b) { b.setAttribute("aria-pressed", String(lines.some(function (l) { return l.option === b.getAttribute("data-opt"); }))); });
+    }
+    function showTop(o) {   // K17 위 가격·용량 줄 = 고른 옵션
+      if (wonEl) wonEl.textContent = won(o.price);
+      if (unitEl) unitEl.textContent = [sizeStr(o.size), data.up ? unitPrice(o.price, o.size) : ""].filter(Boolean).join(" · ") || unitEl.textContent;
     }
     function pick(id) {
       if (!id || !byId[id] || byId[id].sold_out) return;
       say("");
       var hit = null; lines.forEach(function (l) { if (l.option === id) hit = l; });
       if (hit) hit.qty = Math.min(Cart.MAX_QTY, hit.qty + 1); else lines.push({ option: id, qty: 1 });
+      if (optBtns.length) showTop(byId[id]);
       render();
     }
     var optPhoto = initOptPhoto(data);
@@ -1369,14 +1383,25 @@
         if (hit) [].forEach.call(c.querySelectorAll("[data-lopt]"), function (s) { s.hidden = s !== hit; });
       });
     };
-    if (sel) {
+    if (buy.querySelector("[data-lines]")) {
       if (data.options.length === 1 && !data.options[0].sold_out) { pick(data.options[0].id); }
-      sel.addEventListener("change", function () { optPhoto(sel.value); optLegal(sel.value); pick(sel.value); if (data.options.length > 1) sel.value = ""; });
+      optBtns.forEach(function (b) { b.addEventListener("click", function () { var id = b.getAttribute("data-opt"); optPhoto(id); optLegal(id); pick(id); }); });
     }
+    // K17 갈래 안 7개 이상: 6개만 보이고 «N종 더 보기»(단추라 키보드 Enter·Space 그대로) → 펼치면 «접기»
+    buy.querySelectorAll("[data-opts-more]").forEach(function (m) {
+      var more = m.textContent;
+      m.addEventListener("click", function () {
+        var open = m.getAttribute("aria-expanded") !== "true";
+        m.closest("[data-opts-g]").querySelectorAll("[data-opt-more]").forEach(function (li) { li.hidden = !open; });
+        m.setAttribute("aria-expanded", String(open)); m.textContent = open ? T("접기") : more;
+      });
+    });
     function picked() {
       if (!lines.length) {
-        say(Tf("{0}을(를) 먼저 골라 주세요.", sel && sel.labels && sel.labels[0] ? sel.labels[0].textContent.trim() : T("옵션")));
-        if (sel) { sel.scrollIntoView({ block: "center" }); sel.focus(); }
+        var h = buy.querySelector("#opts-h");
+        say(Tf("{0}을(를) 먼저 골라 주세요.", h ? h.firstElementChild.textContent.trim() : T("옵션")));
+        var f = optBtns.filter(function (b) { return !b.disabled && b.offsetParent; })[0];
+        if (f) { f.scrollIntoView({ block: "center" }); f.focus(); }
         return null;
       }
       return lines.map(function (l) { return { key: data.key, option: l.option, qty: l.qty }; });
@@ -1394,10 +1419,13 @@
       var lp = P.live && P.products[data.key];
       if (!lp) return;
       lp.options.forEach(function (o) { if (byId[o.id]) { byId[o.id].price = o.price; byId[o.id].sold_out = o.sold_out; } });
-      if (sel) Array.prototype.forEach.call(sel.options, function (op) {
-        var o = byId[op.value]; if (!o) return;
-        var up = data.up ? unitPrice(o.price, o.size) : "";   // K15 실시간 가격으로 단위가격 다시(켰을 때만)
-        op.disabled = o.sold_out; op.textContent = optText(o.label, o.size) + " · " + won(o.price) + (up ? " (" + up + ")" : "") + (o.sold_out ? T(" (품절)") : "");
+      optBtns.forEach(function (b) {   // K17 실시간 가격·품절로 줄 다시(단위가격은 켰을 때만)
+        var o = byId[b.getAttribute("data-opt")]; if (!o) return;
+        b.disabled = o.sold_out;
+        var pe = b.querySelector("[data-opt-price]"); pe.textContent = won(o.price);
+        if (o.sold_out) { var so = document.createElement("span"); so.className = "opt__so"; so.textContent = T("품절"); pe.appendChild(document.createTextNode(" ")); pe.appendChild(so); }
+        var se = b.querySelector("[data-opt-sub]");
+        if (se && data.up && o.size) { var st = sizeStr(o.size), inName = String(o.label).replace(/\s+/g, "").toLowerCase().indexOf(st.toLowerCase()) >= 0; se.textContent = [inName ? "" : st, unitPrice(o.price, o.size)].filter(Boolean).join(" · "); }
       });
       lines = lines.filter(function (l) { return !byId[l.option].sold_out; });
       render();
@@ -1523,7 +1551,7 @@
     }
     var off = Math.min(G.discount, sum);
     return { name: d.name, img: d.img, href: "giftset.html?set=" + it.gift, parts: parts, sum: sum, off: off, price: sum - off, so: so,
-             label: parts.map(function (h) { return h.p.name + " " + optText(h.o.label, (h.p.size || {})[h.o.id]); }).join(" · ") };
+             label: parts.map(function (h) { return h.p.name + " " + pOpt(h.p, h.o); }).join(" · ") };
   }
   function lineInfo(P, it) {   // 장바구니·주문서 공통: 일반 줄과 세트 줄을 같은 모양으로
     if (it && it.gift) {
@@ -1531,13 +1559,13 @@
       return g && { gift: g, name: g.name, opt: Tf("구성 {0}가지", g.parts.length), price: g.price, so: g.so, img: g.img, href: g.href };
     }
     var h = it && optOf(P, it.key, it.option), oi = h && optPic(h.p, h.o.id);
-    return h && { name: h.p.name, opt: optText(h.o.label, (h.p.size || {})[h.o.id]), price: h.o.price, so: !!h.o.sold_out, img: oi ? oi.img : h.p.img, pos: oi && oi.pos, href: h.p.href, h: h };
+    return h && { name: h.p.name, opt: pOpt(h.p, h.o), price: h.o.price, so: !!h.o.sold_out, img: oi ? oi.img : h.p.img, pos: oi && oi.pos, href: h.p.href, h: h };
   }
   function optPic(p, id) { var x = p && p.opt_img && p.opt_img[id]; return x && x.img ? x : null; }   // H3: 옵션별 사진(products.json opt_img — 없으면 null)
   function giftList(g) {
     var ul = document.createElement("ul"); ul.className = "set-parts";
     g.parts.forEach(function (h) {
-      var li = document.createElement("li"); li.textContent = h.p.name + " " + optText(h.o.label, (h.p.size || {})[h.o.id]) + (h.o.sold_out ? T(" (품절)") : ""); ul.appendChild(li);
+      var li = document.createElement("li"); li.textContent = h.p.name + " " + pOpt(h.p, h.o) + (h.o.sold_out ? T(" (품절)") : ""); ul.appendChild(li);
     });
     return ul;
   }
@@ -1946,7 +1974,7 @@
         li.querySelector("img").src = root() + "images/v2/" + (oi ? oi.img : l.p.img).replace(/\.jpg$/, "") + "-480.jpg";
         if (oi && oi.pos) li.querySelector("img").style.objectPosition = oi.pos;
         li.querySelector(".co__item-name").textContent = l.p.name;
-        li.querySelector(".co__item-opt").textContent = Tf("{0} · {1}개", optText(l.o.label, (l.p.size || {})[l.o.id]), l.qty);   // K15b «이름 · 용량»
+        li.querySelector(".co__item-opt").textContent = Tf("{0} · {1}개", pOpt(l.p, l.o), l.qty);   // K15b «이름 · 용량» · K17 옵션 하나면 용량
         li.querySelector(".co__item-sum").textContent = won(l.o.price * l.qty);
         ul.appendChild(li); l.li = li;
         n += l.qty;
