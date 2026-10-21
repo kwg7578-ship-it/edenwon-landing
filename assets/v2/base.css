@@ -102,7 +102,7 @@ body.is-locked{overflow:hidden}
 /* 2-I 서랍이 열리면 항목이 0.04초 간격으로 차례로 */
 @keyframes ed-drawer-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .drawer.is-open .drawer__nav a,.drawer.is-open .drawer__util>a,.drawer.is-open .drawer__util .hd__member>:not([hidden]){animation:ed-drawer-in var(--dur-mid) var(--ease) both}
-.drawer.is-open .drawer__nav a:nth-child(2){animation-delay:.04s}.drawer.is-open .drawer__nav a:nth-child(3){animation-delay:.08s}.drawer.is-open .drawer__nav a:nth-child(4){animation-delay:.12s}
+.drawer.is-open .drawer__nav>:nth-child(2){animation-delay:.04s}.drawer.is-open .drawer__nav>:nth-child(3){animation-delay:.08s}.drawer.is-open .drawer__nav>:nth-child(4){animation-delay:.12s}.drawer.is-open .drawer__nav>:nth-child(n+5){animation-delay:.16s}
 .drawer.is-open .drawer__util>a,.drawer.is-open .drawer__util .hd__member>*{animation-delay:.16s}
 @media (prefers-reduced-motion:reduce){.drawer__panel{transition:none}.drawer.is-open .drawer__nav a,.drawer.is-open .drawer__util>a,.drawer.is-open .drawer__util .hd__member>*{animation:none}}
 /* K12 분류 두 단계 — 위 메뉴 대분류 펼침(PC) · 서랍 대분류 눌러 펼침(휴대폰). 한 단계 분류면 쓰이지 않음
@@ -131,7 +131,7 @@ body.is-locked{overflow:hidden}
 .drawer__sub{margin:0 0 8px;padding:0 0 0 14px;list-style:none;border-left:2px solid var(--line)}
 .drawer__sub[hidden]{display:none}
 .drawer__nav .drawer__sub a{min-height:44px;font-size:15px}
-.drawer.is-open .drawer__nav>.drawer__grp{animation:ed-drawer-in var(--dur-mid) var(--ease) both}
+.drawer.is-open .drawer__nav>.drawer__grp{animation-name:ed-drawer-in;animation-duration:var(--dur-mid);animation-timing-function:var(--ease);animation-fill-mode:both}
 @media (prefers-reduced-motion:reduce){.gnb__item.is-open .gnb__sub,.drawer.is-open .drawer__nav>.drawer__grp{animation:none}.gnb__tog svg,.drawer__tog svg{transition:none}}
 
 /* 상품 카드 */
