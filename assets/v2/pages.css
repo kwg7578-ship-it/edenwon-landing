@@ -112,6 +112,7 @@ html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   
 .story .eyebrow{letter-spacing:.2em}
 .story__title{font-family:var(--serif);font-weight:500;font-size:44px;line-height:1.35;white-space:pre-line}
 .story__lead{font-size:17px;line-height:1.8;max-width:560px}
+.story__more{margin-top:-8px;color:#FFFFFF;font-size:14px;text-underline-offset:4px}   /* K16 띠 «농사 이야기» 링크(작게) */
 .story .btn{margin-top:12px}
 
 .journal{padding-top:120px;padding-bottom:120px;display:flex;flex-direction:column;gap:40px}
@@ -1857,6 +1858,59 @@ html.sv-book .sv-bar{display:block;position:sticky;bottom:0;z-index:15;backgroun
 html.sv-book .sv-scene.sv-dn .sv-fig{animation:sv-inN .5s var(--ease)}
 html.sv-book .sv-scene.sv-dp .sv-fig{animation:sv-inP .5s var(--ease)}
 html.sv-book .sv-scene.sv-dn .sv-txt,html.sv-book .sv-scene.sv-dp .sv-txt{animation:sv-upT .5s var(--ease) .08s both}
+/* K16 농사 이야기(같은 틀) — 안내 상자 · «농사 원리»/«영동에덴원의 이야기» 표지 · 개념 삽화 글 · 핵심어 칩 · 모아보기 · 공동체 → 농사 링크 */
+.sv{--sv-blue:#2C5C86}   /* 농사 원리 표지(바탕 대비 6:1 넘음) */
+.sv-note{display:flex;gap:16px;align-items:flex-start;margin-top:8px;padding:16px 18px;background:#ECEFE3;border-radius:4px;font-size:13px;line-height:1.85}
+.sv-note strong{flex:none;font-weight:700;color:var(--ink)}
+.sv-note span{color:#4F584C}
+.sv-no__n{display:inline-block;width:5.6em}   /* «장면 05» 칸 폭 고정(글꼴이 늦게 와도 표지 자리 그대로) */
+.sv-kind{display:inline-block;margin-left:8px;padding:3px 9px;border:1px solid currentColor;border-radius:20px;font-size:11px;letter-spacing:0;font-style:normal;vertical-align:1px}
+.sv-kind--principle{color:var(--sv-blue)}
+.sv-kind--story{color:var(--accent)}
+.sv-fig--cap{background:var(--bg);overflow:visible}
+.sv-fig--cap picture{border-radius:4px;overflow:hidden}
+.sv-cap{display:block;padding-top:9px;font-size:12px;line-height:1.7;color:var(--muted);text-align:left}
+.sv-fig--cap::after{bottom:42px}
+.sv-chips{display:flex;flex-wrap:wrap;gap:7px;margin:4px 0 0;padding:0;list-style:none}
+.sv-chips li{font-size:12px;padding:6px 11px;border-radius:20px;background:#E6ECDD;color:#36523A}
+.sv-more{margin:26px 0 0}
+.sv-more a{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;color:var(--ink);text-underline-offset:4px}
+.sv-tools{flex:none;display:flex;align-items:center;gap:10px}
+.sv-allb{display:none;font:inherit;font-size:13px;padding:7px 14px;margin-block:10px;color:var(--ink);background:none;border:1px solid var(--line);cursor:pointer}
+html.sv-js .sv-allb{display:inline-block}
+.sv-all{border:0;padding:0;width:min(1100px,94vw);max-height:90vh;background:var(--bg);color:var(--ink);border-radius:4px}
+.sv-all::backdrop{background:rgba(20,15,12,.6)}
+.sv-all__in{padding:24px 28px 32px}
+.sv-all__h{display:flex;justify-content:space-between;align-items:center;gap:16px;position:sticky;top:-24px;margin:-24px -28px 8px;padding:20px 28px 12px;background:var(--bg);border-bottom:1px solid var(--line)}
+.sv-all__t{margin:0;font-family:var(--serif);font-size:22px;font-weight:600}
+.sv-all__x{color:var(--ink);border-color:var(--line)}
+.sv-all__ch{margin-top:20px}
+.sv-all__k{margin:0 0 10px;font-size:14px;font-weight:500;color:var(--muted)}
+.sv-all__k b{font-family:var(--serif);color:var(--accent);margin-right:4px}
+.sv-all__g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none}
+.sv-all__i{display:flex;flex-direction:column;gap:6px;width:100%;padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.sv-all__i img{display:block;width:100%;height:auto;border-radius:3px;background:var(--surface)}
+.sv-all__i span{font-size:12px;color:var(--muted)}
+.sv-all__i span b{font-family:var(--serif);color:var(--ink);margin-right:2px}
+.sv-all__i .sv-all__tt{font-size:13px;line-height:1.5;color:var(--ink)}
+.sv-all__i .sv-kind{margin-left:4px;padding:1px 7px;font-size:10px}
+.sv-all__i:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (hover:hover){.sv-all__i:hover .sv-all__tt{text-decoration:underline}}
+/* 글꼴이 늦게 와도 밀리지 않게(웹 글꼴 기준으로 잰 자리 — 10-21): 단추 묶음 폭 · 소개 둘째 문단 줄 수 · 안내 상자 높이 */
+.sv-tools .sv-mode{width:234px}.sv-tools .sv-mode button{flex:1 1 0;padding-inline:8px;white-space:nowrap}.sv-tools .sv-allb{width:120px;height:37px;line-height:21px;padding-block:0;padding-inline:8px;white-space:nowrap;text-align:center}   /* 폭 고정(글꼴이 늦게 와도 단추 자리 그대로) */
+@media (min-width:861px){.sv-tools{width:364px;justify-content:flex-end}.sv--farm .sv-toc__row{min-height:64px}
+  .sv--farm .sv-open__lead p:first-child{min-height:calc(1.9em + 1px)}.sv--farm .sv-open__lead p+p{min-height:calc(4 * 1.9em + 1px)}.sv--farm .sv-note{min-height:129px}}
+@media (min-width:861px) and (max-width:1179px){.sv--farm .sv-open__lead p+p{min-height:calc(5 * 1.9em + 1px)}.sv--farm .sv-note{min-height:153px}}
+@media (min-width:861px) and (max-width:1099px){.sv--farm .sv-open__lead p:first-child{min-height:calc(2 * 1.9em + 1px)}.sv--farm .sv-note{min-height:177px}}
+@media (min-width:861px) and (max-width:1023px){.sv--farm .sv-open__lead p+p{min-height:calc(6 * 1.9em + 1px)}.sv--farm .sv-note{min-height:201px}}
+@media (min-width:861px) and (max-width:959px){.sv--farm .sv-open__lead p+p{min-height:calc(7 * 1.9em + 1px)}.sv--farm .sv-note{min-height:249px}}
+@media (max-width:480px){.sv--farm .sv-open__lead p+p{min-height:calc(5 * 1.9em + 1px)}.sv--farm .sv-note{min-height:157px}}   /* 휴대폰: 글꼴이 들어오는 도중 한 줄 더 길어지는 때까지(최종 + 1줄) */
+@media (max-width:420px){.sv--farm .sv-open__lead p+p{min-height:calc(6 * 1.9em + 1px)}.sv--farm .sv-open__t{min-height:5.2em}}   /* 제목도 도중 4줄 */
+@media (max-width:860px){.sv-tools{gap:8px}.sv-tools .sv-mode{width:216px}.sv-tools .sv-allb{width:118px}}   /* 휴대폰 390: 216 + 8 + 118 = 342 ≤ 350 */
+@media (max-width:389px){.sv-tools{flex-wrap:wrap;row-gap:4px;min-height:78px}}   /* 한 줄에 안 들어가는 폭은 두 줄 자리 */
+@media (max-width:370px){.sv--farm .sv-open__lead p+p{min-height:calc(7 * 1.9em + 1px)}}
+@media (max-width:340px){.sv--farm .sv-open__lead p+p{min-height:calc(8 * 1.9em + 1px)}.sv--farm .sv-note{min-height:181px}}
+@media (max-width:860px){.sv-tools{align-self:flex-start;margin-bottom:10px}.sv-tools .sv-mode,.sv-tools .sv-allb{margin-block:0}.sv-all__in{padding:18px 16px 24px}.sv-all__h{margin:-18px -16px 8px;padding:14px 16px 10px;top:-18px}.sv-all__g{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sv-note{display:block}.sv-note span{display:block;margin-top:4px}}
 .sv-old{border-top:4px dashed var(--line);margin-top:48px;opacity:.75}
 .sv-old__note{padding-top:24px;font-size:13px;color:var(--muted)}
 @media (max-width:860px){

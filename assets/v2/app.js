@@ -288,7 +288,7 @@
       var sz = sv.getAttribute(m === "book" ? "data-sv-sizes" : "data-sv-sizes-wide");   // 넓은 장면 삽화 크기: 그림책은 보통 칸, 펼쳐서 읽기는 넓은 칸
       if (sz) sv.querySelectorAll(".sv-scene--wide source, .sv-scene--wide img").forEach(function (e) { if (e.getAttribute("sizes") !== sz) e.setAttribute("sizes", sz); });
       modeBox.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-mode") === m)); });
-      if (keepPlace) try { localStorage.setItem("story-mode", m); } catch (e) {}
+      if (keepPlace) try { localStorage.setItem(sv.getAttribute("data-sv-key") || "story-mode", m); } catch (e) {}   // K16 책마다 따로 기억
       if (m === "book") {
         scenes.forEach(function (s) { s.classList.remove("sv-pre"); if (io) io.unobserve(s); });
         go(cur, 0);
@@ -317,6 +317,23 @@
     });
     sv.querySelector("[data-sv-lb-x]").addEventListener("click", function () { lb.close(); });
     lb.addEventListener("click", function (e) { if (e.target === lb) lb.close(); });
+    // K16 «20컷 모아보기»(농사 이야기): 장별 썸네일 격자 — 누르면 그 장면(그림책이면 넘기고, 펼쳐서 읽기면 그 자리로)
+    var allB = sv.querySelector("[data-sv-all]"), allD = sv.querySelector("[data-sv-all-box]");
+    if (allB && allD && allD.showModal) {
+      allB.hidden = false;
+      allB.addEventListener("click", function () { allD.showModal(); var c = allD.querySelector('[data-sv-to="' + cur + '"]'); if (c) c.focus(); });
+      allD.querySelector("[data-sv-all-x]").addEventListener("click", function () { allD.close(); });
+      allD.addEventListener("click", function (e) {
+        if (e.target === allD) { allD.close(); return; }
+        var b = e.target.closest && e.target.closest("[data-sv-to]");
+        if (!b) return;
+        var i = +b.getAttribute("data-sv-to");
+        allD.close();
+        if (mode === "book") go(i, i >= cur ? 1 : -1);
+        else { cur = i; scenes[i].scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" }); }
+        try { allB.focus({ preventScroll: true }); } catch (e2) {}
+      });
+    }
   }
 
   /* ── 검색 열기/닫기 ── */
