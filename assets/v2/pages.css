@@ -1254,6 +1254,8 @@ body.sheet-open{overflow:hidden}
 .gx-proc__list--3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .gx-proc__list--4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .gx-proc__list--5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.gx-proc__list--many{max-width:1040px;grid-template-columns:repeat(6,minmax(0,1fr));row-gap:32px}   /* 6~12칸(대표 10-22 최대 12): 한 줄 6칸, 줄 끝 연결선 없음 */
+.gx-proc__list--many .gx-proc__step:nth-child(6n)::before{display:none}
 .gx-proc__step{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;position:relative}
 .gx-proc__step::before{content:"";position:absolute;top:6px;left:50%;width:100%;height:1px;background:var(--ink)}
 .gx-proc__step.is-last::before{display:none}
@@ -1435,6 +1437,7 @@ body.sheet-open{overflow:hidden}
   .gx-label__sub{font-size:13px}
   .gx-label__row{font-size:14px}
   .gx-proc__name{font-size:13px}.gx-proc__date{font-size:11px}
+  .gx-proc__list--many{grid-template-columns:repeat(3,minmax(0,1fr))}   /* 휴대폰: 한 줄 3칸 */  .gx-proc__list--many .gx-proc__step:nth-child(3n)::before{display:none}
   .gx-tl__item{grid-template-columns:52px minmax(0,1fr);column-gap:16px;padding-bottom:32px}
   .gx-tl__item::after{left:68px}
   .gx-tl__season{text-align:left;font-size:13px;font-weight:500;font-family:var(--sans)}
