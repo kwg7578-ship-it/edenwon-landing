@@ -1,4 +1,9 @@
 /* 영동에덴원 v2 디자인 토큰 — 2-A 지시서 §4 확정값 그대로 */
+/* K17c 글꼴 바뀜 밀림 줄이기(대표 10-22): 웹 글꼴(Noto)이 오기 전 대체 글꼴(윈도 맑은 고딕·바탕)을 Noto 크기·높이에 맞춤.
+   값 = 같은 글월의 너비·글꼴 높이 비교(audit/phase2K/K17c/font_1). 그 글꼴이 없는 기기(맥·안드로이드)는 이 칸을 건너뛰고 기본 대체 글꼴 */
+@font-face{font-family:"Noto Sans KR fb";src:local("Malgun Gothic"),local("맑은 고딕");font-weight:300 500;size-adjust:96.2%;ascent-override:120.6%;descent-override:30.2%;line-gap-override:0%}
+@font-face{font-family:"Noto Sans KR fb";src:local("Malgun Gothic Bold"),local("맑은 고딕 Bold");font-weight:600 900;size-adjust:91.6%;ascent-override:126.6%;descent-override:31.6%;line-gap-override:0%}
+@font-face{font-family:"Noto Serif KR fb";src:local("Batang"),local("바탕");font-weight:300 900;size-adjust:97.7%;ascent-override:117.7%;descent-override:29.7%;line-gap-override:0%}
 :root{
   --bg:#FAF8F5; --surface:#F1EDE7; --line:#E3DDD4;
   --ink:#221A15; --muted:#6B625A;
@@ -8,7 +13,7 @@
   --accent:#A4532A;                /* 계절 액센트: 봄 #4F6B27 · 여름 #2C6680 · 가을 #A4532A · 겨울 #4C5866 */
   --accent-on-dark:#E0A27E;        /* 어두운 띠 위 액센트 */
   --scrim:rgba(20,15,12,.42);      /* 사진 위 글자 가림막: 단색만, 그라데이션 금지 */
-  --serif:'Noto Serif KR',serif; --sans:'Noto Sans KR',sans-serif;
+  --serif:'Noto Serif KR','Noto Serif KR fb',serif; --sans:'Noto Sans KR','Noto Sans KR fb',sans-serif;
   --container:1360px; --gutter:40px;
   --ease:cubic-bezier(.2,.7,.2,1); --dur-fast:.2s; --dur-mid:.35s; --dur-slow:.8s;   /* 2-I 커서 반응 */
   --ts-sm:.85; --ts-lg:1.15;       /* 2-J-3 제목·큰 문구 글자 크기 단계(부모 글 크기에 곱함) */
