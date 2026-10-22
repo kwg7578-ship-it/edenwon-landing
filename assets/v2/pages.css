@@ -1249,6 +1249,7 @@ body.sheet-open{overflow:hidden}
 .gx-label__row dd{text-align:right;min-width:0;overflow-wrap:anywhere}
 /* 가로 단계 */
 .gx-proc .gx-in{gap:12px}
+.gx-proc--wide .gx-in{max-width:1040px}   /* 6칸 이상(대표 10-22 ㉢): 제목도 단계 줄과 같은 1040px — 왼쪽 끝 맞춤 */
 .gx-proc__list{max-width:720px;margin:28px auto 0;display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));position:relative}
 .gx-proc__list--2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .gx-proc__list--3{grid-template-columns:repeat(3,minmax(0,1fr))}
