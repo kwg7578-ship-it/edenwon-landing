@@ -658,16 +658,15 @@
     });
   }
 
-  /* ── 웹글꼴: 렌더링을 막지 않게 media=print 로 받아 두었다가 켠다.
-     홈은 첫 배너 사진이 뜬 뒤(최대 3초) 켠다 — 한글 글꼴 조각들이 배너 사진과 대역폭을 다투지 않게. ── */
-  function enableFonts() {
-    document.querySelectorAll("link[data-webfont]").forEach(function (l) { l.media = "all"; });
-  }
+  /* ── 웹글꼴(홈만): fonts.css 를 media=print 로 받아 두었다가 첫 배너 사진이 뜬 뒤(최대 3초) 켠다 — 글꼴이 배너 사진과 대역폭을 다투지 않게.
+     다른 쪽은 layout.html 이 처음부터 켜 둠(data-webfont 없음). ── */
   function initFonts() {
-    var hero = document.querySelector("[data-slide] img[fetchpriority=high]");
-    if (!hero || hero.complete) { enableFonts(); return; }
+    var links = document.querySelectorAll("link[data-webfont]");
+    if (!links.length) return;
     var done = false;
-    function go() { if (!done) { done = true; enableFonts(); } }
+    function go() { if (!done) { done = true; links.forEach(function (l) { l.media = "all"; }); } }
+    var hero = document.querySelector("[data-slide] img[fetchpriority=high]");
+    if (!hero || hero.complete) { go(); return; }
     hero.addEventListener("load", go);
     hero.addEventListener("error", go);
     setTimeout(go, 3000);

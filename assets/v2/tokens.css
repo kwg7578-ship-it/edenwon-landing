@@ -4,6 +4,7 @@
 @font-face{font-family:"Noto Sans KR fb";src:local("Malgun Gothic"),local("맑은 고딕");font-weight:300 500;size-adjust:96.2%;ascent-override:120.6%;descent-override:30.2%;line-gap-override:0%}
 @font-face{font-family:"Noto Sans KR fb";src:local("Malgun Gothic Bold"),local("맑은 고딕 Bold");font-weight:600 900;size-adjust:91.6%;ascent-override:126.6%;descent-override:31.6%;line-gap-override:0%}
 @font-face{font-family:"Noto Serif KR fb";src:local("Batang"),local("바탕");font-weight:300 900;size-adjust:97.7%;ascent-override:117.7%;descent-override:29.7%;line-gap-override:0%}
+/* 웹 글꼴(Noto) 자체는 fonts.css(A 글꼴 직접 두기, 대표 10-23) */
 :root{
   --bg:#FAF8F5; --surface:#F1EDE7; --line:#E3DDD4;
   --ink:#221A15; --muted:#6B625A;
