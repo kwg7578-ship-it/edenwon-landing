@@ -1005,6 +1005,14 @@ html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   
 .policy__section strong{font-weight:700}
 .policy__note{font-size:14px;color:var(--muted)}
 .policy__note strong{color:var(--ink)}
+/* 10-26 약관·처리방침(시행본 글자 그대로) — 옛 쪽에만 있던 칸: 머리 안내·소제목·연락처 상자 */
+.policy__intro{margin-top:32px;padding:20px 22px;background:var(--surface);border-left:3px solid var(--accent);font-size:15px;line-height:1.9}
+.policy__h3{font-size:16px;font-weight:700;line-height:1.5;margin-top:8px}
+.policy__contact-box{padding:18px 20px;background:var(--surface)}
+.policy__contact-box p{font-weight:700;margin-bottom:8px}
+.policy__contact-list{list-style:none;padding-left:0;display:flex;flex-direction:column;gap:4px}
+.policy__contact-list li{font-size:15px;line-height:1.8}
+.policy a{color:var(--ink);text-underline-offset:3px;overflow-wrap:anywhere}
 
 @media (max-width:768px){
   .nf{padding-top:72px;padding-bottom:96px}
