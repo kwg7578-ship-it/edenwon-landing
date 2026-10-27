@@ -223,3 +223,7 @@ body.is-locked{overflow:hidden}
 .added__btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}
 .added__btns .btn{padding:0 12px;min-height:52px}
 @media (max-width:768px){.added{top:auto;bottom:80px;left:16px;right:16px;width:auto}}
+/* 10-27 대표: AI 연출 사진(catalog photo_kind = ai)만 사진 오른쪽 아래 작게 «연출 이미지» — 실사·실사 합성은 표시 없음 */
+picture[data-photo-kind="ai"]{position:relative;display:block}
+picture[data-photo-kind="ai"]::after{content:"연출 이미지";position:absolute;right:8px;bottom:8px;padding:2px 8px;border-radius:999px;font:500 11px/1.5 var(--sans,"Noto Sans KR",sans-serif);white-space:nowrap;color:#fff;background:rgba(32,26,22,.62);pointer-events:none}
+[data-thumb] picture[data-photo-kind="ai"]::after{display:none}   /* 상세 사진 줄 작은 썸네일은 빼고 — 큰 사진에서 보임 */
