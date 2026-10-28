@@ -1942,6 +1942,27 @@ html.sv-book .sv-scene.sv-dn .sv-txt,html.sv-book .sv-scene.sv-dp .sv-txt{animat
 .sv-chips li{font-size:12px;padding:6px 11px;border-radius:20px;background:#E6ECDD;color:#36523A}
 .sv-more{margin:26px 0 0}
 .sv-more a{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;color:var(--ink);text-underline-offset:4px}
+/* 10-28 대표: AI 그림 안내는 소개 아래 작은 한 줄만 · 이야기 쪽 그림에는 «연출 이미지» 표시를 붙이지 않음(머리 안내로 갈음) */
+.sv-open__lead .sv-ainote{margin-top:2px;font-size:12.5px;line-height:1.7;color:var(--muted)}
+.sv picture[data-photo-kind="ai"]::after{display:none}
+/* 10-28 장면 덧붙임: 작은 표(facts) · 덧붙임 상자(aside) · 장 끝 상품 */
+.sv-facts{margin:4px 0 0;border-top:1px solid var(--line)}
+.sv-facts div{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.6}
+.sv-facts dt{color:var(--muted)}
+.sv-facts dd{margin:0;font-weight:700;color:var(--ink)}
+.sv-aside{margin:0;padding:14px 16px;background:var(--surface);border-radius:4px;font-size:14px !important;line-height:1.8 !important}
+.sv-prods{margin-top:28px}
+.sv-scene--wide .sv-prods{grid-column:2}
+.sv-prods__k{margin:0 0 10px;font-size:13px;font-weight:700;color:var(--muted)}
+.sv-prods ul{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none;max-width:36em}
+.sv-prods a{display:flex;align-items:center;gap:14px;padding:8px 14px 8px 8px;border:1px solid var(--line);border-radius:4px;color:var(--ink);text-decoration:none;background:var(--bg)}
+.sv-prods a:hover{border-color:var(--ink)}
+.sv-prods picture{flex:none;width:56px;height:56px;border-radius:3px;overflow:hidden}
+.sv-prods__img{width:56px;height:56px;object-fit:cover}
+.sv-prods span{flex:1;display:flex;flex-direction:column;min-width:0}
+.sv-prods b{font-size:15px;font-weight:700}
+.sv-prods em{font-style:normal;font-size:13px;color:var(--muted)}
+.sv-prods svg{flex:none}
 .sv-tools{flex:none;display:flex;align-items:center;gap:10px}
 .sv-allb{display:none;font:inherit;font-size:13px;padding:7px 14px;margin-block:10px;color:var(--ink);background:none;border:1px solid var(--line);cursor:pointer}
 html.sv-js .sv-allb{display:inline-block}
@@ -2002,7 +2023,7 @@ html.sv-js .sv-allb{display:inline-block}
   .sv-scene{padding-block:36px}
   .sv-scene--rev .sv-fig{order:0}
   .sv-scene--wide .sv-fig{margin-bottom:24px}
-  .sv-scene--wide .sv-prose{grid-column:1;grid-row:auto}
+  .sv-scene--wide .sv-prose,.sv-scene--wide .sv-prods{grid-column:1;grid-row:auto}
   .sv-end{padding-block:64px;margin-top:64px}
 }
 @media (prefers-reduced-motion:reduce){
