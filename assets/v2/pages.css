@@ -1844,6 +1844,7 @@ html.sv-js .sv-mode{display:flex}
 .sv-fig{display:block;width:100%;padding:0;border:0;overflow:hidden;border-radius:4px;background:var(--surface);position:relative;cursor:zoom-in}
 .sv-fig picture,.sv-img{display:block;width:100%;height:auto;max-width:100%}
 .sv-img{transition:transform .9s var(--ease)}
+.sv-img,.sv-th img,.sv-all__i img{aspect-ratio:3/2;object-fit:cover}   /* 10-28 편집기로 바꾼 그림이 3:2 가 아니어도 장면 칸은 그대로(초점 = 사진 패널) — 지금 그림은 모두 3:2 라 보이는 변화 없음 */
 .sv-fig::after{content:"크게 보기";position:absolute;right:12px;bottom:12px;font-size:12px;padding:5px 10px;background:rgba(34,26,21,.72);color:#FAF8F5;border-radius:2px;opacity:0;transition:opacity .3s}
 @media (hover:hover){.sv-fig:hover .sv-img{transform:scale(1.025)}.sv-fig:hover::after{opacity:1}}
 .sv-fig:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
