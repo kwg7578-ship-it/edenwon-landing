@@ -1929,7 +1929,7 @@ html.sv-book .sv-bar{display:block;position:sticky;bottom:0;z-index:15;backgroun
 @media (min-width:1280px){
   html.sv-book .sv-story{grid-template-columns:124px minmax(0,1fr);column-gap:40px}
   html.sv-book .sv-scene{grid-area:1 / 2}
-  html.sv-book .sv-rail{display:block;grid-area:1 / 1;align-self:start;position:sticky;top:calc(var(--hd-vis,0px) + 86px);max-height:calc(100vh - var(--hd-vis,0px) - 86px - 100px);overflow-y:auto;scrollbar-width:thin;padding:0 6px 8px 2px}
+  html.sv-book .sv-rail{display:block;grid-area:1 / 1;align-self:start;position:sticky;top:calc(var(--hd-vis,0px) + 86px);height:max(300px, calc(100vh - 290px));overflow-y:auto;scrollbar-width:thin;padding:0 6px 8px 2px}
   html.sv-book .sv-rail__list{display:flex;flex-direction:column;gap:10px}
   html.sv-book .sv-rail ul{display:flex;flex-direction:column;gap:6px;padding:2px}
   html.sv-book .sv-rail__ch:not([data-on]) ul{display:none}   /* 장 이름만 · 지금 장만 작은 그림 */
