@@ -205,6 +205,7 @@
     var chName = links.map(function (a) { return a.textContent.replace(/^\d+/, ""); });
     var prog = sv.querySelector("[data-sv-prog]"), nav = sv.querySelector(".sv-toc__nav"), story = sv.querySelector("[data-sv-story]");
     var ths = Array.prototype.slice.call(sv.querySelectorAll(".sv-th")), endEl = sv.querySelector(".sv-end");
+    var rail = sv.querySelector("[data-sv-rail]"), railTog = rail && rail.querySelector("[data-sv-rail-tog]"), railChs = rail ? Array.prototype.slice.call(rail.querySelectorAll(".sv-rail__ch")) : [];
     var prevB = sv.querySelector("[data-sv-prev]"), nextB = sv.querySelector("[data-sv-next]"), goA = sv.querySelector("[data-sv-go]");
     var curN = sv.querySelector("[data-sv-curn]"), chn = sv.querySelector("[data-sv-chn]"), modeBox = sv.querySelector("[data-sv-mode]");
     var cur = 0, mode = R.classList.contains("sv-book") ? "book" : "scroll";
@@ -231,10 +232,16 @@
       prevB.disabled = cur === 0;
       var last = cur === N - 1;
       nextB.hidden = last; goA.hidden = !last;
-      ths.forEach(function (t, k) {
-        if (k === cur) { t.setAttribute("aria-current", "step"); var p = t.parentNode; try { p.scrollTo({ left: t.offsetLeft - p.clientWidth / 2 + t.clientWidth / 2, behavior: reduce ? "auto" : "smooth" }); } catch (e) {} }
-        else t.removeAttribute("aria-current");
+      ths.forEach(function (t) {   // 아래 띠·옆 띠 두 벌 — data-i 로 맞춤(10-28 시안)
+        if (+t.getAttribute("data-i") !== cur) { t.removeAttribute("aria-current"); return; }
+        t.setAttribute("aria-current", "step");
+        var p = t.closest("[data-sv-rail]") || t.parentNode, side = p !== t.parentNode;
+        try {
+          if (side) p.scrollTo({ top: t.getBoundingClientRect().top - p.getBoundingClientRect().top + p.scrollTop - p.clientHeight / 2 + t.clientHeight / 2, behavior: reduce ? "auto" : "smooth" });
+          else p.scrollTo({ left: t.offsetLeft - p.clientWidth / 2 + t.clientWidth / 2, behavior: reduce ? "auto" : "smooth" });
+        } catch (e) {}
       });
+      if (rail) railChs.forEach(function (g) { if (+g.getAttribute("data-ch") === ci + 1) g.setAttribute("data-on", ""); else g.removeAttribute("data-on"); });
       mark(ci);
       prog.style.transform = "scaleX(" + (cur + 1) / N + ")";
       if (dir) {
@@ -246,7 +253,19 @@
     }
     prevB.addEventListener("click", function () { go(cur - 1, -1); });
     nextB.addEventListener("click", function () { go(cur + 1, 1); });
-    ths.forEach(function (t) { t.addEventListener("click", function () { var i = +t.getAttribute("data-i"); go(i, i >= cur ? 1 : -1); }); });
+    ths.forEach(function (t) { t.addEventListener("click", function () { var i = +t.getAttribute("data-i"); go(i, i >= cur ? 1 : -1); if (rail && t.closest("[data-sv-rail]")) railOpen(false); }); });
+    // 10-28 시안: 옆 띠 — 장 머리(그 장 첫 장면으로) · 휴대폰 «장면 목록» 열고 닫기(Esc 로 닫고 단추로 돌아감)
+    if (rail) {
+      rail.hidden = false;
+      [].forEach.call(rail.querySelectorAll("[data-sv-to-i]"), function (h) { h.addEventListener("click", function () { var i = +h.getAttribute("data-sv-to-i"); go(i, i >= cur ? 1 : -1); railOpen(false); }); });
+      railTog.addEventListener("click", function () { railOpen(railTog.getAttribute("aria-expanded") !== "true"); });
+      rail.addEventListener("keydown", function (e) { if (e.key === "Escape" && railTog.getAttribute("aria-expanded") === "true") { e.preventDefault(); railOpen(false); railTog.focus(); } });
+    }
+    function railOpen(on) {
+      if (!rail) return;
+      railTog.setAttribute("aria-expanded", String(on));
+      if (on) rail.setAttribute("data-open", ""); else rail.removeAttribute("data-open");
+    }
     document.addEventListener("keydown", function (e) {
       if (mode !== "book" || sv.querySelector("dialog[open]") || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName) || e.altKey || e.ctrlKey || e.metaKey) return;
       if (e.key === "ArrowRight") { go(cur + 1, 1); e.preventDefault(); }
