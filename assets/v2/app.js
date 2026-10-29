@@ -303,7 +303,26 @@
     var io = (!reduce && "IntersectionObserver" in window) ? new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove("sv-pre"); io.unobserve(e.target); } });
     }, { rootMargin: "0px 0px -12% 0px" }) : null;
+    // 10-29 대표: 보기를 바꿀 때 화면이 튀지 않게 — 목차 띠 바로 아래(off)를 기준으로 맞춤
+    var tocEl = sv.querySelector("[data-sv-toc]");
+    function tocOff() { return (tocEl ? tocEl.getBoundingClientRect().bottom : 0) + 16; }   // 지금 목차 띠 아래
+    function tocStuck() { return tocEl ? (parseFloat(getComputedStyle(tocEl).top) || 0) + tocEl.offsetHeight + 16 : 16; }   // 목차 띠가 붙었을 때의 아래(옮긴 뒤 자리)
+    function mostVisible() {   // 펼쳐서 읽기에서 목차 띠 아래에 가장 많이 보이는 장면(없으면 -1)
+      var top = tocOff() - 16, best = -1, ba = 0;
+      scenes.forEach(function (s, i) { var r = s.getBoundingClientRect(), a = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, top); if (a > ba) { ba = a; best = i; } });
+      return best;
+    }
     function setMode(m, keepPlace) {
+      var from = mode, before = null;
+      if (keepPlace && from === "scroll" && m === "book") {
+        var vi = mostVisible();
+        if (vi < 0) vi = story.getBoundingClientRect().top > 0 ? 0 : N - 1;   // 무대 위(머리글) · 무대 아래(맺음)
+        cur = vi;
+        before = story.getBoundingClientRect().top >= tocOff() - 16 ? "stay" : "story";   // 아직 무대 전(맨 위에서 누름)이면 위치 그대로
+      } else if (keepPlace && from === "book" && m === "scroll") {
+        before = cur === 0 && story.getBoundingClientRect().top >= tocOff() - 16 ? "stay" : "scene";   // 맨 위에서 장면 1 이면 그대로(펼쳐도 장면 1 이 같은 자리)
+      }
+      if (keepPlace) R.style.overflowAnchor = "none";   // 바꾸는 동안 브라우저가 자동으로 끌지 않게
       mode = m;
       R.classList.toggle("sv-book", m === "book");
       var sz = sv.getAttribute(m === "book" ? "data-sv-sizes" : "data-sv-sizes-wide");   // 넓은 장면 삽화 크기: 그림책은 보통 칸, 펼쳐서 읽기는 넓은 칸
@@ -313,12 +332,14 @@
       if (m === "book") {
         scenes.forEach(function (s) { s.classList.remove("sv-pre"); if (io) io.unobserve(s); });
         go(cur, 0);
+        if (before === "story") window.scrollTo(0, window.pageYOffset + story.getBoundingClientRect().top - tocStuck());   // 무대 머리 = 목차 띠 바로 아래(즉시)
       } else {
         scenes.forEach(function (s) { s.classList.remove("sv-dn", "sv-dp"); });
-        if (keepPlace) scenes[cur].scrollIntoView({ block: "start" });
+        if (before === "scene") window.scrollTo(0, window.pageYOffset + scenes[cur].getBoundingClientRect().top - tocStuck());   // 보던 장면 머리 = 목차 띠 바로 아래(즉시) · 맨 위에서 누르면 그대로
         if (io) { var vh = window.innerHeight; scenes.forEach(function (s) { if (s.getBoundingClientRect().top > vh * 0.9) { s.classList.add("sv-pre"); io.observe(s); } }); }
         onScroll();
       }
+      if (keepPlace) requestAnimationFrame(function () { requestAnimationFrame(function () { R.style.overflowAnchor = ""; }); });
     }
     modeBox.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { if (b.getAttribute("data-mode") !== mode) setMode(b.getAttribute("data-mode"), true); }); });
     var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(function () { if (mode === "scroll") onScroll(); }, 150); });
