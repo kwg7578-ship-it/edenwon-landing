@@ -109,7 +109,9 @@ body.is-locked{overflow:hidden}
    메뉴가 6칸이라 1024~1280 은 간격을 줄여 한 줄, 769~1023 은 한 줄에 안 들어가 서랍 메뉴(☰)로 */
 .gnb--groups{flex-wrap:nowrap;column-gap:clamp(16px,calc(5vw - 34px),40px)}
 .gnb--groups>*,.hd--groups .logo{flex-shrink:0;white-space:nowrap}
-@media (min-width:769px) and (max-width:1023px){.gnb--groups{display:none}.hd--groups .hd__menu{display:inline-flex}}
+@media (min-width:769px) and (max-width:1199px){.gnb--groups{display:none}.hd--groups .hd__menu{display:inline-flex}}   /* 11-03 대표: 글자 B 에서 1024 머리줄 밀림 → 1199 까지 메뉴 단추 */
+/* 11-03 글자 B — 좁은 휴대폰(389 이하): 로고 글은 지금 크기(아이콘 줄 밀림 막음) · 카드 단위 가격은 «…»로 자르지 않고 줄바꿈. 선택자를 한 단계 높여 type.css 보다 앞섬 */
+@media (max-width:389px){.hd__bar .logo__ko{font-size:21px}.hd__bar .logo__en{font-size:8px}.card .card__unit{white-space:normal;overflow:visible}}
 .gnb__item{position:relative;display:flex;align-items:center;column-gap:2px}
 .gnb__tog{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin-right:-8px;padding:0;border:0;background:none;color:var(--muted);cursor:pointer;border-radius:4px}
 .gnb__tog svg{transform:rotate(90deg);transition:transform var(--dur-fast) var(--ease)}
