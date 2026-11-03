@@ -1584,6 +1584,7 @@ body.sheet-open{overflow:hidden}
 .pj__more-in picture,.pj__more-img{display:block;width:100%;height:auto;margin-top:14px}
 @media (max-width:1023px){.pj.is-open .pj__panel,.pj.is-open .pj__panel.is-on{grid-template-columns:minmax(0,1fr);gap:16px}.pj.is-open .pj__panels{gap:40px}
   .pj__nav .pj__all,.pj__nav .pj__all + .pj__auto{padding:0 10px;font-size:12px}}   /* 휴대폰: 넘김 줄 한 줄 유지(390 폭에서 두 단추가 한 줄) */
+@media (max-width:768px){.pj__nav{flex-wrap:wrap}.pj__nav .pj__all,.pj__nav .pj__all + .pj__auto,.pj__nav .pj__auto{flex:1 0 100%;margin-left:0}}   /* 11-03 대표: 글자 B — 휴대폰은 «과정 전체 펼쳐 보기»·«자동으로 보기»를 위아래로 */
 @media (prefers-reduced-motion:reduce){.pj.is-open .pj__panel,.pj__more-box,.pj__more-in{transition:none!important}}
 
 /* 2-H H1-4 계절 갤러리 — 탭 4개 · 엇갈린 열(PC 4·3열, 휴대폰 2열) · 크게 보기 dialog */
