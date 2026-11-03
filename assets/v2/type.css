@@ -53,6 +53,7 @@ body{font-size:var(--fs-15)}
 .added__h{font-size:var(--fs-16)}
 .added__item{font-size:var(--fs-14)}
 picture[data-photo-kind="ai"]::after{font-size:var(--fs-11)}
+.pd-ainote{font-size:var(--fs-13)}
 .hero__eyebrow{font-size:var(--fs-14)}
 .hero__title{font-size:var(--fs-56)}
 .hero__sub{font-size:var(--fs-18)}
