@@ -504,7 +504,11 @@
       var setT = function (el, x) {   // 2-K-4b: 같은 글이면 덮지 않음(편집기의 편집 칸 표시 유지)
         var v = el.querySelectorAll("[data-b4-v]");   // 11-08 편집 빌드: 두 상태 글이 다 있으면 보이는 쪽만 바꿈(글을 덮지 않음 — 둘 다 편집 칸)
         if (v.length) { [].forEach.call(v, function (s) { s.hidden = s.getAttribute("data-b4-v") !== (now.length ? "now" : "soon"); }); return; }
-        if (el.textContent !== x) el.textContent = x;
+        // 11-09 대표: 바꾼 글에 줄바꿈이 있으면 화면 글(<br>·.nl-pc/.nl-m 은 글자가 없음)과 견줄 때 띄어쓰기·줄바꿈은 같게 봄 — 같으면 빌드가 그린 줄바꿈(2-J-2 규칙) 그대로
+        var flat = function (s) { return String(s).replace(/\s+/g, ""); };
+        if (flat(el.textContent) === flat(x)) return;
+        el.textContent = "";   // 상태가 바뀌어 덮을 때는 줄바꿈을 <br> 로 살림
+        String(x).split("\n").forEach(function (p, j) { if (j) el.appendChild(document.createElement("br")); el.appendChild(document.createTextNode(p)); });
       };
       setT(f.querySelector("[data-b4-title]"), now.length ? T("지금 밭에서 거두는 것") : T("곧 만나요"));
       setT(f.querySelector("[data-b4-sub]"), now.length ? T("발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다") : T("다음 수확을 기다리는 작물입니다"));
