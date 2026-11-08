@@ -1867,8 +1867,7 @@
         el.textContent = t; el.hidden = !t;
       });
     }
-    function memo() { var s = $("[data-memo-sel]").value; return s === "custom" ? $("#memo").value.trim() : s; }
-    function validate() {
+    function validate() {   // 11-08 대표: «배송 요청사항» 칸 뺌(주문 서버는 memo 없으면 빈 글로 받음 — 이미 들어온 주문 값은 그대로)
       var bad = null;
       function need(sel, msg, ok) { if (!bad && !ok) bad = { el: $(sel), msg: msg }; }
       var nm = $("#buyer-name").value.trim(), ph = digitsOf($("#buyer-phone").value);
@@ -1947,7 +1946,7 @@
       var body = {
         idempotency_key: idem, lines: reqLines(),
         buyer: { name: $("#buyer-name").value.trim(), phone: $("#buyer-phone").value },
-        receive: { method: ship(), memo: memo(), recipient: { name: $("#rcv-name").value.trim(), phone: $("#rcv-phone").value,
+        receive: { method: ship(), recipient: { name: $("#rcv-name").value.trim(), phone: $("#rcv-phone").value,
                    zip: $("#zip").value.trim(), addr1: $("#addr1").value.trim(), addr2: $("#addr2").value.trim() } },
         payment: { method: pay() }, points_use: q ? q.points : 0, agree: true };
       withGifts(body);
@@ -1970,8 +1969,6 @@
     form.querySelectorAll("[data-ship]").forEach(function (r) { r.addEventListener("change", function () { requote(); }); });
     var payTouched = false;
     form.querySelectorAll("[data-pay]").forEach(function (r) { r.addEventListener("change", function () { payTouched = true; paint(); }); });
-    var memoSel = $("[data-memo-sel]"), memoBox = $("[data-memo-custom]");
-    memoSel.addEventListener("change", function () { memoBox.hidden = memoSel.value !== "custom"; if (!memoBox.hidden) memoBox.querySelector("input").focus(); });
     if (API) {
       $("#buyer-phone").addEventListener("change", function () { requote(); });
       var pts = $("[data-pts]");
