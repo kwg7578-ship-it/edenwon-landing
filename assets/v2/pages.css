@@ -2085,3 +2085,6 @@ html.sv-js .sv-allb{display:inline-block}
   .hero__slide.b4--hanji{background:radial-gradient(120% 55% at 50% 18%,rgba(252,249,243,.92) 0,rgba(252,249,243,.92) 50%,rgba(252,249,243,0) 100%),#F6F0E3}
   .b4--hanji::before,.b4--hanji::after{-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.08) 0,rgba(0,0,0,.08) 36%,#000 48%);mask-image:linear-gradient(180deg,rgba(0,0,0,.08) 0,rgba(0,0,0,.08) 36%,#000 48%)}
 }
+/* 11-08 대표: 주문서 화면 밀림(PC 0.49) — 본문(주문서·빈 장바구니 안내)은 app.js 가 상품 자료를 받은 뒤 보이므로, 그 전에 한 화면 높이를 먼저 잡아
+   바닥글이 처음부터 화면 아래에 있게(보이다가 밀려 내려가지 않게) · 스크롤 막대도 처음부터 있어 폭이 바뀌지 않음 */
+.order[data-checkout]{min-height:100vh}
