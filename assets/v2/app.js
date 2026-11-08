@@ -471,22 +471,41 @@
         items.forEach(function (li) { if (soon.length < 2 && now.indexOf(li) < 0 && !soon.some(function (o) { return o.li === li; }) && has(li, m)) soon.push({ li: li, m: m }); });
       }
       var show = now.length ? now : soon.map(function (o) { return o.li; });
+      /* 11-08 편집 빌드에만(data-ed-js): 이 함수가 만드는 표지·줄 글을 문구 칸 문장 틀(data-ed-tf)로 감쌈 — 손님 화면은 그대로(속성 없음) */
+      var edk = null; try { edk = JSON.parse(f.getAttribute("data-ed-js") || "null"); } catch (x) { edk = null; }
+      var edW = function (raw, node) {
+        if (!edk || !edk[raw]) return node;
+        var w = document.createElement("span"); w.setAttribute("data-ed-tf", edk[raw]); w.setAttribute("data-ed-tf-text", T(raw));
+        w.appendChild(node); return w;
+      };
       items.forEach(function (li) {
         li.hidden = show.indexOf(li) < 0;
         [].forEach.call(li.querySelectorAll(".b4__soon,.b4__live"), function (b) { b.remove(); });
         if (li.hidden) return;
         var s = document.createElement("span");
-        if (now.length) { s.className = "b4__live"; s.innerHTML = "<i></i>"; s.appendChild(document.createTextNode(T("수확 중"))); }
+        if (now.length) { s.className = "b4__live"; s.innerHTML = "<i></i>"; s.appendChild(edW("수확 중", document.createTextNode(T("수확 중")))); }
+        else if (edk) { s.className = "b4__soon"; s.appendChild(edW("곧 만나요 · {0}월", document.createTextNode(Tf("곧 만나요 · {0}월", soon.filter(function (o) { return o.li === li; })[0].m)))); }
         else { s.className = "b4__soon"; s.textContent = Tf("곧 만나요 · {0}월", soon.filter(function (o) { return o.li === li; })[0].m); }
         li.querySelector(".b4__ph").appendChild(s);
       });
       var sl = f.querySelector("[data-b4-soonline]");
       if (sl) {
         sl.hidden = !(now.length && soon.length);
-        sl.textContent = Tf("곧 만나요 · {0}", soon.map(function (o) { return Tf("{0}({1}월)", o.li.querySelector(".b4__n").textContent, o.m); }).join(" · "));
+        var pieces = soon.map(function (o) { return Tf("{0}({1}월)", o.li.querySelector(".b4__n").textContent, o.m); });
+        if (edk) {   // 편집 빌드: 줄 전체(«곧 만나요 · {0}») 안에 품목마다(«{0}({1}월)») 따로 누를 수 있게
+          var pre = T("곧 만나요 · {0}").split("{0}"), box = document.createElement("span");
+          box.appendChild(document.createTextNode(pre[0]));
+          pieces.forEach(function (p, j) { if (j) box.appendChild(document.createTextNode(" · ")); box.appendChild(edW("{0}({1}월)", document.createTextNode(p))); });
+          box.appendChild(document.createTextNode(pre.slice(1).join("{0}")));
+          sl.textContent = ""; sl.appendChild(edW("곧 만나요 · {0}", box));
+        } else sl.textContent = Tf("곧 만나요 · {0}", pieces.join(" · "));
       }
       f.querySelector("[data-b4-month]").textContent = String(M);
-      var setT = function (el, x) { if (el.textContent !== x) el.textContent = x; };   // 2-K-4b: 같은 글이면 덮지 않음(편집기의 편집 칸 표시 유지)
+      var setT = function (el, x) {   // 2-K-4b: 같은 글이면 덮지 않음(편집기의 편집 칸 표시 유지)
+        var v = el.querySelectorAll("[data-b4-v]");   // 11-08 편집 빌드: 두 상태 글이 다 있으면 보이는 쪽만 바꿈(글을 덮지 않음 — 둘 다 편집 칸)
+        if (v.length) { [].forEach.call(v, function (s) { s.hidden = s.getAttribute("data-b4-v") !== (now.length ? "now" : "soon"); }); return; }
+        if (el.textContent !== x) el.textContent = x;
+      };
       setT(f.querySelector("[data-b4-title]"), now.length ? T("지금 밭에서 거두는 것") : T("곧 만나요"));
       setT(f.querySelector("[data-b4-sub]"), now.length ? T("발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다") : T("다음 수확을 기다리는 작물입니다"));
       if (!show.length) f.remove();
