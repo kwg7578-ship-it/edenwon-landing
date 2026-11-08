@@ -980,8 +980,56 @@ html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   
 .contact__direct-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
 .contact__direct-btns .btn{padding:0 28px;font-variant-numeric:tabular-nums;background:#FFFFFF}
 .contact__direct-note{font-size:14px;color:var(--muted)}
-.contact__form{width:100%;max-width:760px;margin:0 auto;min-height:500px}
-.contact__form iframe{display:block;border:0}
+.contact__form{width:100%;max-width:760px;margin:0 auto}
+/* 문의 양식(대표 11-08 — Tally 대신 사이트 자체 양식) · 보낸 뒤 «접수됨» */
+.cform{display:flex;flex-direction:column;gap:28px;border-top:2px solid var(--ink);padding-top:24px}
+.cform[hidden]{display:none}
+.cform__q{font-size:15px;font-weight:600;color:var(--ink);margin:0 0 10px}
+.cform-req{font-size:12px;font-weight:600;color:var(--accent);margin-left:6px}
+.cform-opt{font-size:12px;font-weight:400;color:var(--muted);margin-left:6px}
+.cform .choice--kinds{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cform .choice--kinds .choice__opt{border-top:1px solid var(--line);min-height:56px;padding:14px 16px;align-items:center;font-size:15px}
+.cform .choice--kinds .choice__opt:nth-child(3n+1){border-left:0}
+.cform .choice--kinds .choice__opt:nth-child(-n+3){border-top:0}
+.cform .choice__opt:has(input:focus-visible){outline:2px solid var(--ink);outline-offset:-4px}
+.cform__two{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
+.cform__note{font-size:13px;color:var(--muted);margin:-18px 0 0}
+.cform textarea{font:inherit;font-size:16px;font-weight:400;color:var(--ink);background:#FFFFFF;border:1px solid var(--line);padding:14px;min-height:180px;resize:vertical;width:100%}
+.cform textarea:focus{border-color:var(--ink)}
+.cform__count{align-self:flex-end;font-size:12px;color:var(--muted);font-weight:400}
+.cform__hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.cform__consent{background:var(--surface);padding:20px 22px;display:flex;flex-direction:column;gap:12px}
+.cform__consent h3{font-size:15px;font-weight:600;margin:0}
+.cform__consent table{width:100%;border-collapse:collapse;font-size:14px;background:#FFFFFF}
+.cform__consent th,.cform__consent td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;font-weight:400}
+.cform__consent th{width:96px;font-weight:600;background:var(--bg)}
+.cform__consent p{font-size:13px;color:var(--muted);margin:0;line-height:1.6}
+.cform__agree{display:flex;gap:10px;align-items:flex-start;font-size:15px;font-weight:500;cursor:pointer}
+.cform__agree input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--ink)}
+.cform__err{color:#B3261E;font-size:14px;font-weight:500;margin:0}
+.cform .is-bad input,.cform .is-bad textarea{border-color:#B3261E}
+.cform .choice.is-bad,.cform__consent.is-bad{outline:2px solid #B3261E;outline-offset:2px}
+.cform__send{display:flex;flex-direction:column;align-items:stretch;gap:10px}
+.cform__send .btn{min-height:56px;font-size:16px}
+.cform__send .btn[disabled]{opacity:.6;cursor:wait}
+.cdone{border-top:2px solid var(--ink);padding:40px 0 8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+.cdone[hidden]{display:none}
+.cdone:focus{outline:none}
+.cdone__mark{width:56px;height:56px;border-radius:50%;background:var(--primary);color:var(--on-primary);display:grid;place-items:center;font-size:28px}
+.cdone h2{font-size:26px;font-weight:600;margin:0}
+.cdone p{color:var(--muted);margin:0;line-height:1.7}
+.cdone dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;text-align:left;background:var(--surface);padding:16px 20px;margin:6px 0 0;font-size:14px;min-width:min(420px,100%)}
+.cdone dt{color:var(--muted)}
+.cdone dd{margin:0;color:var(--ink)}
+@media (max-width:768px){
+ .cform .choice--kinds{grid-template-columns:1fr 1fr}
+ .cform .choice--kinds .choice__opt:nth-child(3n+1){border-left:1px solid var(--line)}
+ .cform .choice--kinds .choice__opt:nth-child(odd){border-left:0}
+ .cform .choice--kinds .choice__opt:nth-child(-n+3){border-top:1px solid var(--line)}
+ .cform .choice--kinds .choice__opt:nth-child(-n+2){border-top:0}
+ .cform__two{grid-template-columns:1fr}
+ .cform__consent th{width:72px}
+}
 .contact__info{display:flex;flex-direction:column;gap:28px}
 .contact__cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
 .contact__card{display:flex;flex-direction:column;gap:10px;padding:28px 28px 30px;border-left:1px solid var(--line);min-width:0}

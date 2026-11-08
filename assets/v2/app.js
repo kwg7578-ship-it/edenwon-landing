@@ -2411,7 +2411,84 @@
     if (gone) document.querySelectorAll("[data-cert-fallback]").forEach(function (el) { el.hidden = false; });   // 소개 문장은 인증 없는 문장으로
   }
 
+  /* ── 문의 양식(대표 11-08 — Tally 대신): 화면에서 먼저 검사 → POST /api/v2/inquiry → «접수됨».
+     data-api 가 없으면(미리보기) 보내지 않고 안내만. 숨은 칸(website)·연 뒤 걸린 시간(dt)은 서버의 스팸 막기용. ── */
+  function initInquiry(form) {
+    var t0 = Date.now();
+    var err = form.querySelector("[data-cerr]"), send = form.querySelector("[data-csend]");
+    var body = form.elements.body, count = form.querySelector("[data-ccount]");
+    var done = form.parentNode.querySelector("[data-cdone]");
+    var MAX = 2000;
+    function showCount() { if (count) count.textContent = body.value.length + " / " + MAX; }
+    body.addEventListener("input", showCount);
+    function fieldBox(name) { return form.querySelector('[data-cfield="' + name + '"]'); }
+    function clearBad() {
+      form.querySelectorAll(".is-bad").forEach(function (b) { b.classList.remove("is-bad"); });
+      form.querySelectorAll("[aria-invalid]").forEach(function (b) { b.removeAttribute("aria-invalid"); });
+      err.hidden = true; err.textContent = "";
+    }
+    function fail(msg, names) {
+      err.textContent = msg; err.hidden = false;
+      var first = null;
+      (names || []).forEach(function (n) {
+        var b = fieldBox(n);
+        if (!b) return;
+        b.classList.add("is-bad");
+        var inp = b.querySelector("input, textarea");
+        if (inp) { inp.setAttribute("aria-invalid", "true"); if (!first) first = inp; }
+      });
+      if (first) first.focus(); else send.focus();
+    }
+    form.addEventListener("input", function (e) {
+      var b = e.target.closest && e.target.closest(".is-bad");
+      if (b) b.classList.remove("is-bad");
+    });
+    function check() {
+      var f = form.elements, kind = form.querySelector("input[name=kind]:checked");
+      var email = f.email.value.trim(), phone = f.phone.value.replace(/\D/g, "");
+      if (!kind) return [T("어떤 문의인지 골라 주세요."), ["kind"]];
+      if (!f.name.value.trim()) return [T("성함을 적어 주세요."), ["name"]];
+      if (!email && !phone) return [T("이메일 또는 전화번호 중 하나 이상 남겨 주세요."), ["email", "phone"]];
+      if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return [T("이메일 주소를 확인해 주세요."), ["email"]];
+      if (f.phone.value.trim() && !(/^0/.test(phone) && phone.length >= 9 && phone.length <= 11)) return [T("전화번호를 확인해 주세요."), ["phone"]];
+      if (f.body.value.trim().length < 5) return [T("문의 내용을 5자 이상 적어 주세요."), ["body"]];
+      if (!f.agree.checked) return [T("개인정보 수집·이용에 동의해 주세요."), ["agree"]];
+      return null;
+    }
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      clearBad();
+      var bad = check();
+      if (bad) { fail(bad[0], bad[1]); return; }
+      if (!API) { fail(T("미리보기에서는 문의가 보내지지 않습니다.")); return; }
+      var f = form.elements;
+      var data = { kind: +form.querySelector("input[name=kind]:checked").value, name: f.name.value.trim(), email: f.email.value.trim(),
+                   phone: f.phone.value.trim(), org: f.org.value.trim(), body: f.body.value.trim(), agree: true,
+                   website: f.website.value, dt: Date.now() - t0 };
+      send.disabled = true;
+      call("POST", "/api/v2/inquiry", data, false).then(function (j) {
+        send.disabled = false;
+        if (!j.ok) {
+          var map = { kind: ["kind"], name: ["name"], email: ["email"], phone: ["phone"], contact: ["email", "phone"], body: ["body"], agree: ["agree"] };
+          fail(j.error || T("보내지 못했습니다. 잠시 뒤 다시 보내 주세요. 급하신 일은 전화 주세요."), map[j.code] || []);
+          return;
+        }
+        done.querySelector("[data-cdone-no]").textContent = j.inquiry_no || "";
+        done.querySelector("[data-cdone-kind]").textContent = j.kind || "";
+        done.querySelector("[data-cdone-to]").textContent = j.contact || "";
+        form.hidden = true; done.hidden = false;
+        var top = done.getBoundingClientRect().top + window.pageYOffset - 120;
+        window.scrollTo(0, Math.max(0, top));
+        done.focus({ preventScroll: true });
+      }, function () {
+        send.disabled = false;
+        fail(T("보내지 못했습니다. 인터넷 연결을 확인하고 다시 보내 주세요. 급하신 일은 전화 주세요."));
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[data-cform]").forEach(initInquiry);
     initSeasonWords();
     document.querySelectorAll("[data-sgal]").forEach(initSeasonGallery);
     document.querySelectorAll("[data-feed]").forEach(initFeed);
