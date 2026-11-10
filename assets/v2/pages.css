@@ -1844,6 +1844,8 @@ body.sheet-open{overflow:hidden}
 .ssum__img{display:block;width:100%;height:100%;object-fit:cover}
 .ssum__eb{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:500}
 .ssum__t{font-size:17px;line-height:1.5;font-weight:500}
+.ssum__ainote{grid-column:2;margin:-40px 0 0;font-size:12.5px;line-height:1.7;color:var(--muted)}   /* 11-10 카드 아래 AI 그림 안내 한 줄(이야기 첫머리와 같은 칸) — PC 는 카드 칸(오른쪽) 밑, 격자 틈 56px 를 줄여 카드에 붙임 */
+@media (max-width:768px){.ssum__ainote{grid-column:1;margin-top:-16px}}   /* 한 줄 격자(768 이하)와 같은 폭 */
 @media (max-width:768px){
   .ssum__in{grid-template-columns:minmax(0,1fr);padding-top:72px;padding-bottom:72px;gap:32px}
   .ssum__grid{gap:10px}.ssum__ph{aspect-ratio:3/2;margin-bottom:6px}
@@ -2031,7 +2033,8 @@ html.sv-book .sv-scene.sv-dn .sv-txt,html.sv-book .sv-scene.sv-dp .sv-txt{animat
 .sv-more{margin:26px 0 0}
 .sv-more a{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:500;color:var(--ink);text-underline-offset:4px}
 /* 10-28 대표: AI 그림 안내는 소개 아래 작은 한 줄만 · 이야기 쪽 그림에는 «연출 이미지» 표시를 붙이지 않음(머리 안내로 갈음) */
-.sv-open__lead .sv-ainote{margin-top:2px;font-size:12.5px;line-height:1.7;color:var(--muted)}
+.sv-ainote--foot{margin:0 auto;padding-block:20px 28px;font-size:12px;line-height:1.7;color:var(--muted)}   /* 11-10 대표: 이야기 쪽 맨 아래 작은 회색 한 줄(첫머리에서 옮김) */
+.sv-ainote--bar{margin:0;text-align:center;font-size:11.5px;line-height:1.5;color:var(--muted)}   /* 11-10 그림책 보기 아래 줄 — 장면 번호 아래 작게 */
 .sv picture[data-photo-kind="ai"]::after{display:none}
 /* 10-28 장면 덧붙임: 작은 표(facts) · 덧붙임 상자(aside) · 장 끝 상품 */
 .sv-facts{margin:4px 0 0;border-top:1px solid var(--line)}
