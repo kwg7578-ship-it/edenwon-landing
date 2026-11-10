@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ko" data-season="autumn" data-season-auto data-ic="xl" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* 2-H 계절 자동: 손님 날짜(한국 시각)의 기상 계절 — CSS 앞에서 정해 색이 바뀌는 순간이 없게. 빌드 계절과 다르면 표시(홈 배너가 순서를 다시 정할 때까지 가림) */(function(r){var b=r.getAttribute("data-season"),s=["winter","spring","summer","autumn"][(new Date(Date.now()+324e5).getUTCMonth()+1)%12/3|0];r.setAttribute("data-season",s);if(s!==b)r.setAttribute("data-season-moved","")})(document.documentElement)</script>
+<meta name="robots" content="noindex, nofollow">
+<title>이용약관 — 영동에덴원</title>
+<meta name="description" content="영동에덴원 온라인 주문 서비스 이용약관입니다.">
+<link rel="icon" href="favicon.ico">
+<link rel="preload" href="assets/v2/noto-sans-kr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/v2/fonts.css">
+<link rel="stylesheet" href="assets/v2/tokens.css">
+<link rel="stylesheet" href="assets/v2/base.css">
+<link rel="stylesheet" href="assets/v2/pages.css">
+<link rel="stylesheet" href="assets/v2/motion.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="assets/v2/motion.css"></noscript>
+<link rel="stylesheet" href="assets/v2/type.css"><script type="application/json" id="ed-texts">{"곧 만나요":"영동에덴원\n제철 농산물","다음 수확을 기다리는 작물입니다":"영동에덴원 농산물을 계절별로 만나보세요.","영동 농장 직접 수령":"영동에덴원 방문 or 직접 수령","지금 밭에서 거두는 것":"영동에덴원 농산물","발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다":"발효퇴비와 풀로 만든 토양에서, \n자연농법으로 농산물을 키웠습니다"}</script><script src="assets/v2/app.js" defer></script>
+</head>
+<body class="page-policy">
+<div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
+  <p class="added__h" id="added-h">장바구니에 담았습니다</p>
+  <p class="added__item" data-added-item></p>
+  <div class="added__btns">
+    <a class="btn btn--dark" href="cart.html">장바구니로 가기</a>
+    <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
+  </div>
+</div>
+<p class="sr-only" role="status" aria-live="polite" data-added-live></p>
+<div class="hd-top" role="region" aria-label="공지와 회원 메뉴">
+  <a class="skip" href="#main">본문 바로가기</a>
+  <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
+  <div class="hd__util container">
+    <span class="hd__member" data-hd-member>
+  <a href="account/login.html" data-hd-login data-m-anon>로그인</a>
+  <a href="account/signup.html" data-hd-signup data-m-anon>회원가입</a>
+  <span data-hd-name data-m-in hidden></span>
+  <a href="account/" data-hd-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-hd-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="order-status.html">주문 조회</a><a href="contact.html">고객센터</a>  </div>
+</div>
+<header class="hd hd--groups" data-hd>
+  <div class="hd__bar container">
+    <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+    <a class="logo" href="index.html">
+      <span class="logo__ko">영동에덴원</span><span class="sr-only"> 홈</span>
+      <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
+    </a>
+    <nav class="gnb gnb--groups" aria-label="주 메뉴">
+<div class="gnb__item" data-gnb-item><a class="gnb__link" href="products.html?cat=onggi" style="min-width:3.76em">옹기발효</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-onggi" aria-label="옹기발효 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-onggi" hidden><li><a href="products.html?cat=onggi">옹기발효 전체</a></li><li><a href="products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="gnb__item" data-gnb-item><a class="gnb__link" href="products.html?cat=processed" style="min-width:3.76em">가공식품</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-processed" aria-label="가공식품 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-processed" hidden><li><a href="products.html?cat=processed">가공식품 전체</a></li><li><a href="products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="products.html?cat=farm" style="min-width:2.82em">농산물</a><a href="products.html?cat=gift" style="min-width:3.76em">선물세트</a><div class="gnb__item" data-gnb-item><a class="gnb__link" href="story.html" style="min-width:2.82em">브랜드 스토리</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-story" aria-label="이야기 펼치기" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub gnb__sub--plain" id="gnb-sub-story" hidden><li><a href="story.html">영동에덴원 이야기</a></li><li><a href="farming.html">농사 이야기</a></li><li><a href="fermentation.html">발효 이야기</a></li></ul></div><a href="contact.html" style="min-width:6.28em">단체·기업 문의</a>    </nav>
+    <div class="hd__actions">
+      <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+</button>
+      <a class="icon-btn hd__mypage" href="account/" aria-label="마이페이지"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg>
+</a>
+      <a class="icon-btn hd__cart" href="cart.html" data-cart-link><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="sr-only" data-cart-sr>장바구니</span><span class="hd__count" data-cart-count aria-hidden="true" hidden></span></a>
+    </div>
+  </div>
+  <div class="hd__search" id="search" hidden>
+    <form class="container" action="products.html" method="get" role="search">
+      <label class="sr-only" for="q">제품 검색</label>
+      <input id="q" name="q" type="search" placeholder="제품 이름으로 찾기" autocomplete="off">
+      <button type="submit" class="btn btn--dark">찾기</button>
+    </form>
+  </div>
+  <div class="hd__line"></div>
+</header>
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="메뉴">
+    <div class="drawer__top">
+      <span class="logo__ko">영동에덴원</span>
+      <button type="button" class="icon-btn" aria-label="메뉴 닫기" data-drawer-close><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+    </div>
+    <nav class="drawer__nav" aria-label="모바일 주 메뉴">
+<div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-onggi" data-dr-tog>옹기발효<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-onggi" hidden><li><a href="products.html?cat=onggi">옹기발효 전체</a></li><li><a href="products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-processed" data-dr-tog>가공식품<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-processed" hidden><li><a href="products.html?cat=processed">가공식품 전체</a></li><li><a href="products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="products.html?cat=farm">농산물</a><a href="products.html?cat=gift">선물세트</a><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-story" data-dr-tog>브랜드 스토리<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-story" hidden><li><a href="story.html">영동에덴원 이야기</a></li><li><a href="farming.html">농사 이야기</a></li><li><a href="fermentation.html">발효 이야기</a></li></ul></div><a href="contact.html">단체·기업 문의</a>    </nav>
+    <nav class="drawer__util" aria-label="회원·고객 메뉴">
+      <span class="hd__member" data-dr-member>
+  <a href="account/login.html" data-dr-login data-m-anon>로그인</a>
+  <a href="account/signup.html" data-dr-signup data-m-anon>회원가입</a>
+  <span data-dr-name data-m-in hidden></span>
+  <a href="account/" data-dr-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-dr-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="order-status.html">주문 조회</a><a href="contact.html">고객센터</a>      <a href="account/">마이페이지</a>
+    </nav>
+  </div>
+</div>
+<main id="main" tabindex="-1">
+<div class="policy container">
+    <div class="policy__inner">
+
+      <header class="policy__hero">
+        <div class="policy__eyebrow">Terms of Service</div>
+        <h1 class="policy__title">이용약관</h1>
+        <p class="policy__meta">시행일 · 2026년 10월 19일 (직전 시행 2026년 6월 7일)</p>
+      </header>
+
+      <div class="policy__body">
+        <section class="policy__section">
+          <h2 class="policy__h2">제1조 (목적)</h2>
+          <p>본 약관은 농업회사법인 주식회사 에프엔엘바이오푸드(이하 "영동에덴원")가 운영하는
+          yd-edenwon.com(이하 "몰")에서 제공하는 서비스의 이용 조건 및 절차, 회사와 이용자의
+          권리·의무 및 책임사항을 규정함을 목적으로 합니다.</p>
+        </section>
+
+        <section class="policy__section">
+          <h2 class="policy__h2">제2조 (정의)</h2>
+          <ul class="policy__list">
+            <li><strong>이용자</strong>: 몰에 접속하여 본 약관에 따라 서비스를 이용하는 회원 및 비회원</li>
+            <li><strong>회원</strong>: 휴대폰 본인확인을 거쳐 몰에 가입한 자로서, 몰이 제공하는 서비스를 계속 이용할 수 있는 자</li>
+            <li><strong>비회원</strong>: 회원 가입 없이 몰이 제공하는 서비스를 이용하는 자 (비회원도 상품을 주문할 수 있습니다)</li>
+            <li><strong>적립금</strong>: 회사가 정한 기준에 따라 회원에게 적립되는 포인트로, 몰 내에서만 사용 가능한 혜택</li>
+          </ul>
+        </section>
+
+        <section class="policy__section">
+          <h2 class="policy__h2">제3조 (약관의 게시와 개정)</h2>
+          <p>회사는 본 약관을 몰 초기 화면(하단)에서 확인할 수 있도록 게시하며,
+          관련 법령을 위배하지 않는 범위에서 개정할 수 있습니다. 개정 시 적용일자 및 사유를 명시하여
+          적용일 7일 전부터(이용자에게 불리한 변경은 30일 전부터) 공지합니다.</p>
+        </section>
+
+        <section class="policy__section">
+          <h2 class="policy__h2">제4조 (회원가입 및 탈퇴)</h2>
+          <ul class="policy__list">
+            <li>회원가입은 이용자가 약관 및 개인정보 수집·이용에 동의하고 휴대폰 본인확인(문자 인증)을 거쳐 신청하면 성립합니다.</li>
+            <li>타인의 명의나 휴대폰 번호를 도용한 가입은 금지되며, 적발 시 회원 자격이 제한될 수 있습니다.</li>
+            <li>비밀번호의 관리 책임은 회원 본인에게 있으며, 도용을 인지한 경우 즉시 회사에 알려야 합니다.</li>
+            <li>회원은 언제든지 마이페이지에서 직접 탈퇴하거나 회사에 연락하여 탈퇴를 요청할 수 있으며, 회사는 관련 법령상 보존 의무가 있는 정보를 제외하고 지체 없이 처리합니다.</li>
+          </ul>
+        </section>
+
+        <section class="policy__section">
+          <h2 class="policy__h2">제5조 (구매신청 및 계약의 성립)</h2>
+          <p>이용자는 몰의 주문 절차에 따라 구매를 신청하며, 회사가 입금(또는 결제)을 확인한 때에
+          계약이 성립합니다. 회사는 재고 소진, 상품 정보의 명백한 오류 등 정당한 사유가 있는 경우
+          승낙하지 않거나 계약을 해제할 수 있으며, 이 경우 이미 지급받은 대금을 환불합니다.</p>
+        </section>
+
+        <section class="policy__section">
+          <h2 class="policy__h2">제6조 (결제 방법)</h2>
+          <p>상품 대금은 다음 각 호의 방법으로 지급할 수 있으며, 결제 금액은 주문 화면에 표시된 금액을 따릅니다.</p>
+          <ul class="policy__list">
+            <li><strong>계좌이체(무통장 입금)</strong>: 주문 시 안내되는 회사 계좌로 주문자명과 일치하게 입금해 주시면, 회사가 입금을 확인한 후 주문이 처리됩니다.</li>
+            <li><strong>신용·체크카드</strong>: 전자결제대행사(토스페이먼츠)를 통해 결제됩니다. 회사는 이용자의 카드번호를 수집·보관하지 않습니다.</li>
+            <li>카드 결제창에서 결제를 완료하지 않고 이탈한 주문, 그리고 카드 결제를 선택한 후 24시간 이내에 결제가 완료되지 않은 주문은 자동으로 취소되며, 이때 사용한 적립금은 즉시 반환됩니다.</li>
+            <li>회사는 현금성 거래에 대해 관련 법령에 따라 현금영수증을 발급합니다. 이용자는 주문 시 소득공제용 또는 지출증빙용 발급을 신청할 수 있으며, 법령상 의무발급 대상 거래는 신청이 없어도 자진발급될 수 있습니다.</li>
+            <li>회사는 선물세트 등 일부 상품에 할인을 적용할 수 있으며, 특정 자격에 대한 할인은 증빙 요청과 1인당 누적 한도 적용이 있을 수 있습니다. 허위 자격 기재가 확인되면 할인 금액의 반환을 요구할 수 있습니다.</li>
+          </ul>
+        </section>
+
+        <section class="policy__section">
+          <h2 class="policy__h2">제7조 (배송)</h2>
+          <p>회사는 입금(결제) 확인 후 영업일 기준 1~3일 내 발송을 원칙으로 합니다.
+          농산물 등 일부 상품은 수확·작업 일정에 따라 발송일이 달라질 수 있으며, 이 경우 별도 안내합니다.
+          배송비는 주문 화면에 표시된 금액을 따릅니다.</p>
+        </section>
+
+        <section class="policy__section">
+          <h2 class="policy__h2">제8조 (청약철회 및 환불)</h2>
+          <p>이용자는 상품을 받은 날부터 7일 이내에 청약철회를 할 수 있습니다.
+          다만 「전자상거래 등에서의 소비자보호에 관한 법률」 제17조 제2항에 따라,
+          신선 농산물 등 시간이 지나 재판매가 곤란할 정도로 가치가 현저히 감소한 상품과
+          포장 개봉·훼손으로 상품 가치가 훼손된 식품은 청약철회가 제한됩니다.
+          세부 기준과 절차는 <a href="refund.html">교환·반품·환불 안내</a>를 따릅니다.</p>
+        </section>
+
+        <section class="policy__section">
+          <h2 class="policy__h2">제9조 (적립금)</h2>
+          <ul class="policy__list">
+            <li>회원이 로그인 상태로 주문하고 입금(결제)이 확인되면, 회사가 정한 적립률(현재 2%)에 따라 적립금이 적립됩니다. 적립 기준 금액은 실제 결제(입금)된 금액에서 배송비를 제외한 금액이며, 선물세트 등 할인이 적용된 경우 할인된 금액은 적립 기준에서 제외됩니다. 적립률은 변경될 수 있으며, 변경 시 몰에 공지합니다.</li>
+            <li>적립금은 결제 시 회사가 정한 한도 내에서 사용할 수 있으며, 세부 기준은 몰에 공지합니다. 주문이 취소되거나 환불되는 경우 사용한 적립금은 반환됩니다.</li>
+            <li>부정한 방법으로 적립된 적립금은 회사가 회수할 수 있습니다.</li>
+            <li>적립금은 현금으로 환급되지 않으며, 회원 탈퇴 시 소멸합니다.</li>
+            <li>주문 취소·환불 시 해당 주문으로 적립된 적립금은 차감됩니다.</li>
+          </ul>
+        </section>
+
+        <section class="policy__section">
+          <h2 class="policy__h2">제10조 (개인정보보호)</h2>
+          <p>회사는 이용자의 개인정보를 관련 법령에 따라 보호하며,
+          자세한 내용은 <a href="privacy.html">개인정보 처리방침</a>을 따릅니다.</p>
+        </section>
+
+        <section class="policy__section">
+          <h2 class="policy__h2">제11조 (회사와 이용자의 의무)</h2>
+          <p>회사는 법령과 본 약관을 준수하며 안정적인 서비스 제공을 위해 노력합니다.
+          이용자는 타인의 정보 도용, 시스템의 부정한 이용, 몰의 운영을 방해하는 행위를 해서는 안 됩니다.</p>
+        </section>
+
+        <section class="policy__section">
+          <h2 class="policy__h2">제12조 (분쟁 해결 및 재판관할)</h2>
+          <p>회사와 이용자 간 분쟁은 성실한 협의로 해결하며, 공정거래위원회 고시
+          소비자분쟁해결기준을 참고할 수 있습니다. 협의가 이루어지지 않을 경우 민사소송법상의
+          관할 법원에 제기합니다.</p>
+          <p class="policy__note"><strong>부칙</strong> — 본 약관은 2026년 10월 19일부터 시행합니다. (공고 2026년 10월 12일 / 직전 판: 2026년 6월 7일 시행 — <a href="terms_20260607.html">이전 판 보기</a>)</p>
+        </section>
+
+      </div>
+
+    </div>
+  
+</div>
+</main>
+<footer class="ft">
+  <div class="ft__navwrap">
+    <nav class="ft__nav container" aria-label="정책·안내">
+      <a href="story.html">영동에덴원 소개</a>
+<a href="gallery.html">계절 갤러리</a><a href="terms.html">이용약관</a><a href="privacy.html" class="is-strong">개인정보처리방침</a><a href="refund.html">교환·반품·환불 안내</a>      <a href="order-status.html">주문 조회</a>
+      <a href="contact.html">단체·기업 문의</a>
+    </nav>
+  </div>
+  <div class="ft__body container">
+    <div class="ft__brand">
+      <p class="ft__logo"><span class="logo__ko">영동에덴원</span><span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span></p>
+      <p class="ft__legal">
+        <span>농업회사법인 주식회사 에프엔엘바이오푸드 · 대표 길우관</span>
+        <span>충청북도 영동군 학산면 모리2길 3-1</span>
+        <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
+        <span>kwg7978@naver.com</span>
+<a href="terms.html#revision-notice">이용약관 개정 안내 (시행 2026년 11월 20일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
+      </p>
+    </div>
+    <div class="ft__cs">
+      <p class="ft__cs-h">고객센터</p>
+      <p class="ft__tel"><a href="tel:01051267578">010-5126-7578</a></p>
+<p class="ft__hours">월~금 10:00~19:00</p>      <div class="ft__sns">
+        <a href="https://blog.naver.com/gr_edenfarm" rel="noopener">블로그</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

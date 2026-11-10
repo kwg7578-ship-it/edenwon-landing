@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="ko" data-season="autumn" data-season-auto data-ic="xl" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* 2-H 계절 자동: 손님 날짜(한국 시각)의 기상 계절 — CSS 앞에서 정해 색이 바뀌는 순간이 없게. 빌드 계절과 다르면 표시(홈 배너가 순서를 다시 정할 때까지 가림) */(function(r){var b=r.getAttribute("data-season"),s=["winter","spring","summer","autumn"][(new Date(Date.now()+324e5).getUTCMonth()+1)%12/3|0];r.setAttribute("data-season",s);if(s!==b)r.setAttribute("data-season-moved","")})(document.documentElement)</script>
+<meta name="robots" content="noindex, nofollow">
+<title>영동에덴원의 농사 이야기</title>
+<meta name="description" content="영동에덴원이 땅을 돌보고, 발효퇴비와 유기질 비료, 미생물과 농업자재를 배우는 농사 이야기.">
+<meta property="og:title" content="영동에덴원의 농사 이야기">
+<meta property="og:description" content="영동에덴원이 땅을 돌보고, 발효퇴비와 유기질 비료, 미생물과 농업자재를 배우는 농사 이야기.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yd-edenwon.com/farming">
+<meta property="og:image" content="https://yd-edenwon.com/images/v2/farm-scene-01-1440.jpg">
+<meta property="og:locale" content="ko_KR">
+<link rel="canonical" href="https://yd-edenwon.com/farming">
+<link rel="icon" href="favicon.ico">
+<link rel="preload" href="assets/v2/noto-sans-kr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/v2/fonts.css">
+<link rel="stylesheet" href="assets/v2/tokens.css">
+<link rel="stylesheet" href="assets/v2/base.css">
+<link rel="stylesheet" href="assets/v2/pages.css">
+<link rel="stylesheet" href="assets/v2/motion.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="assets/v2/motion.css"></noscript>
+<link rel="stylesheet" href="assets/v2/type.css"><script type="application/json" id="ed-texts">{"곧 만나요":"영동에덴원\n제철 농산물","다음 수확을 기다리는 작물입니다":"영동에덴원 농산물을 계절별로 만나보세요.","영동 농장 직접 수령":"영동에덴원 방문 or 직접 수령","지금 밭에서 거두는 것":"영동에덴원 농산물","발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다":"발효퇴비와 풀로 만든 토양에서, \n자연농법으로 농산물을 키웠습니다"}</script><script src="assets/v2/app.js" defer></script>
+</head>
+<body class="page-story">
+<div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
+  <p class="added__h" id="added-h">장바구니에 담았습니다</p>
+  <p class="added__item" data-added-item></p>
+  <div class="added__btns">
+    <a class="btn btn--dark" href="cart.html">장바구니로 가기</a>
+    <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
+  </div>
+</div>
+<p class="sr-only" role="status" aria-live="polite" data-added-live></p>
+<div class="hd-top" role="region" aria-label="공지와 회원 메뉴">
+  <a class="skip" href="#main">본문 바로가기</a>
+  <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
+  <div class="hd__util container">
+    <span class="hd__member" data-hd-member>
+  <a href="account/login.html" data-hd-login data-m-anon>로그인</a>
+  <a href="account/signup.html" data-hd-signup data-m-anon>회원가입</a>
+  <span data-hd-name data-m-in hidden></span>
+  <a href="account/" data-hd-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-hd-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="order-status.html">주문 조회</a><a href="contact.html">고객센터</a>  </div>
+</div>
+<header class="hd hd--groups" data-hd>
+  <div class="hd__bar container">
+    <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+    <a class="logo" href="index.html">
+      <span class="logo__ko">영동에덴원</span><span class="sr-only"> 홈</span>
+      <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
+    </a>
+    <nav class="gnb gnb--groups" aria-label="주 메뉴">
+<div class="gnb__item" data-gnb-item><a class="gnb__link" href="products.html?cat=onggi" style="min-width:3.76em">옹기발효</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-onggi" aria-label="옹기발효 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-onggi" hidden><li><a href="products.html?cat=onggi">옹기발효 전체</a></li><li><a href="products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="gnb__item" data-gnb-item><a class="gnb__link" href="products.html?cat=processed" style="min-width:3.76em">가공식품</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-processed" aria-label="가공식품 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-processed" hidden><li><a href="products.html?cat=processed">가공식품 전체</a></li><li><a href="products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="products.html?cat=farm" style="min-width:2.82em">농산물</a><a href="products.html?cat=gift" style="min-width:3.76em">선물세트</a><div class="gnb__item" data-gnb-item><a class="gnb__link" href="story.html" style="min-width:2.82em" aria-current="page">브랜드 스토리</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-story" aria-label="이야기 펼치기" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub gnb__sub--plain" id="gnb-sub-story" hidden><li><a href="story.html">영동에덴원 이야기</a></li><li><a href="farming.html" aria-current="page">농사 이야기</a></li><li><a href="fermentation.html">발효 이야기</a></li></ul></div><a href="contact.html" style="min-width:6.28em">단체·기업 문의</a>    </nav>
+    <div class="hd__actions">
+      <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+</button>
+      <a class="icon-btn hd__mypage" href="account/" aria-label="마이페이지"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg>
+</a>
+      <a class="icon-btn hd__cart" href="cart.html" data-cart-link><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="sr-only" data-cart-sr>장바구니</span><span class="hd__count" data-cart-count aria-hidden="true" hidden></span></a>
+    </div>
+  </div>
+  <div class="hd__search" id="search" hidden>
+    <form class="container" action="products.html" method="get" role="search">
+      <label class="sr-only" for="q">제품 검색</label>
+      <input id="q" name="q" type="search" placeholder="제품 이름으로 찾기" autocomplete="off">
+      <button type="submit" class="btn btn--dark">찾기</button>
+    </form>
+  </div>
+  <div class="hd__line"></div>
+</header>
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="메뉴">
+    <div class="drawer__top">
+      <span class="logo__ko">영동에덴원</span>
+      <button type="button" class="icon-btn" aria-label="메뉴 닫기" data-drawer-close><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+    </div>
+    <nav class="drawer__nav" aria-label="모바일 주 메뉴">
+<div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-onggi" data-dr-tog>옹기발효<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-onggi" hidden><li><a href="products.html?cat=onggi">옹기발효 전체</a></li><li><a href="products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-processed" data-dr-tog>가공식품<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-processed" hidden><li><a href="products.html?cat=processed">가공식품 전체</a></li><li><a href="products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="products.html?cat=farm">농산물</a><a href="products.html?cat=gift">선물세트</a><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-story" data-dr-tog data-current>브랜드 스토리<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-story" hidden><li><a href="story.html">영동에덴원 이야기</a></li><li><a href="farming.html" aria-current="page">농사 이야기</a></li><li><a href="fermentation.html">발효 이야기</a></li></ul></div><a href="contact.html">단체·기업 문의</a>    </nav>
+    <nav class="drawer__util" aria-label="회원·고객 메뉴">
+      <span class="hd__member" data-dr-member>
+  <a href="account/login.html" data-dr-login data-m-anon>로그인</a>
+  <a href="account/signup.html" data-dr-signup data-m-anon>회원가입</a>
+  <span data-dr-name data-m-in hidden></span>
+  <a href="account/" data-dr-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-dr-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="order-status.html">주문 조회</a><a href="contact.html">고객센터</a>      <a href="account/">마이페이지</a>
+    </nav>
+  </div>
+</div>
+<main id="main" tabindex="-1">
+<div class="sv sv--farm" data-sv data-sv-sizes="(max-width: 860px) 100vw, 680px" data-sv-sizes-wide="(max-width: 860px) 100vw, 1280px" data-sv-key="farm-story-mode">
+  <section class="sv-open container" aria-labelledby="sv-h">
+    <div class="sv-open__in">
+      <div>
+        <p class="sv-ey">영동에덴원의 농사 이야기</p>
+        <h1 class="sv-open__t" id="sv-h">우리가 먹을 것을 기르며,<br>토양을 돌보는 법을 배웁니다.</h1>
+        <p class="sv-meta">6장 · 20장면</p>
+      </div>
+      <div class="sv-open__lead"><p>함께 먹을 식재료를 마련하려고 시작한 농사였습니다.</p><p>작물을 기르다 보니 그 아래의 흙을 살피게 되었고,<br>풀과 유기물을 다루며 발효 퇴비와 유기질 비료를 배우게 되었습니다.<br>영동에덴원이 토양을 돌보고 농업자재를 선택하는 이야기를 들려드립니다.</p></div>    </div>
+  </section>
+
+  <div class="sv-toc" data-sv-toc>
+    <div class="container sv-toc__row">
+      <nav class="sv-toc__nav" aria-label="농사 이야기 목차"><a href="#ch1" data-sv-ch="1"><span>01</span>농사의 시작</a><a href="#ch2" data-sv-ch="2"><span>02</span>흙과 자연농법</a><a href="#ch3" data-sv-ch="3"><span>03</span>발효퇴비</a><a href="#ch4" data-sv-ch="4"><span>04</span>유기질 비료</a><a href="#ch5" data-sv-ch="5"><span>05</span>미생물과 자재</a><a href="#ch6" data-sv-ch="6"><span>06</span>다음 식탁으로</a></nav>
+      <div class="sv-tools"><div class="sv-mode" role="group" aria-label="보는 방식" data-sv-mode hidden><button type="button" data-mode="book" aria-pressed="false">그림책으로 보기</button><button type="button" data-mode="scroll" aria-pressed="true">펼쳐서 읽기</button></div>
+<button type="button" class="sv-allb" data-sv-all aria-haspopup="dialog" hidden>20컷 모아보기</button></div>    </div>
+    <div class="sv-prog" aria-hidden="true"><i data-sv-prog></i></div>
+  </div>
+  <style>html.sv-book[data-sv-cur="s1"] #s1,html.sv-book[data-sv-cur="s2"] #s2,html.sv-book[data-sv-cur="s3"] #s3,html.sv-book[data-sv-cur="s4"] #s4,html.sv-book[data-sv-cur="s5"] #s5,html.sv-book[data-sv-cur="s6"] #s6,html.sv-book[data-sv-cur="s7"] #s7,html.sv-book[data-sv-cur="s8"] #s8,html.sv-book[data-sv-cur="s9"] #s9,html.sv-book[data-sv-cur="s10"] #s10,html.sv-book[data-sv-cur="s11"] #s11,html.sv-book[data-sv-cur="s12"] #s12,html.sv-book[data-sv-cur="s13"] #s13,html.sv-book[data-sv-cur="s14"] #s14,html.sv-book[data-sv-cur="s15"] #s15,html.sv-book[data-sv-cur="s16"] #s16,html.sv-book[data-sv-cur="s17"] #s17,html.sv-book[data-sv-cur="s18"] #s18,html.sv-book[data-sv-cur="s19"] #s19,html.sv-book[data-sv-cur="s20"] #s20{display:grid;visibility:visible}html.sv-book[data-sv-cur="s1"] #s1 .sv-fig,html.sv-book[data-sv-cur="s2"] #s2 .sv-fig,html.sv-book[data-sv-cur="s3"] #s3 .sv-fig,html.sv-book[data-sv-cur="s4"] #s4 .sv-fig,html.sv-book[data-sv-cur="s5"] #s5 .sv-fig,html.sv-book[data-sv-cur="s6"] #s6 .sv-fig,html.sv-book[data-sv-cur="s7"] #s7 .sv-fig,html.sv-book[data-sv-cur="s8"] #s8 .sv-fig,html.sv-book[data-sv-cur="s9"] #s9 .sv-fig,html.sv-book[data-sv-cur="s10"] #s10 .sv-fig,html.sv-book[data-sv-cur="s11"] #s11 .sv-fig,html.sv-book[data-sv-cur="s12"] #s12 .sv-fig,html.sv-book[data-sv-cur="s13"] #s13 .sv-fig,html.sv-book[data-sv-cur="s14"] #s14 .sv-fig,html.sv-book[data-sv-cur="s15"] #s15 .sv-fig,html.sv-book[data-sv-cur="s16"] #s16 .sv-fig,html.sv-book[data-sv-cur="s17"] #s17 .sv-fig,html.sv-book[data-sv-cur="s18"] #s18 .sv-fig,html.sv-book[data-sv-cur="s19"] #s19 .sv-fig,html.sv-book[data-sv-cur="s20"] #s20 .sv-fig{display:block}</style>
+  <script>/* K13 그림책 보기를 첫 그림 전에(밀림 0): 지난번 방식(기억) · 주소 #s5 → 그 장면. 편집기 화면은 «펼쳐서 읽기»로 연다 */(function (R, sv) {
+    try {
+      var m = "book", n = 20, h = /^#s(\d+)$/.exec(location.hash), c = 1;
+      try { m = localStorage.getItem("farm-story-mode") || "book"; } catch (e) {}
+      if (sv && sv.hasAttribute("data-sv-edit")) m = "scroll";
+      if (h) c = Math.max(1, Math.min(n, +h[1]));
+      R.classList.add("sv-js");
+      if (m !== "scroll") { R.classList.add("sv-book"); R.setAttribute("data-sv-cur", "s" + c); }
+    } catch (e) {}
+  })(document.documentElement, document.querySelector("[data-sv]"));</script>
+
+  <div class="sv-story container" id="story" data-sv-story>
+    <nav class="sv-rail" data-sv-rail aria-label="장면 바로가기" style="--n:20" hidden>
+      <button type="button" class="sv-rail__tog" data-sv-rail-tog aria-expanded="false" aria-controls="sv-rail-list"><span class="sv-rail__dots" aria-hidden="true"><span class="sv-rail__dch" style="--k:4"><i></i><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:3"><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:5"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:3"><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:3"><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:2"><i></i><i></i></span></span><span class="sv-rail__tog-o">장면 목록 열기</span><span class="sv-rail__tog-x">닫기</span></button>
+      <div class="sv-rail__list" id="sv-rail-list">        <div class="sv-rail__ch" data-ch="1"><button type="button" class="sv-rail__h" data-sv-to-i="0"><b>01</b> 농사의 시작</button>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="0" data-ch="1" aria-label="장면 01 — 우리가 먹을 것을 직접 길러보기로 했습니다"><img src="images/v2/farm-scene-01-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="1" data-ch="1" aria-label="장면 02 — 작물을 심기 전, 토양을 일구는 일부터 어려웠습니다"><img src="images/v2/farm-scene-02-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="2" data-ch="1" aria-label="장면 03 — 풀을 다루는 일에도 우리의 선택이 있습니다"><img src="images/v2/farm-scene-03-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="3" data-ch="1" aria-label="장면 04 — 몇 년의 농사 끝에, 손에 닿는 흙이 달라졌습니다"><img src="images/v2/farm-scene-04-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+        </div>        <div class="sv-rail__ch" data-ch="2"><button type="button" class="sv-rail__h" data-sv-to-i="4"><b>02</b> 흙과 자연농법</button>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="4" data-ch="2" aria-label="장면 05 — 흙은 작물을 받치는 바닥만은 아닙니다"><img src="images/v2/farm-scene-05-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="5" data-ch="2" aria-label="장면 06 — 우리에게 자연농법은 밭에서 이어가는 선택입니다"><img src="images/v2/farm-scene-06-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="6" data-ch="2" aria-label="장면 07 — 흙을 어떻게 덮고, 어떻게 밭을 조성할지도 중요합니다"><img src="images/v2/farm-scene-07-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+        </div>        <div class="sv-rail__ch" data-ch="3"><button type="button" class="sv-rail__h" data-sv-to-i="7"><b>03</b> 발효퇴비</button>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="7" data-ch="3" aria-label="장면 08 — 유기물을 어떻게 다루느냐에 따라 쓰임이 달라집니다"><img src="images/v2/farm-scene-08-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="8" data-ch="3" aria-label="장면 09 — 같은 퇴비라는 이름에도 서로 다른 원료가 들어갑니다"><img src="images/v2/farm-scene-09-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="9" data-ch="3" aria-label="장면 10 — 수분과 원료의 균형을 함께 생각합니다"><img src="images/v2/farm-scene-10-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="10" data-ch="3" aria-label="장면 11 — 미생물이 일하는 과정에도 관리가 필요합니다"><img src="images/v2/farm-scene-11-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="11" data-ch="3" aria-label="장면 12 — 오래 두었다는 것과 충분히 부숙했다는 것은 다릅니다"><img src="images/v2/farm-scene-12-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+        </div>        <div class="sv-rail__ch" data-ch="4"><button type="button" class="sv-rail__h" data-sv-to-i="12"><b>04</b> 유기질 비료</button>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="12" data-ch="4" aria-label="장면 13 — 흙을 돌보는 일과 양분을 공급하는 일"><img src="images/v2/farm-scene-13-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="13" data-ch="4" aria-label="장면 14 — 직접 만든다는 사실보다, 무엇으로 어떻게 만드는지가 중요합니다"><img src="images/v2/farm-scene-14-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="14" data-ch="4" aria-label="장면 15 — 좋은 자재를 고르는 일만큼 사용량을 살피는 일도 중요합니다"><img src="images/v2/farm-scene-15-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+        </div>        <div class="sv-rail__ch" data-ch="5"><button type="button" class="sv-rail__h" data-sv-to-i="15"><b>05</b> 미생물과 자재</button>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="15" data-ch="5" aria-label="장면 16 — 미생물이 들어 있다고 모두 같은 일을 하지는 않습니다"><img src="images/v2/farm-scene-16-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="16" data-ch="5" aria-label="장면 17 — 어떤 균주가, 어떤 병해충에 작용하는가"><img src="images/v2/farm-scene-17-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="17" data-ch="5" aria-label="장면 18 — 이름만 보고 선택하지 않습니다"><img src="images/v2/farm-scene-18-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+        </div>        <div class="sv-rail__ch" data-ch="6"><button type="button" class="sv-rail__h" data-sv-to-i="18"><b>06</b> 다음 식탁으로</button>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="18" data-ch="6" aria-label="장면 19 — 손으로 해온 농사에 배움을 더합니다"><img src="images/v2/farm-scene-19-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="19" data-ch="6" aria-label="장면 20 — 우리가 먹을 것을 기르며, 다음 농사까지 생각합니다"><img src="images/v2/farm-scene-20-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+        </div>      </div>
+    </nav>
+    <section class="sv-chap" id="ch1" aria-labelledby="ch1-t">
+      <header class="sv-chap__h"><span class="sv-chap__no" aria-hidden="true">01</span><div><p class="sv-chap__k">농사의 시작</p><h2 id="ch1-t" class="sv-chap__t">농사를 시작하고, 흙을 만나고</h2></div></header>
+      <article class="sv-scene sv-scene--wide" id="s1" data-ch="1" aria-labelledby="s1-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-01-1440.webp" aria-label="식탁에서 시작된 농사 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-01-192.webp 192w, images/v2/farm-scene-01-480.webp 480w, images/v2/farm-scene-01-960.webp 960w, images/v2/farm-scene-01-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-01-960.jpg" srcset="images/v2/farm-scene-01-192.jpg 192w, images/v2/farm-scene-01-480.jpg 480w, images/v2/farm-scene-01-960.jpg 960w, images/v2/farm-scene-01-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="식탁에서 시작된 농사" class="sv-img" loading="eager" fetchpriority="high" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>01</b> 농사의 시작 · 농사를 시작하고, 흙을 만나고</p>
+          <p class="sv-no"><span class="sv-no__n">장면 01</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s1-t">우리가 먹을 것을<br>직접 길러보기로 했습니다</h3>
+          <div class="sv-prose"><p>많은 식구들의 식비를 아끼면서, 믿고 먹을 수 있는 식재료를 마련하고 싶었습니다. 그렇게 시작한 주말농사는 영동에덴원이 지금까지 이어오는 농사의 출발점이 되었습니다.</p><p>이번에는 그 밭에서 우리가 무엇을 배우고, 어떤 기준으로 농사를 짓고 있는지 이야기하려 합니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--rev" id="s2" data-ch="1" aria-labelledby="s2-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-02-1440.webp" aria-label="처음 만난 땅은 단단했습니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-02-192.webp 192w, images/v2/farm-scene-02-480.webp 480w, images/v2/farm-scene-02-960.webp 960w, images/v2/farm-scene-02-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-02-960.jpg" srcset="images/v2/farm-scene-02-192.jpg 192w, images/v2/farm-scene-02-480.jpg 480w, images/v2/farm-scene-02-960.jpg 960w, images/v2/farm-scene-02-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="처음 만난 땅은 단단했습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>01</b> 농사의 시작 · 농사를 시작하고, 흙을 만나고</p>
+          <p class="sv-no"><span class="sv-no__n">장면 02</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s2-t">작물을 심기 전,<br>토양을 일구는 일부터 어려웠습니다</h3>
+          <div class="sv-prose"><p>처음 농사를 지었던 밭은 호미로 일구기 어려울 만큼 단단했습니다. 농사를 잘 몰랐던 우리는 땅을 파고, 풀을 다루고, 퇴비를 넣어보며 하나씩 배웠습니다.</p><p>처음부터 완성된 방법이 있었던 것은 아닙니다. 직접 겪고 다시 해보는 과정이 쌓이면서 지금의 농사로 이어졌습니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene" id="s3" data-ch="1" aria-labelledby="s3-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-03-1440.webp" aria-label="제초제를 쓰지 않기로 했습니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-03-192.webp 192w, images/v2/farm-scene-03-480.webp 480w, images/v2/farm-scene-03-960.webp 960w, images/v2/farm-scene-03-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-03-960.jpg" srcset="images/v2/farm-scene-03-192.jpg 192w, images/v2/farm-scene-03-480.jpg 480w, images/v2/farm-scene-03-960.jpg 960w, images/v2/farm-scene-03-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="제초제를 쓰지 않기로 했습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>01</b> 농사의 시작 · 농사를 시작하고, 흙을 만나고</p>
+          <p class="sv-no"><span class="sv-no__n">장면 03</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s3-t">풀을 다루는 일에도<br>우리의 선택이 있습니다</h3>
+          <div class="sv-prose"><p>농사를 시작하고 토양의 상태를 확인했을 때, 제초제를 쓰지 않겠다는 기준을 세우면서 지켰습니다. 그리고 작물 주변의 풀을 관리하는 데에는 생각보다 많은 사람의 손과 시간이 필요했습니다.</p><p>풀을 그대로 두기만 하는 농사는 아니었습니다. 작물이 자라는 모습을 보며 필요한 작업을 하고, 식구들이 함께 밭을 돌봤습니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--wide" id="s4" data-ch="1" aria-labelledby="s4-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-04-1440.webp" aria-label="흙이 달라지는 것을 경험했습니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-04-192.webp 192w, images/v2/farm-scene-04-480.webp 480w, images/v2/farm-scene-04-960.webp 960w, images/v2/farm-scene-04-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-04-960.jpg" srcset="images/v2/farm-scene-04-192.jpg 192w, images/v2/farm-scene-04-480.jpg 480w, images/v2/farm-scene-04-960.jpg 960w, images/v2/farm-scene-04-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="흙이 달라지는 것을 경험했습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>01</b> 농사의 시작 · 농사를 시작하고, 흙을 만나고</p>
+          <p class="sv-no"><span class="sv-no__n">장면 04</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s4-t">몇 년의 농사 끝에,<br>손에 닿는 흙이 달라졌습니다</h3>
+          <div class="sv-prose"><p>풀과 유기물을 다루며 여러 해 농사를 이어가는 동안, 처음보다 부드러워진 흙을 경험했습니다. 이러한 변화는 토양을 더 배우고 싶게 만들었습니다.</p><p>저희가 농사를 지으며 작물만 보는 데서 그치지 않고, 작물이 자라는 바탕을 함께 살피기 시작했습니다.</p></div>
+
+        </div>
+      </article>
+    </section>
+    <section class="sv-chap" id="ch2" aria-labelledby="ch2-t">
+      <header class="sv-chap__h"><span class="sv-chap__no" aria-hidden="true">02</span><div><p class="sv-chap__k">흙과 자연농법</p><h2 id="ch2-t" class="sv-chap__t">자연의 과정을 배우는 농사</h2></div></header>
+      <article class="sv-scene sv-scene--wide" id="s5" data-ch="2" aria-labelledby="s5-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-05-1440.webp" aria-label="흙속에서도 일이 일어납니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-05-192.webp 192w, images/v2/farm-scene-05-480.webp 480w, images/v2/farm-scene-05-960.webp 960w, images/v2/farm-scene-05-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-05-960.jpg" srcset="images/v2/farm-scene-05-192.jpg 192w, images/v2/farm-scene-05-480.jpg 480w, images/v2/farm-scene-05-960.jpg 960w, images/v2/farm-scene-05-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="흙속에서도 일이 일어납니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>02</b> 흙과 자연농법 · 자연의 과정을 배우는 농사</p>
+          <p class="sv-no"><span class="sv-no__n">장면 05</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s5-t">흙은 작물을 받치는<br>바닥만은 아닙니다</h3>
+          <div class="sv-prose"><p>토양에는 다양한 미생물이 살아가며 유기물의 분해와 양분 순환에 관여합니다. 흙의 구조와 물, 공기, 유기물은 그 활동과 작물의 생육에 함께 관계합니다.</p><p>토양을 돌본다는 것은 작물의 뿌리와 흙속 미생물이 살아가는 환경을 살피는 일이기도 합니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--rev" id="s6" data-ch="2" aria-labelledby="s6-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-06-1440.webp" aria-label="자연농법은 실제 하는 일로 설명합니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-06-192.webp 192w, images/v2/farm-scene-06-480.webp 480w, images/v2/farm-scene-06-960.webp 960w, images/v2/farm-scene-06-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-06-960.jpg" srcset="images/v2/farm-scene-06-192.jpg 192w, images/v2/farm-scene-06-480.jpg 480w, images/v2/farm-scene-06-960.jpg 960w, images/v2/farm-scene-06-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="자연농법은 실제 하는 일로 설명합니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>02</b> 흙과 자연농법 · 자연의 과정을 배우는 농사</p>
+          <p class="sv-no"><span class="sv-no__n">장면 06</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s6-t">우리에게 자연농법은<br>밭에서 이어가는 선택입니다</h3>
+          <div class="sv-prose"><p>자연농법은 실천하는 체계에 따라 방법이 다릅니다. 이름 하나만으로 모든 농장의 재배 방식이 같아지는 것은 아닙니다.</p><p>영동에덴원은 제초제를 멀리하고, 발효퇴비와 유기질 비료, 미생물과 유기농업자재를 배우며 활용하는 방향을 이어왔습니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene" id="s7" data-ch="2" aria-labelledby="s7-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-07-1440.webp" aria-label="땅을 보호하는 여러 방법을 배웁니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-07-192.webp 192w, images/v2/farm-scene-07-480.webp 480w, images/v2/farm-scene-07-960.webp 960w, images/v2/farm-scene-07-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-07-960.jpg" srcset="images/v2/farm-scene-07-192.jpg 192w, images/v2/farm-scene-07-480.jpg 480w, images/v2/farm-scene-07-960.jpg 960w, images/v2/farm-scene-07-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="땅을 보호하는 여러 방법을 배웁니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>02</b> 흙과 자연농법 · 자연의 과정을 배우는 농사</p>
+          <p class="sv-no"><span class="sv-no__n">장면 07</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s7-t">흙을 어떻게 덮고,<br>어떻게 밭을 조성할지도 중요합니다</h3>
+          <div class="sv-prose"><p>토양을 덮는 멀칭 방법은 수분 증발과 토양 유실을 줄이는 데 도움이 됩니다. 농작물에 따른 두둑과 고랑의 배치도 토양과 재배 환경을 관리하는 방법입니다.</p><p>영동에덴원은 해마다 시도해보며 이러한 원리를 이해하고, 농장의 조건에 맞게 적용할 방법을 찾아 적용합니다.</p></div>
+
+        </div>
+      </article>
+    </section>
+    <section class="sv-chap" id="ch3" aria-labelledby="ch3-t">
+      <header class="sv-chap__h"><span class="sv-chap__no" aria-hidden="true">03</span><div><p class="sv-chap__k">발효퇴비</p><h2 id="ch3-t" class="sv-chap__t">유기물을 다시 흙으로</h2></div></header>
+      <article class="sv-scene sv-scene--wide" id="s8" data-ch="3" aria-labelledby="s8-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-08-1440.webp" aria-label="남은 자원도 다시 살펴봅니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-08-192.webp 192w, images/v2/farm-scene-08-480.webp 480w, images/v2/farm-scene-08-960.webp 960w, images/v2/farm-scene-08-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-08-960.jpg" srcset="images/v2/farm-scene-08-192.jpg 192w, images/v2/farm-scene-08-480.jpg 480w, images/v2/farm-scene-08-960.jpg 960w, images/v2/farm-scene-08-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="남은 자원도 다시 살펴봅니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>03</b> 발효퇴비 · 유기물을 다시 흙으로</p>
+          <p class="sv-no"><span class="sv-no__n">장면 08</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s8-t">유기물을 어떻게 다루느냐에 따라<br>쓰임이 달라집니다</h3>
+          <div class="sv-prose"><p>작물의 잔사와 농식품 부산물, 목질 자원 가운데에는 적절한 처리를 거쳐 농업에 활용할 수 있는 것들이 있습니다.</p><p>재료를 모으는 것만으로 순환이 완성되지는 않습니다. 원료를 살피고, 분해와 발효 과정을 관리하고, 사용하기에 적합한 상태인지 확인하는 과정이 필요합니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene" id="s9" data-ch="3" aria-labelledby="s9-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-09-1440.webp" aria-label="퇴비는 원료에서 시작됩니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-09-192.webp 192w, images/v2/farm-scene-09-480.webp 480w, images/v2/farm-scene-09-960.webp 960w, images/v2/farm-scene-09-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-09-960.jpg" srcset="images/v2/farm-scene-09-192.jpg 192w, images/v2/farm-scene-09-480.jpg 480w, images/v2/farm-scene-09-960.jpg 960w, images/v2/farm-scene-09-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="퇴비는 원료에서 시작됩니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>03</b> 발효퇴비 · 유기물을 다시 흙으로</p>
+          <p class="sv-no"><span class="sv-no__n">장면 09</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s9-t">같은 퇴비라는 이름에도<br>서로 다른 원료가 들어갑니다</h3>
+          <div class="sv-prose"><p>톱밥퇴비는 톱밥을 원료나 부재료로 사용한 퇴비를 말합니다. 함께 섞는 재료에 따라 성분과 특성이 달라집니다.</p><p>따라서 퇴비는 얼마나 오래 두었는지만큼 무엇으로 만들었는지도 중요합니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--rev" id="s10" data-ch="3" aria-labelledby="s10-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-10-1440.webp" aria-label="톱밥에도 역할이 있습니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-10-192.webp 192w, images/v2/farm-scene-10-480.webp 480w, images/v2/farm-scene-10-960.webp 960w, images/v2/farm-scene-10-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-10-960.jpg" srcset="images/v2/farm-scene-10-192.jpg 192w, images/v2/farm-scene-10-480.jpg 480w, images/v2/farm-scene-10-960.jpg 960w, images/v2/farm-scene-10-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="톱밥에도 역할이 있습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>03</b> 발효퇴비 · 유기물을 다시 흙으로</p>
+          <p class="sv-no"><span class="sv-no__n">장면 10</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s10-t">수분과 원료의 균형을<br>함께 생각합니다</h3>
+          <div class="sv-prose"><p>톱밥은 퇴비 제조 과정에서 수분을 조절하고 탄소를 공급하는 역할을 합니다. 다른 원료와 어떻게 조합하느냐에 따라 분해 조건이 달라집니다.</p><p>어떤 재료를 넣었다는 것 보다, 전체 원료의 성질과 상태를 함께 고려해 탄소와 질소의 균형을 맞추는 것이 중요합니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--wide" id="s11" data-ch="3" aria-labelledby="s11-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-11-1440.webp" aria-label="분해가 이어지도록 조건을 살핍니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-11-192.webp 192w, images/v2/farm-scene-11-480.webp 480w, images/v2/farm-scene-11-960.webp 960w, images/v2/farm-scene-11-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-11-960.jpg" srcset="images/v2/farm-scene-11-192.jpg 192w, images/v2/farm-scene-11-480.jpg 480w, images/v2/farm-scene-11-960.jpg 960w, images/v2/farm-scene-11-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="분해가 이어지도록 조건을 살핍니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>03</b> 발효퇴비 · 유기물을 다시 흙으로</p>
+          <p class="sv-no"><span class="sv-no__n">장면 11</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s11-t">미생물이 일하는 과정에도<br>관리가 필요합니다</h3>
+          <div class="sv-prose"><p>호기성 퇴비화에서는 미생물이 유기물을 분해합니다. 이 과정에 관계하는 주요 조건은 산소와 수분, 온도, 원료의 탄소·질소 균형입니다.</p><p>분해 과정에서는 열이 발생합니다. 그러나 퇴비가 충분한 부숙 과정을 거쳐 완숙  퇴비가 되려면 적절한 관리를 통해 충분한 온도의 열이 필요합니다.</p><ul class="sv-chips" aria-label="핵심어"><li>산소</li><li>수분</li><li>온도</li><li>탄소·질소 균형</li></ul></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--rev" id="s12" data-ch="3" aria-labelledby="s12-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-12-1440.webp" aria-label="충분히 부숙했는지 살핍니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-12-192.webp 192w, images/v2/farm-scene-12-480.webp 480w, images/v2/farm-scene-12-960.webp 960w, images/v2/farm-scene-12-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-12-960.jpg" srcset="images/v2/farm-scene-12-192.jpg 192w, images/v2/farm-scene-12-480.jpg 480w, images/v2/farm-scene-12-960.jpg 960w, images/v2/farm-scene-12-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="충분히 부숙했는지 살핍니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>03</b> 발효퇴비 · 유기물을 다시 흙으로</p>
+          <p class="sv-no"><span class="sv-no__n">장면 12</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s12-t">오래 두었다는 것과<br>충분히 부숙했다는 것은 다릅니다</h3>
+          <div class="sv-prose"><p>퇴비는 원료가 분해되고 안정화되는 과정을 거칩니다. 사용하기에 적합한 상태인지는 원료와 관리 과정, 필요한 확인 항목을 함께 살펴야 합니다.</p><p>우리가 퇴비를 배우는 이유도 여기에 있습니다. 작물과 토양에 사용하기 전까지의 과정이 중요하기 때문입니다.</p></div>
+
+        </div>
+      </article>
+    </section>
+    <section class="sv-chap" id="ch4" aria-labelledby="ch4-t">
+      <header class="sv-chap__h"><span class="sv-chap__no" aria-hidden="true">04</span><div><p class="sv-chap__k">유기질 비료</p><h2 id="ch4-t" class="sv-chap__t">작물이 필요한 양분을 생각합니다</h2></div></header>
+      <article class="sv-scene" id="s13" data-ch="4" aria-labelledby="s13-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-13-1440.webp" aria-label="퇴비와 비료의 역할을 구분합니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-13-192.webp 192w, images/v2/farm-scene-13-480.webp 480w, images/v2/farm-scene-13-960.webp 960w, images/v2/farm-scene-13-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-13-960.jpg" srcset="images/v2/farm-scene-13-192.jpg 192w, images/v2/farm-scene-13-480.jpg 480w, images/v2/farm-scene-13-960.jpg 960w, images/v2/farm-scene-13-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="퇴비와 비료의 역할을 구분합니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>04</b> 유기질 비료 · 작물이 필요한 양분을 생각합니다</p>
+          <p class="sv-no"><span class="sv-no__n">장면 13</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s13-t">흙을 돌보는 일과<br>양분을 공급하는 일</h3>
+          <div class="sv-prose"><p>퇴비와 유기질 비료의 역할은 서로 다릅니다. 퇴비는 많은 미생물이  살아갈 수 있는 조건을 만들어주고, 유기질 비료는 작물에 필요한 양분 공급에 필요합니다.</p><p>무엇을 사용하는지에 더해, 왜 사용하고 어느 정도 필요한지 살피는 것이 중요합니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--rev" id="s14" data-ch="4" aria-labelledby="s14-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-14-1440.webp" aria-label="직접 만드는 비료도 원료를 알아야 합니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-14-192.webp 192w, images/v2/farm-scene-14-480.webp 480w, images/v2/farm-scene-14-960.webp 960w, images/v2/farm-scene-14-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-14-960.jpg" srcset="images/v2/farm-scene-14-192.jpg 192w, images/v2/farm-scene-14-480.jpg 480w, images/v2/farm-scene-14-960.jpg 960w, images/v2/farm-scene-14-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="직접 만드는 비료도 원료를 알아야 합니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>04</b> 유기질 비료 · 작물이 필요한 양분을 생각합니다</p>
+          <p class="sv-no"><span class="sv-no__n">장면 14</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s14-t">직접 만든다는 사실보다,<br>무엇으로 어떻게 만드는지가 중요합니다</h3>
+          <div class="sv-prose"><p>유기물 원료를 배합하고 처리해 작물의 양분 공급에 활용하는 방법이 있습니다. 원료마다 성분과 특성이 다르기 때문에 제조 조건과 사용 목적도 함께 고려해야 합니다.</p><p>‘천연’이나 ‘자가 제조’라는 이름만으로 효과가 정해지지는 않습니다. 실제 사용하는 원료와 공정을 구체적으로 고려하는 것이 먼저입니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene" id="s15" data-ch="4" aria-labelledby="s15-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-15-1440.webp" aria-label="필요한 만큼 사용하는 것도 농사입니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-15-192.webp 192w, images/v2/farm-scene-15-480.webp 480w, images/v2/farm-scene-15-960.webp 960w, images/v2/farm-scene-15-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-15-960.jpg" srcset="images/v2/farm-scene-15-192.jpg 192w, images/v2/farm-scene-15-480.jpg 480w, images/v2/farm-scene-15-960.jpg 960w, images/v2/farm-scene-15-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="필요한 만큼 사용하는 것도 농사입니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>04</b> 유기질 비료 · 작물이 필요한 양분을 생각합니다</p>
+          <p class="sv-no"><span class="sv-no__n">장면 15</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s15-t">좋은 자재를 고르는 일만큼<br>사용량을 살피는 일도 중요합니다</h3>
+          <div class="sv-prose"><p>작물과 토양의 상태, 자재가 공급하는 양분을 고려해야 합니다. 여러 비료를 함께 사용할 때에는 같은 양분을 중복해서 공급하지 않는지도 살펴야 합니다.</p><p>농업자재를 많이 넣는 것보다, 재배 조건에 맞게 사용하는 것이 중요합니다.</p></div>
+
+        </div>
+      </article>
+    </section>
+    <section class="sv-chap" id="ch5" aria-labelledby="ch5-t">
+      <header class="sv-chap__h"><span class="sv-chap__no" aria-hidden="true">05</span><div><p class="sv-chap__k">미생물과 자재</p><h2 id="ch5-t" class="sv-chap__t">미생물과 농업자재를 이해합니다</h2></div></header>
+      <article class="sv-scene sv-scene--wide" id="s16" data-ch="5" aria-labelledby="s16-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-16-1440.webp" aria-label="미생물도 쓰임이 다릅니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-16-192.webp 192w, images/v2/farm-scene-16-480.webp 480w, images/v2/farm-scene-16-960.webp 960w, images/v2/farm-scene-16-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-16-960.jpg" srcset="images/v2/farm-scene-16-192.jpg 192w, images/v2/farm-scene-16-480.jpg 480w, images/v2/farm-scene-16-960.jpg 960w, images/v2/farm-scene-16-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="미생물도 쓰임이 다릅니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>05</b> 미생물과 자재 · 미생물과 농업자재를 이해합니다</p>
+          <p class="sv-no"><span class="sv-no__n">장면 16</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s16-t">미생물이 들어 있다고<br>모두 같은 일을 하지는 않습니다</h3>
+          <div class="sv-prose"><p>퇴비의 분해를 돕는 미생물제, 토양이나 생육 관리에 활용하는 미생물제, 특정 병해충을 방제하는 미생물 농약은 용도와 확인할 내용이 다릅니다.</p><p>어떤 미생물을 무슨 목적으로 사용하는지 구분해야 합니다.</p><ul class="sv-chips" aria-label="핵심어"><li>분해·발효 보조</li><li>토양·생육 관리</li><li>특정 병해충 방제</li></ul></div>
+
+        </div>
+      </article>
+      <article class="sv-scene" id="s17" data-ch="5" aria-labelledby="s17-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-17-1440.webp" aria-label="병해충도 대상을 알고 관리합니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-17-192.webp 192w, images/v2/farm-scene-17-480.webp 480w, images/v2/farm-scene-17-960.webp 960w, images/v2/farm-scene-17-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-17-960.jpg" srcset="images/v2/farm-scene-17-192.jpg 192w, images/v2/farm-scene-17-480.jpg 480w, images/v2/farm-scene-17-960.jpg 960w, images/v2/farm-scene-17-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="병해충도 대상을 알고 관리합니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>05</b> 미생물과 자재 · 미생물과 농업자재를 이해합니다</p>
+          <p class="sv-no"><span class="sv-no__n">장면 17</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s17-t">어떤 균주가,<br>어떤 병해충에 작용하는가</h3>
+          <div class="sv-prose"><p>미생물 농약은 미생물의 기능을 활용해 특정 병해충을 방제합니다. 균주와 제품에 따라 적용 대상과 사용 조건이 다릅니다.</p><p>작물의 상태와 방제 대상을 살피고, 해당 제품의 사용방법을 확인하는 과정이 필요합니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--rev" id="s18" data-ch="5" aria-labelledby="s18-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-18-1440.webp" aria-label="유기농업자재도 내용을 확인합니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-18-192.webp 192w, images/v2/farm-scene-18-480.webp 480w, images/v2/farm-scene-18-960.webp 960w, images/v2/farm-scene-18-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-18-960.jpg" srcset="images/v2/farm-scene-18-192.jpg 192w, images/v2/farm-scene-18-480.jpg 480w, images/v2/farm-scene-18-960.jpg 960w, images/v2/farm-scene-18-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="유기농업자재도 내용을 확인합니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>05</b> 미생물과 자재 · 미생물과 농업자재를 이해합니다</p>
+          <p class="sv-no"><span class="sv-no__n">장면 18</span><span class="sv-kind sv-kind--principle">농사 원리</span></p>
+          <h3 class="sv-t" id="s18-t">이름만 보고<br>선택하지 않습니다</h3>
+          <div class="sv-prose"><p>유기농업자재를 살필 때에는 원료와 주성분, 용도와 사용방법을 확인해야 합니다. 공시된 제품이라면 현재 공시 정보도 함께 확인할 수 있습니다.</p><p>자재의 공시와 농산물의 인증은 서로 다른 사항입니다. 영동에덴원이 사용하는 자재와 재배 방식은 수 년간 경험한 것을 바탕으로 활용합니다.</p></div>
+
+        </div>
+      </article>
+    </section>
+    <section class="sv-chap" id="ch6" aria-labelledby="ch6-t">
+      <header class="sv-chap__h"><span class="sv-chap__no" aria-hidden="true">06</span><div><p class="sv-chap__k">다음 식탁으로</p><h2 id="ch6-t" class="sv-chap__t">다시, 우리의 밭으로</h2></div></header>
+      <article class="sv-scene sv-scene--wide" id="s19" data-ch="6" aria-labelledby="s19-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-19-1440.webp" aria-label="자연을 따르기 위해 계속 배웁니다 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-19-192.webp 192w, images/v2/farm-scene-19-480.webp 480w, images/v2/farm-scene-19-960.webp 960w, images/v2/farm-scene-19-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-19-960.jpg" srcset="images/v2/farm-scene-19-192.jpg 192w, images/v2/farm-scene-19-480.jpg 480w, images/v2/farm-scene-19-960.jpg 960w, images/v2/farm-scene-19-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="자연을 따르기 위해 계속 배웁니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>06</b> 다음 식탁으로 · 다시, 우리의 밭으로</p>
+          <p class="sv-no"><span class="sv-no__n">장면 19</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s19-t">손으로 해온 농사에<br>배움을 더합니다</h3>
+          <div class="sv-prose"><p>영동에덴원은 농사를 지으며 토양의 변화를 경험했고, 유기농업과 유기농업자재에 관한 교육과 정보를 찾아왔습니다.</p><p>경험만으로 설명하기 어려운 부분을 배우고, 배운 내용을 실제 밭의 조건과 함께 살피려 합니다. 자연농법이라는 방향 안에서 우리가 무엇을 하고 있는지 더 구체적으로 알아가는 중 입니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--wide" id="s20" data-ch="6" aria-labelledby="s20-t">
+        <button class="sv-fig" type="button" data-full="images/v2/farm-scene-20-1440.webp" aria-label="다음 식탁도 이 땅에서 이어지도록 삽화 크게 보기"><picture><source type="image/webp" srcset="images/v2/farm-scene-20-192.webp 192w, images/v2/farm-scene-20-480.webp 480w, images/v2/farm-scene-20-960.webp 960w, images/v2/farm-scene-20-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/farm-scene-20-960.jpg" srcset="images/v2/farm-scene-20-192.jpg 192w, images/v2/farm-scene-20-480.jpg 480w, images/v2/farm-scene-20-960.jpg 960w, images/v2/farm-scene-20-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="다음 식탁도 이 땅에서 이어지도록" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>06</b> 다음 식탁으로 · 다시, 우리의 밭으로</p>
+          <p class="sv-no"><span class="sv-no__n">장면 20</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s20-t">우리가 먹을 것을 기르며,<br>다음 농사까지 생각합니다</h3>
+          <div class="sv-prose"><p>함께 먹을 것을 마련하려고 시작한 농사는 토양을 돌보고 원료와 자재를 배우는 경험으로 이어졌습니다.</p><p>제초제를 사용하지 않고, 발효 퇴비와 유기질 비료를 준비하는 과정, 미생물과 유기농업자재의 쓰임을 이해하려는 노력. 그 안에는 이 땅에서 농사를 계속 이어가고 싶은 마음이 있습니다.</p><p>오늘 거둔 먹거리가 식탁에 오르고, 다음 계절에도 다시 기를 수 있도록. 영동에덴원은 그렇게 농사를 배워가고 있습니다.</p></div>
+
+        </div>
+      </article>
+    </section>
+  </div>
+  <script>/* 펼쳐서 읽기면 넓은 장면 삽화를 넓은 칸 크기로 받기(그림책은 그대로 — 넓은 장면도 보통 칸) */(function (R, sv) {
+    try { if (!R.classList.contains("sv-book")) [].forEach.call(sv.querySelectorAll(".sv-scene--wide source, .sv-scene--wide img"), function (e) { e.setAttribute("sizes", sv.getAttribute("data-sv-sizes-wide")); }); } catch (e) {}
+  })(document.documentElement, document.querySelector("[data-sv]"));</script>
+
+  <div class="sv-bar" data-sv-bar hidden>
+    <div class="container sv-bar__in">
+      <div class="sv-ctl">
+        <button type="button" class="sv-nb" data-sv-prev aria-label="이전 장면"><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+<span>이전</span></button>
+        <p class="sv-cnt" aria-live="polite"><b data-sv-curn>01</b> / 20 <span data-sv-chn>01 농사의 시작</span></p>
+        <button type="button" class="sv-nb sv-nb--dark" data-sv-next aria-label="다음 장면"><span>다음</span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button>
+        <a class="sv-nb sv-nb--dark sv-nb--go" href="products.html?cat=farm" data-sv-go hidden><span>농산물 보기</span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a>
+      </div>
+      <p class="sv-ainote sv-ainote--bar">이야기와 농업 원리를 바탕으로 AI를 활용해 제작한 삽화입니다. 인물과 공간은 상징적인 표현이며 실제 기록사진은 아닙니다. 원리 그림은 개념을 설명하는 그림입니다.</p>
+    </div>
+  </div>
+
+  <section class="sv-end" aria-labelledby="sv-end-t">
+    <div class="container sv-end__in">
+      <p class="sv-ey sv-ey--lt">다음 계절에도 이어질 농사</p>
+      <h2 id="sv-end-t" class="sv-end__t">오늘의 먹거리를 기르고,<br>다음 계절도 준비합니다</h2>
+      <div class="sv-ctas"><a class="sv-cta sv-cta--p" href="products.html?cat=farm">농산물 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a><a class="sv-cta" href="story.html">공동체 이야기 이어보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></div>
+    </div>
+  </section>
+<div class="sv-disc"><p class="container">자연농법이라는 명칭이나 유기농업자재의 사용이 농산물의 유기·무농약 인증을 의미하지는 않습니다.</p></div>  <p class="container sv-ainote sv-ainote--foot">이야기와 농업 원리를 바탕으로 AI를 활용해 제작한 삽화입니다. 인물과 공간은 상징적인 표현이며 실제 기록사진은 아닙니다. 원리 그림은 개념을 설명하는 그림입니다.</p>
+  <dialog class="sv-all" data-sv-all-box aria-labelledby="sv-all-t"><div class="sv-all__in">
+    <div class="sv-all__h"><h2 id="sv-all-t" class="sv-all__t">20컷 모아보기</h2><button type="button" class="sv-lb__x sv-all__x" data-sv-all-x>닫기</button></div>
+<section class="sv-all__ch" aria-labelledby="sv-all-ch1"><h3 class="sv-all__k" id="sv-all-ch1"><b>01</b> 농사의 시작</h3><ul class="sv-all__g"><li><button type="button" class="sv-all__i" data-sv-to="0"><img src="images/v2/farm-scene-01-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>01</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">식탁에서 시작된 농사</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="1"><img src="images/v2/farm-scene-02-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>02</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">처음 만난 땅은 단단했습니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="2"><img src="images/v2/farm-scene-03-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>03</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">제초제를 쓰지 않기로 했습니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="3"><img src="images/v2/farm-scene-04-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>04</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">흙이 달라지는 것을 경험했습니다</span></button></li></ul></section><section class="sv-all__ch" aria-labelledby="sv-all-ch2"><h3 class="sv-all__k" id="sv-all-ch2"><b>02</b> 흙과 자연농법</h3><ul class="sv-all__g"><li><button type="button" class="sv-all__i" data-sv-to="4"><img src="images/v2/farm-scene-05-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>05</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">흙속에서도 일이 일어납니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="5"><img src="images/v2/farm-scene-06-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>06</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">자연농법은 실제 하는 일로 설명합니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="6"><img src="images/v2/farm-scene-07-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>07</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">땅을 보호하는 여러 방법을 배웁니다</span></button></li></ul></section><section class="sv-all__ch" aria-labelledby="sv-all-ch3"><h3 class="sv-all__k" id="sv-all-ch3"><b>03</b> 발효퇴비</h3><ul class="sv-all__g"><li><button type="button" class="sv-all__i" data-sv-to="7"><img src="images/v2/farm-scene-08-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>08</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">남은 자원도 다시 살펴봅니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="8"><img src="images/v2/farm-scene-09-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>09</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">퇴비는 원료에서 시작됩니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="9"><img src="images/v2/farm-scene-10-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>10</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">톱밥에도 역할이 있습니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="10"><img src="images/v2/farm-scene-11-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>11</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">분해가 이어지도록 조건을 살핍니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="11"><img src="images/v2/farm-scene-12-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>12</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">충분히 부숙했는지 살핍니다</span></button></li></ul></section><section class="sv-all__ch" aria-labelledby="sv-all-ch4"><h3 class="sv-all__k" id="sv-all-ch4"><b>04</b> 유기질 비료</h3><ul class="sv-all__g"><li><button type="button" class="sv-all__i" data-sv-to="12"><img src="images/v2/farm-scene-13-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>13</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">퇴비와 비료의 역할을 구분합니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="13"><img src="images/v2/farm-scene-14-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>14</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">직접 만드는 비료도 원료를 알아야 합니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="14"><img src="images/v2/farm-scene-15-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>15</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">필요한 만큼 사용하는 것도 농사입니다</span></button></li></ul></section><section class="sv-all__ch" aria-labelledby="sv-all-ch5"><h3 class="sv-all__k" id="sv-all-ch5"><b>05</b> 미생물과 자재</h3><ul class="sv-all__g"><li><button type="button" class="sv-all__i" data-sv-to="15"><img src="images/v2/farm-scene-16-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>16</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">미생물도 쓰임이 다릅니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="16"><img src="images/v2/farm-scene-17-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>17</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">병해충도 대상을 알고 관리합니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="17"><img src="images/v2/farm-scene-18-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>18</b> <i class="sv-kind sv-kind--principle">농사 원리</i></span><span class="sv-all__tt">유기농업자재도 내용을 확인합니다</span></button></li></ul></section><section class="sv-all__ch" aria-labelledby="sv-all-ch6"><h3 class="sv-all__k" id="sv-all-ch6"><b>06</b> 다음 식탁으로</h3><ul class="sv-all__g"><li><button type="button" class="sv-all__i" data-sv-to="18"><img src="images/v2/farm-scene-19-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>19</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">자연을 따르기 위해 계속 배웁니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="19"><img src="images/v2/farm-scene-20-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>20</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">다음 식탁도 이 땅에서 이어지도록</span></button></li></ul></section>  </div></dialog>
+<p class="brand__more container"><a class="link-under" href="gallery.html">계절 갤러리 보기 — 밭의 사계절 사진</a></p>
+  <dialog class="sv-lb" data-sv-lb aria-label="삽화 크게 보기"><img alt="" data-sv-lb-img><div class="sv-lb__cap"><span data-sv-lb-cap></span><button type="button" class="sv-lb__x" data-sv-lb-x>닫기</button></div></dialog>
+</div>
+</main>
+<footer class="ft">
+  <div class="ft__navwrap">
+    <nav class="ft__nav container" aria-label="정책·안내">
+      <a href="story.html">영동에덴원 소개</a>
+<a href="gallery.html">계절 갤러리</a><a href="terms.html">이용약관</a><a href="privacy.html" class="is-strong">개인정보처리방침</a><a href="refund.html">교환·반품·환불 안내</a>      <a href="order-status.html">주문 조회</a>
+      <a href="contact.html">단체·기업 문의</a>
+    </nav>
+  </div>
+  <div class="ft__body container">
+    <div class="ft__brand">
+      <p class="ft__logo"><span class="logo__ko">영동에덴원</span><span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span></p>
+      <p class="ft__legal">
+        <span>농업회사법인 주식회사 에프엔엘바이오푸드 · 대표 길우관</span>
+        <span>충청북도 영동군 학산면 모리2길 3-1</span>
+        <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
+        <span>kwg7978@naver.com</span>
+<a href="terms.html#revision-notice">이용약관 개정 안내 (시행 2026년 11월 20일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
+      </p>
+    </div>
+    <div class="ft__cs">
+      <p class="ft__cs-h">고객센터</p>
+      <p class="ft__tel"><a href="tel:01051267578">010-5126-7578</a></p>
+<p class="ft__hours">월~금 10:00~19:00</p>      <div class="ft__sns">
+        <a href="https://blog.naver.com/gr_edenfarm" rel="noopener">블로그</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

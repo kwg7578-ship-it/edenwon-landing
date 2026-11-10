@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="ko" data-season="autumn" data-root="../">
+<html lang="ko" data-season="autumn" data-season-auto data-ic="xl" data-root="../">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* 2-H 계절 자동: 손님 날짜(한국 시각)의 기상 계절 — CSS 앞에서 정해 색이 바뀌는 순간이 없게. 빌드 계절과 다르면 표시(홈 배너가 순서를 다시 정할 때까지 가림) */(function(r){var b=r.getAttribute("data-season"),s=["winter","spring","summer","autumn"][(new Date(Date.now()+324e5).getUTCMonth()+1)%12/3|0];r.setAttribute("data-season",s);if(s!==b)r.setAttribute("data-season-moved","")})(document.documentElement)</script>
 <meta name="robots" content="noindex, nofollow">
 <title>옹기숙성 비빔된장 — 영동에덴원</title>
 <meta name="description" content="밥에 비벼도, 쌈장으로도 좋은 누구나 맛있게 즐기는 비빔된장. — 영동에덴원">
@@ -10,21 +11,19 @@
 <meta property="og:description" content="밥에 비벼도, 쌈장으로도 좋은 누구나 맛있게 즐기는 비빔된장. — 영동에덴원">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yd-edenwon.com/products/bibim-doenjang.html">
-<meta property="og:image" content="https://yd-edenwon.com/images/product-bibim-doenjang.jpg">
+<meta property="og:image" content="https://yd-edenwon.com/images/v2/product-bibim-doenjang-1200.jpg">
 <meta property="og:locale" content="ko_KR">
 <link rel="canonical" href="https://yd-edenwon.com/products/bibim-doenjang">
 <link rel="icon" href="../favicon.ico">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap" media="print" data-webfont>
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap"></noscript>
-<link rel="preload" as="image" type="image/webp" imagesrcset="../images/v2/product-bibim-doenjang-480.webp 480w, ../images/v2/product-bibim-doenjang-960.webp 960w, ../images/v2/product-bibim-doenjang-1200.webp 1200w" imagesizes="(max-width: 768px) 100vw, 640px" fetchpriority="high">
+<link rel="preload" href="../assets/v2/noto-sans-kr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/v2/fonts.css">
+<link rel="preload" as="image" type="image/webp" imagesrcset="../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-480.webp 480w, ../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-960.webp 960w, ../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-1086.webp 1086w" imagesizes="(max-width: 768px) 100vw, 640px" fetchpriority="high">
 <link rel="stylesheet" href="../assets/v2/tokens.css">
 <link rel="stylesheet" href="../assets/v2/base.css">
 <link rel="stylesheet" href="../assets/v2/pages.css">
 <link rel="stylesheet" href="../assets/v2/motion.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="../assets/v2/motion.css"></noscript>
-<script src="../assets/v2/app.js" defer></script>
+<link rel="stylesheet" href="../assets/v2/type.css"><script type="application/json" id="ed-texts">{"곧 만나요":"영동에덴원\n제철 농산물","다음 수확을 기다리는 작물입니다":"영동에덴원 농산물을 계절별로 만나보세요.","영동 농장 직접 수령":"영동에덴원 방문 or 직접 수령","지금 밭에서 거두는 것":"영동에덴원 농산물","발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다":"발효퇴비와 풀로 만든 토양에서, \n자연농법으로 농산물을 키웠습니다"}</script><script src="../assets/v2/app.js" defer></script>
 </head>
 <body class="page-detail">
 <div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
@@ -35,6 +34,7 @@
     <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
   </div>
 </div>
+<p class="sr-only" role="status" aria-live="polite" data-added-live></p>
 <div class="hd-top" role="region" aria-label="공지와 회원 메뉴">
   <a class="skip" href="#main">본문 바로가기</a>
   <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
@@ -49,7 +49,7 @@
 
 <a href="../order-status.html">주문 조회</a><a href="../contact.html">고객센터</a>  </div>
 </div>
-<header class="hd" data-hd>
+<header class="hd hd--groups" data-hd>
   <div class="hd__bar container">
     <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
 </button>
@@ -57,8 +57,11 @@
       <span class="logo__ko">영동에덴원</span><span class="sr-only"> 홈</span>
       <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
     </a>
-    <nav class="gnb" aria-label="주 메뉴">
-<a href="../products.html" aria-current="page">제품</a><a href="../products.html?cat=gift">선물세트</a><a href="../story.html">영동에덴원 이야기</a><a href="../contact.html">단체·기업 구매</a>    </nav>
+    <nav class="gnb gnb--groups" aria-label="주 메뉴">
+<div class="gnb__item" data-gnb-item><a class="gnb__link" href="../products.html?cat=onggi" style="min-width:3.76em" aria-current="page">옹기발효</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-onggi" aria-label="옹기발효 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-onggi" hidden><li><a href="../products.html?cat=onggi">옹기발효 전체</a></li><li><a href="../products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="../products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="../products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="gnb__item" data-gnb-item><a class="gnb__link" href="../products.html?cat=processed" style="min-width:3.76em">가공식품</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-processed" aria-label="가공식품 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-processed" hidden><li><a href="../products.html?cat=processed">가공식품 전체</a></li><li><a href="../products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="../products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="../products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="../products.html?cat=farm" style="min-width:2.82em">농산물</a><a href="../products.html?cat=gift" style="min-width:3.76em">선물세트</a><div class="gnb__item" data-gnb-item><a class="gnb__link" href="../story.html" style="min-width:2.82em">브랜드 스토리</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-story" aria-label="이야기 펼치기" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub gnb__sub--plain" id="gnb-sub-story" hidden><li><a href="../story.html">영동에덴원 이야기</a></li><li><a href="../farming.html">농사 이야기</a></li><li><a href="../fermentation.html">발효 이야기</a></li></ul></div><a href="../contact.html" style="min-width:6.28em">단체·기업 문의</a>    </nav>
     <div class="hd__actions">
       <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
 </button>
@@ -86,7 +89,10 @@
 </button>
     </div>
     <nav class="drawer__nav" aria-label="모바일 주 메뉴">
-<a href="../products.html" aria-current="page">제품</a><a href="../products.html?cat=gift">선물세트</a><a href="../story.html">영동에덴원 이야기</a><a href="../contact.html">단체·기업 구매</a>    </nav>
+<div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-onggi" data-dr-tog data-current>옹기발효<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-onggi" hidden><li><a href="../products.html?cat=onggi">옹기발효 전체</a></li><li><a href="../products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="../products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="../products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-processed" data-dr-tog>가공식품<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-processed" hidden><li><a href="../products.html?cat=processed">가공식품 전체</a></li><li><a href="../products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="../products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="../products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="../products.html?cat=farm">농산물</a><a href="../products.html?cat=gift">선물세트</a><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-story" data-dr-tog>브랜드 스토리<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-story" hidden><li><a href="../story.html">영동에덴원 이야기</a></li><li><a href="../farming.html">농사 이야기</a></li><li><a href="../fermentation.html">발효 이야기</a></li></ul></div><a href="../contact.html">단체·기업 문의</a>    </nav>
     <nav class="drawer__util" aria-label="회원·고객 메뉴">
       <span class="hd__member" data-dr-member>
   <a href="../account/login.html" data-dr-login data-m-anon>로그인</a>
@@ -101,40 +107,38 @@
   </div>
 </div>
 <main id="main" tabindex="-1">
-<script type="application/json" id="product-data">{"key": "bibim-doenjang", "name": "옹기숙성 비빔된장", "img": "product-bibim-doenjang.jpg", "href": "products/bibim-doenjang.html", "options": [{"id": "300g", "label": "300g", "price": 15000, "sold_out": false}]}</script>
+<script type="application/json" id="product-data">{"key": "bibim-doenjang", "name": "옹기숙성 비빔된장", "img": "chatgpt-2026-10-16-11-37-25-20261017000050.jpg", "href": "products/bibim-doenjang.html", "options": [{"id": "300g", "label": "300g", "price": 15000, "sold_out": false, "size": [300, "g"]}], "up": true, "one": true}</script>
 <div class="pd container">
   <nav class="crumbs crumbs--muted" aria-label="현재 위치">
     <a href="../index.html">홈</a><span aria-hidden="true">/</span>
     <a href="../products.html">제품</a><span aria-hidden="true">/</span>
-    <a href="../products.html?cat=jam">잼·조청·비빔장</a>
+    <a href="../products.html?cat=onggi">옹기발효</a><span aria-hidden="true">/</span><a href="../products.html?cat=onggi&amp;sub=bibim">비빔장</a>
   </nav>
 
   <div class="pd__top">
-    <div class="gallery" data-gallery>
-      <div class="gallery__main">
-<div class="gallery__slide" data-shot="0"><picture><source type="image/webp" srcset="../images/v2/product-bibim-doenjang-480.webp 480w, ../images/v2/product-bibim-doenjang-960.webp 960w, ../images/v2/product-bibim-doenjang-1200.webp 1200w" sizes="(max-width: 768px) 100vw, 640px"><img src="../images/v2/product-bibim-doenjang-960.jpg" srcset="../images/v2/product-bibim-doenjang-480.jpg 480w, ../images/v2/product-bibim-doenjang-960.jpg 960w, ../images/v2/product-bibim-doenjang-1200.jpg 1200w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="옹기숙성 비빔된장 300g" class="gallery__img" loading="eager" fetchpriority="high" decoding="async"></picture></div>      </div>
+    <div class="gallery gallery--multi" data-gallery>
+      <div class="gallery__thumbs" role="group" aria-label="사진 고르기">
+<button type="button" class="gallery__thumb" aria-label="옹기숙성 비빔된장 보기" aria-current="true" data-thumb="0"><picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-480.webp 480w, ../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-960.webp 960w, ../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-1086.webp 1086w" sizes="84px"><img src="../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-960.jpg" srcset="../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-480.jpg 480w, ../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-960.jpg 960w, ../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-1086.jpg 1086w" sizes="84px" width="960" height="1280" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></button><button type="button" class="gallery__thumb" aria-label="«옹기숙성 비빔된장» 라벨이 붙은 검은 뚜껑 유리병을 흰 바탕에 둔 모습 보기" data-thumb="1"><picture><source type="image/webp" srcset="../images/v2/photo-20261019112854-1-480.webp 480w, ../images/v2/photo-20261019112854-1-960.webp 960w, ../images/v2/photo-20261019112854-1-1254.webp 1254w" sizes="84px"><img src="../images/v2/photo-20261019112854-1-960.jpg" srcset="../images/v2/photo-20261019112854-1-480.jpg 480w, ../images/v2/photo-20261019112854-1-960.jpg 960w, ../images/v2/photo-20261019112854-1-1254.jpg 1254w" sizes="84px" width="960" height="960" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></button>      </div>
+      <div class="gallery__stage">
+      <div class="gallery__main" data-track tabindex="0" aria-label="큰 사진 — 좌우로 밀거나 화살표 키로 넘기기">
+<div class="gallery__slide is-on" data-shot="0"><picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-480.webp 480w, ../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-960.webp 960w, ../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-1086.webp 1086w" sizes="(max-width: 768px) 100vw, 640px"><img src="../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-960.jpg" srcset="../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-480.jpg 480w, ../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-960.jpg 960w, ../images/v2/chatgpt-2026-10-16-11-37-25-20261017000050-1086.jpg 1086w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="1280" alt="옹기숙성 비빔된장" class="gallery__img" loading="eager" fetchpriority="high" decoding="async"></picture></div><div class="gallery__slide" data-shot="1"><picture data-defer><source type="image/webp" data-srcset="../images/v2/photo-20261019112854-1-480.webp 480w, ../images/v2/photo-20261019112854-1-960.webp 960w, ../images/v2/photo-20261019112854-1-1254.webp 1254w" sizes="(max-width: 768px) 100vw, 640px"><img data-srcset="../images/v2/photo-20261019112854-1-480.jpg 480w, ../images/v2/photo-20261019112854-1-960.jpg 960w, ../images/v2/photo-20261019112854-1-1254.jpg 1254w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="960" alt="«옹기숙성 비빔된장» 라벨이 붙은 검은 뚜껑 유리병을 흰 바탕에 둔 모습" class="gallery__img" decoding="async"></picture></div>      </div><p class="gallery__count" aria-live="polite"><span data-count>1</span> / 2</p></div>
     </div>
 
     <div class="buy" id="buy" data-buy>
       <div class="buy__head">
-        <p class="buy__cat">잼·조청·비빔장</p>
+        <p class="buy__cat">비빔장</p>
         <h1 class="buy__name">옹기숙성 비빔된장</h1>
         <p class="buy__lede">밥에 비비거나 쌈장으로</p>
 <a class="buy__rating" href="#reviews" data-rv-badge hidden><span aria-hidden="true" class="buy__stars">★</span><span data-rv-badge-avg></span><span class="muted" data-rv-badge-n></span></a>        <div class="buy__price">
-          <span class="buy__won">15,000원</span>
+          <span class="buy__won" data-buy-won>15,000원</span>
         </div>
-        <a class="buy__login" href="../account/login.html" data-login-link>로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
+<p class="buy__unit" data-buy-unit>300g · 100g당 5,000원</p>        <a class="buy__login" href="../account/login.html" data-login-link>로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
         <p class="buy__member" data-member-price hidden></p>
       </div>
 
       <dl class="buy__facts">
-<dt>배송</dt><dd>택배 5,000원 · 100,000원 이상 무료</dd><dt>직접 수령</dt><dd>영동 농장 (충북 영동군 학산면)</dd><dt>주문 알림</dt><dd>주문 즉시 주문번호·결제 안내 문자</dd><dt>적립</dt><dd>회원 구매 시 [적립률]% 적립</dd>      </dl>
+<dt>배송</dt><dd>택배 5,000원 · 100,000원 이상 무료</dd><dt>직접 수령</dt><dd>영동 농장 (충북 영동군 학산면)</dd><dt>주문 알림</dt><dd>주문 즉시 주문번호·결제 안내 문자</dd><dt>적립</dt><dd>회원 구매 시 2% 적립</dd>      </dl>
 
-      <div class="buy__select">
-        <label for="opt">용량</label>
-        <select id="opt" data-opt-select>
-<option value="300g">300g · 15,000원</option>        </select>
-      </div>
       <ul class="lines" data-lines aria-label="선택한 옵션"></ul>
       <template id="line-tpl">
         <li class="line">
@@ -164,20 +168,36 @@
 
 <nav class="toc" aria-label="상품 정보 바로가기" data-toc>
   <div class="toc__in container">
-<a href="#glance" data-sec-link aria-current="true">한눈에</a><a href="#usage" data-sec-link>맛과 쓰임</a><a href="#reviews" data-sec-link>후기</a><a href="#notice" data-sec-link>상품정보</a><a href="#shipping" data-sec-link>배송·교환</a>  </div>
+<a href="#intro" data-sec-link aria-current="true">소개</a><a href="#glance" data-sec-link>한눈에</a><a href="#usage" data-sec-link>맛과 쓰임</a><a href="#reviews" data-sec-link>후기</a><a href="#notice" data-sec-link>상품정보</a><a href="#shipping" data-sec-link>배송·교환</a>  </div>
 </nav>
 
-<div class="sb-text" id="story" data-sec>
-<p class="eyebrow eyebrow--accent">BIBIM DOENJANG</p><h2 class="sb-text__title">밥에 비비는 된장</h2><p>옹기에서 발효·숙성한 된장에 산뜻한 토마토를 더했습니다.</p><p>따뜻한 밥에 비벼도, 채소에 쌈장으로 곁들여도 좋습니다.</p></div>
+<section class="sb-hero sb-hero--bottom sb-hero--scrim" id="intro" data-sec data-in-toc aria-label="소개">
+  <picture><source type="image/webp" srcset="../images/v2/background-4-20261107204239-480.webp 480w, ../images/v2/background-4-20261107204239-960.webp 960w, ../images/v2/background-4-20261107204239-1254.webp 1254w" sizes="100vw"><img src="../images/v2/background-4-20261107204239-960.jpg" srcset="../images/v2/background-4-20261107204239-480.jpg 480w, ../images/v2/background-4-20261107204239-960.jpg 960w, ../images/v2/background-4-20261107204239-1254.jpg 1254w" sizes="100vw" width="960" height="960" alt="건더기가 섞인 진한 갈색 비빔된장의 표면" class="sb-hero__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:50% 50%"></picture>  <div class="sb-hero__scrim"></div>
+  <div class="sb-hero__text">
+<p class="eyebrow">옹기숙성</p>    <h2 class="sb-hero__title">발효의 진심<br>옹기숙성 비빔된장</h2>
+<p class="sb-hero__lead">옹기에서 발효·숙성한 옹기숙성 된장에 산뜻한 토마토를 더했습니다.</p>  </div>
+</section>
 <section class="sb container" id="glance" data-sec data-in-toc aria-labelledby="glance-h">
   <h2 class="sb__h" id="glance-h">한눈에 보기</h2>
   <dl class="glance">
-<div class="glance__cell"><dt>주원료</dt><dd>옹기숙성 된장 · 토마토</dd></div><div class="glance__cell"><dt>용량</dt><dd>300g</dd></div><div class="glance__cell"><dt>보관</dt><dd>[보관]</dd></div><div class="glance__cell"><dt>소비기한</dt><dd>[소비기한]</dd></div>  </dl>
+<div class="glance__cell"><dt>주원료</dt><dd>옹기숙성 된장 · 토마토</dd></div><div class="glance__cell"><dt>용량</dt><dd>300g</dd></div><div class="glance__cell"><dt>보관</dt><dd>직사광선을 피하고 냉암소에 보관하고, 개봉후에는 뚜껑 닫아 반드시 냉장보관 하세요</dd></div><div class="glance__cell"><dt>소비기한</dt><dd>제조일로부터 1개월</dd></div>  </dl>
 </section>
+<section class="gx gx-lead gx-lead--left" id="gx-lead" data-sec aria-labelledby="gx-lead-h">
+  <div class="gx-in">
+<p class="gx-eyebrow">STORY</p><h2 class="gx-title" id="gx-lead-h">입 맛이 없을 때, 밥에 비비는 된장</h2><p class="gx-lede">옹기에서 발효·숙성한 된장에 산뜻한 토마토를 더했습니다.<br>따뜻한 밥에 비벼도, 채소에 쌈장으로 곁들여도 좋습니다.</p>  </div>
+</section>
+
 <section class="sb container" id="usage" data-sec data-in-toc aria-labelledby="usage-h">
   <div class="usage__top">
-    <div class="sb__head usage__intro"><p class="eyebrow eyebrow--accent">TASTE &amp; USE</p><h2 class="sb__h" id="usage-h">맛과 쓰임</h2><p class="sb__lead">[맛 설명 — 첫맛, 향, 끝맛 2~3문장. 대표 시식 메모로 작성]</p></div>
-<ul class="pairs"><li><span class="pairs__k">비빔</span><span class="pairs__v">비빔밥 · 주먹밥</span></li><li><span class="pairs__k">쌈장</span><span class="pairs__v">상추 · 깻잎 쌈에</span></li><li><span class="pairs__k">반찬</span><span class="pairs__v">간편한 한 끼</span></li></ul>  </div>
+    <div class="sb__head usage__intro"><p class="eyebrow eyebrow--accent">TASTE &amp; USE</p><h2 class="sb__h" id="usage-h">활용하는 방법</h2></div>
+<ul class="pairs"><li><span class="pairs__k">비빔</span><span class="pairs__v">비빔밥 · 주먹밥</span></li><li><span class="pairs__k">쌈장</span><span class="pairs__v">상추 · 깻잎 쌈에</span></li><li><span class="pairs__k">반찬</span><span class="pairs__v">간편한 한 끼</span></li></ul>  </div><div class="ucards">
+  <h3 class="ucards__h">이렇게 드세요</h3>
+  <div class="ucards__scroll" tabindex="0" role="region" aria-label="이렇게 드세요 카드 3장">
+    <ul class="ucards__list ucards__list--3">
+<li class="ucard"><picture><source type="image/webp" srcset="../images/v2/01-rice-balls-20261026202419-480.webp 480w, ../images/v2/01-rice-balls-20261026202419-960.webp 960w, ../images/v2/01-rice-balls-20261026202419-1448.webp 1448w" sizes="(max-width: 767px) 72vw, 280px"><img src="../images/v2/01-rice-balls-20261026202419-960.jpg" srcset="../images/v2/01-rice-balls-20261026202419-480.jpg 480w, ../images/v2/01-rice-balls-20261026202419-960.jpg 960w, ../images/v2/01-rice-balls-20261026202419-1448.jpg 1448w" sizes="(max-width: 767px) 72vw, 280px" width="960" height="720" alt="잡곡밥에 비빔된장을 넣어 빚은 주먹밥 다섯 개" class="ucard__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="ucard__t">주먹밥</h4></li><li class="ucard"><picture><source type="image/webp" srcset="../images/v2/02-lettuce-ssam-20261026202438-480.webp 480w, ../images/v2/02-lettuce-ssam-20261026202438-960.webp 960w, ../images/v2/02-lettuce-ssam-20261026202438-1448.webp 1448w" sizes="(max-width: 767px) 72vw, 280px"><img src="../images/v2/02-lettuce-ssam-20261026202438-960.jpg" srcset="../images/v2/02-lettuce-ssam-20261026202438-480.jpg 480w, ../images/v2/02-lettuce-ssam-20261026202438-960.jpg 960w, ../images/v2/02-lettuce-ssam-20261026202438-1448.jpg 1448w" sizes="(max-width: 767px) 72vw, 280px" width="960" height="720" alt="상추에 밥과 고기, 비빔된장을 얹은 쌈 세 개" class="ucard__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="ucard__t">쌈장</h4></li><li class="ucard"><picture><source type="image/webp" srcset="../images/v2/03-mini-toast-20261026202509-480.webp 480w, ../images/v2/03-mini-toast-20261026202509-960.webp 960w, ../images/v2/03-mini-toast-20261026202509-1448.webp 1448w" sizes="(max-width: 767px) 72vw, 280px"><img src="../images/v2/03-mini-toast-20261026202509-960.jpg" srcset="../images/v2/03-mini-toast-20261026202509-480.jpg 480w, ../images/v2/03-mini-toast-20261026202509-960.jpg 960w, ../images/v2/03-mini-toast-20261026202509-1448.jpg 1448w" sizes="(max-width: 767px) 72vw, 280px" width="960" height="720" alt="다진 고기와 치즈, 토마토를 올린 작은 토스트" class="ucard__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="ucard__t">토스트</h4></li>    </ul>
+  </div>
+</div>
+
 </section>
 <section class="sb container" id="reviews" data-sec data-in-toc aria-labelledby="reviews-h" data-reviews="bibim-doenjang">
   <div class="sb__headrow"><h2 class="sb__h" id="reviews-h">주문 후기</h2></div>
@@ -194,14 +214,14 @@
   <details class="fold" data-fold>
     <summary class="fold__sum"><span>상품정보제공고시</span><span class="fold__icon" aria-hidden="true"></span></summary>
     <dl class="infotable infotable--fold">
-<dt>제품명</dt><dd>옹기숙성 비빔된장</dd><dt>식품의 유형</dt><dd>[식품의 유형]</dd><dt>생산자 및 소재지 (수입품의 경우 생산자, 수입자 및 제조국)</dt><dd>농업회사법인 주식회사 에프엔엘바이오푸드 · 충청북도 영동군 학산면 모리2길 3-1</dd><dt>제조연월일, 소비기한 또는 품질유지기한</dt><dd>[소비기한]</dd><dt>포장단위별 내용물의 용량(중량), 수량</dt><dd>300g</dd><dt>원재료명 (「농수산물의 원산지 표시 등에 관한 법률」에 따른 원산지 표시 포함) 및 함량(원재료 함량 표시대상 식품에 한함)</dt><dd>[원재료명 및 함량]</dd><dt>영양성분 (영양성분 표시대상 식품에 한함)</dt><dd>[영양성분]</dd><dt>유전자변형식품에 해당하는 경우의 표시</dt><dd>[유전자변형식품 표시]</dd><dt>소비자 안전을 위한 주의사항 (「식품 등의 표시ㆍ광고에 관한 법률 시행규칙」 제5조 및 [별표 2]에 따른 표시사항을 말함)</dt><dd>[소비자 안전 주의사항]</dd><dt>소비자 상담 관련 전화번호</dt><dd>010-5126-7578</dd>    </dl>
+<dt>제품명</dt><dd>옹기숙성 비빔된장</dd><dt>식품의 유형</dt><dd>소스</dd><dt>생산자 및 소재지 (수입품의 경우 생산자, 수입자 및 제조국)</dt><dd>농업회사법인 주식회사 에프엔엘바이오푸드 · 충청북도 영동군 학산면 모리2길 3-1</dd><dt>제조연월일, 소비기한 또는 품질유지기한</dt><dd>제조일로부터 1개월</dd><dt>포장단위별 내용물의 용량(중량), 수량</dt><dd>300g</dd><dt>원재료명 (「농수산물의 원산지 표시 등에 관한 법률」에 따른 원산지 표시 포함) 및 함량(원재료 함량 표시대상 식품에 한함)</dt><dd>된장[대두(국내산),천일염(국내산),정제수]32.8%,양파(국내산)24.6%,고추장[고춧가루(국내산),찹쌀(국내산),천일염(국내산),메주가루(국내산)]16.4%,토마토잼[토마토(국내산)84.2%,설탕15.8%]16.4%,정제수8.2%,발사믹(국내산)1.6%</dd><dt>소비자 안전을 위한 주의사항 (「식품 등의 표시ㆍ광고에 관한 법률 시행규칙」 제5조 및 [별표 2]에 따른 표시사항을 말함)</dt><dd>보관방법 : 직사광선을 피하고 냉암소에 보관하고, 개봉후에는 뚜껑 닫아 반드시 냉장보관 하세요<br>반품 및 교환방법 : 제품구입처 및 판매원<br>본 제품은 공정거래위원회 고시 소비자분쟁해결기준에 의거 교환 또는 보상받을 수 있습니다.<br>부정불량 식품신고 : 국번없이 1399<br>소비자 상담실 : 010-5126-7578</dd><dt>소비자 상담 관련 전화번호</dt><dd>010-5126-7578</dd>    </dl>
   </details>
 </section>
 <section class="sb container sb--fold" id="shipping" data-sec data-in-toc aria-label="배송·교환·환불">
   <details class="fold" data-fold>
     <summary class="fold__sum"><span>배송·교환·환불</span><span class="fold__icon" aria-hidden="true"></span></summary>
     <dl class="infotable infotable--fold">
-<dt>배송비</dt><dd>택배 5,000원 · 상품 합계 100,000원 이상 무료. 제주·도서산간은 배송비가 추가될 수 있습니다.</dd><dt>직접 수령</dt><dd>충청북도 영동군 학산면 모리2길 3-1 · [수령 가능 시간]</dd><dt>교환·환불</dt><dd><a href="../refund.html">교환·반품·환불 안내 보기</a></dd>    </dl>
+<dt>배송비</dt><dd>택배 5,000원 · 상품 합계 100,000원 이상 무료. 제주·도서산간은 배송비가 추가될 수 있습니다.</dd><dt>직접 수령</dt><dd>충청북도 영동군 학산면 모리2길 3-1 · 주중,주말 오전 9시~오후 6시, 방문 전 전화</dd><dt>교환·환불</dt><dd><a href="../refund.html">교환·반품·환불 안내 보기</a></dd>    </dl>
   </details>
 </section>
 
@@ -209,65 +229,69 @@
 <section class="related container" aria-labelledby="related-h">
   <h2 class="h2 h2--md" id="related-h">함께 담기 좋은 제품</h2>
   <div class="grid4">
-<article class="card" data-cat="jam" data-price="15000" data-name="옹기숙성 비빔고추장 300g 밥에 비비거나 쌈장으로">
+<article class="card has-alt" data-cat="bibim" data-top="onggi" data-price="15000" data-name="옹기숙성 비빔고추장 밥에 비비거나 쌈장으로">
   <div class="card__photo">
     <a class="card__photo-link" href="../products/bibim-gochujang.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-bibim-gochujang-480.webp 480w, ../images/v2/product-bibim-gochujang-960.webp 960w, ../images/v2/product-bibim-gochujang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-bibim-gochujang-960.jpg" srcset="../images/v2/product-bibim-gochujang-480.jpg 480w, ../images/v2/product-bibim-gochujang-960.jpg 960w, ../images/v2/product-bibim-gochujang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-480.webp 480w, ../images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-960.webp 960w, ../images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-960.jpg" srcset="../images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-480.jpg 480w, ../images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-960.jpg 960w, ../images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/photo-20261017072313-480.webp 480w, ../images/v2/photo-20261017072313-960.webp 960w, ../images/v2/photo-20261017072313-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/photo-20261017072313-480.jpg 480w, ../images/v2/photo-20261017072313-960.jpg 960w, ../images/v2/photo-20261017072313-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
-    <button type="button" class="card__bag" aria-label="옹기숙성 비빔고추장 300g 장바구니에 담기" data-add="bibim-gochujang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+    <button type="button" class="card__bag" aria-label="옹기숙성 비빔고추장 장바구니에 담기" data-add="bibim-gochujang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">담기 +</span></button>
   </div>
   <a class="card__text" href="../products/bibim-gochujang.html">
-    <span class="card__name">옹기숙성 비빔고추장 300g</span>
-    <span class="card__price">15,000원</span>
+    <span class="card__name">옹기숙성 비빔고추장</span>
+    <span class="card__price">15,000원</span><span class="card__unit">300g · 100g당 5,000원</span>
     <span class="card__desc">밥에 비비거나 쌈장으로</span>
   </a>
 </article>
-<article class="card" data-cat="jam" data-price="10000" data-name="진짜&#39;S 잼 샤인머스캣 · 복숭아 · 토마토">
-  <div class="card__photo">
-    <a class="card__photo-link" href="../products/jam.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-jam-shine-muscat-480.webp 480w, ../images/v2/product-jam-shine-muscat-960.webp 960w, ../images/v2/product-jam-shine-muscat-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-jam-shine-muscat-960.jpg" srcset="../images/v2/product-jam-shine-muscat-480.jpg 480w, ../images/v2/product-jam-shine-muscat-960.jpg 960w, ../images/v2/product-jam-shine-muscat-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-    </a>
-<span class="badge">가마솥 3시간</span>    <a class="card__bag" href="../products/jam.html" aria-label="진짜&#39;S 잼 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</a>
-  </div>
-  <a class="card__text" href="../products/jam.html">
-    <span class="card__name">진짜&#39;S 잼</span>
-    <span class="card__price">10,000원</span>
-    <span class="card__desc">샤인머스캣 · 복숭아 · 토마토</span>
-  </a>
-</article>
-<article class="card" data-cat="jam" data-price="20000" data-name="진짜&#39;S 조청 300g 자가 재배 엿기름 · 가마솥 6시간">
-  <div class="card__photo">
-    <a class="card__photo-link" href="../products/jocheong.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-jocheong-480.webp 480w, ../images/v2/product-jocheong-960.webp 960w, ../images/v2/product-jocheong-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-jocheong-960.jpg" srcset="../images/v2/product-jocheong-480.jpg 480w, ../images/v2/product-jocheong-960.jpg 960w, ../images/v2/product-jocheong-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-    </a>
-    <button type="button" class="card__bag" aria-label="진짜&#39;S 조청 300g 장바구니에 담기" data-add="jocheong" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
-  </div>
-  <a class="card__text" href="../products/jocheong.html">
-    <span class="card__name">진짜&#39;S 조청 300g</span>
-    <span class="card__price">20,000원</span>
-    <span class="card__desc">자가 재배 엿기름 · 가마솥 6시간</span>
-  </a>
-</article>
-<article class="card" data-cat="vinegar" data-price="35000" data-name="발효의 초심 천연식초 375ml 산야초·과일·프리미엄 22종">
+<article class="card has-alt" data-cat="vinegar" data-top="onggi" data-price="35000" data-name="발효의 초심 천연식초 375ml 산야초·과일·프리미엄 24종">
   <div class="card__photo">
     <a class="card__photo-link" href="../products/vinegar.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-vinegar-480.webp 480w, ../images/v2/product-vinegar-960.webp 960w, ../images/v2/product-vinegar-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-vinegar-960.jpg" srcset="../images/v2/product-vinegar-480.jpg 480w, ../images/v2/product-vinegar-960.jpg 960w, ../images/v2/product-vinegar-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-480.webp 480w, ../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.webp 960w, ../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.jpg" srcset="../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-480.jpg 480w, ../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.jpg 960w, ../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/photo-20261019110900-480.webp 480w, ../images/v2/photo-20261019110900-960.webp 960w, ../images/v2/photo-20261019110900-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/photo-20261019110900-480.jpg 480w, ../images/v2/photo-20261019110900-960.jpg 960w, ../images/v2/photo-20261019110900-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
 <span class="badge">자연 발효</span>    <a class="card__bag" href="../products/vinegar.html" aria-label="발효의 초심 천연식초 375ml 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</a>
+<span class="card__bag-t" aria-hidden="true">옵션 고르기</span></a>
   </div>
   <a class="card__text" href="../products/vinegar.html">
     <span class="card__name">발효의 초심 천연식초 375ml</span>
-    <span class="card__price">35,000원~</span>
-    <span class="card__desc">산야초·과일·프리미엄 22종</span>
+    <span class="card__price">35,000원~</span><span class="card__unit">375ml · 100ml당 9,333원</span>
+    <span class="card__desc">산야초·과일·프리미엄 24종</span>
+  </a>
+</article>
+<article class="card has-alt" data-cat="jang" data-top="onggi" data-price="20000" data-name="옹기숙성 된장 자가 재배 콩 · 천일염">
+  <div class="card__photo">
+    <a class="card__photo-link" href="../products/doenjang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-480.webp 480w, ../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.webp 960w, ../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.jpg" srcset="../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-480.jpg 480w, ../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.jpg 960w, ../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/photo-20261017012846-480.webp 480w, ../images/v2/photo-20261017012846-960.webp 960w, ../images/v2/photo-20261017012846-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/photo-20261017012846-480.jpg 480w, ../images/v2/photo-20261017012846-960.jpg 960w, ../images/v2/photo-20261017012846-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:49% 54%"></picture>
+    </a>
+<span class="badge">2년 이상 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 된장 장바구니에 담기" data-add="doenjang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">담기 +</span></button>
+  </div>
+  <a class="card__text" href="../products/doenjang.html">
+    <span class="card__name">옹기숙성 된장</span>
+    <span class="card__price">20,000원</span><span class="card__unit">300g · 100g당 6,667원</span>
+    <span class="card__desc">자가 재배 콩 · 천일염</span>
+  </a>
+</article>
+<article class="card has-alt" data-cat="jang" data-top="onggi" data-price="20000" data-name="옹기숙성 고추장 엿기름 당화액 · 메주가루">
+  <div class="card__photo">
+    <a class="card__photo-link" href="../products/gochujang.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-480.webp 480w, ../images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-960.webp 960w, ../images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-1024.webp 1024w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-960.jpg" srcset="../images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-480.jpg 480w, ../images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-960.jpg 960w, ../images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-1024.jpg 1024w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1440" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/photo-20261017020634-480.webp 480w, ../images/v2/photo-20261017020634-960.webp 960w, ../images/v2/photo-20261017020634-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/photo-20261017020634-480.jpg 480w, ../images/v2/photo-20261017020634-960.jpg 960w, ../images/v2/photo-20261017020634-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
+    </a>
+<span class="badge">1년 이상 숙성</span>    <a class="card__bag" href="../products/gochujang.html" aria-label="옹기숙성 고추장 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">옵션 고르기</span></a>
+  </div>
+  <a class="card__text" href="../products/gochujang.html">
+    <span class="card__name">옹기숙성 고추장</span>
+    <span class="card__price">20,000원~</span><span class="card__unit">300g · 100g당 6,667원</span>
+    <span class="card__desc">엿기름 당화액 · 메주가루</span>
   </a>
 </article>
   </div>
 </section>
-
+<p class="pd-ainote container">활용하는 방법의 요리 사진 등 일부 사진은 AI로 만든 연출 이미지입니다.</p>
 <div class="buybar" data-buybar>
   <button type="button" class="buy__like" aria-label="찜하기" aria-pressed="false" data-like="bibim-doenjang"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
   <button type="button" class="btn btn--line" data-to-cart>장바구니</button>
@@ -278,8 +302,8 @@
   <div class="ft__navwrap">
     <nav class="ft__nav container" aria-label="정책·안내">
       <a href="../story.html">영동에덴원 소개</a>
-<a href="../terms.html">이용약관</a><a href="../privacy.html" class="is-strong">개인정보처리방침</a><a href="../refund.html">교환·반품·환불 안내</a>      <a href="../order-status.html">주문 조회</a>
-      <a href="../contact.html">단체·기업 구매 문의</a>
+<a href="../gallery.html">계절 갤러리</a><a href="../terms.html">이용약관</a><a href="../privacy.html" class="is-strong">개인정보처리방침</a><a href="../refund.html">교환·반품·환불 안내</a>      <a href="../order-status.html">주문 조회</a>
+      <a href="../contact.html">단체·기업 문의</a>
     </nav>
   </div>
   <div class="ft__body container">
@@ -290,7 +314,7 @@
         <span>충청북도 영동군 학산면 모리2길 3-1</span>
         <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
         <span>kwg7978@naver.com</span>
-<a href="../privacy.html#revision-notice">개인정보처리방침·이용약관 개정 안내 (시행 2026년 10월 19일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
+<a href="../terms.html#revision-notice">이용약관 개정 안내 (시행 2026년 11월 20일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
       </p>
     </div>
     <div class="ft__cs">

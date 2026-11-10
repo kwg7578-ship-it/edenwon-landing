@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="ko" data-season="autumn" data-root="../">
+<html lang="ko" data-season="autumn" data-season-auto data-ic="xl" data-root="../">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* 2-H 계절 자동: 손님 날짜(한국 시각)의 기상 계절 — CSS 앞에서 정해 색이 바뀌는 순간이 없게. 빌드 계절과 다르면 표시(홈 배너가 순서를 다시 정할 때까지 가림) */(function(r){var b=r.getAttribute("data-season"),s=["winter","spring","summer","autumn"][(new Date(Date.now()+324e5).getUTCMonth()+1)%12/3|0];r.setAttribute("data-season",s);if(s!==b)r.setAttribute("data-season-moved","")})(document.documentElement)</script>
 <meta name="robots" content="noindex, nofollow">
 <title>명품 메주 — 영동에덴원</title>
 <meta name="description" content="직접 농사 지은 콩으로 빚어 발효실에서 속까지 완전하게 띄운 명품 메주. — 영동에덴원">
@@ -10,21 +11,19 @@
 <meta property="og:description" content="직접 농사 지은 콩으로 빚어 발효실에서 속까지 완전하게 띄운 명품 메주. — 영동에덴원">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yd-edenwon.com/products/meju.html">
-<meta property="og:image" content="https://yd-edenwon.com/images/product-meju.jpg">
+<meta property="og:image" content="https://yd-edenwon.com/images/v2/product-meju-1200.jpg">
 <meta property="og:locale" content="ko_KR">
 <link rel="canonical" href="https://yd-edenwon.com/products/meju">
 <link rel="icon" href="../favicon.ico">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap" media="print" data-webfont>
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap"></noscript>
-<link rel="preload" as="image" type="image/webp" imagesrcset="../images/v2/product-meju-480.webp 480w, ../images/v2/product-meju-960.webp 960w, ../images/v2/product-meju-1200.webp 1200w" imagesizes="(max-width: 768px) 100vw, 640px" fetchpriority="high">
+<link rel="preload" href="../assets/v2/noto-sans-kr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/v2/fonts.css">
+<link rel="preload" as="image" type="image/webp" imagesrcset="../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-480.webp 480w, ../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-960.webp 960w, ../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-1448.webp 1448w" imagesizes="(max-width: 768px) 100vw, 640px" fetchpriority="high">
 <link rel="stylesheet" href="../assets/v2/tokens.css">
 <link rel="stylesheet" href="../assets/v2/base.css">
 <link rel="stylesheet" href="../assets/v2/pages.css">
 <link rel="stylesheet" href="../assets/v2/motion.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="../assets/v2/motion.css"></noscript>
-<script src="../assets/v2/app.js" defer></script>
+<link rel="stylesheet" href="../assets/v2/type.css"><script type="application/json" id="ed-texts">{"곧 만나요":"영동에덴원\n제철 농산물","다음 수확을 기다리는 작물입니다":"영동에덴원 농산물을 계절별로 만나보세요.","영동 농장 직접 수령":"영동에덴원 방문 or 직접 수령","지금 밭에서 거두는 것":"영동에덴원 농산물","발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다":"발효퇴비와 풀로 만든 토양에서, \n자연농법으로 농산물을 키웠습니다"}</script><script src="../assets/v2/app.js" defer></script>
 </head>
 <body class="page-detail">
 <div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
@@ -35,6 +34,7 @@
     <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
   </div>
 </div>
+<p class="sr-only" role="status" aria-live="polite" data-added-live></p>
 <div class="hd-top" role="region" aria-label="공지와 회원 메뉴">
   <a class="skip" href="#main">본문 바로가기</a>
   <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
@@ -49,7 +49,7 @@
 
 <a href="../order-status.html">주문 조회</a><a href="../contact.html">고객센터</a>  </div>
 </div>
-<header class="hd" data-hd>
+<header class="hd hd--groups" data-hd>
   <div class="hd__bar container">
     <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
 </button>
@@ -57,8 +57,11 @@
       <span class="logo__ko">영동에덴원</span><span class="sr-only"> 홈</span>
       <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
     </a>
-    <nav class="gnb" aria-label="주 메뉴">
-<a href="../products.html" aria-current="page">제품</a><a href="../products.html?cat=gift">선물세트</a><a href="../story.html">영동에덴원 이야기</a><a href="../contact.html">단체·기업 구매</a>    </nav>
+    <nav class="gnb gnb--groups" aria-label="주 메뉴">
+<div class="gnb__item" data-gnb-item><a class="gnb__link" href="../products.html?cat=onggi" style="min-width:3.76em">옹기발효</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-onggi" aria-label="옹기발효 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-onggi" hidden><li><a href="../products.html?cat=onggi">옹기발효 전체</a></li><li><a href="../products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="../products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="../products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="gnb__item" data-gnb-item><a class="gnb__link" href="../products.html?cat=processed" style="min-width:3.76em" aria-current="page">가공식품</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-processed" aria-label="가공식품 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-processed" hidden><li><a href="../products.html?cat=processed">가공식품 전체</a></li><li><a href="../products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="../products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="../products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="../products.html?cat=farm" style="min-width:2.82em">농산물</a><a href="../products.html?cat=gift" style="min-width:3.76em">선물세트</a><div class="gnb__item" data-gnb-item><a class="gnb__link" href="../story.html" style="min-width:2.82em">브랜드 스토리</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-story" aria-label="이야기 펼치기" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub gnb__sub--plain" id="gnb-sub-story" hidden><li><a href="../story.html">영동에덴원 이야기</a></li><li><a href="../farming.html">농사 이야기</a></li><li><a href="../fermentation.html">발효 이야기</a></li></ul></div><a href="../contact.html" style="min-width:6.28em">단체·기업 문의</a>    </nav>
     <div class="hd__actions">
       <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
 </button>
@@ -86,7 +89,10 @@
 </button>
     </div>
     <nav class="drawer__nav" aria-label="모바일 주 메뉴">
-<a href="../products.html" aria-current="page">제품</a><a href="../products.html?cat=gift">선물세트</a><a href="../story.html">영동에덴원 이야기</a><a href="../contact.html">단체·기업 구매</a>    </nav>
+<div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-onggi" data-dr-tog>옹기발효<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-onggi" hidden><li><a href="../products.html?cat=onggi">옹기발효 전체</a></li><li><a href="../products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="../products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="../products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-processed" data-dr-tog data-current>가공식품<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-processed" hidden><li><a href="../products.html?cat=processed">가공식품 전체</a></li><li><a href="../products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="../products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="../products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="../products.html?cat=farm">농산물</a><a href="../products.html?cat=gift">선물세트</a><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-story" data-dr-tog>브랜드 스토리<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-story" hidden><li><a href="../story.html">영동에덴원 이야기</a></li><li><a href="../farming.html">농사 이야기</a></li><li><a href="../fermentation.html">발효 이야기</a></li></ul></div><a href="../contact.html">단체·기업 문의</a>    </nav>
     <nav class="drawer__util" aria-label="회원·고객 메뉴">
       <span class="hd__member" data-dr-member>
   <a href="../account/login.html" data-dr-login data-m-anon>로그인</a>
@@ -101,40 +107,38 @@
   </div>
 </div>
 <main id="main" tabindex="-1">
-<script type="application/json" id="product-data">{"key": "meju", "name": "명품 메주", "img": "product-meju.jpg", "href": "products/meju.html", "options": [{"id": "1ea", "label": "1개", "price": 25000, "sold_out": false}]}</script>
+<script type="application/json" id="product-data">{"key": "meju", "name": "명품 메주", "img": "chatgpt-2026-10-17-12-51-44-20261017005217.jpg", "href": "products/meju.html", "options": [{"id": "1ea", "label": "1개", "price": 25000, "sold_out": false, "size": [1, "개"]}], "up": true, "one": true}</script>
 <div class="pd container">
   <nav class="crumbs crumbs--muted" aria-label="현재 위치">
     <a href="../index.html">홈</a><span aria-hidden="true">/</span>
     <a href="../products.html">제품</a><span aria-hidden="true">/</span>
-    <a href="../products.html?cat=jang">옹기숙성 장류</a>
+    <a href="../products.html?cat=processed">가공식품</a><span aria-hidden="true">/</span><a href="../products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a>
   </nav>
 
   <div class="pd__top">
-    <div class="gallery" data-gallery>
-      <div class="gallery__main">
-<div class="gallery__slide" data-shot="0"><picture><source type="image/webp" srcset="../images/v2/product-meju-480.webp 480w, ../images/v2/product-meju-960.webp 960w, ../images/v2/product-meju-1200.webp 1200w" sizes="(max-width: 768px) 100vw, 640px"><img src="../images/v2/product-meju-960.jpg" srcset="../images/v2/product-meju-480.jpg 480w, ../images/v2/product-meju-960.jpg 960w, ../images/v2/product-meju-1200.jpg 1200w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="명품 메주 1개" class="gallery__img" loading="eager" fetchpriority="high" decoding="async"></picture></div>      </div>
+    <div class="gallery gallery--multi" data-gallery>
+      <div class="gallery__thumbs" role="group" aria-label="사진 고르기">
+<button type="button" class="gallery__thumb" aria-label="명품 메주 보기" aria-current="true" data-thumb="0"><picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-480.webp 480w, ../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-960.webp 960w, ../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-1448.webp 1448w" sizes="84px"><img src="../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-960.jpg" srcset="../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-480.jpg 480w, ../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-960.jpg 960w, ../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-1448.jpg 1448w" sizes="84px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></button><button type="button" class="gallery__thumb" aria-label="갈라진 메주의 단면, 안쪽까지 완전히 뜬 메주의 모습 보기" data-thumb="1"><picture><source type="image/webp" srcset="../images/v2/meju-detail-inside-20261019112441-2-480.webp 480w, ../images/v2/meju-detail-inside-20261019112441-2-960.webp 960w, ../images/v2/meju-detail-inside-20261019112441-2-1200.webp 1200w" sizes="84px"><img src="../images/v2/meju-detail-inside-20261019112441-2-960.jpg" srcset="../images/v2/meju-detail-inside-20261019112441-2-480.jpg 480w, ../images/v2/meju-detail-inside-20261019112441-2-960.jpg 960w, ../images/v2/meju-detail-inside-20261019112441-2-1200.jpg 1200w" sizes="84px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></button><button type="button" class="gallery__thumb" aria-label="볏짚 사이에 걸린 구멍 세 개 난 메주의 갈라진 겉면의 모습 보기" data-thumb="2"><picture><source type="image/webp" srcset="../images/v2/product-meju-20261019112441-3-480.webp 480w, ../images/v2/product-meju-20261019112441-3-960.webp 960w, ../images/v2/product-meju-20261019112441-3-1200.webp 1200w" sizes="84px"><img src="../images/v2/product-meju-20261019112441-3-960.jpg" srcset="../images/v2/product-meju-20261019112441-3-480.jpg 480w, ../images/v2/product-meju-20261019112441-3-960.jpg 960w, ../images/v2/product-meju-20261019112441-3-1200.jpg 1200w" sizes="84px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></button><button type="button" class="gallery__thumb" aria-label="발효실 선반에 놓인 메주가 줄지어 놓인 모습 보기" data-thumb="3"><picture><source type="image/webp" srcset="../images/v2/winter-meju-room-wide-20261019112441-4-480.webp 480w, ../images/v2/winter-meju-room-wide-20261019112441-4-960.webp 960w, ../images/v2/winter-meju-room-wide-20261019112441-4-1000.webp 1000w" sizes="84px"><img src="../images/v2/winter-meju-room-wide-20261019112441-4-960.jpg" srcset="../images/v2/winter-meju-room-wide-20261019112441-4-480.jpg 480w, ../images/v2/winter-meju-room-wide-20261019112441-4-960.jpg 960w, ../images/v2/winter-meju-room-wide-20261019112441-4-1000.jpg 1000w" sizes="84px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></button><button type="button" class="gallery__thumb" aria-label="볏짚을 깐 선반 위에 명품 메주가 줄지어 놓인 모습 보기" data-thumb="4"><picture><source type="image/webp" srcset="../images/v2/winter-meju-rack-03-20261019112441-5-480.webp 480w, ../images/v2/winter-meju-rack-03-20261019112441-5-960.webp 960w, ../images/v2/winter-meju-rack-03-20261019112441-5-1000.webp 1000w" sizes="84px"><img src="../images/v2/winter-meju-rack-03-20261019112441-5-960.jpg" srcset="../images/v2/winter-meju-rack-03-20261019112441-5-480.jpg 480w, ../images/v2/winter-meju-rack-03-20261019112441-5-960.jpg 960w, ../images/v2/winter-meju-rack-03-20261019112441-5-1000.jpg 1000w" sizes="84px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></button><button type="button" class="gallery__thumb" aria-label="볏짚 위 선반에 겉이 갈라진 메주가 나란히 놓인 모습 보기" data-thumb="5"><picture><source type="image/webp" srcset="../images/v2/winter-meju-rack-02-20261019112441-6-480.webp 480w, ../images/v2/winter-meju-rack-02-20261019112441-6-960.webp 960w, ../images/v2/winter-meju-rack-02-20261019112441-6-1000.webp 1000w" sizes="84px"><img src="../images/v2/winter-meju-rack-02-20261019112441-6-960.jpg" srcset="../images/v2/winter-meju-rack-02-20261019112441-6-480.jpg 480w, ../images/v2/winter-meju-rack-02-20261019112441-6-960.jpg 960w, ../images/v2/winter-meju-rack-02-20261019112441-6-1000.jpg 1000w" sizes="84px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></button><button type="button" class="gallery__thumb" aria-label="철제 틀에 줄로 매단 메주가 햇빛치기 하는 모습 보기" data-thumb="6"><picture><source type="image/webp" srcset="../images/v2/photo-20261019112728-480.webp 480w, ../images/v2/photo-20261019112728-960.webp 960w, ../images/v2/photo-20261019112728-1000.webp 1000w" sizes="84px"><img src="../images/v2/photo-20261019112728-960.jpg" srcset="../images/v2/photo-20261019112728-480.jpg 480w, ../images/v2/photo-20261019112728-960.jpg 960w, ../images/v2/photo-20261019112728-1000.jpg 1000w" sizes="84px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async" style="object-position:50% 50%"></picture></button>      </div>
+      <div class="gallery__stage">
+      <div class="gallery__main" data-track tabindex="0" aria-label="큰 사진 — 좌우로 밀거나 화살표 키로 넘기기">
+<div class="gallery__slide is-on" data-shot="0"><picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-480.webp 480w, ../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-960.webp 960w, ../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-1448.webp 1448w" sizes="(max-width: 768px) 100vw, 640px"><img src="../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-960.jpg" srcset="../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-480.jpg 480w, ../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-960.jpg 960w, ../images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-1448.jpg 1448w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="명품 메주" class="gallery__img" loading="eager" fetchpriority="high" decoding="async"></picture></div><div class="gallery__slide" data-shot="1"><picture data-defer><source type="image/webp" data-srcset="../images/v2/meju-detail-inside-20261019112441-2-480.webp 480w, ../images/v2/meju-detail-inside-20261019112441-2-960.webp 960w, ../images/v2/meju-detail-inside-20261019112441-2-1200.webp 1200w" sizes="(max-width: 768px) 100vw, 640px"><img data-srcset="../images/v2/meju-detail-inside-20261019112441-2-480.jpg 480w, ../images/v2/meju-detail-inside-20261019112441-2-960.jpg 960w, ../images/v2/meju-detail-inside-20261019112441-2-1200.jpg 1200w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="갈라진 메주의 단면, 안쪽까지 완전히 뜬 메주의 모습" class="gallery__img" decoding="async"></picture></div><div class="gallery__slide" data-shot="2"><picture data-defer><source type="image/webp" data-srcset="../images/v2/product-meju-20261019112441-3-480.webp 480w, ../images/v2/product-meju-20261019112441-3-960.webp 960w, ../images/v2/product-meju-20261019112441-3-1200.webp 1200w" sizes="(max-width: 768px) 100vw, 640px"><img data-srcset="../images/v2/product-meju-20261019112441-3-480.jpg 480w, ../images/v2/product-meju-20261019112441-3-960.jpg 960w, ../images/v2/product-meju-20261019112441-3-1200.jpg 1200w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="볏짚 사이에 걸린 구멍 세 개 난 메주의 갈라진 겉면의 모습" class="gallery__img" decoding="async"></picture></div><div class="gallery__slide" data-shot="3"><picture data-defer><source type="image/webp" data-srcset="../images/v2/winter-meju-room-wide-20261019112441-4-480.webp 480w, ../images/v2/winter-meju-room-wide-20261019112441-4-960.webp 960w, ../images/v2/winter-meju-room-wide-20261019112441-4-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 640px"><img data-srcset="../images/v2/winter-meju-room-wide-20261019112441-4-480.jpg 480w, ../images/v2/winter-meju-room-wide-20261019112441-4-960.jpg 960w, ../images/v2/winter-meju-room-wide-20261019112441-4-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="발효실 선반에 놓인 메주가 줄지어 놓인 모습" class="gallery__img" decoding="async"></picture></div><div class="gallery__slide" data-shot="4"><picture data-defer><source type="image/webp" data-srcset="../images/v2/winter-meju-rack-03-20261019112441-5-480.webp 480w, ../images/v2/winter-meju-rack-03-20261019112441-5-960.webp 960w, ../images/v2/winter-meju-rack-03-20261019112441-5-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 640px"><img data-srcset="../images/v2/winter-meju-rack-03-20261019112441-5-480.jpg 480w, ../images/v2/winter-meju-rack-03-20261019112441-5-960.jpg 960w, ../images/v2/winter-meju-rack-03-20261019112441-5-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="볏짚을 깐 선반 위에 명품 메주가 줄지어 놓인 모습" class="gallery__img" decoding="async"></picture></div><div class="gallery__slide" data-shot="5"><picture data-defer><source type="image/webp" data-srcset="../images/v2/winter-meju-rack-02-20261019112441-6-480.webp 480w, ../images/v2/winter-meju-rack-02-20261019112441-6-960.webp 960w, ../images/v2/winter-meju-rack-02-20261019112441-6-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 640px"><img data-srcset="../images/v2/winter-meju-rack-02-20261019112441-6-480.jpg 480w, ../images/v2/winter-meju-rack-02-20261019112441-6-960.jpg 960w, ../images/v2/winter-meju-rack-02-20261019112441-6-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="볏짚 위 선반에 겉이 갈라진 메주가 나란히 놓인 모습" class="gallery__img" decoding="async"></picture></div><div class="gallery__slide" data-shot="6"><picture data-defer><source type="image/webp" data-srcset="../images/v2/photo-20261019112728-480.webp 480w, ../images/v2/photo-20261019112728-960.webp 960w, ../images/v2/photo-20261019112728-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 640px"><img data-srcset="../images/v2/photo-20261019112728-480.jpg 480w, ../images/v2/photo-20261019112728-960.jpg 960w, ../images/v2/photo-20261019112728-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="철제 틀에 줄로 매단 메주가 햇빛치기 하는 모습" class="gallery__img" decoding="async" style="object-position:50% 50%"></picture></div>      </div><p class="gallery__count" aria-live="polite"><span data-count>1</span> / 7</p></div>
     </div>
 
     <div class="buy" id="buy" data-buy>
       <div class="buy__head">
-        <p class="buy__cat">옹기숙성 장류</p>
+        <p class="buy__cat">발효 재료·차</p>
         <h1 class="buy__name">명품 메주</h1>
         <p class="buy__lede">발효실에서 속까지 띄운 메주</p>
 <a class="buy__rating" href="#reviews" data-rv-badge hidden><span aria-hidden="true" class="buy__stars">★</span><span data-rv-badge-avg></span><span class="muted" data-rv-badge-n></span></a>        <div class="buy__price">
-          <span class="buy__won">25,000원</span>
+          <span class="buy__won" data-buy-won>25,000원</span>
         </div>
-        <a class="buy__login" href="../account/login.html" data-login-link>로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
+<p class="buy__unit" data-buy-unit>1개</p>        <a class="buy__login" href="../account/login.html" data-login-link>로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
         <p class="buy__member" data-member-price hidden></p>
       </div>
 
       <dl class="buy__facts">
-<dt>배송</dt><dd>택배 5,000원 · 100,000원 이상 무료</dd><dt>직접 수령</dt><dd>영동 농장 (충북 영동군 학산면)</dd><dt>주문 알림</dt><dd>주문 즉시 주문번호·결제 안내 문자</dd><dt>적립</dt><dd>회원 구매 시 [적립률]% 적립</dd>      </dl>
+<dt>배송</dt><dd>택배 5,000원 · 100,000원 이상 무료</dd><dt>직접 수령</dt><dd>영동 농장 (충북 영동군 학산면)</dd><dt>주문 알림</dt><dd>주문 즉시 주문번호·결제 안내 문자</dd><dt>적립</dt><dd>회원 구매 시 2% 적립</dd>      </dl>
 
-      <div class="buy__select">
-        <label for="opt">수량</label>
-        <select id="opt" data-opt-select>
-<option value="1ea">1개 · 25,000원</option>        </select>
-      </div>
       <ul class="lines" data-lines aria-label="선택한 옵션"></ul>
       <template id="line-tpl">
         <li class="line">
@@ -164,45 +168,62 @@
 
 <nav class="toc" aria-label="상품 정보 바로가기" data-toc>
   <div class="toc__in container">
-<a href="#intro" data-sec-link aria-current="true">소개</a><a href="#glance" data-sec-link>한눈에</a><a href="#process" data-sec-link>메주를 띄우는 과정</a><a href="#process-2" data-sec-link>장 담그는 순서</a><a href="#reviews" data-sec-link>후기</a><a href="#notice" data-sec-link>상품정보</a><a href="#shipping" data-sec-link>배송·교환</a>  </div>
+<a href="#intro" data-sec-link aria-current="true">소개</a><a href="#glance" data-sec-link>한눈에</a><a href="#process" data-sec-link>메주를 띄우는 과정</a><a href="#reviews" data-sec-link>후기</a><a href="#notice" data-sec-link>상품정보</a><a href="#shipping" data-sec-link>배송·교환</a>  </div>
 </nav>
 
 <section class="sb-hero sb-hero--bottom" id="intro" data-sec data-in-toc aria-label="소개">
-  <picture><source type="image/webp" srcset="../images/v2/meju-room-mid-480.webp 480w, ../images/v2/meju-room-mid-960.webp 960w, ../images/v2/meju-room-mid-1000.webp 1000w" sizes="100vw"><img src="../images/v2/meju-room-mid-960.jpg" srcset="../images/v2/meju-room-mid-480.jpg 480w, ../images/v2/meju-room-mid-960.jpg 960w, ../images/v2/meju-room-mid-1000.jpg 1000w" sizes="100vw" width="960" height="720" alt="발효실 선반에서 뜨는 메주" class="sb-hero__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-  <div class="sb-hero__scrim"></div>
+  <picture><source type="image/webp" srcset="../images/v2/meju-room-side-480.webp 480w, ../images/v2/meju-room-side-960.webp 960w, ../images/v2/meju-room-side-1000.webp 1000w" sizes="100vw"><img src="../images/v2/meju-room-side-960.jpg" srcset="../images/v2/meju-room-side-480.jpg 480w, ../images/v2/meju-room-side-960.jpg 960w, ../images/v2/meju-room-side-1000.jpg 1000w" sizes="100vw" width="960" height="720" alt="발효실 선반에서 뜨는 메주" class="sb-hero__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:50% 50%"></picture>  <div class="sb-hero__scrim"></div>
   <div class="sb-hero__text">
-<p class="eyebrow">MEJU</p>    <h2 class="sb-hero__title">콩 고르기부터
-빚기까지 직접.</h2>
-<p class="sb-hero__lead">콩을 고르는 일부터 메주를 빚는 일까지 직접 하고, 발효실에서 속까지 띄웁니다.</p>  </div>
+<p class="eyebrow">명품</p>    <h2 class="sb-hero__title">발효의 진심<br>명품 메주</h2>
+<p class="sb-hero__lead">자연농법으로 직접 농사지은 콩으로 만든 명품 메주, 정직하고 맛있는 장을 담기 위한 마음입니다.</p>  </div>
 </section>
 <section class="sb container" id="glance" data-sec data-in-toc aria-labelledby="glance-h">
   <h2 class="sb__h" id="glance-h">한눈에 보기</h2>
   <dl class="glance">
-<div class="glance__cell"><dt>주원료</dt><dd>직접 고른 콩</dd></div><div class="glance__cell"><dt>발효</dt><dd>발효실에서 속까지</dd></div><div class="glance__cell"><dt>마무리</dt><dd>햇볕 들이기 · 바람치기</dd></div><div class="glance__cell"><dt>용량</dt><dd>1개</dd></div><div class="glance__cell"><dt>보관</dt><dd>습기 없고 서늘한 곳</dd></div>  </dl>
+<div class="glance__cell"><dt>주원료</dt><dd>영동에덴원 메주콩</dd></div><div class="glance__cell"><dt>발효</dt><dd>발효실에서 약 15일</dd></div><div class="glance__cell"><dt>마무리</dt><dd>햇볕 들이기 · 바람치기</dd></div><div class="glance__cell"><dt>용량</dt><dd>1개</dd></div><div class="glance__cell"><dt>보관</dt><dd>습기 없고 서늘한 곳에 보관하세요. 대두 함유. 반품 및 교환방법 : 제품구입처 및 판매원. 본 제품은 공정거래위원회 고시 소비자분쟁해결기준에 의거 교환 또는 보상받을 수 있습니다. 부정불량 식품신고 : 국번없이 1399. 소비자 상담실 : 010-5126-7578, 010-8950-4335</dd></div>  </dl>
 </section>
-<section class="sb-band" id="process" data-sec data-in-toc aria-labelledby="process-h">
-  <div class="sb container sb--steps">
-    <div class="sb__head"><p class="eyebrow eyebrow--accent">PROCESS</p><h2 class="sb__h" id="process-h">메주를 띄우는 과정</h2></div>
-    <ol class="msteps">
-      <li class="mstep">
-<picture><source type="image/webp" srcset="../images/v2/meju-shaping-480.webp 480w, ../images/v2/meju-shaping-857.webp 857w" sizes="(max-width: 768px) 100vw, 55vw"><img src="../images/v2/meju-shaping-857.jpg" srcset="../images/v2/meju-shaping-480.jpg 480w, ../images/v2/meju-shaping-857.jpg 857w" sizes="(max-width: 768px) 100vw, 55vw" width="857" height="643" alt="손으로 메주를 빚는 모습" class="mstep__img" loading="lazy" fetchpriority="low" decoding="async"></picture>        <div class="mstep__text"><span class="mstep__no">01</span><h3 class="mstep__title">발효실에 들이기</h3><p class="mstep__body">손으로 빚은 메주를 발효실에 들입니다.</p></div>
-      </li>
-      <li class="mstep mstep--rev">
-<picture><source type="image/webp" srcset="../images/v2/meju-room-mid-480.webp 480w, ../images/v2/meju-room-mid-960.webp 960w, ../images/v2/meju-room-mid-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 55vw"><img src="../images/v2/meju-room-mid-960.jpg" srcset="../images/v2/meju-room-mid-480.jpg 480w, ../images/v2/meju-room-mid-960.jpg 960w, ../images/v2/meju-room-mid-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 55vw" width="960" height="720" alt="발효실 선반의 메주" class="mstep__img" loading="lazy" fetchpriority="low" decoding="async"></picture>        <div class="mstep__text"><span class="mstep__no">02</span><h3 class="mstep__title">균이 자리 잡기</h3><p class="mstep__body">메주 표면에 균열이 생기며 백국균과 여러 균이 자리를 잡습니다.</p></div>
-      </li>
-      <li class="mstep">
-<picture><source type="image/webp" srcset="../images/v2/meju-inside-480.webp 480w, ../images/v2/meju-inside-960.webp 960w, ../images/v2/meju-inside-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 55vw"><img src="../images/v2/meju-inside-960.jpg" srcset="../images/v2/meju-inside-480.jpg 480w, ../images/v2/meju-inside-960.jpg 960w, ../images/v2/meju-inside-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 55vw" width="960" height="720" alt="속까지 뜬 메주의 단면" class="mstep__img" loading="lazy" fetchpriority="low" decoding="async"></picture>        <div class="mstep__text"><span class="mstep__no">03</span><h3 class="mstep__title">속까지 발효</h3><p class="mstep__body">겉의 균이 안쪽까지 들어가 속까지 발효됩니다. 잘 뜬 메주는 속에 빈 공간이 생깁니다.</p></div>
-      </li>
-      <li class="mstep mstep--rev">
-<picture><source type="image/webp" srcset="../images/v2/winter-meju-drying-480.webp 480w, ../images/v2/winter-meju-drying-960.webp 960w, ../images/v2/winter-meju-drying-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 55vw"><img src="../images/v2/winter-meju-drying-960.jpg" srcset="../images/v2/winter-meju-drying-480.jpg 480w, ../images/v2/winter-meju-drying-960.jpg 960w, ../images/v2/winter-meju-drying-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 55vw" width="960" height="720" alt="볕에 거는 메주" class="mstep__img" loading="lazy" fetchpriority="low" decoding="async"></picture>        <div class="mstep__text"><span class="mstep__no">04</span><h3 class="mstep__title">볕과 바람</h3><p class="mstep__body">햇볕을 들이고 바람을 쳐 잡내를 날립니다.</p></div>
-      </li>
-    </ol>
+<section class="gx gx-lead gx-lead--left" id="gx-lead" data-sec aria-labelledby="gx-lead-h">
+  <div class="gx-in">
+<p class="gx-eyebrow">STORY</p><h2 class="gx-title" id="gx-lead-h">발효에 진심인 정직한 고집</h2><p class="gx-lede">영동에덴원의 이름을 걸고, 콩의 선별부터 성형까지 모든 과정을 직접 책임집니다.<br>자연발효식초와 전통 발효 식품을 연구하며 얻은 데이터로, 최적의 메주 형태와 발효 조건으로 메주를 발효합니다. 정직하고 깊은 감칠맛의 장 맛을 제공한다는 마음으로 영동에덴원은 메주를 띄웁니다.</p>  </div>
+</section>
+
+<section class="pj" id="process" data-sec data-in-toc data-pj aria-labelledby="process-h">
+  <noscript><style>.pj__rail,.pj__nav{display:none!important}.pj__body,.pj__panels{display:block!important}.pj__stage{max-width:720px}.pj__panel{visibility:visible!important;opacity:1!important;transform:none!important;margin-bottom:48px}.pj__panel .pj__text{opacity:1!important}</style></noscript>
+<div class="pj__head"><p class="eyebrow eyebrow--accent">PROCESS</p><h2 class="pj__h" id="process-h">메주를 띄우는 과정</h2></div>  <div class="pj__body">
+    <div class="pj__rail" role="tablist" aria-label="메주를 띄우는 과정 단계" data-pj-rail>
+      <span class="pj__track" aria-hidden="true"><span class="pj__fill"></span></span>
+<button type="button" class="pj__tab" role="tab" id="process-t0" aria-controls="process-p0" aria-selected="true" data-pj-tab="0"><span class="pj__no">01</span><span class="pj__name">콩 선별 · 세척</span></button><button type="button" class="pj__tab" role="tab" id="process-t1" aria-controls="process-p1" aria-selected="false" tabindex="-1" data-pj-tab="1"><span class="pj__no">02</span><span class="pj__name">가마솥에 콩 삶기</span></button><button type="button" class="pj__tab" role="tab" id="process-t2" aria-controls="process-p2" aria-selected="false" tabindex="-1" data-pj-tab="2"><span class="pj__no">03</span><span class="pj__name">삶은 콩 마쇄하기</span></button><button type="button" class="pj__tab" role="tab" id="process-t3" aria-controls="process-p3" aria-selected="false" tabindex="-1" data-pj-tab="3"><span class="pj__no">04</span><span class="pj__name">메주 빚기</span></button><button type="button" class="pj__tab" role="tab" id="process-t4" aria-controls="process-p4" aria-selected="false" tabindex="-1" data-pj-tab="4"><span class="pj__no">05</span><span class="pj__name">발효실에서 메주 띄우기</span></button><button type="button" class="pj__tab" role="tab" id="process-t5" aria-controls="process-p5" aria-selected="false" tabindex="-1" data-pj-tab="5"><span class="pj__no">06</span><span class="pj__name">바람 · 햇볕</span></button><button type="button" class="pj__tab" role="tab" id="process-t6" aria-controls="process-p6" aria-selected="false" tabindex="-1" data-pj-tab="6"><span class="pj__no">07</span><span class="pj__name">명품 메주</span></button>    </div>
+    <div class="pj__stage">
+      <div class="pj__panels" data-pj-panels>
+<div class="pj__panel is-on" role="tabpanel" id="process-p0" aria-labelledby="process-t0" data-pj-panel="0">
+          <div class="pj__media"><picture><source type="image/webp" srcset="../images/v2/meju-shaping-480.webp 480w, ../images/v2/meju-shaping-857.webp 857w" sizes="(max-width: 1023px) 100vw, 640px"><img src="../images/v2/meju-shaping-857.jpg" srcset="../images/v2/meju-shaping-480.jpg 480w, ../images/v2/meju-shaping-857.jpg 857w" sizes="(max-width: 1023px) 100vw, 640px" width="857" height="643" alt="손으로 메주를 빚는 모습" class="pj__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+          <div class="pj__text"><p class="pj__count">01 / 07</p><h3 class="pj__title">콩 선별 · 세척</h3><p class="pj__desc">영동에덴원이 자연농법으로 직접 농사지은 메주콩을 선별해, 깨끗이 씻습니다.<br>메주의 품질을 결정하는 첫 단계입니다.</p></div>
+        </div><div class="pj__panel" role="tabpanel" id="process-p1" aria-labelledby="process-t1" data-pj-panel="1">
+          <div class="pj__media"><picture><source type="image/webp" srcset="../images/v2/meju-room-mid-480.webp 480w, ../images/v2/meju-room-mid-960.webp 960w, ../images/v2/meju-room-mid-1000.webp 1000w" sizes="(max-width: 1023px) 100vw, 640px"><img src="../images/v2/meju-room-mid-960.jpg" srcset="../images/v2/meju-room-mid-480.jpg 480w, ../images/v2/meju-room-mid-960.jpg 960w, ../images/v2/meju-room-mid-1000.jpg 1000w" sizes="(max-width: 1023px) 100vw, 640px" width="960" height="720" alt="발효실 선반의 메주" class="pj__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+          <div class="pj__text"><p class="pj__count">02 / 07</p><h3 class="pj__title">가마솥에 콩 삶기</h3><p class="pj__desc">선별한 콩을 가마솥에 푹 삶아 메주를 쑤기 위한 준비를 합니다.</p></div>
+        </div><div class="pj__panel" role="tabpanel" id="process-p2" aria-labelledby="process-t2" data-pj-panel="2">
+          <div class="pj__media"><picture><source type="image/webp" srcset="../images/v2/meju-inside-480.webp 480w, ../images/v2/meju-inside-960.webp 960w, ../images/v2/meju-inside-1000.webp 1000w" sizes="(max-width: 1023px) 100vw, 640px"><img src="../images/v2/meju-inside-960.jpg" srcset="../images/v2/meju-inside-480.jpg 480w, ../images/v2/meju-inside-960.jpg 960w, ../images/v2/meju-inside-1000.jpg 1000w" sizes="(max-width: 1023px) 100vw, 640px" width="960" height="720" alt="속까지 뜬 메주의 단면" class="pj__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+          <div class="pj__text"><p class="pj__count">03 / 07</p><h3 class="pj__title">삶은 콩 마쇄하기</h3><p class="pj__desc">잘 삶아진 콩을 적당히 마쇄하여, 메주를 빚을 준비를 합니다.</p></div>
+        </div><div class="pj__panel" role="tabpanel" id="process-p3" aria-labelledby="process-t3" data-pj-panel="3">
+          <div class="pj__media"><picture><source type="image/webp" srcset="../images/v2/winter-meju-drying-480.webp 480w, ../images/v2/winter-meju-drying-960.webp 960w, ../images/v2/winter-meju-drying-1000.webp 1000w" sizes="(max-width: 1023px) 100vw, 640px"><img src="../images/v2/winter-meju-drying-960.jpg" srcset="../images/v2/winter-meju-drying-480.jpg 480w, ../images/v2/winter-meju-drying-960.jpg 960w, ../images/v2/winter-meju-drying-1000.jpg 1000w" sizes="(max-width: 1023px) 100vw, 640px" width="960" height="720" alt="볕에 거는 메주" class="pj__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+          <div class="pj__text"><p class="pj__count">04 / 07</p><h3 class="pj__title">메주 빚기</h3><p class="pj__desc">마쇄된 콩을 손으로 하나 하나 메주를 빚습니다.<br>영동에덴원 식구들이 함께 손으로 빚는 과정입니다.</p></div>
+        </div><div class="pj__panel" role="tabpanel" id="process-p4" aria-labelledby="process-t4" data-pj-panel="4">
+          <div class="pj__media"><picture><source type="image/webp" srcset="../images/v2/doenjang-06-480.webp 480w, ../images/v2/doenjang-06-960.webp 960w, ../images/v2/doenjang-06-1000.webp 1000w" sizes="(max-width: 1023px) 100vw, 640px"><img src="../images/v2/doenjang-06-960.jpg" srcset="../images/v2/doenjang-06-480.jpg 480w, ../images/v2/doenjang-06-960.jpg 960w, ../images/v2/doenjang-06-1000.jpg 1000w" sizes="(max-width: 1023px) 100vw, 640px" width="960" height="720" alt="" class="pj__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+          <div class="pj__text"><p class="pj__count">05 / 07</p><h3 class="pj__title">발효실에서 메주 띄우기</h3><p class="pj__desc">최적의 환경으로 세팅된 발효실에서 메주를 띄워,<br>복합 미생물이 자연스럽게 자리 잡게 유도합니다.</p></div>
+        </div><div class="pj__panel" role="tabpanel" id="process-p5" aria-labelledby="process-t5" data-pj-panel="5">
+          <div class="pj__media"><picture><source type="image/webp" srcset="../images/v2/doenjang-07-480.webp 480w, ../images/v2/doenjang-07-960.webp 960w, ../images/v2/doenjang-07-1000.webp 1000w" sizes="(max-width: 1023px) 100vw, 640px"><img src="../images/v2/doenjang-07-960.jpg" srcset="../images/v2/doenjang-07-480.jpg 480w, ../images/v2/doenjang-07-960.jpg 960w, ../images/v2/doenjang-07-1000.jpg 1000w" sizes="(max-width: 1023px) 100vw, 640px" width="960" height="720" alt="" class="pj__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+          <div class="pj__text"><p class="pj__count">06 / 07</p><h3 class="pj__title">바람 · 햇볕</h3><p class="pj__desc">잘 띄워진 메주를 매달아 바람에 건조를 시킵니다.<br>동시에 햇볕으로 살균하여, 미생물의 활동을 멈추게 합니다.</p></div>
+        </div><div class="pj__panel" role="tabpanel" id="process-p6" aria-labelledby="process-t6" data-pj-panel="6">
+          <div class="pj__media"><picture><source type="image/webp" srcset="../images/v2/photo-20261029222502-480.webp 480w, ../images/v2/photo-20261029222502-750.webp 750w" sizes="(max-width: 1023px) 100vw, 640px"><img src="../images/v2/photo-20261029222502-750.jpg" srcset="../images/v2/photo-20261029222502-480.jpg 480w, ../images/v2/photo-20261029222502-750.jpg 750w" sizes="(max-width: 1023px) 100vw, 640px" width="750" height="1000" alt="" class="pj__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+          <div class="pj__text"><p class="pj__count">07 / 07</p><h3 class="pj__title">명품 메주</h3><p class="pj__desc">영동에덴원의 환경과 기술로 띄운 명품 메주의 모습입니다.</p></div>
+        </div>      </div>
+      <div class="pj__nav"><button type="button" class="pj__btn" data-pj-prev aria-label="이전 단계"><svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+</button><button type="button" class="pj__btn" data-pj-next aria-label="다음 단계"><svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><button type="button" class="pj__auto" data-pj-auto aria-pressed="false">자동으로 보기</button></div>
+    </div>
   </div>
 </section>
-<section class="sb-steps" id="process-2" data-sec data-in-toc aria-label="장 담그는 순서">
-<h3 class="sb-h">장 담그는 순서</h3>  <ol class="steps">
-<li class="step"><span class="step__no">01</span><span class="step__title">메주 준비</span><span class="step__body">잘 띄운 메주를 준비합니다.</span></li><li class="step"><span class="step__no">02</span><span class="step__title">소금물</span><span class="step__body">소금과 물로 염수를 만듭니다.</span></li><li class="step"><span class="step__no">03</span><span class="step__title">장 가르기</span><span class="step__body">장물이 우러나면 간장과 된장으로 가릅니다.</span></li>  </ol>
-</section>
+
 <section class="sb container" id="reviews" data-sec data-in-toc aria-labelledby="reviews-h" data-reviews="meju">
   <div class="sb__headrow"><h2 class="sb__h" id="reviews-h">주문 후기</h2></div>
   <div class="rv-sum" data-rv-sum hidden>
@@ -218,14 +239,14 @@
   <details class="fold" data-fold>
     <summary class="fold__sum"><span>상품정보제공고시</span><span class="fold__icon" aria-hidden="true"></span></summary>
     <dl class="infotable infotable--fold">
-<dt>제품명</dt><dd>명품 메주</dd><dt>식품의 유형</dt><dd>[식품의 유형]</dd><dt>생산자 및 소재지 (수입품의 경우 생산자, 수입자 및 제조국)</dt><dd>농업회사법인 주식회사 에프엔엘바이오푸드 · 충청북도 영동군 학산면 모리2길 3-1</dd><dt>제조연월일, 소비기한 또는 품질유지기한</dt><dd>[소비기한]</dd><dt>포장단위별 내용물의 용량(중량), 수량</dt><dd>1개</dd><dt>원재료명 (「농수산물의 원산지 표시 등에 관한 법률」에 따른 원산지 표시 포함) 및 함량(원재료 함량 표시대상 식품에 한함)</dt><dd>[원재료명 및 함량]</dd><dt>영양성분 (영양성분 표시대상 식품에 한함)</dt><dd>[영양성분]</dd><dt>유전자변형식품에 해당하는 경우의 표시</dt><dd>[유전자변형식품 표시]</dd><dt>소비자 안전을 위한 주의사항 (「식품 등의 표시ㆍ광고에 관한 법률 시행규칙」 제5조 및 [별표 2]에 따른 표시사항을 말함)</dt><dd>[소비자 안전 주의사항]</dd><dt>소비자 상담 관련 전화번호</dt><dd>010-5126-7578</dd>    </dl>
+<dt>제품명</dt><dd>명품 메주</dd><dt>식품의 유형</dt><dd>한식메주</dd><dt>생산자 및 소재지 (수입품의 경우 생산자, 수입자 및 제조국)</dt><dd>농업회사법인 주식회사 에프엔엘바이오푸드 · 충청북도 영동군 학산면 모리2길 3-1</dd><dt>제조연월일, 소비기한 또는 품질유지기한</dt><dd>보관 방법에 따라 달라집니다(습기 없고 서늘한 곳에 보관). 정확한 기한은 전화로 안내해 드립니다: 010-5126-7578</dd><dt>포장단위별 내용물의 용량(중량), 수량</dt><dd>1개</dd><dt>원재료명 (「농수산물의 원산지 표시 등에 관한 법률」에 따른 원산지 표시 포함) 및 함량(원재료 함량 표시대상 식품에 한함)</dt><dd>대두(국내산) 100%</dd><dt>소비자 안전을 위한 주의사항 (「식품 등의 표시ㆍ광고에 관한 법률 시행규칙」 제5조 및 [별표 2]에 따른 표시사항을 말함)</dt><dd>보관방법 : 습기 없고 서늘한 곳에 보관하세요. 대두 함유. 반품 및 교환방법 : 제품구입처 및 판매원. 본 제품은 공정거래위원회 고시 소비자분쟁해결기준에 의거 교환 또는 보상받을 수 있습니다. 부정불량 식품신고 : 국번없이 1399. 소비자 상담실 : 010-5126-7578, 010-8950-4335</dd><dt>소비자 상담 관련 전화번호</dt><dd>010-5126-7578</dd>    </dl>
   </details>
 </section>
 <section class="sb container sb--fold" id="shipping" data-sec data-in-toc aria-label="배송·교환·환불">
   <details class="fold" data-fold>
     <summary class="fold__sum"><span>배송·교환·환불</span><span class="fold__icon" aria-hidden="true"></span></summary>
     <dl class="infotable infotable--fold">
-<dt>배송비</dt><dd>택배 5,000원 · 상품 합계 100,000원 이상 무료. 제주·도서산간은 배송비가 추가될 수 있습니다.</dd><dt>직접 수령</dt><dd>충청북도 영동군 학산면 모리2길 3-1 · [수령 가능 시간]</dd><dt>교환·환불</dt><dd><a href="../refund.html">교환·반품·환불 안내 보기</a></dd>    </dl>
+<dt>배송비</dt><dd>택배 5,000원 · 상품 합계 100,000원 이상 무료. 제주·도서산간은 배송비가 추가될 수 있습니다.</dd><dt>직접 수령</dt><dd>충청북도 영동군 학산면 모리2길 3-1 · 주중,주말 오전 9시~오후 6시, 방문 전 전화</dd><dt>교환·환불</dt><dd><a href="../refund.html">교환·반품·환불 안내 보기</a></dd>    </dl>
   </details>
 </section>
 
@@ -233,61 +254,64 @@
 <section class="related container" aria-labelledby="related-h">
   <h2 class="h2 h2--md" id="related-h">함께 담기 좋은 제품</h2>
   <div class="grid4">
-<article class="card has-alt" data-cat="jang" data-price="20000" data-name="옹기숙성 된장 300g 자가 재배 콩 · 천일염">
+<article class="card has-alt" data-cat="jam" data-top="processed" data-price="10000" data-name="진짜&#39;S 잼 샤인머스캣 · 복숭아 · 토마토 · 흑포도 · 딸기">
+  <div class="card__photo">
+    <a class="card__photo-link" href="../products/jam.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-480.webp 480w, ../images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-960.webp 960w, ../images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-1536.webp 1536w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-960.jpg" srcset="../images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-480.jpg 480w, ../images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-960.jpg 960w, ../images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-1536.jpg 1536w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="640" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/s-20261017102915-480.webp 480w, ../images/v2/s-20261017102915-960.webp 960w, ../images/v2/s-20261017102915-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/s-20261017102915-480.jpg 480w, ../images/v2/s-20261017102915-960.jpg 960w, ../images/v2/s-20261017102915-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 52%"></picture>
+    </a>
+<span class="badge">가마솥 3시간</span>    <a class="card__bag" href="../products/jam.html" aria-label="진짜&#39;S 잼 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">옵션 고르기</span></a>
+  </div>
+  <a class="card__text" href="../products/jam.html">
+    <span class="card__name">진짜&#39;S 잼</span>
+    <span class="card__price">10,000원</span><span class="card__unit">300g · 100g당 3,333원</span>
+    <span class="card__desc">샤인머스캣 · 복숭아 · 토마토 · 흑포도 · 딸기</span>
+  </a>
+</article>
+<article class="card has-alt" data-cat="jocheong" data-top="processed" data-price="20000" data-name="진짜&#39;S 조청 자가 재배 엿기름 · 가마솥 6시간">
+  <div class="card__photo">
+    <a class="card__photo-link" href="../products/jocheong.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-480.webp 480w, ../images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-960.webp 960w, ../images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-960.jpg" srcset="../images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-480.jpg 480w, ../images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-960.jpg 960w, ../images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/s-20261017103439-480.webp 480w, ../images/v2/s-20261017103439-960.webp 960w, ../images/v2/s-20261017103439-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/s-20261017103439-480.jpg 480w, ../images/v2/s-20261017103439-960.jpg 960w, ../images/v2/s-20261017103439-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
+    </a>
+    <a class="card__bag" href="../products/jocheong.html" aria-label="진짜&#39;S 조청 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">옵션 고르기</span></a>
+  </div>
+  <a class="card__text" href="../products/jocheong.html">
+    <span class="card__name">진짜&#39;S 조청</span>
+    <span class="card__price">20,000원</span><span class="card__unit">300g · 100g당 6,667원</span>
+    <span class="card__desc">자가 재배 엿기름 · 가마솥 6시간</span>
+  </a>
+</article>
+<article class="card has-alt" data-cat="vinegar" data-top="onggi" data-price="35000" data-name="발효의 초심 천연식초 375ml 산야초·과일·프리미엄 24종">
+  <div class="card__photo">
+    <a class="card__photo-link" href="../products/vinegar.html" tabindex="-1" aria-hidden="true">
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-480.webp 480w, ../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.webp 960w, ../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.jpg" srcset="../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-480.jpg 480w, ../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.jpg 960w, ../images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/photo-20261019110900-480.webp 480w, ../images/v2/photo-20261019110900-960.webp 960w, ../images/v2/photo-20261019110900-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/photo-20261019110900-480.jpg 480w, ../images/v2/photo-20261019110900-960.jpg 960w, ../images/v2/photo-20261019110900-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
+    </a>
+<span class="badge">자연 발효</span>    <a class="card__bag" href="../products/vinegar.html" aria-label="발효의 초심 천연식초 375ml 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">옵션 고르기</span></a>
+  </div>
+  <a class="card__text" href="../products/vinegar.html">
+    <span class="card__name">발효의 초심 천연식초 375ml</span>
+    <span class="card__price">35,000원~</span><span class="card__unit">375ml · 100ml당 9,333원</span>
+    <span class="card__desc">산야초·과일·프리미엄 24종</span>
+  </a>
+</article>
+<article class="card has-alt" data-cat="jang" data-top="onggi" data-price="20000" data-name="옹기숙성 된장 자가 재배 콩 · 천일염">
   <div class="card__photo">
     <a class="card__photo-link" href="../products/doenjang.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-doenjang-480.webp 480w, ../images/v2/product-doenjang-960.webp 960w, ../images/v2/product-doenjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-doenjang-960.jpg" srcset="../images/v2/product-doenjang-480.jpg 480w, ../images/v2/product-doenjang-960.jpg 960w, ../images/v2/product-doenjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/meju-pot-brine-sunlit-480.webp 480w, ../images/v2/meju-pot-brine-sunlit-960.webp 960w, ../images/v2/meju-pot-brine-sunlit-1000.webp 1000w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/meju-pot-brine-sunlit-480.jpg 480w, ../images/v2/meju-pot-brine-sunlit-960.jpg 960w, ../images/v2/meju-pot-brine-sunlit-1000.jpg 1000w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-480.webp 480w, ../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.webp 960w, ../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.jpg" srcset="../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-480.jpg 480w, ../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.jpg 960w, ../images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/photo-20261017012846-480.webp 480w, ../images/v2/photo-20261017012846-960.webp 960w, ../images/v2/photo-20261017012846-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/photo-20261017012846-480.jpg 480w, ../images/v2/photo-20261017012846-960.jpg 960w, ../images/v2/photo-20261017012846-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:49% 54%"></picture>
     </a>
-<span class="badge">2년 이상 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 된장 300g 장바구니에 담기" data-add="doenjang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+<span class="badge">2년 이상 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 된장 장바구니에 담기" data-add="doenjang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">담기 +</span></button>
   </div>
   <a class="card__text" href="../products/doenjang.html">
-    <span class="card__name">옹기숙성 된장 300g</span>
-    <span class="card__price">20,000원</span>
+    <span class="card__name">옹기숙성 된장</span>
+    <span class="card__price">20,000원</span><span class="card__unit">300g · 100g당 6,667원</span>
     <span class="card__desc">자가 재배 콩 · 천일염</span>
-  </a>
-</article>
-<article class="card" data-cat="jang" data-price="20000" data-name="옹기숙성 고추장 300g 엿기름 당화액 · 메주가루">
-  <div class="card__photo">
-    <a class="card__photo-link" href="../products/gochujang.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-gochujang-480.webp 480w, ../images/v2/product-gochujang-960.webp 960w, ../images/v2/product-gochujang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-gochujang-960.jpg" srcset="../images/v2/product-gochujang-480.jpg 480w, ../images/v2/product-gochujang-960.jpg 960w, ../images/v2/product-gochujang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-    </a>
-<span class="badge">1년 이상 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 고추장 300g 장바구니에 담기" data-add="gochujang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
-  </div>
-  <a class="card__text" href="../products/gochujang.html">
-    <span class="card__name">옹기숙성 고추장 300g</span>
-    <span class="card__price">20,000원</span>
-    <span class="card__desc">엿기름 당화액 · 메주가루</span>
-  </a>
-</article>
-<article class="card" data-cat="jang" data-price="20000" data-name="옹기숙성 어간장 300ml 3년 액젓 + 2년 간장">
-  <div class="card__photo">
-    <a class="card__photo-link" href="../products/eoganjang.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-eoganjang-480.webp 480w, ../images/v2/product-eoganjang-960.webp 960w, ../images/v2/product-eoganjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-eoganjang-960.jpg" srcset="../images/v2/product-eoganjang-480.jpg 480w, ../images/v2/product-eoganjang-960.jpg 960w, ../images/v2/product-eoganjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-    </a>
-    <button type="button" class="card__bag" aria-label="옹기숙성 어간장 300ml 장바구니에 담기" data-add="eoganjang" data-add-option="300ml"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
-  </div>
-  <a class="card__text" href="../products/eoganjang.html">
-    <span class="card__name">옹기숙성 어간장 300ml</span>
-    <span class="card__price">20,000원</span>
-    <span class="card__desc">3년 액젓 + 2년 간장</span>
-  </a>
-</article>
-<article class="card" data-cat="jang" data-price="4000" data-name="옹기발효 청국장 200g 냄새를 줄인 옹기 발효">
-  <div class="card__photo">
-    <a class="card__photo-link" href="../products/cheonggukjang.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-cheonggukjang-480.webp 480w, ../images/v2/product-cheonggukjang-960.webp 960w, ../images/v2/product-cheonggukjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-cheonggukjang-960.jpg" srcset="../images/v2/product-cheonggukjang-480.jpg 480w, ../images/v2/product-cheonggukjang-960.jpg 960w, ../images/v2/product-cheonggukjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-    </a>
-    <button type="button" class="card__bag" aria-label="옹기발효 청국장 200g 장바구니에 담기" data-add="cheonggukjang" data-add-option="200g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
-  </div>
-  <a class="card__text" href="../products/cheonggukjang.html">
-    <span class="card__name">옹기발효 청국장 200g</span>
-    <span class="card__price">4,000원</span>
-    <span class="card__desc">냄새를 줄인 옹기 발효</span>
   </a>
 </article>
   </div>
@@ -303,8 +327,8 @@
   <div class="ft__navwrap">
     <nav class="ft__nav container" aria-label="정책·안내">
       <a href="../story.html">영동에덴원 소개</a>
-<a href="../terms.html">이용약관</a><a href="../privacy.html" class="is-strong">개인정보처리방침</a><a href="../refund.html">교환·반품·환불 안내</a>      <a href="../order-status.html">주문 조회</a>
-      <a href="../contact.html">단체·기업 구매 문의</a>
+<a href="../gallery.html">계절 갤러리</a><a href="../terms.html">이용약관</a><a href="../privacy.html" class="is-strong">개인정보처리방침</a><a href="../refund.html">교환·반품·환불 안내</a>      <a href="../order-status.html">주문 조회</a>
+      <a href="../contact.html">단체·기업 문의</a>
     </nav>
   </div>
   <div class="ft__body container">
@@ -315,7 +339,7 @@
         <span>충청북도 영동군 학산면 모리2길 3-1</span>
         <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
         <span>kwg7978@naver.com</span>
-<a href="../privacy.html#revision-notice">개인정보처리방침·이용약관 개정 안내 (시행 2026년 10월 19일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
+<a href="../terms.html#revision-notice">이용약관 개정 안내 (시행 2026년 11월 20일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
       </p>
     </div>
     <div class="ft__cs">

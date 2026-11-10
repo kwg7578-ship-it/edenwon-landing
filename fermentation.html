@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="ko" data-season="autumn" data-season-auto data-ic="xl" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* 2-H 계절 자동: 손님 날짜(한국 시각)의 기상 계절 — CSS 앞에서 정해 색이 바뀌는 순간이 없게. 빌드 계절과 다르면 표시(홈 배너가 순서를 다시 정할 때까지 가림) */(function(r){var b=r.getAttribute("data-season"),s=["winter","spring","summer","autumn"][(new Date(Date.now()+324e5).getUTCMonth()+1)%12/3|0];r.setAttribute("data-season",s);if(s!==b)r.setAttribute("data-season-moved","")})(document.documentElement)</script>
+<meta name="robots" content="noindex, nofollow">
+<title>영동에덴원의 발효 이야기</title>
+<meta name="description" content="영동에덴원이 직접 기른 재료로 메주를 띄우고, 장과 식초를 만드는 발효 이야기.">
+<meta property="og:title" content="영동에덴원의 발효 이야기">
+<meta property="og:description" content="영동에덴원이 직접 기른 재료로 메주를 띄우고, 장과 식초를 만드는 발효 이야기.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yd-edenwon.com/fermentation">
+<meta property="og:image" content="https://yd-edenwon.com/images/v2/ferment-scene-01-1440.jpg">
+<meta property="og:locale" content="ko_KR">
+<link rel="canonical" href="https://yd-edenwon.com/fermentation">
+<link rel="icon" href="favicon.ico">
+<link rel="preload" href="assets/v2/noto-sans-kr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/v2/fonts.css">
+<link rel="stylesheet" href="assets/v2/tokens.css">
+<link rel="stylesheet" href="assets/v2/base.css">
+<link rel="stylesheet" href="assets/v2/pages.css">
+<link rel="stylesheet" href="assets/v2/motion.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="assets/v2/motion.css"></noscript>
+<link rel="stylesheet" href="assets/v2/type.css"><script type="application/json" id="ed-texts">{"곧 만나요":"영동에덴원\n제철 농산물","다음 수확을 기다리는 작물입니다":"영동에덴원 농산물을 계절별로 만나보세요.","영동 농장 직접 수령":"영동에덴원 방문 or 직접 수령","지금 밭에서 거두는 것":"영동에덴원 농산물","발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다":"발효퇴비와 풀로 만든 토양에서, \n자연농법으로 농산물을 키웠습니다"}</script><script src="assets/v2/app.js" defer></script>
+</head>
+<body class="page-story">
+<div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
+  <p class="added__h" id="added-h">장바구니에 담았습니다</p>
+  <p class="added__item" data-added-item></p>
+  <div class="added__btns">
+    <a class="btn btn--dark" href="cart.html">장바구니로 가기</a>
+    <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
+  </div>
+</div>
+<p class="sr-only" role="status" aria-live="polite" data-added-live></p>
+<div class="hd-top" role="region" aria-label="공지와 회원 메뉴">
+  <a class="skip" href="#main">본문 바로가기</a>
+  <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
+  <div class="hd__util container">
+    <span class="hd__member" data-hd-member>
+  <a href="account/login.html" data-hd-login data-m-anon>로그인</a>
+  <a href="account/signup.html" data-hd-signup data-m-anon>회원가입</a>
+  <span data-hd-name data-m-in hidden></span>
+  <a href="account/" data-hd-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-hd-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="order-status.html">주문 조회</a><a href="contact.html">고객센터</a>  </div>
+</div>
+<header class="hd hd--groups" data-hd>
+  <div class="hd__bar container">
+    <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+    <a class="logo" href="index.html">
+      <span class="logo__ko">영동에덴원</span><span class="sr-only"> 홈</span>
+      <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
+    </a>
+    <nav class="gnb gnb--groups" aria-label="주 메뉴">
+<div class="gnb__item" data-gnb-item><a class="gnb__link" href="products.html?cat=onggi" style="min-width:3.76em">옹기발효</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-onggi" aria-label="옹기발효 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-onggi" hidden><li><a href="products.html?cat=onggi">옹기발효 전체</a></li><li><a href="products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="gnb__item" data-gnb-item><a class="gnb__link" href="products.html?cat=processed" style="min-width:3.76em">가공식품</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-processed" aria-label="가공식품 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-processed" hidden><li><a href="products.html?cat=processed">가공식품 전체</a></li><li><a href="products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="products.html?cat=farm" style="min-width:2.82em">농산물</a><a href="products.html?cat=gift" style="min-width:3.76em">선물세트</a><div class="gnb__item" data-gnb-item><a class="gnb__link" href="story.html" style="min-width:2.82em" aria-current="page">브랜드 스토리</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-story" aria-label="이야기 펼치기" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub gnb__sub--plain" id="gnb-sub-story" hidden><li><a href="story.html">영동에덴원 이야기</a></li><li><a href="farming.html">농사 이야기</a></li><li><a href="fermentation.html" aria-current="page">발효 이야기</a></li></ul></div><a href="contact.html" style="min-width:6.28em">단체·기업 문의</a>    </nav>
+    <div class="hd__actions">
+      <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+</button>
+      <a class="icon-btn hd__mypage" href="account/" aria-label="마이페이지"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg>
+</a>
+      <a class="icon-btn hd__cart" href="cart.html" data-cart-link><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="sr-only" data-cart-sr>장바구니</span><span class="hd__count" data-cart-count aria-hidden="true" hidden></span></a>
+    </div>
+  </div>
+  <div class="hd__search" id="search" hidden>
+    <form class="container" action="products.html" method="get" role="search">
+      <label class="sr-only" for="q">제품 검색</label>
+      <input id="q" name="q" type="search" placeholder="제품 이름으로 찾기" autocomplete="off">
+      <button type="submit" class="btn btn--dark">찾기</button>
+    </form>
+  </div>
+  <div class="hd__line"></div>
+</header>
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="메뉴">
+    <div class="drawer__top">
+      <span class="logo__ko">영동에덴원</span>
+      <button type="button" class="icon-btn" aria-label="메뉴 닫기" data-drawer-close><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+    </div>
+    <nav class="drawer__nav" aria-label="모바일 주 메뉴">
+<div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-onggi" data-dr-tog>옹기발효<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-onggi" hidden><li><a href="products.html?cat=onggi">옹기발효 전체</a></li><li><a href="products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-processed" data-dr-tog>가공식품<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-processed" hidden><li><a href="products.html?cat=processed">가공식품 전체</a></li><li><a href="products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="products.html?cat=farm">농산물</a><a href="products.html?cat=gift">선물세트</a><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-story" data-dr-tog data-current>브랜드 스토리<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-story" hidden><li><a href="story.html">영동에덴원 이야기</a></li><li><a href="farming.html">농사 이야기</a></li><li><a href="fermentation.html" aria-current="page">발효 이야기</a></li></ul></div><a href="contact.html">단체·기업 문의</a>    </nav>
+    <nav class="drawer__util" aria-label="회원·고객 메뉴">
+      <span class="hd__member" data-dr-member>
+  <a href="account/login.html" data-dr-login data-m-anon>로그인</a>
+  <a href="account/signup.html" data-dr-signup data-m-anon>회원가입</a>
+  <span data-dr-name data-m-in hidden></span>
+  <a href="account/" data-dr-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-dr-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="order-status.html">주문 조회</a><a href="contact.html">고객센터</a>      <a href="account/">마이페이지</a>
+    </nav>
+  </div>
+</div>
+<main id="main" tabindex="-1">
+<div class="sv sv--ferment" data-sv data-sv-sizes="(max-width: 860px) 100vw, 680px" data-sv-sizes-wide="(max-width: 860px) 100vw, 1280px" data-sv-key="ferment-story-mode">
+  <section class="sv-open container" aria-labelledby="sv-h">
+    <div class="sv-open__in">
+      <div>
+        <p class="sv-ey">영동에덴원의 발효 이야기</p>
+        <h1 class="sv-open__t" id="sv-h">영동에덴원이 기른 먹거리<br>발효의 진짜 맛으로</h1>
+        <p class="sv-meta">5장 · 16장면</p>
+      </div>
+      <div class="sv-open__lead"><p>영동에덴원은 속도 편하고 믿고 먹을 수 있는 먹거리를 위해 발효를 배우기 시작했습니다.</p><p>실패하며 방법을 찾았고, 현장에서 익힌 경험에 새로운 배움을 더해왔습니다. 영동에덴원이 원료를 준비하고, 메주를 띄우고, 장과 식초를 만드는 과정을 소개합니다.</p></div>    </div>
+  </section>
+
+  <div class="sv-toc" data-sv-toc>
+    <div class="container sv-toc__row">
+      <nav class="sv-toc__nav" aria-label="발효 이야기 목차"><a href="#ch1" data-sv-ch="1"><span>01</span>발효의 시작</a><a href="#ch2" data-sv-ch="2"><span>02</span>메주</a><a href="#ch3" data-sv-ch="3"><span>03</span>장과 숙성</a><a href="#ch4" data-sv-ch="4"><span>04</span>청국장과 식초</a><a href="#ch5" data-sv-ch="5"><span>05</span>배움과 식탁</a></nav>
+      <div class="sv-tools"><div class="sv-mode" role="group" aria-label="보는 방식" data-sv-mode hidden><button type="button" data-mode="book" aria-pressed="false">그림책으로 보기</button><button type="button" data-mode="scroll" aria-pressed="true">펼쳐서 읽기</button></div>
+<button type="button" class="sv-allb" data-sv-all aria-haspopup="dialog" hidden>16컷 모아보기</button></div>    </div>
+    <div class="sv-prog" aria-hidden="true"><i data-sv-prog></i></div>
+  </div>
+  <style>html.sv-book[data-sv-cur="s1"] #s1,html.sv-book[data-sv-cur="s2"] #s2,html.sv-book[data-sv-cur="s3"] #s3,html.sv-book[data-sv-cur="s4"] #s4,html.sv-book[data-sv-cur="s5"] #s5,html.sv-book[data-sv-cur="s6"] #s6,html.sv-book[data-sv-cur="s7"] #s7,html.sv-book[data-sv-cur="s8"] #s8,html.sv-book[data-sv-cur="s9"] #s9,html.sv-book[data-sv-cur="s10"] #s10,html.sv-book[data-sv-cur="s11"] #s11,html.sv-book[data-sv-cur="s12"] #s12,html.sv-book[data-sv-cur="s13"] #s13,html.sv-book[data-sv-cur="s14"] #s14,html.sv-book[data-sv-cur="s15"] #s15,html.sv-book[data-sv-cur="s16"] #s16{display:grid;visibility:visible}html.sv-book[data-sv-cur="s1"] #s1 .sv-fig,html.sv-book[data-sv-cur="s2"] #s2 .sv-fig,html.sv-book[data-sv-cur="s3"] #s3 .sv-fig,html.sv-book[data-sv-cur="s4"] #s4 .sv-fig,html.sv-book[data-sv-cur="s5"] #s5 .sv-fig,html.sv-book[data-sv-cur="s6"] #s6 .sv-fig,html.sv-book[data-sv-cur="s7"] #s7 .sv-fig,html.sv-book[data-sv-cur="s8"] #s8 .sv-fig,html.sv-book[data-sv-cur="s9"] #s9 .sv-fig,html.sv-book[data-sv-cur="s10"] #s10 .sv-fig,html.sv-book[data-sv-cur="s11"] #s11 .sv-fig,html.sv-book[data-sv-cur="s12"] #s12 .sv-fig,html.sv-book[data-sv-cur="s13"] #s13 .sv-fig,html.sv-book[data-sv-cur="s14"] #s14 .sv-fig,html.sv-book[data-sv-cur="s15"] #s15 .sv-fig,html.sv-book[data-sv-cur="s16"] #s16 .sv-fig{display:block}</style>
+  <script>/* K13 그림책 보기를 첫 그림 전에(밀림 0): 지난번 방식(기억) · 주소 #s5 → 그 장면. 편집기 화면은 «펼쳐서 읽기»로 연다 */(function (R, sv) {
+    try {
+      var m = "book", n = 16, h = /^#s(\d+)$/.exec(location.hash), c = 1;
+      try { m = localStorage.getItem("ferment-story-mode") || "book"; } catch (e) {}
+      if (sv && sv.hasAttribute("data-sv-edit")) m = "scroll";
+      if (h) c = Math.max(1, Math.min(n, +h[1]));
+      R.classList.add("sv-js");
+      if (m !== "scroll") { R.classList.add("sv-book"); R.setAttribute("data-sv-cur", "s" + c); }
+    } catch (e) {}
+  })(document.documentElement, document.querySelector("[data-sv]"));</script>
+
+  <div class="sv-story container" id="story" data-sv-story>
+    <nav class="sv-rail" data-sv-rail aria-label="장면 바로가기" style="--n:16" hidden>
+      <button type="button" class="sv-rail__tog" data-sv-rail-tog aria-expanded="false" aria-controls="sv-rail-list"><span class="sv-rail__dots" aria-hidden="true"><span class="sv-rail__dch" style="--k:3"><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:5"><i></i><i></i><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:4"><i></i><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:2"><i></i><i></i></span><span class="sv-rail__dch" style="--k:2"><i></i><i></i></span></span><span class="sv-rail__tog-o">장면 목록 열기</span><span class="sv-rail__tog-x">닫기</span></button>
+      <div class="sv-rail__list" id="sv-rail-list">        <div class="sv-rail__ch" data-ch="1"><button type="button" class="sv-rail__h" data-sv-to-i="0"><b>01</b> 발효의 시작</button>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="0" data-ch="1" aria-label="장면 01 — 믿고 먹을 수 있는 재료가 발효를 만납니다"><img src="images/v2/ferment-scene-01-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="1" data-ch="1" aria-label="장면 02 — 우리는 이 방식으로 발효를 배워왔습니다"><img src="images/v2/ferment-scene-02-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="2" data-ch="1" aria-label="장면 03 — 발효가 진행되는 동안, 그 안의 활동도 달라집니다"><img src="images/v2/ferment-scene-03-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+        </div>        <div class="sv-rail__ch" data-ch="2"><button type="button" class="sv-rail__h" data-sv-to-i="3"><b>02</b> 메주</button>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="3" data-ch="2" aria-label="장면 04 — 장을 담기 위한 메주를 준비합니다"><img src="images/v2/ferment-scene-04-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="4" data-ch="2" aria-label="장면 05 — 메주 속까지 생각하며 형태를 만듭니다"><img src="images/v2/05-no-inset-v4-20261102200430-480.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="5" data-ch="2" aria-label="장면 06 — 볏짚과 함께 발효를 시작합니다"><img src="images/v2/ferment-scene-06-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="6" data-ch="2" aria-label="장면 07 — 메주가 띄워지는 동안, 발효실의 조건을 만듭니다"><img src="images/v2/ferment-scene-07-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="7" data-ch="2" aria-label="장면 08 — 보이지 않는 곳에서도 변화는 일어납니다"><img src="images/v2/ferment-scene-08-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+        </div>        <div class="sv-rail__ch" data-ch="3"><button type="button" class="sv-rail__h" data-sv-to-i="8"><b>03</b> 장과 숙성</button>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="8" data-ch="3" aria-label="장면 09 — 함께 시작해, 다른 형태로 변해갑니다"><img src="images/v2/ferment-scene-09-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="9" data-ch="3" aria-label="장면 10 — 곡물과 메주, 여러 재료가 만나 고추장이 됩니다"><img src="images/v2/ferment-scene-10-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="10" data-ch="3" aria-label="장면 11 — 장을 담근 뒤에는 기다림이 있습니다"><img src="images/v2/ferment-scene-11-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="11" data-ch="3" aria-label="장면 12 — 옹기는 사계절을 보내고, 사람은 관리를 합니다"><img src="images/v2/ferment-scene-12-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+        </div>        <div class="sv-rail__ch" data-ch="4"><button type="button" class="sv-rail__h" data-sv-to-i="12"><b>04</b> 청국장과 식초</button>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="12" data-ch="4" aria-label="장면 13 — 메주를 사용하는 장과 청국장은 다릅니다"><img src="images/v2/13-onggi-small-v4-20261102210912-480.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="13" data-ch="4" aria-label="장면 14 — 당에서 알코올, 그리고 다시 초산으로"><img src="images/v2/chatgpt-2026-10-21-01-17-36-20261028232405-480.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+        </div>        <div class="sv-rail__ch" data-ch="5"><button type="button" class="sv-rail__h" data-sv-to-i="14"><b>05</b> 배움과 식탁</button>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="14" data-ch="5" aria-label="장면 15 — 만드는 과정을 배우고, 완성된 성분을 확인합니다"><img src="images/v2/ferment-scene-15-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="15" data-ch="5" aria-label="장면 16 — 영동에덴원의 경험과 여러 발효 과정을 거쳐, 여러분의 식탁으로"><img src="images/v2/chatgpt-2026-10-21-04-29-39-20261028232720-480.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+        </div>      </div>
+    </nav>
+    <section class="sv-chap" id="ch1" aria-labelledby="ch1-t">
+      <header class="sv-chap__h"><span class="sv-chap__no" aria-hidden="true">01</span><div><p class="sv-chap__k">발효의 시작</p><h2 id="ch1-t" class="sv-chap__t">우리가 선택한 발효</h2></div></header>
+      <article class="sv-scene sv-scene--wide" id="s1" data-ch="1" aria-labelledby="s1-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-01-1440.webp" aria-label="밭에서 이어지는 이야기 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-01-192.webp 192w, images/v2/ferment-scene-01-480.webp 480w, images/v2/ferment-scene-01-960.webp 960w, images/v2/ferment-scene-01-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-01-960.jpg" srcset="images/v2/ferment-scene-01-192.jpg 192w, images/v2/ferment-scene-01-480.jpg 480w, images/v2/ferment-scene-01-960.jpg 960w, images/v2/ferment-scene-01-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="밭에서 이어지는 이야기" class="sv-img" loading="eager" fetchpriority="high" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>01</b> 발효의 시작 · 우리가 선택한 발효</p>
+          <p class="sv-no"><span class="sv-no__n">장면 01</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s1-t">믿고 먹을 수 있는 재료가<br>발효를 만납니다</h3>
+          <div class="sv-prose"><p>우리의 농사와 발효는 같은 식탁에서 시작됐습니다. 함께 먹을 것을 기르고, 수확한 재료를 활용할 방법을 찾다가 발효를 배우게 되었습니다.</p><p>밭에서 거둔 원료가 곧바로 발효식품이 되지 않듯이. 재료를 준비하고, 발효가 진행되는 과정과 환경을 관리하고, 발효가 진행되는 시간을 거쳐야 합니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene" id="s2" data-ch="1" aria-labelledby="s2-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-02-1440.webp" aria-label="종균을 따로 더하지 않는 방식 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-02-192.webp 192w, images/v2/ferment-scene-02-480.webp 480w, images/v2/ferment-scene-02-960.webp 960w, images/v2/ferment-scene-02-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-02-960.jpg" srcset="images/v2/ferment-scene-02-192.jpg 192w, images/v2/ferment-scene-02-480.jpg 480w, images/v2/ferment-scene-02-960.jpg 960w, images/v2/ferment-scene-02-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="종균을 따로 더하지 않는 방식" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>01</b> 발효의 시작 · 우리가 선택한 발효</p>
+          <p class="sv-no"><span class="sv-no__n">장면 02</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s2-t">우리는 이 방식으로<br>발효를 배워왔습니다</h3>
+          <div class="sv-prose"><p>영동에덴원은 별도의 종균을 첨가하지 않는 자연 복합 발효 방식을 이어가고 있습니다. 원료와 제조 환경에서 유래한 미생물들이 발효에 관여하는 방식입니다.</p><p>현장에서 배우고 직접 만들어보며 경험한 은은한 풍미가, 이 방식을 계속 고수하는 이유 중 하나입니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--wide" id="s3" data-ch="1" aria-labelledby="s3-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-03-1440.webp" aria-label="여러 미생물의 활동이 이어집니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-03-192.webp 192w, images/v2/ferment-scene-03-480.webp 480w, images/v2/ferment-scene-03-960.webp 960w, images/v2/ferment-scene-03-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-03-960.jpg" srcset="images/v2/ferment-scene-03-192.jpg 192w, images/v2/ferment-scene-03-480.jpg 480w, images/v2/ferment-scene-03-960.jpg 960w, images/v2/ferment-scene-03-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="여러 미생물의 활동이 이어집니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>01</b> 발효의 시작 · 우리가 선택한 발효</p>
+          <p class="sv-no"><span class="sv-no__n">장면 03</span><span class="sv-kind sv-kind--principle">발효 원리</span></p>
+          <h3 class="sv-t" id="s3-t">발효가 진행되는 동안,<br>그 안의 활동도 달라집니다</h3>
+          <div class="sv-prose"><p>발효에는 여러 미생물과 효소의 작용이 관여합니다. 온도와 수분, 산소와 염분 등 조건에 따라 자리 잡는 미생물과 그 활동도 달라집니다.</p><p>원료가 분해되고, 그 과정에서 생긴 물질이 다시 이용되거나 변하면서 맛과 향을 이루는 변화가 이어집니다.</p></div>
+
+        </div>
+      </article>
+    </section>
+    <section class="sv-chap" id="ch2" aria-labelledby="ch2-t">
+      <header class="sv-chap__h"><span class="sv-chap__no" aria-hidden="true">02</span><div><p class="sv-chap__k">메주</p><h2 id="ch2-t" class="sv-chap__t">메주를 띄우는 우리의 과정</h2></div></header>
+      <article class="sv-scene sv-scene--rev" id="s4" data-ch="2" aria-labelledby="s4-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-04-1440.webp" aria-label="삶은 콩을 메주로 빚습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-04-192.webp 192w, images/v2/ferment-scene-04-480.webp 480w, images/v2/ferment-scene-04-960.webp 960w, images/v2/ferment-scene-04-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-04-960.jpg" srcset="images/v2/ferment-scene-04-192.jpg 192w, images/v2/ferment-scene-04-480.jpg 480w, images/v2/ferment-scene-04-960.jpg 960w, images/v2/ferment-scene-04-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="삶은 콩을 메주로 빚습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>02</b> 메주 · 메주를 띄우는 우리의 과정</p>
+          <p class="sv-no"><span class="sv-no__n">장면 04</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s4-t">장을 담기 위한<br>메주를 준비합니다</h3>
+          <div class="sv-prose"><p>콩을 삶고 분쇄해 메주를 성형합니다. 콩이 익은 상태에서 형태와 수분을 가진 발효의 재료로 바뀌는 과정입니다.</p><p>영동에덴원은 이렇게 준비한 메주를 직접 띄워 장을 만드는 데 사용합니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--wide" id="s5" data-ch="2" aria-labelledby="s5-t">
+        <button class="sv-fig sv-fig--cap" type="button" data-full="images/v2/05-no-inset-v4-20261102200430-1536.webp" aria-label="메주에 세 개의 관통 구멍을 만듭니다 삽화 크게 보기 — 오른쪽 아래 작은 그림은 메주를 자른 단면입니다."><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/05-no-inset-v4-20261102200430-480.webp 480w, images/v2/05-no-inset-v4-20261102200430-960.webp 960w, images/v2/05-no-inset-v4-20261102200430-1536.webp 1536w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/05-no-inset-v4-20261102200430-960.jpg" srcset="images/v2/05-no-inset-v4-20261102200430-480.jpg 480w, images/v2/05-no-inset-v4-20261102200430-960.jpg 960w, images/v2/05-no-inset-v4-20261102200430-1536.jpg 1536w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="메주에 세 개의 관통 구멍을 만듭니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture><span class="sv-cap" id="s5-cap">오른쪽 아래 작은 그림은 메주를 자른 단면입니다.</span></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>02</b> 메주 · 메주를 띄우는 우리의 과정</p>
+          <p class="sv-no"><span class="sv-no__n">장면 05</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s5-t">메주 속까지 생각하며<br>형태를 만듭니다</h3>
+          <div class="sv-prose"><p>우리는 성형한 메주에 세 개의 작은 구멍을 만듭니다.</p><p>구멍은 메주 안쪽이 외부와 접촉하는 통로입니다. 공기가 접근하고 수분이 이동하는 조건을 고려해 영동에덴원이 적용하고 있는 형태입니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene" id="s6" data-ch="2" aria-labelledby="s6-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-06-1440.webp" aria-label="볏짚을 사용해 메주를 띄웁니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-06-192.webp 192w, images/v2/ferment-scene-06-480.webp 480w, images/v2/ferment-scene-06-960.webp 960w, images/v2/ferment-scene-06-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-06-960.jpg" srcset="images/v2/ferment-scene-06-192.jpg 192w, images/v2/ferment-scene-06-480.jpg 480w, images/v2/ferment-scene-06-960.jpg 960w, images/v2/ferment-scene-06-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="볏짚을 사용해 메주를 띄웁니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>02</b> 메주 · 메주를 띄우는 우리의 과정</p>
+          <p class="sv-no"><span class="sv-no__n">장면 06</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s6-t">볏짚과 함께<br>발효를 시작합니다</h3>
+          <div class="sv-prose"><p>영동에덴원은 메주를 띄울 때 볏짚을 사용합니다. 원료와 볏짚, 제조 환경은 발효에 필요한 미생물이 유래하는 경로가 될 수 있습니다.</p><p>그 안에서 어떤 미생물이 자리 잡고 활동하는지는 발효 조건과 환경의 영향을 받습니다. 영동에덴원은 재료를 준비하는 과정과 발효가 이어질 환경을 관리합니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--wide" id="s7" data-ch="2" aria-labelledby="s7-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-07-1440.webp" aria-label="발효실에서 약 40일 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-07-192.webp 192w, images/v2/ferment-scene-07-480.webp 480w, images/v2/ferment-scene-07-960.webp 960w, images/v2/ferment-scene-07-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-07-960.jpg" srcset="images/v2/ferment-scene-07-192.jpg 192w, images/v2/ferment-scene-07-480.jpg 480w, images/v2/ferment-scene-07-960.jpg 960w, images/v2/ferment-scene-07-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="발효실에서 약 40일" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>02</b> 메주 · 메주를 띄우는 우리의 과정</p>
+          <p class="sv-no"><span class="sv-no__n">장면 07</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s7-t">메주가 띄워지는 동안,<br>발효실의 조건을 만듭니다</h3>
+          <div class="sv-prose"><p>준비된 메주는 발효실에서 약 15일 동안 띄웁니다. 이 시간 동안 건조와 발효가 진행되며 메주의 상태가 달라집니다.</p><p>수분이 줄어드는 과정 역시 발효와 관계합니다. 빨리 말리는 것이 아닌, 발효가 제대로 진행되는 환경과 메주의 상태를 관리하는 과정입니다.</p><dl class="sv-facts"><div><dt>메주 발효</dt><dd>약 40일</dd></div></dl></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--rev" id="s8" data-ch="2" aria-labelledby="s8-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-08-1440.webp" aria-label="콩의 성분이 달라지는 과정 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-08-192.webp 192w, images/v2/ferment-scene-08-480.webp 480w, images/v2/ferment-scene-08-960.webp 960w, images/v2/ferment-scene-08-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-08-960.jpg" srcset="images/v2/ferment-scene-08-192.jpg 192w, images/v2/ferment-scene-08-480.jpg 480w, images/v2/ferment-scene-08-960.jpg 960w, images/v2/ferment-scene-08-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="콩의 성분이 달라지는 과정" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>02</b> 메주 · 메주를 띄우는 우리의 과정</p>
+          <p class="sv-no"><span class="sv-no__n">장면 08</span><span class="sv-kind sv-kind--principle">발효 원리</span></p>
+          <h3 class="sv-t" id="s8-t">보이지 않는 곳에서도<br>변화는 일어납니다</h3>
+          <div class="sv-prose"><p>발효 과정에서 효소 작용으로, 콩의 단백질을 아미노산과 다른 다양한 성분으로 분해하는 데 관여합니다. 지방과 탄수화물 같은 다른 성분들도 분해되고 변환되면서 맛과 향을 이루는 재료가 됩니다.</p><p>생성된 물질이 다시 이용되기도 합니다. 발효는 무언가가 계속 쌓이기만 하는 과정이 아닌, 여러 변화가 함께 일어나는 과정입니다.</p></div>
+<div class="sv-prods"><p class="sv-prods__k">이 장의 상품</p><ul><li><a href="products/meju.html"><picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-480.webp 480w, images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-960.webp 960w, images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-1448.webp 1448w" sizes="56px"><img src="images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-960.jpg" srcset="images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-480.jpg 480w, images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-960.jpg 960w, images/v2/chatgpt-2026-10-17-12-51-44-20261017005217-1448.jpg 1448w" sizes="56px" width="960" height="720" alt="" class="sv-prods__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span><b>명품 메주</b><em>25,000원</em></span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></li></ul></div>
+        </div>
+      </article>
+    </section>
+    <section class="sv-chap" id="ch3" aria-labelledby="ch3-t">
+      <header class="sv-chap__h"><span class="sv-chap__no" aria-hidden="true">03</span><div><p class="sv-chap__k">장과 숙성</p><h2 id="ch3-t" class="sv-chap__t">메주에서 장으로, 그리고 기다림</h2></div></header>
+      <article class="sv-scene sv-scene--wide" id="s9" data-ch="3" aria-labelledby="s9-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-09-1440.webp" aria-label="된장과 간장으로 이어집니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-09-192.webp 192w, images/v2/ferment-scene-09-480.webp 480w, images/v2/ferment-scene-09-960.webp 960w, images/v2/ferment-scene-09-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-09-960.jpg" srcset="images/v2/ferment-scene-09-192.jpg 192w, images/v2/ferment-scene-09-480.jpg 480w, images/v2/ferment-scene-09-960.jpg 960w, images/v2/ferment-scene-09-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="된장과 간장으로 이어집니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>03</b> 장과 숙성 · 메주에서 장으로, 그리고 기다림</p>
+          <p class="sv-no"><span class="sv-no__n">장면 09</span><span class="sv-kind sv-kind--principle">발효 원리</span></p>
+          <h3 class="sv-t" id="s9-t">함께 시작해,<br>다른 형태로 변해갑니다</h3>
+          <div class="sv-prose"><p>메주를 염수에 담그고, 장 가르기를 통해 고형분과 액상을 나눕니다. 나뉜 재료는 각각 된장과 간장으로 숙성됩니다.</p><p>같은 메주에서 출발해도 고형과 액상의 형태로 환경이 달라집니다. 각각의 상태에서 성분과 맛의 변화가 이어집니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene" id="s10" data-ch="3" aria-labelledby="s10-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-10-1440.webp" aria-label="고추장에는 또 다른 준비가 있습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-10-192.webp 192w, images/v2/ferment-scene-10-480.webp 480w, images/v2/ferment-scene-10-960.webp 960w, images/v2/ferment-scene-10-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-10-960.jpg" srcset="images/v2/ferment-scene-10-192.jpg 192w, images/v2/ferment-scene-10-480.jpg 480w, images/v2/ferment-scene-10-960.jpg 960w, images/v2/ferment-scene-10-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="고추장에는 또 다른 준비가 있습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>03</b> 장과 숙성 · 메주에서 장으로, 그리고 기다림</p>
+          <p class="sv-no"><span class="sv-no__n">장면 10</span><span class="sv-kind sv-kind--principle">발효 원리</span></p>
+          <h3 class="sv-t" id="s10-t">곡물과 메주,<br>여러 재료가 만나 고추장이 됩니다</h3>
+          <div class="sv-prose"><p>고추장에는 메주뿐 아니라 곡물과 엿기름, 고춧가루와 소금 등 여러 재료가 함께 쓰입니다. 엿기름의 효소로 곡물의 전분을 당으로 바꾸는 준비 과정도 있습니다.</p><p>이렇게 준비한 재료가 배합되고 발효·숙성을 거치며 좋은 품질의 고추장 맛과 향으로 이어집니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--wide" id="s11" data-ch="3" aria-labelledby="s11-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-11-1440.webp" aria-label="장류는 1년 발효와 1년 이상의 숙성을 기본으로 합니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-11-192.webp 192w, images/v2/ferment-scene-11-480.webp 480w, images/v2/ferment-scene-11-960.webp 960w, images/v2/ferment-scene-11-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-11-960.jpg" srcset="images/v2/ferment-scene-11-192.jpg 192w, images/v2/ferment-scene-11-480.jpg 480w, images/v2/ferment-scene-11-960.jpg 960w, images/v2/ferment-scene-11-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="장류는 1년 발효와 1년 이상의 숙성을 기본으로 합니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>03</b> 장과 숙성 · 메주에서 장으로, 그리고 기다림</p>
+          <p class="sv-no"><span class="sv-no__n">장면 11</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s11-t">장을 담근 뒤에는<br>기다림이 있습니다</h3>
+          <div class="sv-prose"><p>영동에덴원의 된장·간장·고추장은 최소 1년 이상 발효 기간과 1년 이상의 숙성 기간을 기본으로 합니다.</p><p>기다리는 동안 맛과 향, 색과 질감의 변화가 이어집니다. 하지만 같은 미생물이 처음부터 끝까지 같은 방식으로 활동하는 것은 아닙니다. 자연 복합 발효의 장점인 수 많은 미생물과 시간에 따라 달라지는 과정을 거쳐 장은 완성됩니다.</p><dl class="sv-facts"><div><dt>된장 · 간장 · 고추장</dt><dd>최소 1년 이상 발효 + 1년 이상 숙성</dd></div></dl><p class="sv-aside">메주를 띄우는 기간과 장류의 발효·숙성 기간은 구분합니다. 청국장과 식초는 이 기준이 적용되지 않습니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--wide" id="s12" data-ch="3" aria-labelledby="s12-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-12-1440.webp" aria-label="오래 기다리고, 상태를 확인합니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-12-192.webp 192w, images/v2/ferment-scene-12-480.webp 480w, images/v2/ferment-scene-12-960.webp 960w, images/v2/ferment-scene-12-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-12-960.jpg" srcset="images/v2/ferment-scene-12-192.jpg 192w, images/v2/ferment-scene-12-480.jpg 480w, images/v2/ferment-scene-12-960.jpg 960w, images/v2/ferment-scene-12-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="오래 기다리고, 상태를 확인합니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>03</b> 장과 숙성 · 메주에서 장으로, 그리고 기다림</p>
+          <p class="sv-no"><span class="sv-no__n">장면 12</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s12-t">옹기는 사계절을 보내고,<br>사람은 관리를 합니다</h3>
+          <div class="sv-prose"><p>옹기에서 자연스럽게 발효와 숙성이 이어지도록 옹기 상태를 확인합니다. 발효실에서도 필요한 측정과 관리를 진행합니다.</p><p>옹기를 관리하는 것과 발효실의 환경을 관리하는 일은 서로 다른 작업이지만, 좋은 품질의 발효식품을 위해서는 꼭 필요한 작업입니다.</p></div>
+<div class="sv-prods"><p class="sv-prods__k">이 장의 상품</p><ul><li><a href="products/doenjang.html"><picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-480.webp 480w, images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.webp 960w, images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-1086.webp 1086w" sizes="56px"><img src="images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.jpg" srcset="images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-480.jpg 480w, images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.jpg 960w, images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-1086.jpg 1086w" sizes="56px" width="960" height="1280" alt="" class="sv-prods__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span><b>옹기숙성 된장</b><em>20,000원</em></span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></li><li><a href="products/gochujang.html"><picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-480.webp 480w, images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-960.webp 960w, images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-1024.webp 1024w" sizes="56px"><img src="images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-960.jpg" srcset="images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-480.jpg 480w, images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-960.jpg 960w, images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-1024.jpg 1024w" sizes="56px" width="960" height="1440" alt="" class="sv-prods__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span><b>옹기숙성 고추장</b><em>20,000원~</em></span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></li></ul></div>
+        </div>
+      </article>
+    </section>
+    <section class="sv-chap" id="ch4" aria-labelledby="ch4-t">
+      <header class="sv-chap__h"><span class="sv-chap__no" aria-hidden="true">04</span><div><p class="sv-chap__k">청국장과 식초</p><h2 id="ch4-t" class="sv-chap__t">제품마다 다른 발효</h2></div></header>
+      <article class="sv-scene sv-scene--rev" id="s13" data-ch="4" aria-labelledby="s13-t">
+        <button class="sv-fig" type="button" data-full="images/v2/13-onggi-small-v4-20261102210912-1536.webp" aria-label="청국장은 삶은 콩에서 출발합니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/13-onggi-small-v4-20261102210912-480.webp 480w, images/v2/13-onggi-small-v4-20261102210912-960.webp 960w, images/v2/13-onggi-small-v4-20261102210912-1536.webp 1536w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/13-onggi-small-v4-20261102210912-960.jpg" srcset="images/v2/13-onggi-small-v4-20261102210912-480.jpg 480w, images/v2/13-onggi-small-v4-20261102210912-960.jpg 960w, images/v2/13-onggi-small-v4-20261102210912-1536.jpg 1536w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="청국장은 삶은 콩에서 출발합니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>04</b> 청국장과 식초 · 제품마다 다른 발효</p>
+          <p class="sv-no"><span class="sv-no__n">장면 13</span><span class="sv-kind sv-kind--principle">발효 원리</span></p>
+          <h3 class="sv-t" id="s13-t">메주를 사용하는 장과<br>청국장은 다릅니다</h3>
+          <div class="sv-prose"><p>청국장은 메주를 만든 뒤 장을 담그는 방식과 달리, 삶은 콩을 비교적 짧게 발효시키는 음식입니다.</p><p>같은 콩을 사용하더라도 준비와 미생물의 종류와 발효의 경로가 다릅니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--wide" id="s14" data-ch="4" aria-labelledby="s14-t">
+        <button class="sv-fig" type="button" data-full="images/v2/chatgpt-2026-10-21-01-17-36-20261028232405-1536.webp" aria-label="식초에도 이어지는 순서가 있습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/chatgpt-2026-10-21-01-17-36-20261028232405-480.webp 480w, images/v2/chatgpt-2026-10-21-01-17-36-20261028232405-960.webp 960w, images/v2/chatgpt-2026-10-21-01-17-36-20261028232405-1536.webp 1536w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/chatgpt-2026-10-21-01-17-36-20261028232405-960.jpg" srcset="images/v2/chatgpt-2026-10-21-01-17-36-20261028232405-480.jpg 480w, images/v2/chatgpt-2026-10-21-01-17-36-20261028232405-960.jpg 960w, images/v2/chatgpt-2026-10-21-01-17-36-20261028232405-1536.jpg 1536w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="식초에도 이어지는 순서가 있습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>04</b> 청국장과 식초 · 제품마다 다른 발효</p>
+          <p class="sv-no"><span class="sv-no__n">장면 14</span><span class="sv-kind sv-kind--principle">발효 원리</span></p>
+          <h3 class="sv-t" id="s14-t">당에서 알코올,<br>그리고 다시 초산으로</h3>
+          <div class="sv-prose"><p>당을 가진 원료로 식초를 만드는 과정에서는 효모가 알코올을 만들고, 초산균이 알코올을 초산으로 바꾸는 과정이 중요합니다. 초산이 생성되는 과정에는 산소도 필요합니다.</p><p>영동에덴원은 종초를 따로 넣지 않는 방식을 이어갑니다. 그 안에서도 미생물의 작용이 필요하며, 장류와는 다른 조건으로 발효가 진행됩니다.</p><ul class="sv-chips" aria-label="핵심어"><li>원료의 당</li><li>알코올 생성</li><li>초산 생성</li></ul></div>
+<div class="sv-prods"><p class="sv-prods__k">이 장의 상품</p><ul><li><a href="products/cheonggukjang.html"><picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-17-12-47-05-20261017004730-480.webp 480w, images/v2/chatgpt-2026-10-17-12-47-05-20261017004730-960.webp 960w, images/v2/chatgpt-2026-10-17-12-47-05-20261017004730-1448.webp 1448w" sizes="56px"><img src="images/v2/chatgpt-2026-10-17-12-47-05-20261017004730-960.jpg" srcset="images/v2/chatgpt-2026-10-17-12-47-05-20261017004730-480.jpg 480w, images/v2/chatgpt-2026-10-17-12-47-05-20261017004730-960.jpg 960w, images/v2/chatgpt-2026-10-17-12-47-05-20261017004730-1448.jpg 1448w" sizes="56px" width="960" height="720" alt="" class="sv-prods__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span><b>옹기발효 청국장</b><em>4,000원</em></span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></li><li><a href="products/vinegar.html"><picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-480.webp 480w, images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.webp 960w, images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-1086.webp 1086w" sizes="56px"><img src="images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.jpg" srcset="images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-480.jpg 480w, images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.jpg 960w, images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-1086.jpg 1086w" sizes="56px" width="960" height="1280" alt="" class="sv-prods__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span><b>발효의 초심 천연식초</b><em>35,000원~</em></span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></li></ul></div>
+        </div>
+      </article>
+    </section>
+    <section class="sv-chap" id="ch5" aria-labelledby="ch5-t">
+      <header class="sv-chap__h"><span class="sv-chap__no" aria-hidden="true">05</span><div><p class="sv-chap__k">배움과 식탁</p><h2 id="ch5-t" class="sv-chap__t">경험을 바탕으로 이론을 확인합니다</h2></div></header>
+      <article class="sv-scene" id="s15" data-ch="5" aria-labelledby="s15-t">
+        <button class="sv-fig" type="button" data-full="images/v2/ferment-scene-15-1440.webp" aria-label="완성된 음식도 알아가고 있습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/ferment-scene-15-192.webp 192w, images/v2/ferment-scene-15-480.webp 480w, images/v2/ferment-scene-15-960.webp 960w, images/v2/ferment-scene-15-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/ferment-scene-15-960.jpg" srcset="images/v2/ferment-scene-15-192.jpg 192w, images/v2/ferment-scene-15-480.jpg 480w, images/v2/ferment-scene-15-960.jpg 960w, images/v2/ferment-scene-15-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="완성된 음식도 알아가고 있습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>05</b> 배움과 식탁 · 경험을 바탕으로 이론을 확인합니다</p>
+          <p class="sv-no"><span class="sv-no__n">장면 15</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s15-t">만드는 과정을 배우고,<br>완성된 성분을 확인합니다</h3>
+          <div class="sv-prose"><p>우리는 현장에서 배운 경험에 이론을 더하고, 완성된 발효 식품의 성분도 분석을 의뢰합니다. 아미노산 분석에서는 여러 유리아미노산과 제품마다 다른 성분이 확인됐습니다.</p><p>분석은 영동에덴원이 만든 발효 식품을 이해하는 자료입니다. 분석의 결과로 모든 품질을 판단하기보다, 공정과 재료, 맛과 성분을 함께 알아가려 합니다.</p></div>
+
+        </div>
+      </article>
+      <article class="sv-scene sv-scene--wide" id="s16" data-ch="5" aria-labelledby="s16-t">
+        <button class="sv-fig" type="button" data-full="images/v2/chatgpt-2026-10-21-04-29-39-20261028232720-1536.webp" aria-label="함께 배워온 시간을 음식으로 건넵니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/chatgpt-2026-10-21-04-29-39-20261028232720-480.webp 480w, images/v2/chatgpt-2026-10-21-04-29-39-20261028232720-960.webp 960w, images/v2/chatgpt-2026-10-21-04-29-39-20261028232720-1536.webp 1536w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/chatgpt-2026-10-21-04-29-39-20261028232720-960.jpg" srcset="images/v2/chatgpt-2026-10-21-04-29-39-20261028232720-480.jpg 480w, images/v2/chatgpt-2026-10-21-04-29-39-20261028232720-960.jpg 960w, images/v2/chatgpt-2026-10-21-04-29-39-20261028232720-1536.jpg 1536w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="함께 배워온 시간을 음식으로 건넵니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <div class="sv-txt">
+          <p class="sv-bkch"><b>05</b> 배움과 식탁 · 경험을 바탕으로 이론을 확인합니다</p>
+          <p class="sv-no"><span class="sv-no__n">장면 16</span><span class="sv-kind sv-kind--story">영동에덴원의 이야기</span></p>
+          <h3 class="sv-t" id="s16-t">영동에덴원의 경험과 여러 발효 과정을 거쳐,<br>여러분의 식탁으로</h3>
+          <div class="sv-prose"><p>함께 믿고 먹을 수 있는 것을 마련하려고 시작한 일이 농사와 발효로 이어졌습니다. 원료를 기르고, 메주를 띄우고, 옹기를 관리하는 시간에는 여러 식구의 손길과 배움을 통한 경험이 들어 있습니다.</p><p>영동에덴원은 저희가 선택한 방법을 더 잘 이해하고, 만드는 과정을 차근차근 설명하며 이 일을 이어가고 싶습니다.</p><p>영동에덴원의 발효식품은 이런 함께 해온 시간을 거쳐 여러분의 식탁으로 향합니다.</p></div>
+
+        </div>
+      </article>
+    </section>
+  </div>
+  <script>/* 펼쳐서 읽기면 넓은 장면 삽화를 넓은 칸 크기로 받기(그림책은 그대로 — 넓은 장면도 보통 칸) */(function (R, sv) {
+    try { if (!R.classList.contains("sv-book")) [].forEach.call(sv.querySelectorAll(".sv-scene--wide source, .sv-scene--wide img"), function (e) { e.setAttribute("sizes", sv.getAttribute("data-sv-sizes-wide")); }); } catch (e) {}
+  })(document.documentElement, document.querySelector("[data-sv]"));</script>
+
+  <div class="sv-bar" data-sv-bar hidden>
+    <div class="container sv-bar__in">
+      <div class="sv-ctl">
+        <button type="button" class="sv-nb" data-sv-prev aria-label="이전 장면"><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+<span>이전</span></button>
+        <p class="sv-cnt" aria-live="polite"><b data-sv-curn>01</b> / 16 <span data-sv-chn>01 발효의 시작</span></p>
+        <button type="button" class="sv-nb sv-nb--dark" data-sv-next aria-label="다음 장면"><span>다음</span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button>
+        <a class="sv-nb sv-nb--dark sv-nb--go" href="products.html" data-sv-go hidden><span>영동에덴원의 제품 만나보기</span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a>
+      </div>
+      <p class="sv-ainote sv-ainote--bar">이 이야기의 그림은 영동에덴원의 실제 사진과 이야기를 바탕으로 AI로 그렸습니다. 원리 그림은 개념을 설명하는 그림입니다.</p>
+    </div>
+  </div>
+
+  <section class="sv-end" aria-labelledby="sv-end-t">
+    <div class="container sv-end__in">
+      <p class="sv-ey sv-ey--lt">함께 배워온 시간과 경험을 발효로</p>
+      <h2 id="sv-end-t" class="sv-end__t">영동에덴원이 경험하고 배우고,<br>선택한 발효의 맛을 만나세요</h2>
+      <div class="sv-ctas"><a class="sv-cta sv-cta--p" href="products.html">영동에덴원의 제품 만나보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a><a class="sv-cta" href="#s1">처음부터 다시 읽기 ↑</a></div>
+    </div>
+  </section>
+  <p class="container sv-ainote sv-ainote--foot">이 이야기의 그림은 영동에덴원의 실제 사진과 이야기를 바탕으로 AI로 그렸습니다. 원리 그림은 개념을 설명하는 그림입니다.</p>
+  <dialog class="sv-all" data-sv-all-box aria-labelledby="sv-all-t"><div class="sv-all__in">
+    <div class="sv-all__h"><h2 id="sv-all-t" class="sv-all__t">16컷 모아보기</h2><button type="button" class="sv-lb__x sv-all__x" data-sv-all-x>닫기</button></div>
+<section class="sv-all__ch" aria-labelledby="sv-all-ch1"><h3 class="sv-all__k" id="sv-all-ch1"><b>01</b> 발효의 시작</h3><ul class="sv-all__g"><li><button type="button" class="sv-all__i" data-sv-to="0"><img src="images/v2/ferment-scene-01-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>01</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">밭에서 이어지는 이야기</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="1"><img src="images/v2/ferment-scene-02-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>02</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">종균을 따로 더하지 않는 방식</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="2"><img src="images/v2/ferment-scene-03-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>03</b> <i class="sv-kind sv-kind--principle">발효 원리</i></span><span class="sv-all__tt">여러 미생물의 활동이 이어집니다</span></button></li></ul></section><section class="sv-all__ch" aria-labelledby="sv-all-ch2"><h3 class="sv-all__k" id="sv-all-ch2"><b>02</b> 메주</h3><ul class="sv-all__g"><li><button type="button" class="sv-all__i" data-sv-to="3"><img src="images/v2/ferment-scene-04-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>04</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">삶은 콩을 메주로 빚습니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="4"><img src="images/v2/05-no-inset-v4-20261102200430-480.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>05</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">메주에 세 개의 관통 구멍을 만듭니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="5"><img src="images/v2/ferment-scene-06-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>06</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">볏짚을 사용해 메주를 띄웁니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="6"><img src="images/v2/ferment-scene-07-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>07</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">발효실에서 약 40일</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="7"><img src="images/v2/ferment-scene-08-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>08</b> <i class="sv-kind sv-kind--principle">발효 원리</i></span><span class="sv-all__tt">콩의 성분이 달라지는 과정</span></button></li></ul></section><section class="sv-all__ch" aria-labelledby="sv-all-ch3"><h3 class="sv-all__k" id="sv-all-ch3"><b>03</b> 장과 숙성</h3><ul class="sv-all__g"><li><button type="button" class="sv-all__i" data-sv-to="8"><img src="images/v2/ferment-scene-09-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>09</b> <i class="sv-kind sv-kind--principle">발효 원리</i></span><span class="sv-all__tt">된장과 간장으로 이어집니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="9"><img src="images/v2/ferment-scene-10-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>10</b> <i class="sv-kind sv-kind--principle">발효 원리</i></span><span class="sv-all__tt">고추장에는 또 다른 준비가 있습니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="10"><img src="images/v2/ferment-scene-11-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>11</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">장류는 1년 발효와 1년 이상의 숙성을 기본으로 합니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="11"><img src="images/v2/ferment-scene-12-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>12</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">오래 기다리고, 상태를 확인합니다</span></button></li></ul></section><section class="sv-all__ch" aria-labelledby="sv-all-ch4"><h3 class="sv-all__k" id="sv-all-ch4"><b>04</b> 청국장과 식초</h3><ul class="sv-all__g"><li><button type="button" class="sv-all__i" data-sv-to="12"><img src="images/v2/13-onggi-small-v4-20261102210912-480.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>13</b> <i class="sv-kind sv-kind--principle">발효 원리</i></span><span class="sv-all__tt">청국장은 삶은 콩에서 출발합니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="13"><img src="images/v2/chatgpt-2026-10-21-01-17-36-20261028232405-480.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>14</b> <i class="sv-kind sv-kind--principle">발효 원리</i></span><span class="sv-all__tt">식초에도 이어지는 순서가 있습니다</span></button></li></ul></section><section class="sv-all__ch" aria-labelledby="sv-all-ch5"><h3 class="sv-all__k" id="sv-all-ch5"><b>05</b> 배움과 식탁</h3><ul class="sv-all__g"><li><button type="button" class="sv-all__i" data-sv-to="14"><img src="images/v2/ferment-scene-15-192.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>15</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">완성된 음식도 알아가고 있습니다</span></button></li><li><button type="button" class="sv-all__i" data-sv-to="15"><img src="images/v2/chatgpt-2026-10-21-04-29-39-20261028232720-480.webp" alt="" width="192" height="128" loading="lazy" decoding="async"><span><b>16</b> <i class="sv-kind sv-kind--story">영동에덴원의 이야기</i></span><span class="sv-all__tt">함께 배워온 시간을 음식으로 건넵니다</span></button></li></ul></section>  </div></dialog>
+<p class="brand__more container"><a class="link-under" href="gallery.html">계절 갤러리 보기 — 밭의 사계절 사진</a></p>
+  <dialog class="sv-lb" data-sv-lb aria-label="삽화 크게 보기"><img alt="" data-sv-lb-img><div class="sv-lb__cap"><span data-sv-lb-cap></span><button type="button" class="sv-lb__x" data-sv-lb-x>닫기</button></div></dialog>
+</div>
+</main>
+<footer class="ft">
+  <div class="ft__navwrap">
+    <nav class="ft__nav container" aria-label="정책·안내">
+      <a href="story.html">영동에덴원 소개</a>
+<a href="gallery.html">계절 갤러리</a><a href="terms.html">이용약관</a><a href="privacy.html" class="is-strong">개인정보처리방침</a><a href="refund.html">교환·반품·환불 안내</a>      <a href="order-status.html">주문 조회</a>
+      <a href="contact.html">단체·기업 문의</a>
+    </nav>
+  </div>
+  <div class="ft__body container">
+    <div class="ft__brand">
+      <p class="ft__logo"><span class="logo__ko">영동에덴원</span><span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span></p>
+      <p class="ft__legal">
+        <span>농업회사법인 주식회사 에프엔엘바이오푸드 · 대표 길우관</span>
+        <span>충청북도 영동군 학산면 모리2길 3-1</span>
+        <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
+        <span>kwg7978@naver.com</span>
+<a href="terms.html#revision-notice">이용약관 개정 안내 (시행 2026년 11월 20일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
+      </p>
+    </div>
+    <div class="ft__cs">
+      <p class="ft__cs-h">고객센터</p>
+      <p class="ft__tel"><a href="tel:01051267578">010-5126-7578</a></p>
+<p class="ft__hours">월~금 10:00~19:00</p>      <div class="ft__sns">
+        <a href="https://blog.naver.com/gr_edenfarm" rel="noopener">블로그</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

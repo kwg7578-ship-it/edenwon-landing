@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="ko" data-season="autumn" data-root="../">
+<html lang="ko" data-season="autumn" data-season-auto data-ic="xl" data-root="../">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* 2-H 계절 자동: 손님 날짜(한국 시각)의 기상 계절 — CSS 앞에서 정해 색이 바뀌는 순간이 없게. 빌드 계절과 다르면 표시(홈 배너가 순서를 다시 정할 때까지 가림) */(function(r){var b=r.getAttribute("data-season"),s=["winter","spring","summer","autumn"][(new Date(Date.now()+324e5).getUTCMonth()+1)%12/3|0];r.setAttribute("data-season",s);if(s!==b)r.setAttribute("data-season-moved","")})(document.documentElement)</script>
 <meta name="robots" content="noindex, nofollow">
 <title>초생재배 감자 — 영동에덴원</title>
 <meta name="description" content="초생재배 감자 — 영동에덴원 · 충북 영동에서 기르고 빚은 먹거리입니다.">
@@ -10,21 +11,19 @@
 <meta property="og:description" content="초생재배 감자 — 영동에덴원 · 충북 영동에서 기르고 빚은 먹거리입니다.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yd-edenwon.com/products/potato">
-<meta property="og:image" content="https://yd-edenwon.com/images/product-potato.jpg">
+<meta property="og:image" content="https://yd-edenwon.com/images/v2/product-potato-750.jpg">
 <meta property="og:locale" content="ko_KR">
 <link rel="canonical" href="https://yd-edenwon.com/products/potato">
 <link rel="icon" href="../favicon.ico">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap" media="print" data-webfont>
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap"></noscript>
-<link rel="preload" as="image" type="image/webp" imagesrcset="../images/v2/product-potato-480.webp 480w, ../images/v2/product-potato-750.webp 750w" imagesizes="(max-width: 768px) 100vw, 640px" fetchpriority="high">
+<link rel="preload" href="../assets/v2/noto-sans-kr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/v2/fonts.css">
+<link rel="preload" as="image" type="image/webp" imagesrcset="../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-480.webp 480w, ../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-960.webp 960w, ../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-1448.webp 1448w" imagesizes="(max-width: 768px) 100vw, 640px" fetchpriority="high">
 <link rel="stylesheet" href="../assets/v2/tokens.css">
 <link rel="stylesheet" href="../assets/v2/base.css">
 <link rel="stylesheet" href="../assets/v2/pages.css">
 <link rel="stylesheet" href="../assets/v2/motion.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="../assets/v2/motion.css"></noscript>
-<script src="../assets/v2/app.js" defer></script>
+<link rel="stylesheet" href="../assets/v2/type.css"><script type="application/json" id="ed-texts">{"곧 만나요":"영동에덴원\n제철 농산물","다음 수확을 기다리는 작물입니다":"영동에덴원 농산물을 계절별로 만나보세요.","영동 농장 직접 수령":"영동에덴원 방문 or 직접 수령","지금 밭에서 거두는 것":"영동에덴원 농산물","발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다":"발효퇴비와 풀로 만든 토양에서, \n자연농법으로 농산물을 키웠습니다"}</script><script src="../assets/v2/app.js" defer></script>
 </head>
 <body class="page-detail">
 <div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
@@ -35,6 +34,7 @@
     <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
   </div>
 </div>
+<p class="sr-only" role="status" aria-live="polite" data-added-live></p>
 <div class="hd-top" role="region" aria-label="공지와 회원 메뉴">
   <a class="skip" href="#main">본문 바로가기</a>
   <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
@@ -49,7 +49,7 @@
 
 <a href="../order-status.html">주문 조회</a><a href="../contact.html">고객센터</a>  </div>
 </div>
-<header class="hd" data-hd>
+<header class="hd hd--groups" data-hd>
   <div class="hd__bar container">
     <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
 </button>
@@ -57,8 +57,11 @@
       <span class="logo__ko">영동에덴원</span><span class="sr-only"> 홈</span>
       <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
     </a>
-    <nav class="gnb" aria-label="주 메뉴">
-<a href="../products.html" aria-current="page">제품</a><a href="../products.html?cat=gift">선물세트</a><a href="../story.html">영동에덴원 이야기</a><a href="../contact.html">단체·기업 구매</a>    </nav>
+    <nav class="gnb gnb--groups" aria-label="주 메뉴">
+<div class="gnb__item" data-gnb-item><a class="gnb__link" href="../products.html?cat=onggi" style="min-width:3.76em">옹기발효</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-onggi" aria-label="옹기발효 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-onggi" hidden><li><a href="../products.html?cat=onggi">옹기발효 전체</a></li><li><a href="../products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="../products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="../products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="gnb__item" data-gnb-item><a class="gnb__link" href="../products.html?cat=processed" style="min-width:3.76em">가공식품</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-processed" aria-label="가공식품 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-processed" hidden><li><a href="../products.html?cat=processed">가공식품 전체</a></li><li><a href="../products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="../products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="../products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="../products.html?cat=farm" style="min-width:2.82em" aria-current="page">농산물</a><a href="../products.html?cat=gift" style="min-width:3.76em">선물세트</a><div class="gnb__item" data-gnb-item><a class="gnb__link" href="../story.html" style="min-width:2.82em">브랜드 스토리</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-story" aria-label="이야기 펼치기" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub gnb__sub--plain" id="gnb-sub-story" hidden><li><a href="../story.html">영동에덴원 이야기</a></li><li><a href="../farming.html">농사 이야기</a></li><li><a href="../fermentation.html">발효 이야기</a></li></ul></div><a href="../contact.html" style="min-width:6.28em">단체·기업 문의</a>    </nav>
     <div class="hd__actions">
       <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
 </button>
@@ -86,7 +89,10 @@
 </button>
     </div>
     <nav class="drawer__nav" aria-label="모바일 주 메뉴">
-<a href="../products.html" aria-current="page">제품</a><a href="../products.html?cat=gift">선물세트</a><a href="../story.html">영동에덴원 이야기</a><a href="../contact.html">단체·기업 구매</a>    </nav>
+<div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-onggi" data-dr-tog>옹기발효<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-onggi" hidden><li><a href="../products.html?cat=onggi">옹기발효 전체</a></li><li><a href="../products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="../products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="../products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-processed" data-dr-tog>가공식품<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-processed" hidden><li><a href="../products.html?cat=processed">가공식품 전체</a></li><li><a href="../products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="../products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="../products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="../products.html?cat=farm" aria-current="page">농산물</a><a href="../products.html?cat=gift">선물세트</a><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-story" data-dr-tog>브랜드 스토리<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-story" hidden><li><a href="../story.html">영동에덴원 이야기</a></li><li><a href="../farming.html">농사 이야기</a></li><li><a href="../fermentation.html">발효 이야기</a></li></ul></div><a href="../contact.html">단체·기업 문의</a>    </nav>
     <nav class="drawer__util" aria-label="회원·고객 메뉴">
       <span class="hd__member" data-dr-member>
   <a href="../account/login.html" data-dr-login data-m-anon>로그인</a>
@@ -101,7 +107,7 @@
   </div>
 </div>
 <main id="main" tabindex="-1">
-<script type="application/json" id="product-data">{"key": "potato", "name": "감자", "img": "product-potato.jpg", "href": "products/potato.html", "options": [{"id": "1kg", "label": "1kg", "price": 12000, "sold_out": false}]}</script>
+<script type="application/json" id="product-data">{"key": "potato", "name": "감자", "img": "chatgpt-2026-10-17-01-03-00-20261017010403.jpg", "href": "products/potato.html", "options": [{"id": "1kg", "label": "1kg", "price": 12000, "sold_out": false, "size": [1, "kg"]}], "up": true, "one": true}</script>
 <div class="pd container">
   <nav class="crumbs crumbs--muted" aria-label="현재 위치">
     <a href="../index.html">홈</a><span aria-hidden="true">/</span>
@@ -110,9 +116,12 @@
   </nav>
 
   <div class="pd__top">
-    <div class="gallery" data-gallery>
-      <div class="gallery__main">
-<div class="gallery__slide" data-shot="0"><picture><source type="image/webp" srcset="../images/v2/product-potato-480.webp 480w, ../images/v2/product-potato-750.webp 750w" sizes="(max-width: 768px) 100vw, 640px"><img src="../images/v2/product-potato-750.jpg" srcset="../images/v2/product-potato-480.jpg 480w, ../images/v2/product-potato-750.jpg 750w" sizes="(max-width: 768px) 100vw, 640px" width="750" height="1000" alt="감자 1kg" class="gallery__img" loading="eager" fetchpriority="high" decoding="async"></picture></div>      </div>
+    <div class="gallery gallery--multi" data-gallery>
+      <div class="gallery__thumbs" role="group" aria-label="사진 고르기">
+<button type="button" class="gallery__thumb" aria-label="감자 보기" aria-current="true" data-thumb="0"><picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-480.webp 480w, ../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-960.webp 960w, ../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-1448.webp 1448w" sizes="84px"><img src="../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-960.jpg" srcset="../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-480.jpg 480w, ../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-960.jpg 960w, ../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-1448.jpg 1448w" sizes="84px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></button><button type="button" class="gallery__thumb" aria-label="흙이 조금 묻은 감자 여러 개가 가득 모여 있는 모습 보기" data-thumb="1"><picture><source type="image/webp" srcset="../images/v2/product-potato-480.webp 480w, ../images/v2/product-potato-750.webp 750w" sizes="84px"><img src="../images/v2/product-potato-750.jpg" srcset="../images/v2/product-potato-480.jpg 480w, ../images/v2/product-potato-750.jpg 750w" sizes="84px" width="750" height="1000" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></button><button type="button" class="gallery__thumb" aria-label="밭고랑 흙 위에 갓 캔 감자들이 줄지어 놓인 모습 보기" data-thumb="2"><picture><source type="image/webp" srcset="../images/v2/potato-02-480.webp 480w, ../images/v2/potato-02-960.webp 960w, ../images/v2/potato-02-1000.webp 1000w" sizes="84px"><img src="../images/v2/potato-02-960.jpg" srcset="../images/v2/potato-02-480.jpg 480w, ../images/v2/potato-02-960.jpg 960w, ../images/v2/potato-02-1000.jpg 1000w" sizes="84px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></button>      </div>
+      <div class="gallery__stage">
+      <div class="gallery__main" data-track tabindex="0" aria-label="큰 사진 — 좌우로 밀거나 화살표 키로 넘기기">
+<div class="gallery__slide is-on" data-shot="0"><picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-480.webp 480w, ../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-960.webp 960w, ../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-1448.webp 1448w" sizes="(max-width: 768px) 100vw, 640px"><img src="../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-960.jpg" srcset="../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-480.jpg 480w, ../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-960.jpg 960w, ../images/v2/chatgpt-2026-10-17-01-03-00-20261017010403-1448.jpg 1448w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="감자" class="gallery__img" loading="eager" fetchpriority="high" decoding="async"></picture></div><div class="gallery__slide" data-shot="1"><picture data-defer><source type="image/webp" data-srcset="../images/v2/product-potato-480.webp 480w, ../images/v2/product-potato-750.webp 750w" sizes="(max-width: 768px) 100vw, 640px"><img data-srcset="../images/v2/product-potato-480.jpg 480w, ../images/v2/product-potato-750.jpg 750w" sizes="(max-width: 768px) 100vw, 640px" width="750" height="1000" alt="흙이 조금 묻은 감자 여러 개가 가득 모여 있는 모습" class="gallery__img" decoding="async"></picture></div><div class="gallery__slide" data-shot="2"><picture data-defer><source type="image/webp" data-srcset="../images/v2/potato-02-480.webp 480w, ../images/v2/potato-02-960.webp 960w, ../images/v2/potato-02-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 640px"><img data-srcset="../images/v2/potato-02-480.jpg 480w, ../images/v2/potato-02-960.jpg 960w, ../images/v2/potato-02-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 640px" width="960" height="720" alt="밭고랑 흙 위에 갓 캔 감자들이 줄지어 놓인 모습" class="gallery__img" decoding="async"></picture></div>      </div><p class="gallery__count" aria-live="polite"><span data-count>1</span> / 3</p></div>
     </div>
 
     <div class="buy" id="buy" data-buy>
@@ -121,20 +130,15 @@
         <h1 class="buy__name">감자</h1>
         <p class="buy__lede">발효퇴비 · 풀과 함께</p>
 <a class="buy__rating" href="#reviews" data-rv-badge hidden><span aria-hidden="true" class="buy__stars">★</span><span data-rv-badge-avg></span><span class="muted" data-rv-badge-n></span></a>        <div class="buy__price">
-          <span class="buy__won">12,000원</span>
+          <span class="buy__won" data-buy-won>12,000원</span>
         </div>
-        <a class="buy__login" href="../account/login.html" data-login-link>로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
+<p class="buy__unit" data-buy-unit>1kg · 100g당 1,200원</p>        <a class="buy__login" href="../account/login.html" data-login-link>로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
         <p class="buy__member" data-member-price hidden></p>
       </div>
 
       <dl class="buy__facts">
-<dt>배송</dt><dd>택배 5,000원 · 100,000원 이상 무료</dd><dt>직접 수령</dt><dd>영동 농장 (충북 영동군 학산면)</dd><dt>주문 알림</dt><dd>주문 즉시 주문번호·결제 안내 문자</dd><dt>적립</dt><dd>회원 구매 시 [적립률]% 적립</dd>      </dl>
+<dt>배송</dt><dd>택배 5,000원 · 100,000원 이상 무료</dd><dt>직접 수령</dt><dd>영동 농장 (충북 영동군 학산면)</dd><dt>주문 알림</dt><dd>주문 즉시 주문번호·결제 안내 문자</dd><dt>적립</dt><dd>회원 구매 시 2% 적립</dd>      </dl>
 
-      <div class="buy__select">
-        <label for="opt">중량</label>
-        <select id="opt" data-opt-select>
-<option value="1kg">1kg · 12,000원</option>        </select>
-      </div>
       <ul class="lines" data-lines aria-label="선택한 옵션"></ul>
       <template id="line-tpl">
         <li class="line">
@@ -168,24 +172,61 @@
 </nav>
 
 <section class="sb-hero sb-hero--bottom" id="intro" data-sec data-in-toc aria-label="소개">
-  <picture><source type="image/webp" srcset="../images/v2/summer-potato-harvest-480.webp 480w, ../images/v2/summer-potato-harvest-960.webp 960w, ../images/v2/summer-potato-harvest-1000.webp 1000w" sizes="100vw"><img src="../images/v2/summer-potato-harvest-960.jpg" srcset="../images/v2/summer-potato-harvest-480.jpg 480w, ../images/v2/summer-potato-harvest-960.jpg 960w, ../images/v2/summer-potato-harvest-1000.jpg 1000w" sizes="100vw" width="960" height="720" alt="밭에서 갓 캔 감자" class="sb-hero__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-  <div class="sb-hero__scrim"></div>
+  <picture><source type="image/webp" srcset="../images/v2/potato-01-480.webp 480w, ../images/v2/potato-01-750.webp 750w" sizes="100vw"><img src="../images/v2/potato-01-750.jpg" srcset="../images/v2/potato-01-480.jpg 480w, ../images/v2/potato-01-750.jpg 750w" sizes="100vw" width="750" height="1000" alt="밭에서 갓 캔 감자" class="sb-hero__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:50% 50%"></picture>  <div class="sb-hero__scrim"></div>
   <div class="sb-hero__text">
-<p class="eyebrow">FRESH POTATO</p>    <h2 class="sb-hero__title">풀과 함께 자란
-영동 감자.</h2>
-<p class="sb-hero__lead">직접 만든 발효퇴비와 풀로 가꾼 밭에서 감자를 길렀습니다.</p>  </div>
+<p class="eyebrow">풀과 함께</p>    <h2 class="sb-hero__title">영동에덴원<br>감자</h2>
+<p class="sb-hero__lead">직접 만든 발효퇴비로 토양을 가꾸고, <br>풀과 함께 키우며 씨앗부터 수확까지 직접 합니다.</p>  </div>
 </section>
 <section class="sb container" id="glance" data-sec data-in-toc aria-labelledby="glance-h">
   <h2 class="sb__h" id="glance-h">한눈에 보기</h2>
   <dl class="glance">
-<div class="glance__cell"><dt>재배</dt><dd>풀과 함께(초생재배)</dd></div><div class="glance__cell"><dt>거름</dt><dd>자가제조 발효퇴비 · 유기질 비료</dd></div><div class="glance__cell"><dt>용량</dt><dd>1kg</dd></div><div class="glance__cell"><dt>보관</dt><dd>[보관]</dd></div>  </dl>
+<div class="glance__cell"><dt>재배</dt><dd>풀과 함께(초생재배)</dd></div><div class="glance__cell"><dt>거름</dt><dd>자가제조 발효퇴비 · 유기질 비료</dd></div><div class="glance__cell"><dt>용량</dt><dd>1kg</dd></div><div class="glance__cell"><dt>보관</dt><dd>햇빛이 들지 않는 서늘하고 바람이 잘 통하는 곳에 두세요. 햇빛을 받으면 껍질이 초록색으로 변하니 피하세요.</dd></div>  </dl>
 </section>
-<div class="photo2 photo2--2" id="photos" data-sec>
-<figure class="photo2__fig"><picture><source type="image/webp" srcset="../images/v2/potato-02-480.webp 480w, ../images/v2/potato-02-960.webp 960w, ../images/v2/potato-02-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 50vw"><img src="../images/v2/potato-02-960.jpg" srcset="../images/v2/potato-02-480.jpg 480w, ../images/v2/potato-02-960.jpg 960w, ../images/v2/potato-02-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 50vw" width="960" height="720" alt="이랑에 줄지어 놓인 감자" class="photo2__img" loading="lazy" fetchpriority="low" decoding="async"></picture></figure><figure class="photo2__fig"><picture><source type="image/webp" srcset="../images/v2/potato-03-480.webp 480w, ../images/v2/potato-03-960.webp 960w, ../images/v2/potato-03-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 50vw"><img src="../images/v2/potato-03-960.jpg" srcset="../images/v2/potato-03-480.jpg 480w, ../images/v2/potato-03-960.jpg 960w, ../images/v2/potato-03-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 50vw" width="960" height="720" alt="감자를 캐는 밭" class="photo2__img" loading="lazy" fetchpriority="low" decoding="async"></picture></figure></div>
+<section class="gx gx-lead gx-lead--left" id="gx-lead" data-sec aria-labelledby="gx-lead-h">
+  <div class="gx-in">
+<p class="gx-eyebrow">STORY</p><h2 class="gx-title" id="gx-lead-h">자연과 함께, 재배는 과학적으로</h2><p class="gx-lede">직접 유기질 재료로 만든 발효퇴비와 유기질 비료, 유기농업자재를 활용해 균일하고 높은 품질을 유지합니다. 발효퇴비와 풀을 키워 만든 비옥한 토양과 미생물 재배 시스템이 만나 속까지 단단하게 영근 정직하고 맛있는 감자가 자랍니다.</p>  </div>
+</section>
+
+<section class="pj" id="gx-process-h" data-sec data-pj aria-labelledby="gx-process-h-h">
+  <noscript><style>.pj__rail,.pj__nav{display:none!important}.pj__body,.pj__panels{display:block!important}.pj__stage{max-width:720px}.pj__panel{visibility:visible!important;opacity:1!important;transform:none!important;margin-bottom:48px}.pj__panel .pj__text{opacity:1!important}</style></noscript>
+<div class="pj__head"><p class="eyebrow eyebrow--accent">FROM THE FIELD</p><h2 class="pj__h" id="gx-process-h-h">밭에서 식탁까지</h2></div>  <div class="pj__body">
+    <div class="pj__rail" role="tablist" aria-label="과정 단계" data-pj-rail>
+      <span class="pj__track" aria-hidden="true"><span class="pj__fill"></span></span>
+<button type="button" class="pj__tab" role="tab" id="gx-process-h-t0" aria-controls="gx-process-h-p0" aria-selected="true" data-pj-tab="0"><span class="pj__no">01</span><span class="pj__name">토양 만들기</span></button><button type="button" class="pj__tab" role="tab" id="gx-process-h-t1" aria-controls="gx-process-h-p1" aria-selected="false" tabindex="-1" data-pj-tab="1"><span class="pj__no">02</span><span class="pj__name">재배 초기</span></button><button type="button" class="pj__tab" role="tab" id="gx-process-h-t2" aria-controls="gx-process-h-p2" aria-selected="false" tabindex="-1" data-pj-tab="2"><span class="pj__no">03</span><span class="pj__name">재배 중기-말기</span></button><button type="button" class="pj__tab" role="tab" id="gx-process-h-t3" aria-controls="gx-process-h-p3" aria-selected="false" tabindex="-1" data-pj-tab="3"><span class="pj__no">04</span><span class="pj__name">감자</span></button>    </div>
+    <div class="pj__stage">
+      <div class="pj__panels" data-pj-panels>
+<div class="pj__panel is-on" role="tabpanel" id="gx-process-h-p0" aria-labelledby="gx-process-h-t0" data-pj-panel="0">
+          <div class="pj__media"><picture><source type="image/webp" srcset="../images/v2/autumn-compost-480.webp 480w, ../images/v2/autumn-compost-960.webp 960w, ../images/v2/autumn-compost-1000.webp 1000w" sizes="(max-width: 1023px) 100vw, 640px"><img src="../images/v2/autumn-compost-960.jpg" srcset="../images/v2/autumn-compost-480.jpg 480w, ../images/v2/autumn-compost-960.jpg 960w, ../images/v2/autumn-compost-1000.jpg 1000w" sizes="(max-width: 1023px) 100vw, 640px" width="960" height="720" alt="마른 풀밭 위에 퇴비를 길게 쌓아 둔 가을 밭" class="pj__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+          <div class="pj__text"><p class="pj__count">01 / 04</p><h3 class="pj__title">토양 만들기</h3><p class="pj__desc">직접 6개월 발효한 퇴비와 유기질 비료로 흙을 가꿉니다.</p></div>
+        </div><div class="pj__panel" role="tabpanel" id="gx-process-h-p1" aria-labelledby="gx-process-h-t1" data-pj-panel="1">
+          <div class="pj__media"><picture><source type="image/webp" srcset="../images/v2/20260507-092048-20261029231050-480.webp 480w, ../images/v2/20260507-092048-20261029231050-960.webp 960w, ../images/v2/20260507-092048-20261029231050-1600.webp 1600w" sizes="(max-width: 1023px) 100vw, 640px"><img src="../images/v2/20260507-092048-20261029231050-960.jpg" srcset="../images/v2/20260507-092048-20261029231050-480.jpg 480w, ../images/v2/20260507-092048-20261029231050-960.jpg 960w, ../images/v2/20260507-092048-20261029231050-1600.jpg 1600w" sizes="(max-width: 1023px) 100vw, 640px" width="960" height="720" alt="마을 길가 밭 비닐 고랑에 줄지어 올라온 감자 싹" class="pj__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+          <div class="pj__text"><p class="pj__count">02 / 04</p><h3 class="pj__title">재배 초기</h3><p class="pj__desc">발효퇴비를 넣고 풀을 함께 키워 비옥해진 흙에 감자를 심으면, 싹이 올라와 자라기 시작합니다.</p></div>
+        </div><div class="pj__panel" role="tabpanel" id="gx-process-h-p2" aria-labelledby="gx-process-h-t2" data-pj-panel="2">
+          <div class="pj__media"><picture><source type="image/webp" srcset="../images/v2/20260614-154115-20261029231947-480.webp 480w, ../images/v2/20260614-154115-20261029231947-960.webp 960w, ../images/v2/20260614-154115-20261029231947-1600.webp 1600w" sizes="(max-width: 1023px) 100vw, 640px"><img src="../images/v2/20260614-154115-20261029231947-960.jpg" srcset="../images/v2/20260614-154115-20261029231947-480.jpg 480w, ../images/v2/20260614-154115-20261029231947-960.jpg 960w, ../images/v2/20260614-154115-20261029231947-1600.jpg 1600w" sizes="(max-width: 1023px) 100vw, 640px" width="960" height="720" alt="잎이 무성하게 자란 감자밭 고랑과 먼 산" class="pj__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+          <div class="pj__text"><p class="pj__count">03 / 04</p><h3 class="pj__title">재배 중기-말기</h3><p class="pj__desc">줄기와 잎이 무성하게 자라 밭을 푸르게 채우고, 땅속 감자가 굵어지면서 잎과 줄기는 서서히 시듭니다.</p></div>
+        </div><div class="pj__panel" role="tabpanel" id="gx-process-h-p3" aria-labelledby="gx-process-h-t3" data-pj-panel="3">
+          <div class="pj__media"><picture><source type="image/webp" srcset="../images/v2/potato-02-20261029232350-480.webp 480w, ../images/v2/potato-02-20261029232350-960.webp 960w, ../images/v2/potato-02-20261029232350-1000.webp 1000w" sizes="(max-width: 1023px) 100vw, 640px"><img src="../images/v2/potato-02-20261029232350-960.jpg" srcset="../images/v2/potato-02-20261029232350-480.jpg 480w, ../images/v2/potato-02-20261029232350-960.jpg 960w, ../images/v2/potato-02-20261029232350-1000.jpg 1000w" sizes="(max-width: 1023px) 100vw, 640px" width="960" height="720" alt="흙 고랑 위에 줄지어 캐어 놓은 감자" class="pj__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+          <div class="pj__text"><p class="pj__count">04 / 04</p><h3 class="pj__title">감자</h3><p class="pj__desc">여러 과정을 거쳐, 풀과 함께 자란 영동에덴원 감자입니다.</p></div>
+        </div>      </div>
+      <div class="pj__nav"><button type="button" class="pj__btn" data-pj-prev aria-label="이전 단계"><svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+</button><button type="button" class="pj__btn" data-pj-next aria-label="다음 단계"><svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><button type="button" class="pj__auto" data-pj-auto aria-pressed="false">자동으로 보기</button></div>
+    </div>
+  </div>
+</section>
+
+
 <section class="sb container" id="usage" data-sec data-in-toc aria-labelledby="usage-h">
   <div class="usage__top">
-    <div class="sb__head usage__intro"><p class="eyebrow eyebrow--accent">TASTE &amp; USE</p><h2 class="sb__h" id="usage-h">맛과 쓰임</h2><p class="sb__lead">[맛 설명 — 첫맛, 향, 끝맛 2~3문장. 대표 시식 메모로 작성]</p></div>
-<ul class="pairs"><li><span class="pairs__k">그대로</span><span class="pairs__v">껍질째 삶거나 쪄서 소금 한 꼬집</span></li><li><span class="pairs__k">요리</span><span class="pairs__v">된장찌개 · 감자볶음</span></li><li><span class="pairs__k">샐러드</span><span class="pairs__v">감자 샐러드 · 샌드위치</span></li></ul>  </div>
+    <div class="sb__head usage__intro"><p class="eyebrow eyebrow--accent">TASTE &amp; USE</p><h2 class="sb__h" id="usage-h">활용하는 방법</h2></div>
+<ul class="pairs"><li><span class="pairs__k">그대로</span><span class="pairs__v">껍질째 삶거나 쪄서 소금 한 꼬집</span></li><li><span class="pairs__k">요리</span><span class="pairs__v">된장찌개 · 감자볶음</span></li><li><span class="pairs__k">샐러드</span><span class="pairs__v">감자 샐러드 · 샌드위치</span></li></ul>  </div><div class="ucards">
+  <h3 class="ucards__h">이렇게 드세요</h3>
+  <div class="ucards__scroll" tabindex="0" role="region" aria-label="이렇게 드세요 카드 3장">
+    <ul class="ucards__list ucards__list--3">
+<li class="ucard"><picture><source type="image/webp" srcset="../images/v2/01-steamed-potatoes-20261026204602-480.webp 480w, ../images/v2/01-steamed-potatoes-20261026204602-960.webp 960w, ../images/v2/01-steamed-potatoes-20261026204602-1448.webp 1448w" sizes="(max-width: 767px) 72vw, 280px"><img src="../images/v2/01-steamed-potatoes-20261026204602-960.jpg" srcset="../images/v2/01-steamed-potatoes-20261026204602-480.jpg 480w, ../images/v2/01-steamed-potatoes-20261026204602-960.jpg 960w, ../images/v2/01-steamed-potatoes-20261026204602-1448.jpg 1448w" sizes="(max-width: 767px) 72vw, 280px" width="960" height="720" alt="껍질째 찐 감자 세 알과 소금 한 종지" class="ucard__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="ucard__t">찐감자</h4></li><li class="ucard"><picture><source type="image/webp" srcset="../images/v2/02-potato-stir-fry-20261026204619-480.webp 480w, ../images/v2/02-potato-stir-fry-20261026204619-960.webp 960w, ../images/v2/02-potato-stir-fry-20261026204619-1448.webp 1448w" sizes="(max-width: 767px) 72vw, 280px"><img src="../images/v2/02-potato-stir-fry-20261026204619-960.jpg" srcset="../images/v2/02-potato-stir-fry-20261026204619-480.jpg 480w, ../images/v2/02-potato-stir-fry-20261026204619-960.jpg 960w, ../images/v2/02-potato-stir-fry-20261026204619-1448.jpg 1448w" sizes="(max-width: 767px) 72vw, 280px" width="960" height="720" alt="당근과 쪽파를 넣고 볶은 채 썬 감자볶음" class="ucard__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="ucard__t">감자볶음</h4></li><li class="ucard"><picture><source type="image/webp" srcset="../images/v2/03-potato-sandwich-20261026204631-480.webp 480w, ../images/v2/03-potato-sandwich-20261026204631-960.webp 960w, ../images/v2/03-potato-sandwich-20261026204631-1448.webp 1448w" sizes="(max-width: 767px) 72vw, 280px"><img src="../images/v2/03-potato-sandwich-20261026204631-960.jpg" srcset="../images/v2/03-potato-sandwich-20261026204631-480.jpg 480w, ../images/v2/03-potato-sandwich-20261026204631-960.jpg 960w, ../images/v2/03-potato-sandwich-20261026204631-1448.jpg 1448w" sizes="(max-width: 767px) 72vw, 280px" width="960" height="720" alt="으깬 감자 샐러드를 넣은 샌드위치 두 쪽" class="ucard__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="ucard__t">샌드위치</h4></li>    </ul>
+  </div>
+</div>
+
 </section>
 <section class="sb container" id="reviews" data-sec data-in-toc aria-labelledby="reviews-h" data-reviews="potato">
   <div class="sb__headrow"><h2 class="sb__h" id="reviews-h">주문 후기</h2></div>
@@ -202,14 +243,14 @@
   <details class="fold" data-fold>
     <summary class="fold__sum"><span>상품정보제공고시</span><span class="fold__icon" aria-hidden="true"></span></summary>
     <dl class="infotable infotable--fold">
-<dt>품목 또는 명칭</dt><dd>감자</dd><dt>포장단위별 내용물의 용량(중량), 수량, 크기</dt><dd>1kg</dd><dt>생산자, 수입품의 경우 수입자를 함께 표기</dt><dd>농업회사법인 주식회사 에프엔엘바이오푸드 · 충청북도 영동군 학산면 모리2길 3-1</dd><dt>「농수산물의 원산지 표시 등에 관한 법률」에 따른 원산지</dt><dd>[원산지]</dd><dt>제조연월일, 소비기한 또는 품질유지기한</dt><dd>[소비기한]</dd><dt>세부 품목군별 표시사항 — 농수산물: 「농수산물 품질관리법」에 따른 유전자변형농수산물 표시, 지리적 표시</dt><dd>[유전자변형농수산물·지리적 표시]</dd><dt>상품구성</dt><dd>[상품구성]</dd><dt>보관방법 또는 취급방법</dt><dd>[보관 방법]</dd><dt>소비자 안전을 위한 주의사항 (「식품 등의 표시ㆍ광고에 관한 법률 시행규칙」 제5조 및 [별표 2]에 따른 표시사항을 말함)</dt><dd>[소비자 안전 주의사항]</dd><dt>소비자 상담 관련 전화번호</dt><dd>010-5126-7578</dd>    </dl>
+<dt>품목 또는 명칭</dt><dd>감자</dd><dt>포장단위별 내용물의 용량(중량), 수량, 크기</dt><dd>1kg</dd><dt>생산자, 수입품의 경우 수입자를 함께 표기</dt><dd>농업회사법인 주식회사 에프엔엘바이오푸드 · 충청북도 영동군 학산면 모리2길 3-1</dd><dt>「농수산물의 원산지 표시 등에 관한 법률」에 따른 원산지</dt><dd>국내산(영동군)</dd><dt>제조연월일, 소비기한 또는 품질유지기한</dt><dd>신선 농산물로 별도 소비기한 없음 — 수확 후 바로 발송합니다. 받으신 뒤 서늘한 그늘에 두고 되도록 빨리 드세요.</dd><dt>상품구성</dt><dd>감자 1kg · 상자 1개</dd><dt>보관방법 또는 취급방법</dt><dd>햇빛이 들지 않는 서늘하고 바람이 잘 통하는 곳에 두세요. 햇빛을 받으면 껍질이 초록색으로 변하니 피하세요.</dd><dt>소비자 안전을 위한 주의사항 (「식품 등의 표시ㆍ광고에 관한 법률 시행규칙」 제5조 및 [별표 2]에 따른 표시사항을 말함)</dt><dd>싹이 나거나 초록색으로 변한 부분은 도려내고 드세요. 흙이 묻어 있을 수 있으니 씻어 드세요. 받으신 날 상태를 확인하시고 문제가 있으면 바로 연락 주세요. 부정불량 식품신고 : 국번없이 1399. 소비자 상담실 : 010-5126-7578</dd><dt>소비자 상담 관련 전화번호</dt><dd>010-5126-7578</dd>    </dl>
   </details>
 </section>
 <section class="sb container sb--fold" id="shipping" data-sec data-in-toc aria-label="배송·교환·환불">
   <details class="fold" data-fold>
     <summary class="fold__sum"><span>배송·교환·환불</span><span class="fold__icon" aria-hidden="true"></span></summary>
     <dl class="infotable infotable--fold">
-<dt>배송비</dt><dd>택배 5,000원 · 상품 합계 100,000원 이상 무료. 제주·도서산간은 배송비가 추가될 수 있습니다.</dd><dt>직접 수령</dt><dd>충청북도 영동군 학산면 모리2길 3-1 · [수령 가능 시간]</dd><dt>교환·환불</dt><dd><a href="../refund.html">교환·반품·환불 안내 보기</a></dd>    </dl>
+<dt>배송비</dt><dd>택배 5,000원 · 상품 합계 100,000원 이상 무료. 제주·도서산간은 배송비가 추가될 수 있습니다.</dd><dt>직접 수령</dt><dd>충청북도 영동군 학산면 모리2길 3-1 · 주중,주말 오전 9시~오후 6시, 방문 전 전화</dd><dt>교환·환불</dt><dd><a href="../refund.html">교환·반품·환불 안내 보기</a></dd>    </dl>
   </details>
 </section>
 
@@ -217,63 +258,67 @@
 <section class="related container" aria-labelledby="related-h">
   <h2 class="h2 h2--md" id="related-h">함께 담기 좋은 제품</h2>
   <div class="grid4">
-<article class="card is-soldout" data-cat="farm" data-price="10000" data-name="햇 완두콩 1kg · 3kg">
+<article class="card is-soldout has-alt" data-cat="farm" data-top="farm" data-price="10000" data-name="햇 완두콩 발효퇴비 · 풀과 함께">
   <div class="card__photo">
     <a class="card__photo-link" href="../products/pea.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-pea-480.webp 480w, ../images/v2/product-pea-960.webp 960w, ../images/v2/product-pea-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-pea-960.jpg" srcset="../images/v2/product-pea-480.jpg 480w, ../images/v2/product-pea-960.jpg 960w, ../images/v2/product-pea-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-17-12-57-55-20261017005827-480.webp 480w, ../images/v2/chatgpt-2026-10-17-12-57-55-20261017005827-960.webp 960w, ../images/v2/chatgpt-2026-10-17-12-57-55-20261017005827-1448.webp 1448w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-17-12-57-55-20261017005827-960.jpg" srcset="../images/v2/chatgpt-2026-10-17-12-57-55-20261017005827-480.jpg 480w, ../images/v2/chatgpt-2026-10-17-12-57-55-20261017005827-960.jpg 960w, ../images/v2/chatgpt-2026-10-17-12-57-55-20261017005827-1448.jpg 1448w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/01-pea-20261017114425-480.webp 480w, ../images/v2/01-pea-20261017114425-960.webp 960w, ../images/v2/01-pea-20261017114425-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/01-pea-20261017114425-480.jpg 480w, ../images/v2/01-pea-20261017114425-960.jpg 960w, ../images/v2/01-pea-20261017114425-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
 <span class="badge badge--soldout">품절</span>  </div>
   <a class="card__text" href="../products/pea.html">
     <span class="card__name">햇 완두콩</span>
-    <span class="card__price"><span class="sr-only">품절, </span>10,000원~</span>
-    <span class="card__desc">1kg · 3kg</span>
+    <span class="card__price"><span class="sr-only">품절, </span>10,000원~</span><span class="card__unit">1kg 외 · 100g당 1,000원</span>
+    <span class="card__desc">발효퇴비 · 풀과 함께</span>
   </a>
 </article>
-<article class="card" data-cat="farm" data-price="16000" data-name="마늘 1kg 발효퇴비 · 풀과 함께">
+<article class="card has-alt" data-cat="farm" data-top="farm" data-price="16000" data-name="마늘 발효퇴비 · 풀과 함께">
   <div class="card__photo">
     <a class="card__photo-link" href="../products/garlic.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-garlic-480.webp 480w, ../images/v2/product-garlic-750.webp 750w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-garlic-750.jpg" srcset="../images/v2/product-garlic-480.jpg 480w, ../images/v2/product-garlic-750.jpg 750w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="750" height="1000" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-17-01-11-52-20261017011214-480.webp 480w, ../images/v2/chatgpt-2026-10-17-01-11-52-20261017011214-960.webp 960w, ../images/v2/chatgpt-2026-10-17-01-11-52-20261017011214-1448.webp 1448w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-17-01-11-52-20261017011214-960.jpg" srcset="../images/v2/chatgpt-2026-10-17-01-11-52-20261017011214-480.jpg 480w, ../images/v2/chatgpt-2026-10-17-01-11-52-20261017011214-960.jpg 960w, ../images/v2/chatgpt-2026-10-17-01-11-52-20261017011214-1448.jpg 1448w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/05-garlic-20261017114505-480.webp 480w, ../images/v2/05-garlic-20261017114505-960.webp 960w, ../images/v2/05-garlic-20261017114505-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/05-garlic-20261017114505-480.jpg 480w, ../images/v2/05-garlic-20261017114505-960.jpg 960w, ../images/v2/05-garlic-20261017114505-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
-    <button type="button" class="card__bag" aria-label="마늘 1kg 장바구니에 담기" data-add="garlic" data-add-option="1kg"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+    <button type="button" class="card__bag" aria-label="마늘 장바구니에 담기" data-add="garlic" data-add-option="1kg"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">담기 +</span></button>
   </div>
   <a class="card__text" href="../products/garlic.html">
-    <span class="card__name">마늘 1kg</span>
-    <span class="card__price">16,000원</span>
+    <span class="card__name">마늘</span>
+    <span class="card__price">16,000원</span><span class="card__unit">1kg · 100g당 1,600원</span>
     <span class="card__desc">발효퇴비 · 풀과 함께</span>
   </a>
 </article>
-<article class="card" data-cat="farm" data-price="5000" data-name="양파 1kg 발효퇴비 · 풀과 함께">
+<article class="card has-alt" data-cat="farm" data-top="farm" data-price="5000" data-name="양파 발효퇴비 · 풀과 함께">
   <div class="card__photo">
     <a class="card__photo-link" href="../products/onion.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-onion-480.webp 480w, ../images/v2/product-onion-960.webp 960w, ../images/v2/product-onion-1000.webp 1000w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-onion-960.jpg" srcset="../images/v2/product-onion-480.jpg 480w, ../images/v2/product-onion-960.jpg 960w, ../images/v2/product-onion-1000.jpg 1000w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-17-01-11-44-20261017011225-480.webp 480w, ../images/v2/chatgpt-2026-10-17-01-11-44-20261017011225-960.webp 960w, ../images/v2/chatgpt-2026-10-17-01-11-44-20261017011225-1448.webp 1448w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-17-01-11-44-20261017011225-960.jpg" srcset="../images/v2/chatgpt-2026-10-17-01-11-44-20261017011225-480.jpg 480w, ../images/v2/chatgpt-2026-10-17-01-11-44-20261017011225-960.jpg 960w, ../images/v2/chatgpt-2026-10-17-01-11-44-20261017011225-1448.jpg 1448w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/04-onion-20261017114521-480.webp 480w, ../images/v2/04-onion-20261017114521-960.webp 960w, ../images/v2/04-onion-20261017114521-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/04-onion-20261017114521-480.jpg 480w, ../images/v2/04-onion-20261017114521-960.jpg 960w, ../images/v2/04-onion-20261017114521-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
-    <button type="button" class="card__bag" aria-label="양파 1kg 장바구니에 담기" data-add="onion" data-add-option="1kg"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+    <button type="button" class="card__bag" aria-label="양파 장바구니에 담기" data-add="onion" data-add-option="1kg"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">담기 +</span></button>
   </div>
   <a class="card__text" href="../products/onion.html">
-    <span class="card__name">양파 1kg</span>
-    <span class="card__price">5,000원</span>
+    <span class="card__name">양파</span>
+    <span class="card__price">5,000원</span><span class="card__unit">1kg · 100g당 500원</span>
     <span class="card__desc">발효퇴비 · 풀과 함께</span>
   </a>
 </article>
-<article class="card" data-cat="farm" data-price="6000" data-name="비트 1kg 발효퇴비 · 풀과 함께">
+<article class="card has-alt" data-cat="farm" data-top="farm" data-price="6000" data-name="비트 발효퇴비 · 풀과 함께">
   <div class="card__photo">
     <a class="card__photo-link" href="../products/beet.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="../images/v2/product-beet-480.webp 480w, ../images/v2/product-beet-750.webp 750w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/product-beet-750.jpg" srcset="../images/v2/product-beet-480.jpg 480w, ../images/v2/product-beet-750.jpg 750w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="750" height="1000" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="../images/v2/chatgpt-2026-10-17-01-11-35-20261017011238-480.webp 480w, ../images/v2/chatgpt-2026-10-17-01-11-35-20261017011238-960.webp 960w, ../images/v2/chatgpt-2026-10-17-01-11-35-20261017011238-1448.webp 1448w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="../images/v2/chatgpt-2026-10-17-01-11-35-20261017011238-960.jpg" srcset="../images/v2/chatgpt-2026-10-17-01-11-35-20261017011238-480.jpg 480w, ../images/v2/chatgpt-2026-10-17-01-11-35-20261017011238-960.jpg 960w, ../images/v2/chatgpt-2026-10-17-01-11-35-20261017011238-1448.jpg 1448w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="../images/v2/03-beet-20261017114535-480.webp 480w, ../images/v2/03-beet-20261017114535-960.webp 960w, ../images/v2/03-beet-20261017114535-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="../images/v2/03-beet-20261017114535-480.jpg 480w, ../images/v2/03-beet-20261017114535-960.jpg 960w, ../images/v2/03-beet-20261017114535-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
-    <button type="button" class="card__bag" aria-label="비트 1kg 장바구니에 담기" data-add="beet" data-add-option="1kg"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+    <button type="button" class="card__bag" aria-label="비트 장바구니에 담기" data-add="beet" data-add-option="1kg"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">담기 +</span></button>
   </div>
   <a class="card__text" href="../products/beet.html">
-    <span class="card__name">비트 1kg</span>
-    <span class="card__price">6,000원</span>
+    <span class="card__name">비트</span>
+    <span class="card__price">6,000원</span><span class="card__unit">1kg · 100g당 600원</span>
     <span class="card__desc">발효퇴비 · 풀과 함께</span>
   </a>
 </article>
   </div>
 </section>
-
+<p class="pd-ainote container">활용하는 방법의 요리 사진 등 일부 사진은 AI로 만든 연출 이미지입니다.</p>
 <div class="buybar" data-buybar>
   <button type="button" class="buy__like" aria-label="찜하기" aria-pressed="false" data-like="potato"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
   <button type="button" class="btn btn--line" data-to-cart>장바구니</button>
@@ -284,8 +329,8 @@
   <div class="ft__navwrap">
     <nav class="ft__nav container" aria-label="정책·안내">
       <a href="../story.html">영동에덴원 소개</a>
-<a href="../terms.html">이용약관</a><a href="../privacy.html" class="is-strong">개인정보처리방침</a><a href="../refund.html">교환·반품·환불 안내</a>      <a href="../order-status.html">주문 조회</a>
-      <a href="../contact.html">단체·기업 구매 문의</a>
+<a href="../gallery.html">계절 갤러리</a><a href="../terms.html">이용약관</a><a href="../privacy.html" class="is-strong">개인정보처리방침</a><a href="../refund.html">교환·반품·환불 안내</a>      <a href="../order-status.html">주문 조회</a>
+      <a href="../contact.html">단체·기업 문의</a>
     </nav>
   </div>
   <div class="ft__body container">
@@ -296,7 +341,7 @@
         <span>충청북도 영동군 학산면 모리2길 3-1</span>
         <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
         <span>kwg7978@naver.com</span>
-<a href="../privacy.html#revision-notice">개인정보처리방침·이용약관 개정 안내 (시행 2026년 10월 19일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
+<a href="../terms.html#revision-notice">이용약관 개정 안내 (시행 2026년 11월 20일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
       </p>
     </div>
     <div class="ft__cs">

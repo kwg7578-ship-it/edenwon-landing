@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="ko" data-season="autumn" data-root="">
+<html lang="ko" data-season="autumn" data-season-auto data-ic="xl" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* 2-H 계절 자동: 손님 날짜(한국 시각)의 기상 계절 — CSS 앞에서 정해 색이 바뀌는 순간이 없게. 빌드 계절과 다르면 표시(홈 배너가 순서를 다시 정할 때까지 가림) */(function(r){var b=r.getAttribute("data-season"),s=["winter","spring","summer","autumn"][(new Date(Date.now()+324e5).getUTCMonth()+1)%12/3|0];r.setAttribute("data-season",s);if(s!==b)r.setAttribute("data-season-moved","")})(document.documentElement)</script>
 <meta name="robots" content="noindex, nofollow">
 <title>영동에덴원 · YEONGDONG EDENWON — 자연이 기다리고, 시간이 빚어낸 진심</title>
 <meta name="description" content="충북 영동에서 옹기로 익히는 발효식품. 1년 6개월 이상 옹기 발효한 천연발효식초, 옹기숙성 된장·고추장·어간장, 청국장과 가공식품까지 일곱 가지 진심을 전합니다.">
@@ -10,21 +11,19 @@
 <meta property="og:description" content="충북 영동, 옹기로 익히는 발효식품 — 영동에덴원의 일곱 가지 진심">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yd-edenwon.com">
-<meta property="og:image" content="https://yd-edenwon.com/images/hero-snow-pots.jpg">
+<meta property="og:image" content="https://yd-edenwon.com/images/v2/hero-snow-pots-1000.jpg">
 <meta property="og:locale" content="ko_KR">
 <link rel="canonical" href="https://yd-edenwon.com/">
 <link rel="icon" href="favicon.ico">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap" media="print" data-webfont>
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap"></noscript>
-<link rel="preload" as="image" type="image/webp" imagesrcset="images/v2/autumn-rice-harvest-480.webp 480w, images/v2/autumn-rice-harvest-960.webp 960w" imagesizes="100vw" fetchpriority="high">
+<link rel="stylesheet" href="assets/v2/fonts.css" media="print" data-webfont>
+<noscript><link rel="stylesheet" href="assets/v2/fonts.css"></noscript>
+<link rel="preload" as="image" type="image/webp" imagesrcset="images/v2/kakaotalk-20261017-131523481-05-20261017213718-480.webp 480w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-960.webp 960w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-1280.webp 1280w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-1440.webp 1440w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-1600.webp 1600w" imagesizes="100vw" fetchpriority="high">
 <link rel="stylesheet" href="assets/v2/tokens.css">
 <link rel="stylesheet" href="assets/v2/base.css">
 <link rel="stylesheet" href="assets/v2/pages.css">
 <link rel="stylesheet" href="assets/v2/motion.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="assets/v2/motion.css"></noscript>
-<script src="assets/v2/app.js" defer></script>
+<link rel="stylesheet" href="assets/v2/type.css"><script type="application/json" id="ed-texts">{"곧 만나요":"영동에덴원\n제철 농산물","다음 수확을 기다리는 작물입니다":"영동에덴원 농산물을 계절별로 만나보세요.","영동 농장 직접 수령":"영동에덴원 방문 or 직접 수령","지금 밭에서 거두는 것":"영동에덴원 농산물","발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다":"발효퇴비와 풀로 만든 토양에서, \n자연농법으로 농산물을 키웠습니다"}</script><script src="assets/v2/app.js" defer></script>
 </head>
 <body class="page-home">
 <div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
@@ -35,6 +34,7 @@
     <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
   </div>
 </div>
+<p class="sr-only" role="status" aria-live="polite" data-added-live></p>
 <div class="hd-top" role="region" aria-label="공지와 회원 메뉴">
   <a class="skip" href="#main">본문 바로가기</a>
   <p class="hd__notice"><span>주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>
@@ -49,7 +49,7 @@
 
 <a href="order-status.html">주문 조회</a><a href="contact.html">고객센터</a>  </div>
 </div>
-<header class="hd" data-hd>
+<header class="hd hd--groups" data-hd>
   <div class="hd__bar container">
     <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
 </button>
@@ -57,8 +57,11 @@
       <span class="logo__ko">영동에덴원</span><span class="sr-only"> 홈</span>
       <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
     </a>
-    <nav class="gnb" aria-label="주 메뉴">
-<a href="products.html">제품</a><a href="products.html?cat=gift">선물세트</a><a href="story.html">영동에덴원 이야기</a><a href="contact.html">단체·기업 구매</a>    </nav>
+    <nav class="gnb gnb--groups" aria-label="주 메뉴">
+<div class="gnb__item" data-gnb-item><a class="gnb__link" href="products.html?cat=onggi" style="min-width:3.76em">옹기발효</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-onggi" aria-label="옹기발효 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-onggi" hidden><li><a href="products.html?cat=onggi">옹기발효 전체</a></li><li><a href="products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="gnb__item" data-gnb-item><a class="gnb__link" href="products.html?cat=processed" style="min-width:3.76em">가공식품</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-processed" aria-label="가공식품 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-processed" hidden><li><a href="products.html?cat=processed">가공식품 전체</a></li><li><a href="products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="products.html?cat=farm" style="min-width:2.82em">농산물</a><a href="products.html?cat=gift" style="min-width:3.76em">선물세트</a><div class="gnb__item" data-gnb-item><a class="gnb__link" href="story.html" style="min-width:2.82em">브랜드 스토리</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-story" aria-label="이야기 펼치기" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub gnb__sub--plain" id="gnb-sub-story" hidden><li><a href="story.html">영동에덴원 이야기</a></li><li><a href="farming.html">농사 이야기</a></li><li><a href="fermentation.html">발효 이야기</a></li></ul></div><a href="contact.html" style="min-width:6.28em">단체·기업 문의</a>    </nav>
     <div class="hd__actions">
       <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
 </button>
@@ -86,7 +89,10 @@
 </button>
     </div>
     <nav class="drawer__nav" aria-label="모바일 주 메뉴">
-<a href="products.html">제품</a><a href="products.html?cat=gift">선물세트</a><a href="story.html">영동에덴원 이야기</a><a href="contact.html">단체·기업 구매</a>    </nav>
+<div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-onggi" data-dr-tog>옹기발효<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-onggi" hidden><li><a href="products.html?cat=onggi">옹기발효 전체</a></li><li><a href="products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-processed" data-dr-tog>가공식품<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-processed" hidden><li><a href="products.html?cat=processed">가공식품 전체</a></li><li><a href="products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="products.html?cat=farm">농산물</a><a href="products.html?cat=gift">선물세트</a><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-story" data-dr-tog>브랜드 스토리<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-story" hidden><li><a href="story.html">영동에덴원 이야기</a></li><li><a href="farming.html">농사 이야기</a></li><li><a href="fermentation.html">발효 이야기</a></li></ul></div><a href="contact.html">단체·기업 문의</a>    </nav>
     <nav class="drawer__util" aria-label="회원·고객 메뉴">
       <span class="hd__member" data-dr-member>
   <a href="account/login.html" data-dr-login data-m-anon>로그인</a>
@@ -103,17 +109,16 @@
 <main id="main" tabindex="-1">
 <h1 class="sr-only">영동에덴원</h1>
 
-<section class="hero" aria-roledescription="carousel" aria-label="대표 배너" data-carousel>
+<section class="hero" aria-roledescription="carousel" aria-label="대표 배너" data-carousel data-b4-src="assets/v2/home-b4.html" data-b4-hol="2026-02-17,2026-09-25,2027-02-07,2027-09-15,2028-01-27,2028-10-03,2029-02-13,2029-09-22,2030-02-03,2030-09-12,2031-01-23,2031-10-01,2032-02-11,2032-09-19,2033-01-31,2033-09-08,2034-02-19,2034-09-27,2035-02-08,2035-09-16">
   <div class="hero__track">
-    <div class="hero__slide hero__slide--dark hero__slide--start" role="group" aria-roledescription="slide" aria-label="1 / 4" data-slide style="background:var(--photo) url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAYACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDZk2RLmR1Qf7RxVM6jY5IE24j0FZLWUshy95E5PUsSSad9hRFHmX0KjvgYqXjIrYn2DLdxqDAZhKIv+0Mmq0Os3iSFlaKTHGCo4/lTJLC1kKgXjMv+zkkfpT10K1Chlkm+pqPrXdl+x7DftrAqVx05GMc/jTo5JZpMlRyeORRRXO0kjVEjSSqNu4qakhuCgw7sx9SM4+lFFTZNFH//2Q==) center 60%/cover no-repeat">
-      <picture><source type="image/webp" srcset="images/v2/autumn-rice-harvest-480.webp 480w, images/v2/autumn-rice-harvest-960.webp 960w" sizes="100vw"><img src="images/v2/autumn-rice-harvest-960.jpg" srcset="images/v2/autumn-rice-harvest-480.jpg 480w, images/v2/autumn-rice-harvest-960.jpg 960w" sizes="100vw" width="960" height="720" alt="산 아래 황금빛 논에서 벼를 거두는 모습" class="hero__img" loading="eager" fetchpriority="high" decoding="async" style="object-position:center 60%"></picture>
+    <div class="hero__slide hero__slide--dark hero__slide--start is-play is-first" role="group" aria-roledescription="slide" aria-label="1 / 4" data-slide style="background:var(--photo) url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAYACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCkt/5bBJWQ+561Il2u75lDA917VcjsbVIxvQMe7E4z+VL9gsV5FtH+BP8AjWP19ruL2CI4mjl4BAb0PFOlEcP32UHGcd6mEFt0EKD8TTfItCc+WM+uTWqzHTYj6vruVzchF5xkdRmq1zqKosm052jAx60UVxxgrnS2UbbVnkkcuwAPIqdNRMrMCCFz94HgDFFFauESUz//2Q==) 50% 50%/cover no-repeat">
+      <picture><source type="image/webp" srcset="images/v2/kakaotalk-20261017-131523481-05-20261017213718-480.webp 480w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-960.webp 960w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-1280.webp 1280w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-1440.webp 1440w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-1600.webp 1600w" sizes="100vw"><img src="images/v2/kakaotalk-20261017-131523481-05-20261017213718-960.jpg" srcset="images/v2/kakaotalk-20261017-131523481-05-20261017213718-480.jpg 480w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-960.jpg 960w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-1280.jpg 1280w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-1440.jpg 1440w, images/v2/kakaotalk-20261017-131523481-05-20261017213718-1600.jpg 1600w" sizes="100vw" width="960" height="720" alt="산 아래 황금빛 논에서 벼를 거두는 모습" class="hero__img" loading="eager" fetchpriority="high" decoding="async" style="object-position:50% 50%"></picture>
       <div class="hero__scrim"></div>
       <div class="hero__inner">
         <div class="hero__text">
-          <p class="hero__eyebrow">가을 · 한로 寒露</p>
-          <h2 class="hero__title">자연이 기다리고,
-시간이 빚어낸 진심</h2>
-          <p class="hero__sub">영동 학산의 밭에서 기른 콩과 과일을 옹기에 담아, 서두르지 않고 시간으로 발효합니다.</p>
+          <p class="hero__eyebrow"><span data-season-ko>가을</span> · <span data-term>입동 立冬</span></p>
+          <h2 class="hero__title">자연이 기다리고,<br>시간이 빚어낸 진심</h2>
+          <p class="hero__sub">영동에덴원은 자연농법으로 기른 자연의 선물을 <span class="nl-pc"><br></span><span class="nl-m"> </span>옹기에 담아, 사계절의 시간에서 발효·숙성 합니다.</p>
           <a class="hero__cta" href="products.html">제품 둘러보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 </a>
         </div>
@@ -125,8 +130,7 @@
       <div class="hero__inner">
         <div class="hero__text">
           <p class="hero__eyebrow">옹기숙성 장류</p>
-          <h2 class="hero__title">2년의 볕과 바람,
-옹기숙성 된장</h2>
+          <h2 class="hero__title">2년의 볕과 바람,<br>옹기숙성 된장</h2>
           <p class="hero__sub">자가 재배 콩으로 띄운 메주와 천일염으로 담급니다.</p>
           <a class="hero__cta" href="products/doenjang.html">된장 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 </a>
@@ -134,27 +138,25 @@
       </div>
     </div>
     <div class="hero__slide hero__slide--light hero__slide--start" role="group" aria-roledescription="slide" aria-label="3 / 4" data-slide hidden>
-      <picture><source type="image/webp" srcset="images/v2/vinegar-hero-480.webp 480w, images/v2/vinegar-hero-960.webp 960w, images/v2/vinegar-hero-1600.webp 1600w" sizes="100vw"><img src="images/v2/vinegar-hero-960.jpg" srcset="images/v2/vinegar-hero-480.jpg 480w, images/v2/vinegar-hero-960.jpg 960w, images/v2/vinegar-hero-1600.jpg 1600w" sizes="100vw" width="960" height="600" alt="천연식초 두 병" class="hero__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:78% center"></picture>
+      <picture><source type="image/webp" srcset="images/v2/vinegar-hero-480.webp 480w, images/v2/vinegar-hero-960.webp 960w, images/v2/vinegar-hero-1280.webp 1280w, images/v2/vinegar-hero-1440.webp 1440w, images/v2/vinegar-hero-1600.webp 1600w" sizes="100vw"><img src="images/v2/vinegar-hero-960.jpg" srcset="images/v2/vinegar-hero-480.jpg 480w, images/v2/vinegar-hero-960.jpg 960w, images/v2/vinegar-hero-1280.jpg 1280w, images/v2/vinegar-hero-1440.jpg 1440w, images/v2/vinegar-hero-1600.jpg 1600w" sizes="100vw" width="960" height="600" alt="천연식초 두 병" class="hero__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:78% center"></picture>
       <div class="hero__scrim"></div>
       <div class="hero__inner">
         <div class="hero__text">
           <p class="hero__eyebrow">천연발효식초</p>
-          <h2 class="hero__title">누룩도 종초도 없이,
-발효의 초심</h2>
-          <p class="hero__sub">옹기 속 자연 미생물로 익힌 천연식초 22종</p>
+          <h2 class="hero__title">누룩도 종초도 없이,<br>발효의 초심</h2>
+          <p class="hero__sub">옹기 속 자연 미생물로 익힌 천연식초 24종</p>
           <a class="hero__cta" href="products.html?cat=vinegar">식초 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 </a>
         </div>
       </div>
     </div>
     <div class="hero__slide hero__slide--light hero__slide--end" role="group" aria-roledescription="slide" aria-label="4 / 4" data-slide hidden>
-      <picture><source type="image/webp" srcset="images/v2/jam-hero-480.webp 480w, images/v2/jam-hero-960.webp 960w, images/v2/jam-hero-1600.webp 1600w" sizes="100vw"><img src="images/v2/jam-hero-960.jpg" srcset="images/v2/jam-hero-480.jpg 480w, images/v2/jam-hero-960.jpg 960w, images/v2/jam-hero-1600.jpg 1600w" sizes="100vw" width="960" height="600" alt="진짜S 잼 세 병" class="hero__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:10% center"></picture>
+      <picture><source type="image/webp" srcset="images/v2/jam-hero-480.webp 480w, images/v2/jam-hero-960.webp 960w, images/v2/jam-hero-1280.webp 1280w, images/v2/jam-hero-1440.webp 1440w, images/v2/jam-hero-1600.webp 1600w" sizes="100vw"><img src="images/v2/jam-hero-960.jpg" srcset="images/v2/jam-hero-480.jpg 480w, images/v2/jam-hero-960.jpg 960w, images/v2/jam-hero-1280.jpg 1280w, images/v2/jam-hero-1440.jpg 1440w, images/v2/jam-hero-1600.jpg 1600w" sizes="100vw" width="960" height="600" alt="진짜S 잼 세 병" class="hero__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:10% center"></picture>
       <div class="hero__scrim"></div>
       <div class="hero__inner">
         <div class="hero__text">
           <p class="hero__eyebrow">진짜&#39;S 시리즈</p>
-          <h2 class="hero__title">젤라틴도 펙틴도 없이,
-원물만 달였습니다.</h2>
+          <h2 class="hero__title">젤라틴도 펙틴도 없이,<br>원물만 달였습니다.</h2>
           <p class="hero__sub">가마솥에서 3시간 이상 달인 잼</p>
           <a class="hero__cta" href="products.html?cat=jam">잼 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 </a>
@@ -164,7 +166,7 @@
   </div>
   <div class="hero__controls">
     <div class="hero__controls-in">
-      <p class="hero__num" aria-hidden="true"><b data-num>01</b> / 04</p>
+      <p class="hero__num" aria-hidden="true"><b data-num>01</b> / <span data-num-n>04</span></p>
       <div class="hero__dots">
 <button type="button" class="hero__dot" aria-label="1번째 배너" aria-current="true" data-dot="0"><span></span></button><button type="button" class="hero__dot" aria-label="2번째 배너" data-dot="1"><span></span></button><button type="button" class="hero__dot" aria-label="3번째 배너" data-dot="2"><span></span></button><button type="button" class="hero__dot" aria-label="4번째 배너" data-dot="3"><span></span></button>      </div>
       <button type="button" class="hero__pause" aria-pressed="false" aria-label="배너 자동 넘김 멈춤" data-pause hidden>
@@ -181,151 +183,207 @@
   </div>
 </section>
 
-<nav class="cats container" aria-label="제품 분류 바로가기">
-  <a class="cats__item" href="products.html?cat=vinegar">
-    <span class="cats__img"><picture><source type="image/webp" srcset="images/v2/product-vinegar-480.webp 480w, images/v2/product-vinegar-960.webp 960w, images/v2/product-vinegar-1200.webp 1200w" sizes="112px"><img src="images/v2/product-vinegar-960.jpg" srcset="images/v2/product-vinegar-480.jpg 480w, images/v2/product-vinegar-960.jpg 960w, images/v2/product-vinegar-1200.jpg 1200w" sizes="112px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
-    <span class="cats__label">천연발효식초</span>
-  </a>
-  <a class="cats__item" href="products.html?cat=jang">
-    <span class="cats__img"><picture><source type="image/webp" srcset="images/v2/product-doenjang-480.webp 480w, images/v2/product-doenjang-960.webp 960w, images/v2/product-doenjang-1200.webp 1200w" sizes="112px"><img src="images/v2/product-doenjang-960.jpg" srcset="images/v2/product-doenjang-480.jpg 480w, images/v2/product-doenjang-960.jpg 960w, images/v2/product-doenjang-1200.jpg 1200w" sizes="112px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
-    <span class="cats__label">옹기숙성 장류</span>
-  </a>
-  <a class="cats__item" href="products.html?cat=jam">
-    <span class="cats__img"><picture><source type="image/webp" srcset="images/v2/product-jam-shine-muscat-480.webp 480w, images/v2/product-jam-shine-muscat-960.webp 960w, images/v2/product-jam-shine-muscat-1200.webp 1200w" sizes="112px"><img src="images/v2/product-jam-shine-muscat-960.jpg" srcset="images/v2/product-jam-shine-muscat-480.jpg 480w, images/v2/product-jam-shine-muscat-960.jpg 960w, images/v2/product-jam-shine-muscat-1200.jpg 1200w" sizes="112px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
-    <span class="cats__label">잼·조청·비빔장</span>
-  </a>
-  <a class="cats__item" href="products.html?cat=farm">
-    <span class="cats__img"><picture><source type="image/webp" srcset="images/v2/product-potato-480.webp 480w, images/v2/product-potato-750.webp 750w" sizes="112px"><img src="images/v2/product-potato-750.jpg" srcset="images/v2/product-potato-480.jpg 480w, images/v2/product-potato-750.jpg 750w" sizes="112px" width="750" height="1000" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
-    <span class="cats__label">제철 농산물</span>
-  </a>
-  <a class="cats__item" href="products.html?cat=gift">
-    <span class="cats__img"><picture><source type="image/webp" srcset="images/v2/giftset-jam-480.webp 480w, images/v2/giftset-jam-960.webp 960w, images/v2/giftset-jam-1200.webp 1200w" sizes="112px"><img src="images/v2/giftset-jam-960.jpg" srcset="images/v2/giftset-jam-480.jpg 480w, images/v2/giftset-jam-960.jpg 960w, images/v2/giftset-jam-1200.jpg 1200w" sizes="112px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
-    <span class="cats__label">선물세트</span>
-  </a>
-  <a class="cats__item" href="contact.html">
-    <span class="cats__img"><picture><source type="image/webp" srcset="images/v2/product-meju-480.webp 480w, images/v2/product-meju-960.webp 960w, images/v2/product-meju-1200.webp 1200w" sizes="112px"><img src="images/v2/product-meju-960.jpg" srcset="images/v2/product-meju-480.jpg 480w, images/v2/product-meju-960.jpg 960w, images/v2/product-meju-1200.jpg 1200w" sizes="112px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
-    <span class="cats__label">단체·기업 구매</span>
-  </a>
-</nav>
+<div class="term" data-term-band>
+  <p class="term__in container"><b class="term__name"><span data-term>입동 立冬</span></b><span class="term__mean" data-term-mean>겨울이 시작되는 때</span><span class="term__line" data-term-line hidden></span></p>
+</div>
+<script type="application/json" id="term-data">{"y0":2026,"k":20,"d":[[5,20,4,19,5,20,5,20,5,21,6,21,7,23,7,23,7,23,8,23,7,22,7,22],[5,20,4,19,6,21,5,20,6,21,6,21,7,23,8,23,8,23,8,24,8,22,7,22],[6,20,4,19,5,20,4,19,5,20,5,21,6,22,7,22,7,22,8,23,7,22,6,21],[5,20,3,18,5,20,4,20,5,21,5,21,7,22,7,23,7,23,8,23,7,22,7,21],[5,20,4,19,5,20,5,20,5,21,5,21,7,23,7,23,7,23,8,23,7,22,7,22],[5,20,4,19,6,21,5,20,6,21,6,21,7,23,8,23,8,23,8,23,8,22,7,22],[6,20,4,19,5,20,4,19,5,20,5,21,6,22,7,22,7,22,8,23,7,22,6,21],[5,20,3,18,5,20,4,20,5,21,5,21,7,22,7,23,7,23,8,23,7,22,7,21],[5,20,4,18,5,20,5,20,5,21,5,21,7,23,7,23,7,23,8,23,7,22,7,22],[5,20,4,19,6,21,5,20,6,21,6,21,7,23,8,23,8,23,8,23,7,22,7,22],[6,20,4,19,5,20,4,19,5,20,5,21,6,22,7,22,7,22,8,23,7,22,6,21]],"t":[["소한","小寒","작은 추위, 한겨울 추위가 깊어지는 때",""],["대한","大寒","큰 추위, 겨울을 마무리하는 마지막 절기",""],["입춘","立春","봄이 시작되는 때",""],["우수","雨水","눈이 녹아 비가 되고 얼음이 풀리는 때",""],["경칩","驚蟄","겨울잠 자던 벌레와 개구리가 깨어나는 때",""],["춘분","春分","낮과 밤의 길이가 같아지는 때",""],["청명","淸明","하늘이 맑아지고 봄 농사를 준비하는 때",""],["곡우","穀雨","봄비가 내려 곡식을 기름지게 하는 때",""],["입하","立夏","여름이 시작되는 때",""],["소만","小滿","햇볕이 넉넉해 만물이 자라 차오르는 때",""],["망종","芒種","보리를 거두고 모를 심는 때",""],["하지","夏至","낮이 가장 긴 때",""],["소서","小暑","작은 더위, 본격적인 더위가 시작되는 때",""],["대서","大暑","큰 더위, 한 해 가장 무더운 때",""],["입추","立秋","가을이 시작되는 때",""],["처서","處暑","더위가 물러나고 선선해지는 때",""],["백로","白露","풀잎에 흰 이슬이 맺히기 시작하는 때",""],["추분","秋分","낮과 밤의 길이가 다시 같아지는 때",""],["한로","寒露","찬 이슬이 맺히는 때",""],["상강","霜降","서리가 내리기 시작하는 때",""],["입동","立冬","겨울이 시작되는 때",""],["소설","小雪","첫눈이 내리기 시작하는 때",""],["대설","大雪","눈이 많이 내리는 때",""],["동지","冬至","밤이 가장 긴 때",""]]}</script>
+<script>/* 2-H H1-3: 손님 날짜(한국 시각)의 24절기 — 빌드 날짜와 다를 때만 바꾼다(계산표 2026~2036 밖이면 빌드 값) */(function () {
+  var j = JSON.parse(document.getElementById("term-data").textContent), n = new Date(Date.now() + 324e5);
+  var at = function (y, m, d) {
+    var r = j.d[y - j.y0], k = -1;
+    if (!r) return -2;
+    for (var i = 0; i < 24; i++) if ((i >> 1) + 1 < m || ((i >> 1) + 1 === m && r[i] <= d)) k = i;
+    return k >= 0 ? k : (j.d[y - 1 - j.y0] ? 23 : -2);
+  };
+  var k = at(n.getUTCFullYear(), n.getUTCMonth() + 1, n.getUTCDate());
+  if (k < 0 || k === j.k) return;
+  var t = j.t[k], line = document.querySelector("[data-term-line]");
+  document.querySelectorAll("[data-term]").forEach(function (e) { e.textContent = t[0] + " " + t[1]; });
+  document.querySelector("[data-term-mean]").textContent = t[2];
+  line.textContent = t[3]; line.hidden = !t[3];
+})();</script>
+
+<section class="browse container" aria-labelledby="browse-h">
+  <div class="sec-head sec-head--center">
+    <h2 id="browse-h" class="h2">둘러보기</h2>
+  </div>
+  <ul class="browse__grid">
+    <li class="browse__card">
+      <a class="browse__head" href="products.html?cat=onggi&amp;sub=jang">
+        <span class="browse__img"><picture><source type="image/webp" srcset="images/v2/photo-20261110072019-480.webp 480w, images/v2/photo-20261110072019-960.webp 960w, images/v2/photo-20261110072019-1254.webp 1254w" sizes="(max-width: 768px) 64px, 112px"><img src="images/v2/photo-20261110072019-960.jpg" srcset="images/v2/photo-20261110072019-480.jpg 480w, images/v2/photo-20261110072019-960.jpg 960w, images/v2/photo-20261110072019-1254.jpg 1254w" sizes="(max-width: 768px) 64px, 112px" width="960" height="960" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="browse__name">장류</span>
+      </a>
+    </li>
+    <li class="browse__card">
+      <a class="browse__head" href="products.html?cat=onggi&amp;sub=vinegar">
+        <span class="browse__img"><picture><source type="image/webp" srcset="images/v2/photo-20261110072058-480.webp 480w, images/v2/photo-20261110072058-960.webp 960w, images/v2/photo-20261110072058-1254.webp 1254w" sizes="(max-width: 768px) 64px, 112px"><img src="images/v2/photo-20261110072058-960.jpg" srcset="images/v2/photo-20261110072058-480.jpg 480w, images/v2/photo-20261110072058-960.jpg 960w, images/v2/photo-20261110072058-1254.jpg 1254w" sizes="(max-width: 768px) 64px, 112px" width="960" height="960" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="browse__name">식초</span>
+      </a>
+    </li>
+    <li class="browse__card">
+      <a class="browse__head" href="products.html?cat=onggi&amp;sub=bibim">
+        <span class="browse__img"><picture><source type="image/webp" srcset="images/v2/photo-20261110072142-480.webp 480w, images/v2/photo-20261110072142-960.webp 960w, images/v2/photo-20261110072142-1254.webp 1254w" sizes="(max-width: 768px) 64px, 112px"><img src="images/v2/photo-20261110072142-960.jpg" srcset="images/v2/photo-20261110072142-480.jpg 480w, images/v2/photo-20261110072142-960.jpg 960w, images/v2/photo-20261110072142-1254.jpg 1254w" sizes="(max-width: 768px) 64px, 112px" width="960" height="960" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="browse__name">비빔장</span>
+      </a>
+    </li>
+    <li class="browse__card">
+      <a class="browse__head" href="products.html?cat=processed&amp;sub=jam">
+        <span class="browse__img"><picture><source type="image/webp" srcset="images/v2/s-20261110072228-480.webp 480w, images/v2/s-20261110072228-960.webp 960w, images/v2/s-20261110072228-1254.webp 1254w" sizes="(max-width: 768px) 64px, 112px"><img src="images/v2/s-20261110072228-960.jpg" srcset="images/v2/s-20261110072228-480.jpg 480w, images/v2/s-20261110072228-960.jpg 960w, images/v2/s-20261110072228-1254.jpg 1254w" sizes="(max-width: 768px) 64px, 112px" width="960" height="960" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="browse__name">잼</span>
+      </a>
+    </li>
+    <li class="browse__card">
+      <a class="browse__head" href="products.html?cat=processed&amp;sub=jocheong">
+        <span class="browse__img"><picture><source type="image/webp" srcset="images/v2/s-20261110072449-480.webp 480w, images/v2/s-20261110072449-960.webp 960w, images/v2/s-20261110072449-1254.webp 1254w" sizes="(max-width: 768px) 64px, 112px"><img src="images/v2/s-20261110072449-960.jpg" srcset="images/v2/s-20261110072449-480.jpg 480w, images/v2/s-20261110072449-960.jpg 960w, images/v2/s-20261110072449-1254.jpg 1254w" sizes="(max-width: 768px) 64px, 112px" width="960" height="960" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="browse__name">조청</span>
+      </a>
+    </li>
+    <li class="browse__card">
+      <a class="browse__head" href="products.html?cat=processed&amp;sub=ferment-tea">
+        <span class="browse__img"><picture><source type="image/webp" srcset="images/v2/photo-20261110072540-480.webp 480w, images/v2/photo-20261110072540-960.webp 960w, images/v2/photo-20261110072540-1254.webp 1254w" sizes="(max-width: 768px) 64px, 112px"><img src="images/v2/photo-20261110072540-960.jpg" srcset="images/v2/photo-20261110072540-480.jpg 480w, images/v2/photo-20261110072540-960.jpg 960w, images/v2/photo-20261110072540-1254.jpg 1254w" sizes="(max-width: 768px) 64px, 112px" width="960" height="960" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="browse__name">발효 재료·차</span>
+      </a>
+    </li>
+    <li class="browse__card">
+      <a class="browse__head" href="products.html?cat=farm">
+        <span class="browse__img"><picture><source type="image/webp" srcset="images/v2/02-shine-grape-20261110072628-480.webp 480w, images/v2/02-shine-grape-20261110072628-960.webp 960w, images/v2/02-shine-grape-20261110072628-1254.webp 1254w" sizes="(max-width: 768px) 64px, 112px"><img src="images/v2/02-shine-grape-20261110072628-960.jpg" srcset="images/v2/02-shine-grape-20261110072628-480.jpg 480w, images/v2/02-shine-grape-20261110072628-960.jpg 960w, images/v2/02-shine-grape-20261110072628-1254.jpg 1254w" sizes="(max-width: 768px) 64px, 112px" width="960" height="960" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="browse__name">제철 농산물</span>
+      </a>
+    </li>
+    <li class="browse__card">
+      <a class="browse__head" href="products.html?cat=gift">
+        <span class="browse__img"><picture><source type="image/webp" srcset="images/v2/1-20261110072700-480.webp 480w, images/v2/1-20261110072700-960.webp 960w, images/v2/1-20261110072700-1448.webp 1448w" sizes="(max-width: 768px) 64px, 112px"><img src="images/v2/1-20261110072700-960.jpg" srcset="images/v2/1-20261110072700-480.jpg 480w, images/v2/1-20261110072700-960.jpg 960w, images/v2/1-20261110072700-1448.jpg 1448w" sizes="(max-width: 768px) 64px, 112px" width="960" height="720" alt="" class="" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="browse__name">선물세트</span>
+      </a>
+    </li>
+  </ul>
+</section>
 
 <section class="picks container" aria-labelledby="picks-h">
   <div class="sec-head sec-head--center">
-    <h2 id="picks-h" class="h2">이번 가을, 영동에덴원 추천</h2>
-    <p class="sec-head__sub">옹기에서 익어 지금 가장 맛있게 드실 수 있는 것들</p>
+    <h2 id="picks-h" class="h2">이번 <span data-season-ko>가을</span>, 영동에덴원이 추천합니다</h2>
+    <p class="sec-head__sub">씨앗부터 식탁까지, 정직한 먹거리를 만드는 영동에덴원의 가치를 담은 제품입니다</p>
   </div>
   <div class="pills" role="tablist" aria-label="추천 분류" data-tabs="picks">
-<button type="button" role="tab" class="pill" id="picktab-all" aria-controls="picks-panel" aria-selected="true" data-tab="all">전체</button><button type="button" role="tab" class="pill" id="picktab-jang" aria-controls="picks-panel" aria-selected="false" tabindex="-1" data-tab="jang">장류</button><button type="button" role="tab" class="pill" id="picktab-vinegar" aria-controls="picks-panel" aria-selected="false" tabindex="-1" data-tab="vinegar">식초</button><button type="button" role="tab" class="pill" id="picktab-jam" aria-controls="picks-panel" aria-selected="false" tabindex="-1" data-tab="jam">잼·조청·비빔장</button>  </div>
+<button type="button" role="tab" class="pill" id="picktab-all" aria-controls="picks-panel" aria-selected="true" data-tab="all">전체</button><button type="button" role="tab" class="pill" id="picktab-jang" aria-controls="picks-panel" aria-selected="false" tabindex="-1" data-tab="jang">장류</button><button type="button" role="tab" class="pill" id="picktab-vinegar" aria-controls="picks-panel" aria-selected="false" tabindex="-1" data-tab="vinegar">식초</button><button type="button" role="tab" class="pill" id="picktab-processed" aria-controls="picks-panel" aria-selected="false" tabindex="-1" data-tab="processed">가공식품</button>  </div>
   <div class="grid4" id="picks-panel" role="tabpanel" aria-labelledby="picktab-all" data-picks data-limit="4">
-<article class="card has-alt" data-cat="jang" data-price="20000" data-name="옹기숙성 된장 300g 자가 재배 콩 · 천일염">
+<article class="card has-alt" data-cat="jang" data-top="onggi" data-price="20000" data-name="옹기숙성 된장 자가 재배 콩 · 천일염">
   <div class="card__photo">
     <a class="card__photo-link" href="products/doenjang.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="images/v2/product-doenjang-480.webp 480w, images/v2/product-doenjang-960.webp 960w, images/v2/product-doenjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-doenjang-960.jpg" srcset="images/v2/product-doenjang-480.jpg 480w, images/v2/product-doenjang-960.jpg 960w, images/v2/product-doenjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-      <picture class="card__alt"><source type="image/webp" data-srcset="images/v2/meju-pot-brine-sunlit-480.webp 480w, images/v2/meju-pot-brine-sunlit-960.webp 960w, images/v2/meju-pot-brine-sunlit-1000.webp 1000w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="images/v2/meju-pot-brine-sunlit-480.jpg 480w, images/v2/meju-pot-brine-sunlit-960.jpg 960w, images/v2/meju-pot-brine-sunlit-1000.jpg 1000w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-480.webp 480w, images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.webp 960w, images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.jpg" srcset="images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-480.jpg 480w, images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-960.jpg 960w, images/v2/chatgpt-2026-10-16-10-14-28-20261016235639-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="images/v2/photo-20261017012846-480.webp 480w, images/v2/photo-20261017012846-960.webp 960w, images/v2/photo-20261017012846-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="images/v2/photo-20261017012846-480.jpg 480w, images/v2/photo-20261017012846-960.jpg 960w, images/v2/photo-20261017012846-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:49% 54%"></picture>
     </a>
-<span class="badge">2년 이상 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 된장 300g 장바구니에 담기" data-add="doenjang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+<span class="badge">2년 이상 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 된장 장바구니에 담기" data-add="doenjang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">담기 +</span></button>
   </div>
   <a class="card__text" href="products/doenjang.html">
-    <span class="card__name">옹기숙성 된장 300g</span>
-    <span class="card__price">20,000원</span>
+    <span class="card__name">옹기숙성 된장</span>
+    <span class="card__price">20,000원</span><span class="card__unit">300g · 100g당 6,667원</span>
     <span class="card__desc">자가 재배 콩 · 천일염</span>
   </a>
 </article>
-<article class="card" data-cat="vinegar" data-price="35000" data-name="발효의 초심 천연식초 375ml 산야초·과일·프리미엄 22종">
+<article class="card has-alt" data-cat="vinegar" data-top="onggi" data-price="35000" data-name="발효의 초심 천연식초 375ml 산야초·과일·프리미엄 24종">
   <div class="card__photo">
     <a class="card__photo-link" href="products/vinegar.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="images/v2/product-vinegar-480.webp 480w, images/v2/product-vinegar-960.webp 960w, images/v2/product-vinegar-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-vinegar-960.jpg" srcset="images/v2/product-vinegar-480.jpg 480w, images/v2/product-vinegar-960.jpg 960w, images/v2/product-vinegar-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-480.webp 480w, images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.webp 960w, images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.jpg" srcset="images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-480.jpg 480w, images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-960.jpg 960w, images/v2/chatgpt-2026-10-16-11-40-22-20261017110955-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="images/v2/photo-20261019110900-480.webp 480w, images/v2/photo-20261019110900-960.webp 960w, images/v2/photo-20261019110900-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="images/v2/photo-20261019110900-480.jpg 480w, images/v2/photo-20261019110900-960.jpg 960w, images/v2/photo-20261019110900-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
 <span class="badge">자연 발효</span>    <a class="card__bag" href="products/vinegar.html" aria-label="발효의 초심 천연식초 375ml 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</a>
+<span class="card__bag-t" aria-hidden="true">옵션 고르기</span></a>
   </div>
   <a class="card__text" href="products/vinegar.html">
     <span class="card__name">발효의 초심 천연식초 375ml</span>
-    <span class="card__price">35,000원~</span>
-    <span class="card__desc">산야초·과일·프리미엄 22종</span>
+    <span class="card__price">35,000원~</span><span class="card__unit">375ml · 100ml당 9,333원</span>
+    <span class="card__desc">산야초·과일·프리미엄 24종</span>
   </a>
 </article>
-<article class="card" data-cat="jang" data-price="20000" data-name="옹기숙성 고추장 300g 엿기름 당화액 · 메주가루">
+<article class="card has-alt" data-cat="jang" data-top="onggi" data-price="20000" data-name="옹기숙성 고추장 엿기름 당화액 · 메주가루">
   <div class="card__photo">
     <a class="card__photo-link" href="products/gochujang.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="images/v2/product-gochujang-480.webp 480w, images/v2/product-gochujang-960.webp 960w, images/v2/product-gochujang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-gochujang-960.jpg" srcset="images/v2/product-gochujang-480.jpg 480w, images/v2/product-gochujang-960.jpg 960w, images/v2/product-gochujang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-480.webp 480w, images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-960.webp 960w, images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-1024.webp 1024w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-960.jpg" srcset="images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-480.jpg 480w, images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-960.jpg 960w, images/v2/chatgpt-2026-10-16-10-14-49-20261016235737-1024.jpg 1024w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1440" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="images/v2/photo-20261017020634-480.webp 480w, images/v2/photo-20261017020634-960.webp 960w, images/v2/photo-20261017020634-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="images/v2/photo-20261017020634-480.jpg 480w, images/v2/photo-20261017020634-960.jpg 960w, images/v2/photo-20261017020634-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
-<span class="badge">1년 이상 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 고추장 300g 장바구니에 담기" data-add="gochujang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+<span class="badge">1년 이상 숙성</span>    <a class="card__bag" href="products/gochujang.html" aria-label="옹기숙성 고추장 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">옵션 고르기</span></a>
   </div>
   <a class="card__text" href="products/gochujang.html">
-    <span class="card__name">옹기숙성 고추장 300g</span>
-    <span class="card__price">20,000원</span>
+    <span class="card__name">옹기숙성 고추장</span>
+    <span class="card__price">20,000원~</span><span class="card__unit">300g · 100g당 6,667원</span>
     <span class="card__desc">엿기름 당화액 · 메주가루</span>
   </a>
 </article>
-<article class="card" data-cat="jam" data-price="10000" data-name="진짜&#39;S 잼 샤인머스캣 원물만, 가마솥 3시간">
+<article class="card has-alt" data-cat="jam" data-top="processed" data-price="10000" data-name="진짜&#39;S 잼 복숭아 ·샤인머스캣 · 토마토 · 딸기">
   <div class="card__photo">
     <a class="card__photo-link" href="products/jam.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="images/v2/product-jam-shine-muscat-480.webp 480w, images/v2/product-jam-shine-muscat-960.webp 960w, images/v2/product-jam-shine-muscat-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-jam-shine-muscat-960.jpg" srcset="images/v2/product-jam-shine-muscat-480.jpg 480w, images/v2/product-jam-shine-muscat-960.jpg 960w, images/v2/product-jam-shine-muscat-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-480.webp 480w, images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-960.webp 960w, images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-1536.webp 1536w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-960.jpg" srcset="images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-480.jpg 480w, images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-960.jpg 960w, images/v2/chatgpt-2026-10-17-12-07-00-20261017020936-1536.jpg 1536w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="640" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="images/v2/s-20261017102915-480.webp 480w, images/v2/s-20261017102915-960.webp 960w, images/v2/s-20261017102915-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="images/v2/s-20261017102915-480.jpg 480w, images/v2/s-20261017102915-960.jpg 960w, images/v2/s-20261017102915-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 52%"></picture>
     </a>
-<span class="badge">여름 수확</span>    <button type="button" class="card__bag" aria-label="진짜&#39;S 잼 샤인머스캣 장바구니에 담기" data-add="jam" data-add-option="muscat"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+<span class="badge">여름 수확</span>    <button type="button" class="card__bag" aria-label="진짜&#39;S 잼 장바구니에 담기" data-add="jam" data-add-option="muscat"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">담기 +</span></button>
   </div>
   <a class="card__text" href="products/jam.html">
-    <span class="card__name">진짜&#39;S 잼 샤인머스캣</span>
-    <span class="card__price">10,000원</span>
-    <span class="card__desc">원물만, 가마솥 3시간</span>
+    <span class="card__name">진짜&#39;S 잼</span>
+    <span class="card__price">10,000원</span><span class="card__unit">300g · 100g당 3,333원</span>
+    <span class="card__desc">복숭아 ·샤인머스캣 · 토마토 · 딸기</span>
   </a>
 </article>
-<article class="card" data-cat="jang" data-price="20000" data-name="옹기숙성 어간장 300ml 3년 액젓 + 2년 간장" hidden>
+<article class="card has-alt" data-cat="jang" data-top="onggi" data-price="20000" data-name="옹기숙성 어간장 3년 액젓 + 2년 간장" hidden>
   <div class="card__photo">
     <a class="card__photo-link" href="products/eoganjang.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="images/v2/product-eoganjang-480.webp 480w, images/v2/product-eoganjang-960.webp 960w, images/v2/product-eoganjang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-eoganjang-960.jpg" srcset="images/v2/product-eoganjang-480.jpg 480w, images/v2/product-eoganjang-960.jpg 960w, images/v2/product-eoganjang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-16-10-14-41-20261016235811-480.webp 480w, images/v2/chatgpt-2026-10-16-10-14-41-20261016235811-960.webp 960w, images/v2/chatgpt-2026-10-16-10-14-41-20261016235811-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/chatgpt-2026-10-16-10-14-41-20261016235811-960.jpg" srcset="images/v2/chatgpt-2026-10-16-10-14-41-20261016235811-480.jpg 480w, images/v2/chatgpt-2026-10-16-10-14-41-20261016235811-960.jpg 960w, images/v2/chatgpt-2026-10-16-10-14-41-20261016235811-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="images/v2/photo-20261017072222-480.webp 480w, images/v2/photo-20261017072222-960.webp 960w, images/v2/photo-20261017072222-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="images/v2/photo-20261017072222-480.jpg 480w, images/v2/photo-20261017072222-960.jpg 960w, images/v2/photo-20261017072222-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
-<span class="badge">다시 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 어간장 300ml 장바구니에 담기" data-add="eoganjang" data-add-option="300ml"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+<span class="badge">다시 숙성</span>    <button type="button" class="card__bag" aria-label="옹기숙성 어간장 장바구니에 담기" data-add="eoganjang" data-add-option="300ml"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">담기 +</span></button>
   </div>
   <a class="card__text" href="products/eoganjang.html">
-    <span class="card__name">옹기숙성 어간장 300ml</span>
-    <span class="card__price">20,000원</span>
+    <span class="card__name">옹기숙성 어간장</span>
+    <span class="card__price">20,000원</span><span class="card__unit">300ml · 100ml당 6,667원</span>
     <span class="card__desc">3년 액젓 + 2년 간장</span>
   </a>
 </article>
-<article class="card" data-cat="jam" data-price="20000" data-name="진짜&#39;S 조청 300g 자가 재배 엿기름" hidden>
+<article class="card has-alt" data-cat="jocheong" data-top="processed" data-price="20000" data-name="진짜&#39;S 조청 자가 재배 엿기름" hidden>
   <div class="card__photo">
     <a class="card__photo-link" href="products/jocheong.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="images/v2/product-jocheong-480.webp 480w, images/v2/product-jocheong-960.webp 960w, images/v2/product-jocheong-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-jocheong-960.jpg" srcset="images/v2/product-jocheong-480.jpg 480w, images/v2/product-jocheong-960.jpg 960w, images/v2/product-jocheong-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-480.webp 480w, images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-960.webp 960w, images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-960.jpg" srcset="images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-480.jpg 480w, images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-960.jpg 960w, images/v2/chatgpt-2026-10-17-12-12-42-20261017001313-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="images/v2/s-20261017103439-480.webp 480w, images/v2/s-20261017103439-960.webp 960w, images/v2/s-20261017103439-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="images/v2/s-20261017103439-480.jpg 480w, images/v2/s-20261017103439-960.jpg 960w, images/v2/s-20261017103439-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
-<span class="badge">가마솥 6시간</span>    <button type="button" class="card__bag" aria-label="진짜&#39;S 조청 300g 장바구니에 담기" data-add="jocheong" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+<span class="badge">가마솥 6시간</span>    <a class="card__bag" href="products/jocheong.html" aria-label="진짜&#39;S 조청 옵션 고르기"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">옵션 고르기</span></a>
   </div>
   <a class="card__text" href="products/jocheong.html">
-    <span class="card__name">진짜&#39;S 조청 300g</span>
-    <span class="card__price">20,000원</span>
+    <span class="card__name">진짜&#39;S 조청</span>
+    <span class="card__price">20,000원</span><span class="card__unit">300g · 100g당 6,667원</span>
     <span class="card__desc">자가 재배 엿기름</span>
   </a>
 </article>
-<article class="card" data-cat="vinegar" data-price="35000" data-name="천연식초 프리미엄 비파 프리미엄 3종 중 하나" hidden>
+<article class="card has-alt" data-cat="vinegar" data-top="onggi" data-price="35000" data-name="천연식초 프리미엄 비파 프리미엄 4종 중 하나" hidden>
   <div class="card__photo">
     <a class="card__photo-link" href="products/vinegar.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="images/v2/vinegar-hero-480.webp 480w, images/v2/vinegar-hero-960.webp 960w, images/v2/vinegar-hero-1600.webp 1600w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/vinegar-hero-960.jpg" srcset="images/v2/vinegar-hero-480.jpg 480w, images/v2/vinegar-hero-960.jpg 960w, images/v2/vinegar-hero-1600.jpg 1600w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="600" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-17-12-02-21-20261017000309-480.webp 480w, images/v2/chatgpt-2026-10-17-12-02-21-20261017000309-960.webp 960w, images/v2/chatgpt-2026-10-17-12-02-21-20261017000309-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/chatgpt-2026-10-17-12-02-21-20261017000309-960.jpg" srcset="images/v2/chatgpt-2026-10-17-12-02-21-20261017000309-480.jpg 480w, images/v2/chatgpt-2026-10-17-12-02-21-20261017000309-960.jpg 960w, images/v2/chatgpt-2026-10-17-12-02-21-20261017000309-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="images/v2/photo-20261019110900-480.webp 480w, images/v2/photo-20261019110900-960.webp 960w, images/v2/photo-20261019110900-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="images/v2/photo-20261019110900-480.jpg 480w, images/v2/photo-20261019110900-960.jpg 960w, images/v2/photo-20261019110900-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
 <span class="badge">프리미엄</span>    <button type="button" class="card__bag" aria-label="천연식초 프리미엄 비파 장바구니에 담기" data-add="vinegar" data-add-option="vin_bipa"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+<span class="card__bag-t" aria-hidden="true">담기 +</span></button>
   </div>
   <a class="card__text" href="products/vinegar.html">
     <span class="card__name">천연식초 프리미엄 비파</span>
-    <span class="card__price">50,000원</span>
-    <span class="card__desc">프리미엄 3종 중 하나</span>
+    <span class="card__price">50,000원</span><span class="card__unit">375ml · 100ml당 9,333원</span>
+    <span class="card__desc">프리미엄 4종 중 하나</span>
   </a>
 </article>
-<article class="card" data-cat="jam" data-price="15000" data-name="옹기숙성 비빔고추장 300g 밥에 비비거나 쌈장으로" hidden>
+<article class="card has-alt" data-cat="bibim" data-top="onggi" data-price="15000" data-name="옹기숙성 비빔고추장 밥에 비비거나 쌈장으로" hidden>
   <div class="card__photo">
     <a class="card__photo-link" href="products/bibim-gochujang.html" tabindex="-1" aria-hidden="true">
-      <picture><source type="image/webp" srcset="images/v2/product-bibim-gochujang-480.webp 480w, images/v2/product-bibim-gochujang-960.webp 960w, images/v2/product-bibim-gochujang-1200.webp 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/product-bibim-gochujang-960.jpg" srcset="images/v2/product-bibim-gochujang-480.jpg 480w, images/v2/product-bibim-gochujang-960.jpg 960w, images/v2/product-bibim-gochujang-1200.jpg 1200w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="720" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture><source type="image/webp" srcset="images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-480.webp 480w, images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-960.webp 960w, images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-1086.webp 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img src="images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-960.jpg" srcset="images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-480.jpg 480w, images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-960.jpg 960w, images/v2/chatgpt-2026-10-16-11-37-40-20261017000024-1086.jpg 1086w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="1280" alt="" class="card__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
+      <picture class="card__alt"><source type="image/webp" data-srcset="images/v2/photo-20261017072313-480.webp 480w, images/v2/photo-20261017072313-960.webp 960w, images/v2/photo-20261017072313-1254.webp 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"><img data-srcset="images/v2/photo-20261017072313-480.jpg 480w, images/v2/photo-20261017072313-960.jpg 960w, images/v2/photo-20261017072313-1254.jpg 1254w" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px" width="960" height="960" alt="" class="card__img" decoding="async" style="object-position:50% 50%"></picture>
     </a>
-<span class="badge">토마토잼 배합</span>    <button type="button" class="card__bag" aria-label="옹기숙성 비빔고추장 300g 장바구니에 담기" data-add="bibim-gochujang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
-</button>
+<span class="badge">토마토잼 배합</span>    <button type="button" class="card__bag" aria-label="옹기숙성 비빔고추장 장바구니에 담기" data-add="bibim-gochujang" data-add-option="300g"><svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="card__bag-t" aria-hidden="true">담기 +</span></button>
   </div>
   <a class="card__text" href="products/bibim-gochujang.html">
-    <span class="card__name">옹기숙성 비빔고추장 300g</span>
-    <span class="card__price">15,000원</span>
+    <span class="card__name">옹기숙성 비빔고추장</span>
+    <span class="card__price">15,000원</span><span class="card__unit">300g · 100g당 5,000원</span>
     <span class="card__desc">밥에 비비거나 쌈장으로</span>
   </a>
 </article>
@@ -333,98 +391,97 @@
   <a class="btn btn--line" href="products.html">전체 제품 보기</a>
 </section>
 
-<section class="tiles" aria-label="선물세트와 단체 구매">
-  <a class="tile tile--dark" href="products.html?cat=gift">
-    <picture><source type="image/webp" srcset="images/v2/giftset-vinegar-480.webp 480w, images/v2/giftset-vinegar-960.webp 960w, images/v2/giftset-vinegar-1200.webp 1200w" sizes="(max-width: 768px) 100vw, 50vw"><img src="images/v2/giftset-vinegar-960.jpg" srcset="images/v2/giftset-vinegar-480.jpg 480w, images/v2/giftset-vinegar-960.jpg 960w, images/v2/giftset-vinegar-1200.jpg 1200w" sizes="(max-width: 768px) 100vw, 50vw" width="960" height="720" alt="식초 선물세트 구성" class="tile__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-    <span class="tile__scrim"></span>
-    <span class="tile__text">
-      <span class="eyebrow">GIFT</span>
-      <span class="tile__title">진심을 담은
-발효 선물세트</span>
-      <span class="tile__sub">장류 세트 · 식초 세트, 4종 구성에 합산가에서 5,000원 할인</span>
-      <span class="tile__cta">선물세트 고르기</span>
-    </span>
-  </a>
-  <a class="tile tile--dark" href="contact.html">
-    <picture><source type="image/webp" srcset="images/v2/meju-detail-room-480.webp 480w, images/v2/meju-detail-room-960.webp 960w, images/v2/meju-detail-room-1280.webp 1280w" sizes="(max-width: 768px) 100vw, 50vw"><img src="images/v2/meju-detail-room-960.jpg" srcset="images/v2/meju-detail-room-480.jpg 480w, images/v2/meju-detail-room-960.jpg 960w, images/v2/meju-detail-room-1280.jpg 1280w" sizes="(max-width: 768px) 100vw, 50vw" width="960" height="540" alt="발효실 선반 위에 줄지어 놓인 메주" class="tile__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-    <span class="tile__scrim"></span>
-    <span class="tile__text">
-      <span class="eyebrow">FOR BUSINESS</span>
-      <span class="tile__title">단체·기업 문의</span>
-      <span class="tile__sub">명절 선물과 행사 단체 주문은 수량과 구성을 맞춰 상담해 드립니다.</span>
-      <span class="tile__cta">상담 신청하기</span>
-    </span>
-  </a>
-</section>
-
-<section class="onggi" aria-labelledby="onggi-h">
-  <div class="onggi__in container">
-    <picture><source type="image/webp" srcset="images/v2/hero-snow-pots-480.webp 480w, images/v2/hero-snow-pots-960.webp 960w, images/v2/hero-snow-pots-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 55vw"><img src="images/v2/hero-snow-pots-960.jpg" srcset="images/v2/hero-snow-pots-480.jpg 480w, images/v2/hero-snow-pots-960.jpg 960w, images/v2/hero-snow-pots-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 55vw" width="960" height="720" alt="눈 덮인 장독대의 옹기들" class="onggi__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-    <div class="onggi__text">
-      <p class="eyebrow eyebrow--on-dark">IN THE ONGGI · 매일 갱신</p>
-      <h2 id="onggi-h" class="h2 h2--lg">지금 옹기에서</h2>
-      <p class="onggi__lead">장독대와 숙성실에서 익어가는 장의 상태를 농장 기록 그대로 보여드립니다.</p>
-      <dl class="onggi__stats">
-<div><dt>숙성 중인 단지</dt><dd>[N]<span>개</span></dd></div><div><dt>가장 오래 익은 장</dt><dd>[YYYY]<span>년 담금</span></dd></div><div><dt>다음 출고</dt><dd>[MM]<span>월</span></dd></div>      </dl>
-    </div>
-  </div>
-</section>
-
 <section class="sig" aria-labelledby="sig-h">
-  <div class="sig__photo"><picture><source type="image/webp" srcset="images/v2/vinegar-hero-480.webp 480w, images/v2/vinegar-hero-960.webp 960w, images/v2/vinegar-hero-1600.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw"><img src="images/v2/vinegar-hero-960.jpg" srcset="images/v2/vinegar-hero-480.jpg 480w, images/v2/vinegar-hero-960.jpg 960w, images/v2/vinegar-hero-1600.jpg 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="960" height="600" alt="발효의 초심 천연식초 두 병" class="sig__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
+  <div class="sig__photo"><picture><source type="image/webp" srcset="images/v2/2-20261017110537-480.webp 480w, images/v2/2-20261017110537-960.webp 960w, images/v2/2-20261017110537-1448.webp 1448w" sizes="(max-width: 768px) 100vw, 50vw"><img src="images/v2/2-20261017110537-960.jpg" srcset="images/v2/2-20261017110537-480.jpg 480w, images/v2/2-20261017110537-960.jpg 960w, images/v2/2-20261017110537-1448.jpg 1448w" sizes="(max-width: 768px) 100vw, 50vw" width="960" height="720" alt="발효의 초심 천연식초 두 병" class="sig__img" loading="lazy" fetchpriority="low" decoding="async"></picture></div>
   <div class="sig__text">
     <p class="eyebrow eyebrow--accent">SIGNATURE</p>
-    <h2 id="sig-h" class="h2 h2--lg">발효의 초심
-천연발효식초</h2>
+    <h2 id="sig-h" class="h2 h2--lg">발효의 초심<br>천연발효식초</h2>
     <p class="sig__lead">누룩이나 종초 없이, 자연 미생물로 복합 발효한 천연발효식초 입니다. 약용작물과 산야초, 과일을 원물로 사용합니다.</p>
     <ul class="sig__list">
-<li><span>프리미엄 <span class="muted">· 비파·포포·선학초</span></span><b>50,000원</b></li><li><span>산야초 <span class="muted">· 18종</span></span><b>35,000원</b></li><li><span>과일 <span class="muted">· 아로니아</span></span><b>35,000원</b></li>    </ul>
-    <a class="btn btn--dark" href="products.html?cat=vinegar">식초 22종 보기</a>
+<li><span>프리미엄 <span class="muted">· 4종</span></span><b>50,000원</b></li><li><span>산야초 <span class="muted">· 19종</span></span><b>35,000원</b></li><li><span>과일 <span class="muted">· 아로니아</span></span><b>35,000원</b></li>    </ul>
+    <a class="btn btn--dark" href="products.html?cat=vinegar">식초 24종 보기</a>
   </div>
 </section>
 
-<section class="story" aria-labelledby="story-h">
-  <picture><source type="image/webp" srcset="images/v2/spring-field-480.webp 480w, images/v2/spring-field-960.webp 960w, images/v2/spring-field-1000.webp 1000w" sizes="100vw"><img src="images/v2/spring-field-960.jpg" srcset="images/v2/spring-field-480.jpg 480w, images/v2/spring-field-960.jpg 960w, images/v2/spring-field-1000.jpg 1000w" sizes="100vw" width="960" height="720" alt="산 아래 영동 학산의 밭" class="story__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-  <div class="story__scrim"></div>
-  <div class="story__text">
-    <p class="eyebrow">OUR STORY</p>
-    <h2 id="story-h" class="story__title">씨앗부터 식탁까지,
-영동에덴원의 시간을 담은</h2>
-    <p class="story__lead">발효를 위해 농사를 짓는, 더 좋은 먹거리를 위해 자연 농법으로 씨앗부터 식탁까지 책임지는 영동에덴원의 이야기</p>
-    <a class="btn btn--line-white" href="story.html">영동에덴원 이야기</a>
-  </div>
+<section class="ssum" aria-labelledby="ssum-h">
+  <div class="ssum__in container">
+    <div class="ssum__head">
+      <p class="eyebrow eyebrow--accent">영동에덴원 이야기</p>
+      <h2 id="ssum-h" class="h2 h2--lg ssum__title">영동에덴원은<br>공동체로 시작했습니다</h2>
+      <p class="ssum__lead">오래 함께해온 사람들이 있습니다.<br>서로의 아픈 날을 알고, 매일의 식탁을 함께 고민해온 사람들입니다.<br>영동에덴원의 농사와 발효는 그 식탁에서 시작됐습니다.<br>직접 기르고, 실패하며 배우고, 다시 만들어온 시간을 들려드립니다.</p>
+      <div class="ssum__ctas"><a class="btn btn--line" href="story.html">영동에덴원 이야기 보기</a><a class="btn btn--line ssum__more" href="farming.html">농사 이야기</a></div>
+    </div>
+    <ul class="ssum__grid">
+      <li class="ssum__item">
+        <span class="ssum__ph"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-01-192.webp 192w, images/v2/story-scene-01-480.webp 480w, images/v2/story-scene-01-960.webp 960w, images/v2/story-scene-01-1440.webp 1440w" sizes="(max-width: 768px) 33vw, 20vw"><img src="images/v2/story-scene-01-960.jpg" srcset="images/v2/story-scene-01-192.jpg 192w, images/v2/story-scene-01-480.jpg 480w, images/v2/story-scene-01-960.jpg 960w, images/v2/story-scene-01-1440.jpg 1440w" sizes="(max-width: 768px) 33vw, 20vw" width="960" height="640" alt="함께 생활한다는 것" class="ssum__img" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="ssum__eb">01 공동체</span>
+        <span class="ssum__t">함께 생활한다는 것</span>
+      </li>
+      <li class="ssum__item">
+        <span class="ssum__ph"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-15-192.webp 192w, images/v2/story-scene-15-480.webp 480w, images/v2/story-scene-15-960.webp 960w, images/v2/story-scene-15-1440.webp 1440w" sizes="(max-width: 768px) 33vw, 20vw"><img src="images/v2/story-scene-15-960.jpg" srcset="images/v2/story-scene-15-192.jpg 192w, images/v2/story-scene-15-480.jpg 480w, images/v2/story-scene-15-960.jpg 960w, images/v2/story-scene-15-1440.jpg 1440w" sizes="(max-width: 768px) 33vw, 20vw" width="960" height="640" alt="천천히 기다리고, 상태를 살핍니다" class="ssum__img" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="ssum__eb">05 오늘의 과정</span>
+        <span class="ssum__t">천천히 기다리고,<br>상태를 살핍니다</span>
+      </li>
+      <li class="ssum__item">
+        <span class="ssum__ph"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-480.webp 480w, images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-960.webp 960w, images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-1536.webp 1536w" sizes="(max-width: 768px) 33vw, 20vw"><img src="images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-960.jpg" srcset="images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-480.jpg 480w, images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-960.jpg 960w, images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-1536.jpg 1536w" sizes="(max-width: 768px) 33vw, 20vw" width="960" height="640" alt="영동에덴원이 함께 기르고 만든 먹거리입니다" class="ssum__img" loading="lazy" fetchpriority="low" decoding="async"></picture></span>
+        <span class="ssum__eb">06 여러분의 식탁으로</span>
+        <span class="ssum__t">영동에덴원이 함께 기르고<br>만든 먹거리입니다</span>
+      </li>
+    </ul>
+<p class="ssum__ainote">영동에덴원 이야기의 삽화는 AI로 그린 그림입니다.</p>  </div>
 </section>
 
-<section class="journal container" aria-labelledby="journal-h">
-  <div class="sec-head sec-head--row">
-    <h2 id="journal-h" class="h2 h2--sm">계절 기록</h2>
-    <a class="link-under" href="https://blog.naver.com/gr_edenfarm" rel="noopener">기록 더 보기</a>
+<section class="journal container feed feed--mag" aria-labelledby="journal-h" data-feed data-feed-src="naver_blog" data-feed-api="https://api.yd-edenwon.com" data-feed-label="블로그" data-feed-iv="3" data-feed-n="8">  <div class="mag" data-mag data-mag-fb="images/v2/winter-meju-drying-960.jpg" data-mag-fb-webp="images/v2/winter-meju-drying-480.webp 480w, images/v2/winter-meju-drying-960.webp 960w, images/v2/winter-meju-drying-1000.webp 1000w" data-mag-fb-jpg="images/v2/winter-meju-drying-480.jpg 480w, images/v2/winter-meju-drying-960.jpg 960w, images/v2/winter-meju-drying-1000.jpg 1000w">
+  <div class="mag__head">
+    <div class="mag__hl">
+      <p class="mag__src"><a class="mag__blog" href="https://blog.naver.com/gr_edenfarm" target="_blank" rel="noopener">네이버 블로그</a><span class="mag__bar" aria-hidden="true"></span><span>농장 일지</span></p>
+      <h2 id="journal-h" class="h2 h2--sm mag__h">영동에덴원 기록<span class="mag__tag" data-mag-tag>2024 가을</span></h2>
+    </div>
+    <span class="journal__links"><a class="link-under" href="gallery.html">계절 갤러리 보기</a><a class="link-under" href="https://blog.naver.com/gr_edenfarm" target="_blank" rel="noopener">블로그에서 전체 보기</a></span>
   </div>
-  <div class="journal__grid">
-    <a class="journal__item" href="https://blog.naver.com/gr_edenfarm" rel="noopener">
-      <picture><source type="image/webp" srcset="images/v2/winter-meju-drying-480.webp 480w, images/v2/winter-meju-drying-960.webp 960w, images/v2/winter-meju-drying-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 33vw"><img src="images/v2/winter-meju-drying-960.jpg" srcset="images/v2/winter-meju-drying-480.jpg 480w, images/v2/winter-meju-drying-960.jpg 960w, images/v2/winter-meju-drying-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 33vw" width="960" height="720" alt="" class="journal__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-      <span class="journal__tag">발효 기록</span>
-      <span class="journal__title">메주를 볕에 거는 날</span>
+  <div class="mag__body" role="region" aria-roledescription="carousel" aria-label="블로그 계절 글" data-mag-body>
+    <a class="mag__feat" href="https://blog.naver.com/gr_edenfarm/223678360992" target="_blank" rel="noopener" data-mag-feat>
+      <span class="mag__stage" data-mag-stage><span class="mag__ph is-on"><picture><source type="image/webp" srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/865797cc5fe9616c-480.webp 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/865797cc5fe9616c-960.webp 960w" sizes="(max-width:860px) 100vw, 58vw"><img src="https://api.yd-edenwon.com/api/v2/feed/thumb/865797cc5fe9616c-960.jpg" srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/865797cc5fe9616c-480.jpg 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/865797cc5fe9616c-960.jpg 960w" sizes="(max-width:860px) 100vw, 58vw" alt="" width="960" height="600" class="mag__img" loading="lazy" decoding="async"></picture></span><span class="mag__ph"><picture><source type="image/webp" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/b0ee8bac93913c02-480.webp 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/b0ee8bac93913c02-960.webp 960w" sizes="(max-width:860px) 100vw, 58vw"><img data-src="https://api.yd-edenwon.com/api/v2/feed/thumb/b0ee8bac93913c02-960.jpg" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/b0ee8bac93913c02-480.jpg 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/b0ee8bac93913c02-960.jpg 960w" sizes="(max-width:860px) 100vw, 58vw" alt="" width="960" height="600" class="mag__img" decoding="async"></picture></span><span class="mag__ph"><picture><source type="image/webp" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/a39fb0624dbcd166-480.webp 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/a39fb0624dbcd166-960.webp 960w" sizes="(max-width:860px) 100vw, 58vw"><img data-src="https://api.yd-edenwon.com/api/v2/feed/thumb/a39fb0624dbcd166-960.jpg" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/a39fb0624dbcd166-480.jpg 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/a39fb0624dbcd166-960.jpg 960w" sizes="(max-width:860px) 100vw, 58vw" alt="" width="960" height="600" class="mag__img" decoding="async"></picture></span><span class="mag__ph"><picture><source type="image/webp" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/ae1c6952077303a5-480.webp 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/ae1c6952077303a5-960.webp 960w" sizes="(max-width:860px) 100vw, 58vw"><img data-src="https://api.yd-edenwon.com/api/v2/feed/thumb/ae1c6952077303a5-960.jpg" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/ae1c6952077303a5-480.jpg 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/ae1c6952077303a5-960.jpg 960w" sizes="(max-width:860px) 100vw, 58vw" alt="" width="960" height="600" class="mag__img" decoding="async"></picture></span><span class="mag__ph"><picture><source type="image/webp" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/b54715405971ed20-480.webp 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/b54715405971ed20-960.webp 960w" sizes="(max-width:860px) 100vw, 58vw"><img data-src="https://api.yd-edenwon.com/api/v2/feed/thumb/b54715405971ed20-960.jpg" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/b54715405971ed20-480.jpg 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/b54715405971ed20-960.jpg 960w" sizes="(max-width:860px) 100vw, 58vw" alt="" width="960" height="600" class="mag__img" decoding="async"></picture></span><span class="mag__ph"><picture><source type="image/webp" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/f51233146a67b576-480.webp 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/f51233146a67b576-960.webp 960w" sizes="(max-width:860px) 100vw, 58vw"><img data-src="https://api.yd-edenwon.com/api/v2/feed/thumb/f51233146a67b576-960.jpg" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/f51233146a67b576-480.jpg 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/f51233146a67b576-960.jpg 960w" sizes="(max-width:860px) 100vw, 58vw" alt="" width="960" height="600" class="mag__img" decoding="async"></picture></span><span class="mag__ph"><picture><source type="image/webp" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/59339add2018401f-480.webp 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/59339add2018401f-960.webp 960w" sizes="(max-width:860px) 100vw, 58vw"><img data-src="https://api.yd-edenwon.com/api/v2/feed/thumb/59339add2018401f-960.jpg" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/59339add2018401f-480.jpg 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/59339add2018401f-960.jpg 960w" sizes="(max-width:860px) 100vw, 58vw" alt="" width="960" height="600" class="mag__img" decoding="async"></picture></span><span class="mag__ph"><picture><source type="image/webp" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/c6420cc07c06e191-480.webp 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/c6420cc07c06e191-960.webp 960w" sizes="(max-width:860px) 100vw, 58vw"><img data-src="https://api.yd-edenwon.com/api/v2/feed/thumb/c6420cc07c06e191-960.jpg" data-srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/c6420cc07c06e191-480.jpg 480w, https://api.yd-edenwon.com/api/v2/feed/thumb/c6420cc07c06e191-960.jpg 960w" sizes="(max-width:860px) 100vw, 58vw" alt="" width="960" height="600" class="mag__img" decoding="async"></picture></span></span>
+      <span class="mag__txt" data-mag-txt>
+        <span class="mag__date" data-mag-date>2024 가을</span>
+        <h3 class="mag__t" data-mag-t>영동 에덴원 영농 일기 2024.11.11~12</h3>
+        <span class="mag__ex" data-mag-ex hidden></span>
+        <span class="mag__read"><span>블로그에서 읽기</span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</span>
+      </span>
     </a>
-    <a class="journal__item" href="https://blog.naver.com/gr_edenfarm" rel="noopener">
-      <picture><source type="image/webp" srcset="images/v2/meju-detail-room-480.webp 480w, images/v2/meju-detail-room-960.webp 960w, images/v2/meju-detail-room-1280.webp 1280w" sizes="(max-width: 768px) 100vw, 33vw"><img src="images/v2/meju-detail-room-960.jpg" srcset="images/v2/meju-detail-room-480.jpg 480w, images/v2/meju-detail-room-960.jpg 960w, images/v2/meju-detail-room-1280.jpg 1280w" sizes="(max-width: 768px) 100vw, 33vw" width="960" height="540" alt="" class="journal__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-      <span class="journal__tag">발효 기록</span>
-      <span class="journal__title">발효실, 메주가 속까지 뜨기까지</span>
-    </a>
-    <a class="journal__item" href="https://blog.naver.com/gr_edenfarm" rel="noopener">
-      <picture><source type="image/webp" srcset="images/v2/summer-vineyard-480.webp 480w, images/v2/summer-vineyard-960.webp 960w, images/v2/summer-vineyard-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 33vw"><img src="images/v2/summer-vineyard-960.jpg" srcset="images/v2/summer-vineyard-480.jpg 480w, images/v2/summer-vineyard-960.jpg 960w, images/v2/summer-vineyard-1000.jpg 1000w" sizes="(max-width: 768px) 100vw, 33vw" width="960" height="720" alt="" class="journal__img" loading="lazy" fetchpriority="low" decoding="async"></picture>
-      <span class="journal__tag">농사 기록</span>
-      <span class="journal__title">여름 포도밭의 초생재배</span>
-    </a>
+    <div class="mag__side">
+      <ol class="mag__list" data-mag-list>
+        <li class="mag__li is-on" data-u="https://blog.naver.com/gr_edenfarm/223678360992" data-d="2024 가을" data-s=""><button type="button" class="mag__row" aria-current="true"><span class="mag__rph"><picture><source type="image/webp" srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/865797cc5fe9616c-480.webp"><img src="https://api.yd-edenwon.com/api/v2/feed/thumb/865797cc5fe9616c-480.jpg" alt="" width="72" height="72" loading="lazy" decoding="async"></picture></span><span class="mag__meta"><span class="mag__date">2024 가을</span><span class="mag__rt">영동 에덴원 영농 일기 2024.11.11~12</span></span></button><span class="mag__line" aria-hidden="true"></span></li>
+        <li class="mag__li" data-u="https://blog.naver.com/gr_edenfarm/223665510030" data-d="2024 가을" data-s=""><button type="button" class="mag__row"><span class="mag__rph"><picture><source type="image/webp" srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/b0ee8bac93913c02-480.webp"><img src="https://api.yd-edenwon.com/api/v2/feed/thumb/b0ee8bac93913c02-480.jpg" alt="" width="72" height="72" loading="lazy" decoding="async"></picture></span><span class="mag__meta"><span class="mag__date">2024 가을</span><span class="mag__rt">영동 에덴원 영농 일기 2024.11.9~10</span></span></button><span class="mag__line" aria-hidden="true"></span></li>
+        <li class="mag__li" data-u="https://blog.naver.com/gr_edenfarm/223664187070" data-d="2024 가을" data-s=""><button type="button" class="mag__row"><span class="mag__rph"><picture><source type="image/webp" srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/a39fb0624dbcd166-480.webp"><img src="https://api.yd-edenwon.com/api/v2/feed/thumb/a39fb0624dbcd166-480.jpg" alt="" width="72" height="72" loading="lazy" decoding="async"></picture></span><span class="mag__meta"><span class="mag__date">2024 가을</span><span class="mag__rt">영동 에덴원 영농 일기 2024.11.7~8</span></span></button><span class="mag__line" aria-hidden="true"></span></li>
+        <li class="mag__li" data-u="https://blog.naver.com/gr_edenfarm/223663328432" data-d="2024 가을" data-s=""><button type="button" class="mag__row"><span class="mag__rph"><picture><source type="image/webp" srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/ae1c6952077303a5-480.webp"><img src="https://api.yd-edenwon.com/api/v2/feed/thumb/ae1c6952077303a5-480.jpg" alt="" width="72" height="72" loading="lazy" decoding="async"></picture></span><span class="mag__meta"><span class="mag__date">2024 가을</span><span class="mag__rt">영동 에덴원 영농 일기 2024.11.4~6</span></span></button><span class="mag__line" aria-hidden="true"></span></li>
+        <li class="mag__li" data-u="https://blog.naver.com/gr_edenfarm/223651504450" data-d="2024 가을" data-s=""><button type="button" class="mag__row"><span class="mag__rph"><picture><source type="image/webp" srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/b54715405971ed20-480.webp"><img src="https://api.yd-edenwon.com/api/v2/feed/thumb/b54715405971ed20-480.jpg" alt="" width="72" height="72" loading="lazy" decoding="async"></picture></span><span class="mag__meta"><span class="mag__date">2024 가을</span><span class="mag__rt">영동 에덴원 영농 일기 24.11.1~3</span></span></button><span class="mag__line" aria-hidden="true"></span></li>
+        <li class="mag__li" data-u="https://blog.naver.com/gr_edenfarm/223650313645" data-d="2024 가을" data-s=""><button type="button" class="mag__row"><span class="mag__rph"><picture><source type="image/webp" srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/f51233146a67b576-480.webp"><img src="https://api.yd-edenwon.com/api/v2/feed/thumb/f51233146a67b576-480.jpg" alt="" width="72" height="72" loading="lazy" decoding="async"></picture></span><span class="mag__meta"><span class="mag__date">2024 가을</span><span class="mag__rt">영동 에덴원 영농 일기 24.10. 29~31</span></span></button><span class="mag__line" aria-hidden="true"></span></li>
+        <li class="mag__li" data-u="https://blog.naver.com/gr_edenfarm/223648633777" data-d="2024 가을" data-s=""><button type="button" class="mag__row"><span class="mag__rph"><picture><source type="image/webp" srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/59339add2018401f-480.webp"><img src="https://api.yd-edenwon.com/api/v2/feed/thumb/59339add2018401f-480.jpg" alt="" width="72" height="72" loading="lazy" decoding="async"></picture></span><span class="mag__meta"><span class="mag__date">2024 가을</span><span class="mag__rt">영동 에덴원 영농 일기 24.10.26 ~ 28</span></span></button><span class="mag__line" aria-hidden="true"></span></li>
+        <li class="mag__li" data-u="https://blog.naver.com/gr_edenfarm/223633795968" data-d="2024 가을" data-s=""><button type="button" class="mag__row"><span class="mag__rph"><picture><source type="image/webp" srcset="https://api.yd-edenwon.com/api/v2/feed/thumb/c6420cc07c06e191-480.webp"><img src="https://api.yd-edenwon.com/api/v2/feed/thumb/c6420cc07c06e191-480.jpg" alt="" width="72" height="72" loading="lazy" decoding="async"></picture></span><span class="mag__meta"><span class="mag__date">2024 가을</span><span class="mag__rt">영동 에덴원 영농 일기 2024.10.25</span></span></button><span class="mag__line" aria-hidden="true"></span></li>
+      </ol>
+      <div class="mag__ctl">
+        <button type="button" class="feed__btn" aria-label="이전 글" data-mag-prev><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+</button>
+        <button type="button" class="feed__btn" aria-label="다음 글" data-mag-next><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button>
+        <span class="mag__count" data-mag-count><b>01</b> / 08</span>
+        <button type="button" class="mag__pause" aria-pressed="false" data-mag-pause>멈춤</button>
+      </div>
+    </div>
   </div>
+  </div>
+
+  <p class="feed__empty" data-feed-empty hidden><a class="btn btn--line" href="https://blog.naver.com/gr_edenfarm" target="_blank" rel="noopener">블로그에서 보기</a></p>
 </section>
 </main>
 <footer class="ft">
   <div class="ft__navwrap">
     <nav class="ft__nav container" aria-label="정책·안내">
       <a href="story.html">영동에덴원 소개</a>
-<a href="terms.html">이용약관</a><a href="privacy.html" class="is-strong">개인정보처리방침</a><a href="refund.html">교환·반품·환불 안내</a>      <a href="order-status.html">주문 조회</a>
-      <a href="contact.html">단체·기업 구매 문의</a>
+<a href="gallery.html">계절 갤러리</a><a href="terms.html">이용약관</a><a href="privacy.html" class="is-strong">개인정보처리방침</a><a href="refund.html">교환·반품·환불 안내</a>      <a href="order-status.html">주문 조회</a>
+      <a href="contact.html">단체·기업 문의</a>
     </nav>
   </div>
   <div class="ft__body container">
@@ -435,7 +492,7 @@
         <span>충청북도 영동군 학산면 모리2길 3-1</span>
         <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
         <span>kwg7978@naver.com</span>
-<a href="privacy.html#revision-notice">개인정보처리방침·이용약관 개정 안내 (시행 2026년 10월 19일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
+<a href="terms.html#revision-notice">이용약관 개정 안내 (시행 2026년 11월 20일)</a>        <span>© 2026 영동에덴원. All rights reserved.</span>
       </p>
     </div>
     <div class="ft__cs">
