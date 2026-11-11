@@ -1,0 +1,8 @@
+/* A 글꼴 직접 두기(대표 10-23): 사이트 글자로 쪼갠 가변 글꼴(noto-*.woff2 — tools/mirror/font_subset.py, OFL-*.txt). 굵기마다 칸을 따로 두어 예전 Google 판(Sans 400·500·700, Serif 500·600)과 같은 굵기로 맞춤 — 파일은 하나.
+   본문 Sans = optional(늦으면 그 방문은 대체 글꼴 그대로 — 밀림 0), 제목 Serif = swap. 글꼴에 없는 새 글자는 그 글자만 대체 글꼴(빌드 경고·편집기 할 일).
+   홈은 이 파일을 첫 배너 사진 뒤에 켬(layout.html 의 fonts 칸 · app.js initFonts) — 글꼴이 배너 사진과 대역폭을 다투지 않게 */
+@font-face{font-family:"Noto Sans KR";src:url(noto-sans-kr.woff2) format("woff2");font-weight:400;font-display:optional}
+@font-face{font-family:"Noto Sans KR";src:url(noto-sans-kr.woff2) format("woff2");font-weight:500;font-display:optional}
+@font-face{font-family:"Noto Sans KR";src:url(noto-sans-kr.woff2) format("woff2");font-weight:700;font-display:optional}
+@font-face{font-family:"Noto Serif KR";src:url(noto-serif-kr.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Noto Serif KR";src:url(noto-serif-kr.woff2) format("woff2");font-weight:600;font-display:swap}

@@ -1,0 +1,123 @@
+/* 영동에덴원 v2 움직임 체계 (2-B-3 개정 2-2) — 외부 라이브러리 없음.
+   규칙: 0.2~0.8초, ease-out 계열, transform·opacity 만 움직인다(화면 밀림 CLS 0), 반복·회전·튀는 움직임 없음.
+   prefers-reduced-motion 이면 모두 끈다(맨 아래). 등장 움직임은 app.js 가 «처음 화면 밖에 있던 것»에만 .rv 를 붙인다.
+   이 파일은 렌더링을 막지 않게 늦게 불러온다(layout.html). 배치에 닿는 머리글 붙임·홈 배너 겹침 규칙은 pages.css 끝에 있다. */
+
+/* 버튼·링크·탭: 색과 밑줄 0.2초 */
+a,button,.btn,.pill,.gnb a,.cats__item,.card__text{transition:color .2s ease-out,background-color .2s ease-out,border-color .2s ease-out,text-decoration-color .2s ease-out,opacity .2s ease-out}
+
+/* 스크롤 등장: 16~24px 아래에서, 0.6초, 처음 한 번만. 카드는 app.js 가 0.06초씩 늦춘다 */
+.rv{opacity:0;transform:translateY(20px)}
+.rv.is-in{opacity:1;transform:none;transition:opacity .6s ease-out,transform .6s var(--ease-out)}
+
+/* 상품 카드: 사진이 살짝 커진다(마우스가 있는 기기만) */
+.card__photo{overflow:hidden}
+@media (hover:hover){
+  .card__img{transition:transform .4s var(--ease-out)}
+  .card:hover .card__img,.card:focus-within .card__img{transform:scale(1.04)}
+  /* 두 번째 사진(개정 3-2): 같은 자리·같은 비율로 위에 겹쳐 0.4초 동안 나타난다(주소는 app.js 가 카드가 화면에 들어오면 채움) */
+  .card__alt{display:block;position:absolute;inset:0;opacity:0;transition:opacity .4s var(--ease-out);pointer-events:none}
+  .card:hover .card__alt.is-ready,.card:focus-within .card__alt.is-ready{opacity:1}
+  /* 선물세트 고르기 카드도 같은 부품(G7b) */
+  .gift__set-img{position:relative}
+  .gift__set:hover .card__alt.is-ready,.gift__set:focus-visible .card__alt.is-ready{opacity:1}
+}
+
+/* 계절 배너(2-H H1-2): 장이 바뀌면 계절 표시·진행 색이 0.6초 동안 겹쳐 바뀐다 */
+.hero__sea span{transition:opacity .6s ease-out}
+.hero[data-sea] .hero__dot span,.hero[data-sea] .hero__num b{transition:background-color .6s ease-out,color .6s ease-out,opacity .6s ease-out}
+
+/* 장바구니 담기: 숫자 배지가 한 번 톡, «담았습니다» 안내가 미끄러져 나온다 */
+@keyframes ed-pop{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+.hd__count.is-pop{animation:ed-pop .45s var(--ease) 1}
+
+/* ── 2-I 커서 반응: transform·opacity·색만(밀림 0). 마우스 효과는 hover 기기에서만, 같은 상태를 키보드 포커스에도 ── */
+.link-under::after,.gnb a::after,.ft__nav a::after,.cats__label::after{transition:transform .32s var(--ease)}
+.btn::before,.hero__cta::before{transition:transform .38s var(--ease)}
+.btn svg,.hero__cta svg,.hero__arrow svg,.tile__cta::after{transition:transform var(--dur-mid) var(--ease)}
+.hd__actions .icon-btn svg{transition:transform .28s var(--ease)}
+.hero__arrow{transition:background-color var(--dur-fast) var(--ease),color var(--dur-fast) var(--ease)}
+.hero__dot span{transition:transform var(--dur-fast) var(--ease),opacity var(--dur-fast) var(--ease)}
+.cats__img img{transition:transform .5s var(--ease)}
+.card__photo,.gift__set-img{transition:transform var(--dur-mid) var(--ease)}
+.card__bag{transition:opacity var(--dur-mid) var(--ease),transform var(--dur-mid) var(--ease),background-color var(--dur-fast) ease-out,color var(--dur-fast) ease-out}
+.tile__img,.journal__img{transition:transform var(--dur-slow) var(--ease)}
+.tile__scrim{transition:opacity var(--dur-slow) var(--ease)}
+/* 누름: 0.98배(모든 기기) */
+.btn:not(:disabled):active,.hero__cta:active,.card .card__bag:active{transform:scale(.98)}
+/* 움직임 줄이기: 움직임(transform)은 없이 색만 바뀐다 */
+@media (hover:hover) and (prefers-reduced-motion:reduce){
+  .gnb a:hover,.gnb a:focus-visible,.link-under:hover,.link-under:focus-visible,.hd__actions .icon-btn:hover,.hd__actions .icon-btn:focus-visible{color:var(--accent)}
+  .hero__arrow:hover,.hero__arrow:focus-visible{background:#FFFFFF;color:var(--ink)}
+  .card__bag{transform:none}
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .gnb a:hover,.gnb a:focus-visible{color:var(--accent)}
+  .link-under:hover,.link-under:focus-visible{color:var(--accent)}
+  .link-under:hover::after,.link-under:focus-visible::after,.gnb a:hover::after,.gnb a:focus-visible::after,.ft__nav a:hover::after,.ft__nav a:focus-visible::after,
+  .cats__item:hover .cats__label::after,.cats__item:focus-visible .cats__label::after{transform:scaleX(1)}
+  .hd__actions .icon-btn:hover,.hd__actions .icon-btn:focus-visible{color:var(--accent)}
+  .hd__actions .icon-btn:hover svg,.hd__actions .icon-btn:focus-visible svg{transform:translateY(-2px) rotate(-6deg)}
+  .btn:not(:disabled):hover::before,.btn:not(:disabled):focus-visible::before,.hero__cta:hover::before,.hero__cta:focus-visible::before{transform:scaleX(1)}
+  .btn--dark:not(:disabled):hover,.btn--dark:not(:disabled):focus-visible{border-color:var(--accent)}
+  .btn--line:not(:disabled):hover,.btn--line:not(:disabled):focus-visible{color:var(--bg)}
+  .btn--line-white:hover,.btn--line-white:focus-visible{color:var(--ink)}
+  .hero__cta:hover,.hero__cta:focus-visible{color:var(--ink)}
+  .hero__slide--light .hero__cta:hover,.hero__slide--light .hero__cta:focus-visible{color:#FFFFFF}
+  .btn:not(:disabled):hover svg,.btn:not(:disabled):focus-visible svg,.hero__cta:hover svg,.hero__cta:focus-visible svg{transform:translateX(4px)}
+  .hero__arrow:hover,.hero__arrow:focus-visible{background:#FFFFFF;color:var(--ink)}
+  .hero__arrow[data-prev]:hover svg,.hero__arrow[data-prev]:focus-visible svg{transform:translateX(-3px)}
+  .hero__arrow[data-next]:hover svg,.hero__arrow[data-next]:focus-visible svg{transform:translateX(3px)}
+  .hero__dot:hover span,.hero__dot:focus-visible span{transform:scaleY(1.4);opacity:1}
+  .cats__item:hover .cats__img img,.cats__item:focus-visible .cats__img img{transform:scale(1.12)}
+  .card:hover .card__photo,.card:focus-within .card__photo,.gift__set:hover .gift__set-img,.gift__set:focus-visible .gift__set-img{transform:translateY(-4px)}
+  .card:hover .card__alt .card__img,.card:focus-within .card__alt .card__img{transform:scale(1.06);transition-duration:.9s}
+  .tile:hover .tile__img,.tile:focus-visible .tile__img,.journal__item:hover .journal__img,.journal__item:focus-visible .journal__img{transform:scale(1.05)}
+  .tile:hover .tile__scrim,.tile:focus-visible .tile__scrim{opacity:.72}
+  .tile:hover .tile__cta::after,.tile:focus-visible .tile__cta::after{transform:translateX(5px)}
+}
+/* ⓐ(10-20): 배너 사진 마우스 따라오기(2-I)는 뺐다 — 사진 층 12px 넓힘(pages.css)은 쉴 때 자리와 같아 그대로 둔다 */
+@keyframes ed-slide-down{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@keyframes ed-slide-up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.added:not([hidden]){animation:ed-slide-down .32s var(--ease-out) 1}
+@media (max-width:768px){.added:not([hidden]){animation-name:ed-slide-up}}
+
+/* 2-K-4 홈 배너 4장 «광고형»(대표 10-19 — 배너만 예외: 튀는 곡선·빛 스침·점 깜빡임). .is-play = 장이 들어올 때(app.js 가 되감음), .is-txt = 글 움직임(1장 첫 표시는 없음),
+   카드 .is-in·.is-out = 묶음 들어옴·빠짐. 일시정지([data-held])면 사진 다가옴·점 깜빡임 멈춤(들어오는 움직임은 끝까지). 1장 사진 다가옴은 pages.css */
+@media (prefers-reduced-motion:no-preference){
+  .hero[data-b4-src].is-fade .hero__slide{transition:opacity .8s var(--ease-out),visibility 0s linear .8s}
+  .hero[data-b4-src].is-fade .hero__slide.is-on{transition:opacity .8s var(--ease-out),visibility 0s}
+  .hero[data-b4-src].is-fade .hero__text>*{opacity:1;transform:none;transition:none}
+  .hero[data-b4-src] .is-txt :is(.hero__eyebrow,.b4__eyebrow)::before{animation:b4draw .6s var(--ease-out) .1s backwards}
+  .hero[data-b4-src] .is-txt .b4-ln>span{animation:b4rise .8s var(--ease-out) backwards}
+  .hero[data-b4-src] .is-txt .b4-ln:nth-child(2)>span{animation-delay:.12s}
+  .hero[data-b4-src] .is-txt .b4-ln:nth-child(n+3)>span{animation-delay:.24s}
+  .hero[data-b4-src] .is-txt :is(.hero__sub,.b4__sub){animation:b4fade .7s var(--ease-out) .35s backwards}
+  .hero[data-b4-src] .is-txt :is(.hero__text,.b4__text)>.hero__cta{animation:b4fade .7s var(--ease-out) .5s backwards}
+  .hero[data-b4-src] .is-txt .b4__month{animation:b4month .9s cubic-bezier(.22,1.25,.36,1) backwards}
+  .hero[data-b4-src] .is-txt .b4__soonline{animation:b4fade .6s var(--ease-out) 1s backwards}
+  .hero[data-b4-src] .is-play .b4__live i{animation:b4pulse 1.6s ease-out infinite}
+  .hero[data-b4-src] .b4[data-b4-grp] .b4__item.is-in .b4__card{animation:b4cardIn .75s cubic-bezier(.22,1.25,.36,1) var(--d,0s) backwards}
+  .hero[data-b4-src] .b4[data-b4-grp] .b4__item.is-out .b4__card{animation:b4cardOut .45s var(--ease-out) var(--d,0s) forwards}
+  .hero[data-b4-src] .b4[data-b4-grp] .b4__card::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-130%);pointer-events:none}
+  .hero[data-b4-src] .b4[data-b4-grp] .b4__item.is-in .b4__card::after{animation:b4shine 1s ease-out calc(var(--d,0s) + .7s) both}
+  /* 일시정지: 오래·되풀이 도는 움직임(사진 다가옴 7초·수확 중 점)만 멈춘다. 장·카드가 들어오는 움직임(1초 안팎)까지 멈추면 첫 프레임(투명·줄 밖)에 서서
+     멈춘 채로 다른 장으로 가면 글·카드가 안 보인다 — 2-K-4b(편집기는 처음부터 일시정지라 2장이 빈 화면으로 보였음) */
+  .hero[data-b4-src][data-held] .hero__img,.hero[data-b4-src][data-held] .b4__live i{animation-play-state:paused}
+}
+@keyframes b4draw{from{transform:scaleX(0)}}
+@keyframes b4rise{from{transform:translateY(105%)}}
+@keyframes b4fade{from{opacity:0;transform:translateY(12px)}}
+@keyframes b4month{from{opacity:0;transform:translateY(30px) scale(.8)}}
+@keyframes b4pulse{0%{box-shadow:0 0 0 0 rgba(79,107,39,.55)}100%{box-shadow:0 0 0 10px rgba(79,107,39,0)}}
+@keyframes b4cardIn{from{opacity:0;transform:translate(90px,calc(var(--y,0px) + 40px)) scale(.86)}to{opacity:1;transform:translate(0,var(--y,0px)) scale(1)}}
+@keyframes b4cardOut{to{opacity:0;transform:translate(-60px,var(--y,0px)) scale(.94)}}
+@keyframes b4shine{to{transform:translateX(130%)}}
+
+/* 움직임 줄이기: 모두 끈다 */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .btn:active,.hero__cta:active,.card .card__bag:active{transform:none}
+  .rv{opacity:1;transform:none}
+  .hd.is-stuck .hd__bar>*,.hd.is-stuck .logo{transform:none}
+}
