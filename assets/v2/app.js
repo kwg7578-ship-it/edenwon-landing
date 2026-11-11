@@ -572,7 +572,8 @@
     var dots = root.querySelectorAll("[data-dot]");
     var num = root.querySelector("[data-num]");
     var pause = root.querySelector("[data-pause]");
-    var n = slides.length, i = 0, fade = false, timer = null, DWELL = 6000;
+    // 11-11 대표: 보이는 바뀜(사진 장·카드 묶음)마다 같은 간격 5.5초 — 첫 장도 화면에 나온 때부터 셈(쪽을 다 읽을 때까지 더 기다리지 않음)
+    var n = slides.length, i = 0, fade = false, timer = null, DWELL = 5500, T0 = Date.now(), first = true;
     var st = { user: false, hover: false, focus: false, off: false, tab: false };
     function running() { return fade && n > 1 && !st.user && !st.hover && !st.focus && !st.off && !st.tab; }
     var gi = 0, pend = null;   // 2-K-3 카드 장의 지금 묶음 · 2-K-4 빠지는 중(0.45초)에 놓을 다음 묶음
@@ -580,12 +581,15 @@
     function schedule() {
       var cs = B4 && slides[i].hasAttribute("data-b4-cards"), G = cs ? b4Groups(slides[i]) : 1;
       clearTimeout(timer); flush();   // 빠지는 중에 멈추거나 다시 정하면 다음 묶음을 바로 놓는다(빈 무대 없음)
-      timer = !running() ? null : cs ? setTimeout(function () {   // 카드 장: 3.4초마다 묶음이 빠지고 다음 묶음, 다 돌면 다음 장(묶음 하나면 6.5초) — 일시정지·마우스 올림이면 둘 다 멈춤
+      // 11-11: 첫 장 첫 번은 화면에 나온 때(T0)부터 5.5초 — 쪽 읽기가 늦어 자동 넘김이 늦게 켜져도 남은 시간만(최소 1초)
+      var wait = first && i === 0 && gi === 0 ? Math.max(1000, DWELL - (Date.now() - T0)) : DWELL;
+      if (running()) first = false;
+      timer = !running() ? null : cs ? setTimeout(function () {   // 카드 장: 묶음마다 같은 간격(5.5초), 다 돌면 다음 장 — 일시정지·마우스 올림이면 둘 다 멈춤
         if (gi + 1 < G) {
           var s = slides[i]; b4Out(s); pend = function () { gi++; b4Show(s, gi); };
           timer = setTimeout(function () { flush(); schedule(); }, REDUCE ? 0 : 450);
         } else go(i + 1);
-      }, G > 1 ? 3400 : 6500) : setTimeout(function () { go(i + 1); }, DWELL);
+      }, wait) : setTimeout(function () { go(i + 1); }, wait);
       slides.forEach(function (s, j) { videoSet(s.querySelector("video"), fade && j === i && !st.user && !st.off && !st.tab); });   // 영상은 지금 장·보일 때·멈추지 않았을 때만
     }
     function go(k) {
