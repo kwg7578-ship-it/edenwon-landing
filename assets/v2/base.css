@@ -80,6 +80,36 @@ main:focus{outline:none}
 .hd__actions{display:flex;align-items:center;gap:2px;margin-left:auto}
 .hd__count{position:absolute;top:5px;right:2px;min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:#FFFFFF;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;line-height:1}
 .hd__count[hidden]{display:none}
+/* 11-12 음성 V1 말로 찾기: 자리는 늘 있음(지원 안 되면 보이지만 않음 — CLS 0) · 인앱은 흐린 아이콘 · 듣는 중은 강조색 */
+.hd__mic:not([data-voice-state=on]):not([data-voice-state=inapp]){visibility:hidden}
+.hd__mic[data-voice-state=inapp]{opacity:.45}
+.hd__mic[data-listening]{color:var(--accent)}
+.hd__mic[data-listening]::after{content:"";position:absolute;inset:8px;border-radius:50%;border:1.5px solid var(--accent);animation:vc-pulse 1.4s ease-out infinite}
+@keyframes vc-pulse{from{opacity:.9;transform:scale(.85)}to{opacity:0;transform:scale(1.25)}}
+@media (prefers-reduced-motion:reduce){.hd__mic[data-listening]::after{animation:none}}
+.vc{position:fixed;left:16px;right:16px;bottom:16px;z-index:60;max-width:440px;margin:0 auto;background:#FFFFFF;border:1px solid var(--line);box-shadow:0 8px 28px rgba(0,0,0,.14);padding:20px 20px 18px}
+.vc[hidden]{display:none}
+.vc__close{position:absolute;top:6px;right:6px;width:44px;height:44px;border:0;background:none;font-size:24px;line-height:1;color:var(--ink);cursor:pointer}
+.vc__live{margin:0 40px 6px 0;font-size:17px;font-weight:700;line-height:1.45}
+.vc__heard{margin:0 0 10px;color:var(--muted,#6B6259);font-size:14px;min-height:1.4em}
+.vc__body{display:flex;flex-direction:column;gap:8px}
+.vc__pick,.vc__no{display:flex;align-items:center;min-height:48px;padding:0 16px;border:1px solid var(--line);color:var(--ink);text-decoration:none;background:#FFFFFF;font-size:15px;cursor:pointer}
+.vc__no{color:var(--muted,#6B6259)}
+.vc__ex,.vc__note{margin:0;font-size:14px;line-height:1.55}
+.vc__form{display:flex;gap:8px}
+.vc__form input{flex:1;min-width:0;min-height:48px;border:1px solid var(--line);padding:0 14px;font-size:16px;border-radius:0}
+.vc__ext{justify-content:center}
+.vc-fab{display:none}
+@media (max-width:600px){
+  .hd__mic{display:none}
+  .vc-fab{display:flex;align-items:center;justify-content:center;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:45;width:56px;height:56px;border-radius:50%;border:0;padding:0;background:var(--ink);color:#FFFFFF;box-shadow:0 4px 16px rgba(0,0,0,.22);cursor:pointer}
+  .vc-fab:not([data-voice-state=on]):not([data-voice-state=inapp]){display:none}
+  .vc-fab[data-voice-state=inapp]{opacity:.45}
+  .vc-fab[data-listening]{background:var(--accent)}
+  .page-detail .vc-fab{bottom:calc(80px + env(safe-area-inset-bottom))}
+  .vc{bottom:calc(84px + env(safe-area-inset-bottom))}
+  .page-detail .vc{bottom:calc(148px + env(safe-area-inset-bottom))}
+}
 .hd__line{height:1px;background:var(--line)}
 .hd__search{border-top:1px solid var(--line);padding:16px 0}
 .hd__search form{display:flex;gap:8px}
