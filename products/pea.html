@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="../assets/v2/motion.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="../assets/v2/motion.css"></noscript>
 <link rel="stylesheet" href="../assets/v2/type.css"><script type="application/json" id="ed-texts">{"곧 만나요":"영동에덴원\n제철 농산물","다음 수확을 기다리는 작물입니다":"영동에덴원 농산물을 계절별로 만나보세요.","영동 농장 직접 수령":"영동에덴원 방문 or 직접 수령","지금 밭에서 거두는 것":"영동에덴원 농산물","발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다":"발효퇴비와 풀로 만든 토양에서, \n자연농법으로 농산물을 키웠습니다"}</script><script src="../assets/v2/app.js" defer></script>
+<script src="../assets/v2/voice.js" defer></script>
 </head>
 <body class="page-detail">
 <div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
@@ -62,7 +63,8 @@
 </button><ul class="gnb__sub" id="gnb-sub-onggi" hidden><li><a href="../products.html?cat=onggi">옹기발효 전체</a></li><li><a href="../products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="../products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="../products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="gnb__item" data-gnb-item><a class="gnb__link" href="../products.html?cat=processed" style="min-width:3.76em">가공식품</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-processed" aria-label="가공식품 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
 </button><ul class="gnb__sub" id="gnb-sub-processed" hidden><li><a href="../products.html?cat=processed">가공식품 전체</a></li><li><a href="../products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="../products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="../products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="../products.html?cat=farm" style="min-width:2.82em" aria-current="page">농산물</a><a href="../products.html?cat=gift" style="min-width:3.76em">선물세트</a><div class="gnb__item" data-gnb-item><a class="gnb__link" href="../story.html" style="min-width:2.82em">브랜드 스토리</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-story" aria-label="이야기 펼치기" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
 </button><ul class="gnb__sub gnb__sub--plain" id="gnb-sub-story" hidden><li><a href="../story.html">영동에덴원 이야기</a></li><li><a href="../farming.html">농사 이야기</a></li><li><a href="../fermentation.html">발효 이야기</a></li></ul></div><a href="../contact.html" style="min-width:6.28em">단체·기업 문의</a>    </nav>
-    <div class="hd__actions">
+    <div class="hd__actions">      <button type="button" class="icon-btn hd__mic" aria-label="말로 찾기" aria-controls="voice-panel" aria-expanded="false" data-voice><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5"/></svg>
+</button>
       <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
 </button>
       <a class="icon-btn hd__mypage" href="../account/" aria-label="마이페이지"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg>
@@ -106,6 +108,8 @@
     </nav>
   </div>
 </div>
+<button type="button" class="vc-fab" aria-label="말로 찾기" aria-controls="voice-panel" aria-expanded="false" data-voice><svg aria-hidden="true" focusable="false" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5"/></svg>
+</button>
 <main id="main" tabindex="-1">
 <script type="application/json" id="product-data">{"key": "pea", "name": "햇 완두콩", "img": "chatgpt-2026-10-17-12-57-55-20261017005827.jpg", "href": "products/pea.html", "options": [{"id": "1kg", "label": "1kg", "price": 10000, "sold_out": true, "size": [1, "kg"]}, {"id": "3kg", "label": "3kg", "price": 30000, "sold_out": true, "size": [3, "kg"]}], "up": true}</script>
 <div class="pd container">

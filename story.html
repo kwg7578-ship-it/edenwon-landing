@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="assets/v2/motion.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="assets/v2/motion.css"></noscript>
 <link rel="stylesheet" href="assets/v2/type.css"><script type="application/json" id="ed-texts">{"곧 만나요":"영동에덴원\n제철 농산물","다음 수확을 기다리는 작물입니다":"영동에덴원 농산물을 계절별로 만나보세요.","영동 농장 직접 수령":"영동에덴원 방문 or 직접 수령","지금 밭에서 거두는 것":"영동에덴원 농산물","발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다":"발효퇴비와 풀로 만든 토양에서, \n자연농법으로 농산물을 키웠습니다"}</script><script src="assets/v2/app.js" defer></script>
+<script src="assets/v2/voice.js" defer></script>
 </head>
 <body class="page-story">
 <div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
@@ -61,7 +62,8 @@
 </button><ul class="gnb__sub" id="gnb-sub-onggi" hidden><li><a href="products.html?cat=onggi">옹기발효 전체</a></li><li><a href="products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="gnb__item" data-gnb-item><a class="gnb__link" href="products.html?cat=processed" style="min-width:3.76em">가공식품</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-processed" aria-label="가공식품 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
 </button><ul class="gnb__sub" id="gnb-sub-processed" hidden><li><a href="products.html?cat=processed">가공식품 전체</a></li><li><a href="products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="products.html?cat=farm" style="min-width:2.82em">농산물</a><a href="products.html?cat=gift" style="min-width:3.76em">선물세트</a><div class="gnb__item" data-gnb-item><a class="gnb__link" href="story.html" style="min-width:2.82em" aria-current="page">브랜드 스토리</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-story" aria-label="이야기 펼치기" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
 </button><ul class="gnb__sub gnb__sub--plain" id="gnb-sub-story" hidden><li><a href="story.html" aria-current="page">영동에덴원 이야기</a></li><li><a href="farming.html">농사 이야기</a></li><li><a href="fermentation.html">발효 이야기</a></li></ul></div><a href="contact.html" style="min-width:6.28em">단체·기업 문의</a>    </nav>
-    <div class="hd__actions">
+    <div class="hd__actions">      <button type="button" class="icon-btn hd__mic" aria-label="말로 찾기" aria-controls="voice-panel" aria-expanded="false" data-voice><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5"/></svg>
+</button>
       <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
 </button>
       <a class="icon-btn hd__mypage" href="account/" aria-label="마이페이지"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg>
@@ -105,6 +107,8 @@
     </nav>
   </div>
 </div>
+<button type="button" class="vc-fab" aria-label="말로 찾기" aria-controls="voice-panel" aria-expanded="false" data-voice><svg aria-hidden="true" focusable="false" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5"/></svg>
+</button>
 <main id="main" tabindex="-1">
 <div class="sv" data-sv data-sv-sizes="(max-width: 860px) 100vw, 680px" data-sv-sizes-wide="(max-width: 860px) 100vw, 1280px">
   <section class="sv-open container" aria-labelledby="sv-h">
@@ -114,7 +118,7 @@
         <h1 class="sv-open__t" id="sv-h">영동에덴원은<br>공동체로 시작했습니다</h1>
         <p class="sv-meta">6장 · 18장면</p>
       </div>
-      <div class="sv-open__lead"><p>오래 함께해온 사람들이 있습니다.<br>서로의 아픈 날을 알고, 매일의 식탁을 함께 고민해온 사람들입니다.</p><p>영동에덴원의 농사와 발효는 그 식탁에서 시작됐습니다.<br>직접 기르고, 실패하며 배우고, 다시 만들어온 시간을 들려드립니다.</p></div>    </div>
+      <div class="sv-open__lead"><p>오래 함께해온 사람들이 있습니다.<br>서로의 아픈 날을 알고, 매일의 식탁을 함께 해온 사람들입니다.</p><p>영동에덴원의 농사와 발효는 우리의 식탁에서 시작됐습니다.<br>직접 기르고, 실패하며 배우고, 다시 만들어온 시간을 들려드립니다.</p></div>    </div>
   </section>
 
   <div class="sv-toc" data-sv-toc>
@@ -161,7 +165,7 @@
           <p class="sv-bkch"><b>01</b> 공동체 · 우리가 함께 살아온 시간</p>
           <p class="sv-no">장면 01</p>
           <h3 class="sv-t" id="s1-t">함께 생활한다는 것</h3>
-          <div class="sv-prose"><p>우리에게 일상 중 하나는 여러 사람의 식사가 매일 돌아오는 일이었습니다. 무엇을 사고, 어떻게 만들고, 누구와 나눌 것인지. 식탁을 마련하는 일에는 늘 여러 사람의 손길과 사정이 함께 놓였습니다.</p><p>지금 영동에덴원이 짓는 농사와 만드는 발효식품을 설명하려면, 먼저 이 식탁의 이야기를 해야 합니다. 우리가 직접 먹을 것을 마련하려던 일이 지금의 재배와 제조로 이어졌기 때문입니다.</p></div>
+          <div class="sv-prose"><p>많은 식구가 함께 살면서 어려운 점은, 많은 양의 식재료가 필요하다는 것입니다. 무엇을 사고, 어떻게 만들지, 식탁을 마련하는 일에는 늘 여러 사람의 손길과 사정이 함께 놓였습니다.</p><p>지금 영동에덴원이 짓는 농사와 만드는 발효식품을 설명하려면, 먼저 이 식탁의 이야기를 해야 합니다. 우리가 직접 먹을 것을 마련하려던 일이 지금의 재배와 제조로 이어졌기 때문입니다.</p></div>
 
         </div>
       </article>
