@@ -266,24 +266,25 @@
     wrap.setAttribute("data-voice-state", STATE);   // off 면 CSS 가 wrap 째 숨김
     if (STATE === "off") return;
     var fold = wrap.querySelector("[data-vc-fold]"), tab = wrap.querySelector("[data-vc-unfold]"), fab = wrap.querySelector(".vc-fab");
-    function apply(c) { if (c) wrap.setAttribute("data-vc-collapsed", ""); else wrap.removeAttribute("data-vc-collapsed"); }
+    function apply(c) { if (c) wrap.setAttribute("data-vc-collapsed", ""); else { wrap.removeAttribute("data-vc-collapsed"); wrap.removeAttribute("data-vc-away"); } }   // 펼치면 숨김도 품(바로 보이게)
     if (fold) fold.addEventListener("click", function () { apply(true); collSave(true); if (tab) tab.focus(); });
     if (tab) tab.addEventListener("click", function () { apply(false); collSave(false); if (fab) fab.focus(); });
     apply(collRead());
     wrap.setAttribute("data-vc-ready", "");   // JS 준비 뒤에만 ×·탭 보임
     scrollHide(wrap);   // 11-15 보강②: 아래로 스크롤 중 숨김·멈춤/올림 때 표시
   }
-  function scrollHide(wrap) {   // 보강②: reduced-motion 이면 CSS transition 0(움직임 없이 바로)
-    var lastY = G.pageYOffset || 0, ticking = false, idle;
+  function scrollHide(wrap) {   // 11-15 규칙: 아래로=숨김(멈춰도 그대로) · 보임=위로/맨 위(y<120)/맨 끝 · 접힘(탭)은 항상 보임 · reduced-motion 이면 CSS transition 0(움직임 없이 바로)
+    var lastY = G.pageYOffset || 0, ticking = false;
     function set(h) { if (wrap.hasAttribute("data-vc-away") !== h) { if (h) wrap.setAttribute("data-vc-away", ""); else wrap.removeAttribute("data-vc-away"); } }
+    function atBottom(y) { var de = doc.documentElement; return y + G.innerHeight >= (de.scrollHeight || doc.body.scrollHeight) - 1; }
     G.addEventListener("scroll", function () {
       if (ticking) return; ticking = true;
       G.requestAnimationFrame(function () {
         var y = G.pageYOffset || 0;
-        if (y > lastY + 4 && y > 120) set(true);        // 아래로 스크롤 중 → 숨김
-        else if (y < lastY - 4) set(false);             // 올림 → 표시
+        if (wrap.hasAttribute("data-vc-collapsed") || y < 120 || atBottom(y)) set(false);   // 접힘·맨 위·맨 끝 → 보임
+        else if (y > lastY + 4) set(true);                                                   // 아래로 → 숨김(멈춰도 그대로)
+        else if (y < lastY - 4) set(false);                                                  // 위로 → 보임
         lastY = y; ticking = false;
-        clearTimeout(idle); idle = setTimeout(function () { set(false); }, 220);   // 멈추면 표시
       });
     }, { passive: true });
   }

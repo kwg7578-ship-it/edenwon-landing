@@ -116,8 +116,8 @@ main:focus{outline:none}
   .vc-fab-wrap[data-vc-collapsed]{right:0}
   .vc-fab-wrap[data-vc-collapsed] .vc-fab{display:none}
   .vc-fab-wrap[data-vc-ready][data-vc-collapsed] .vc-fab__tab{display:flex;align-items:center;justify-content:center;width:34px;height:56px;border-radius:14px 0 0 14px;border:0;padding:0;background:var(--ink);color:#FFFFFF;box-shadow:-2px 3px 12px rgba(0,0,0,.2)}
-  /* 보강②: 아래로 스크롤 중 숨김(멈춤·올림 때 scrollHide 가 data-vc-away 뗌) · opacity 0 으로 확실히 가림 */
-  .vc-fab-wrap[data-vc-away]{transform:translateY(calc(100% + 28px + env(safe-area-inset-bottom)));opacity:0;pointer-events:none}
+  /* 보강②: 아래로 스크롤 시 숨김(멈춰도 그대로 · 보임=위로/맨 위/맨 끝) · opacity 0 으로 확실히 가림 · 접힘(탭)은 안 숨김 */
+  .vc-fab-wrap[data-vc-away]:not([data-vc-collapsed]){transform:translateY(calc(100% + 28px + env(safe-area-inset-bottom)));opacity:0;pointer-events:none}
   /* 보강①: 둥근 단추 쪽 본문 맨 아래 여백(마이크 보일 때만 — 바닥글 가림 막음) */
   body:has(.vc-fab-wrap[data-voice-state=on]) .ft,
   body:has(.vc-fab-wrap[data-voice-state=inapp]) .ft{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
