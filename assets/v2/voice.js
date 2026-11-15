@@ -1,6 +1,6 @@
 /* 영동에덴원 v2 — 말로 찾기(음성 V1, 2026-11-12)
    · 브라우저 음성 인식(크롬=Google, 사파리=Apple)으로 받아쓴 글을 규칙으로 알아듣는다. AI·서버로 소리 보내기 없음.
-   · 들은 글은 어디에도 남기지 않는다: 저장소(localStorage·sessionStorage)·콘솔·서버 0. 화면에 «들은 말: …»을 잠깐 보이고 지운다.
+   · 들은 글은 어디에도 남기지 않는다: 저장소·콘솔·서버 0 (localStorage 에는 접기 상태 flag edenwon_vc_collapsed="1" 하나만 — 들은 글 아님). 화면에 «들은 말: …»을 잠깐 보이고 지운다.
    · 알아듣기(EdenVoice.match)는 화면 없이도 돈다(node 시험이 같은 함수를 부름).
    · 결제·주문 함수는 부르지 않는다(이 파일에서 그런 이름을 부르는 곳 0 — 정적 검사 test_voice1 V7). */
 (function (G) {
@@ -257,6 +257,36 @@
     }
     var a2 = body.querySelector("a"); if (a2) a2.focus();
   }
+  var COLL_KEY = "edenwon_vc_collapsed";
+  function collRead() { try { return G.localStorage.getItem(COLL_KEY) === "1"; } catch (e) { return false; } }   // 실패 시 펼침
+  function collSave(c) { try { if (c) G.localStorage.setItem(COLL_KEY, "1"); else G.localStorage.removeItem(COLL_KEY); } catch (e) {} }
+  function foldInit() {   // ㉮ 접기(휴대폰 둥근 단추): × → 오른쪽 가장자리 탭 · 탭 → 펼침 · localStorage 기억 · 키보드는 단추라 기본 동작
+    var wrap = doc.querySelector("[data-vc-wrap]");
+    if (!wrap) return;
+    wrap.setAttribute("data-voice-state", STATE);   // off 면 CSS 가 wrap 째 숨김
+    if (STATE === "off") return;
+    var fold = wrap.querySelector("[data-vc-fold]"), tab = wrap.querySelector("[data-vc-unfold]"), fab = wrap.querySelector(".vc-fab");
+    function apply(c) { if (c) wrap.setAttribute("data-vc-collapsed", ""); else wrap.removeAttribute("data-vc-collapsed"); }
+    if (fold) fold.addEventListener("click", function () { apply(true); collSave(true); if (tab) tab.focus(); });
+    if (tab) tab.addEventListener("click", function () { apply(false); collSave(false); if (fab) fab.focus(); });
+    apply(collRead());
+    wrap.setAttribute("data-vc-ready", "");   // JS 준비 뒤에만 ×·탭 보임
+    scrollHide(wrap);   // 11-15 보강②: 아래로 스크롤 중 숨김·멈춤/올림 때 표시
+  }
+  function scrollHide(wrap) {   // 보강②: reduced-motion 이면 CSS transition 0(움직임 없이 바로)
+    var lastY = G.pageYOffset || 0, ticking = false, idle;
+    function set(h) { if (wrap.hasAttribute("data-vc-away") !== h) { if (h) wrap.setAttribute("data-vc-away", ""); else wrap.removeAttribute("data-vc-away"); } }
+    G.addEventListener("scroll", function () {
+      if (ticking) return; ticking = true;
+      G.requestAnimationFrame(function () {
+        var y = G.pageYOffset || 0;
+        if (y > lastY + 4 && y > 120) set(true);        // 아래로 스크롤 중 → 숨김
+        else if (y < lastY - 4) set(false);             // 올림 → 표시
+        lastY = y; ticking = false;
+        clearTimeout(idle); idle = setTimeout(function () { set(false); }, 220);   // 멈추면 표시
+      });
+    }, { passive: true });
+  }
   function init() {
     var all = doc.querySelectorAll("[data-voice]");   // 머리글 단추(넓은 화면) · 아래 둥근 단추(휴대폰) — 화면 폭에 따라 하나만 보임(CSS)
     if (!all.length) return;
@@ -270,6 +300,7 @@
       });
     });
     btn = all[0];
+    foldInit();
   }
   if (doc.readyState === "loading") doc.addEventListener("DOMContentLoaded", init); else init();
 })(typeof window !== "undefined" ? window : this);
