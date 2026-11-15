@@ -211,7 +211,9 @@
     var curN = sv.querySelector("[data-sv-curn]"), chn = sv.querySelector("[data-sv-chn]"), modeBox = sv.querySelector("[data-sv-mode]");
     var cur = 0, mode = R.classList.contains("sv-book") ? "book" : "scroll";
     scenes.forEach(function (s, i) { if (R.getAttribute("data-sv-cur") === s.id) cur = i; });
-    modeBox.hidden = false;
+    var svMob = window.matchMedia("(max-width:600px)").matches;   // 11-15 대표: 휴대폰(≤600px) 그림책 제외 — scroll 고정 · 토글(입구) 숨김
+    if (svMob) mode = "scroll";
+    modeBox.hidden = svMob;
     var two = function (n) { return (n < 10 ? "0" : "") + n; };
     function mark(ci) {
       links.forEach(function (a, i) {
