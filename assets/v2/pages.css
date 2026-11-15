@@ -1880,7 +1880,7 @@ body.sheet-open{overflow:hidden}
 .sv-toc__nav a[aria-current] span{color:var(--accent)}
 .sv-mode{flex:none;display:none;border:1px solid var(--ink);margin-block:10px}
 html.sv-js .sv-mode{display:flex}
-@media (max-width:600px){html.sv-js .sv-mode{display:none}}   /* 11-15 대표: 휴대폰(≤600px) 그림책 제외 — 보는 방식 토글(입구) 숨김 */
+html.sv-js .sv-mode{display:none}   /* 11-15 대표: 그림책 전부 제외(PC·휴대폰) — 보는 방식 토글(입구) 항상 숨김 */
 .sv-mode button{font:inherit;font-size:13px;padding:7px 14px;color:var(--muted);background:none;border:0;cursor:pointer}
 .sv-mode button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .sv-prog{height:2px;position:relative}
