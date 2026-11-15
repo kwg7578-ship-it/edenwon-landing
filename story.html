@@ -111,9 +111,9 @@
       <div>
         <p class="sv-ey">영동에덴원 이야기</p>
         <h1 class="sv-open__t" id="sv-h">영동에덴원은<br>공동체로 시작했습니다</h1>
-        <p class="sv-meta">6장 · 18장면</p>
+        <p class="sv-meta">6장</p>
       </div>
-      <div class="sv-open__lead"><p>오래 함께해온 사람들이 있습니다.<br>서로의 아픈 날을 알고, 매일의 식탁을 함께 고민해온 사람들입니다.</p><p>영동에덴원의 농사와 발효는 그 식탁에서 시작됐습니다.<br>직접 기르고, 실패하며 배우고, 다시 만들어온 시간을 들려드립니다.</p></div>    </div>
+      <div class="sv-open__lead"><p>오래 함께해온 사람들이 있습니다.<br>서로의 아픈 날을 알고, 매일의 식탁을 함께 해온 사람들입니다.</p><p>영동에덴원의 농사와 발효는 우리의 식탁에서 시작됐습니다.<br>직접 기르고, 실패하며 배우고, 다시 만들어온 시간을 들려드립니다.</p></div>    </div>
   </section>
 
   <div class="sv-toc" data-sv-toc>
@@ -129,6 +129,7 @@
       var m = "book", n = 18, h = /^#s(\d+)$/.exec(location.hash), c = 1;
       try { m = localStorage.getItem("story-mode") || "book"; } catch (e) {}
       if (sv && sv.hasAttribute("data-sv-edit")) m = "scroll";
+      m = "scroll";   /* 11-15 대표: 그림책 전부 제외(PC·휴대폰) — 기억·#해시·쿼리로 열어도 일반 이야기. 코드는 남기고 쓰이지 않게만(첫 그림 전에 정함, 밀림 0) */
       if (h) c = Math.max(1, Math.min(n, +h[1]));
       R.classList.add("sv-js");
       if (m !== "scroll") { R.classList.add("sv-book"); R.setAttribute("data-sv-cur", "s" + c); }
@@ -136,20 +137,20 @@
   })(document.documentElement, document.querySelector("[data-sv]"));</script>
 
   <div class="sv-story container" id="story" data-sv-story>
-    <nav class="sv-rail" data-sv-rail aria-label="장면 바로가기" style="--n:18" hidden>
-      <button type="button" class="sv-rail__tog" data-sv-rail-tog aria-expanded="false" aria-controls="sv-rail-list"><span class="sv-rail__dots" aria-hidden="true"><span class="sv-rail__dch" style="--k:4"><i></i><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:4"><i></i><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:3"><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:2"><i></i><i></i></span><span class="sv-rail__dch" style="--k:4"><i></i><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:1"><i></i></span></span><span class="sv-rail__tog-o">장면 목록 열기</span><span class="sv-rail__tog-x">닫기</span></button>
+    <nav class="sv-rail" data-sv-rail aria-label="바로가기" style="--n:18" hidden>
+      <button type="button" class="sv-rail__tog" data-sv-rail-tog aria-expanded="false" aria-controls="sv-rail-list"><span class="sv-rail__dots" aria-hidden="true"><span class="sv-rail__dch" style="--k:4"><i></i><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:4"><i></i><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:3"><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:2"><i></i><i></i></span><span class="sv-rail__dch" style="--k:4"><i></i><i></i><i></i><i></i></span><span class="sv-rail__dch" style="--k:1"><i></i></span></span><span class="sv-rail__tog-o">목록 열기</span><span class="sv-rail__tog-x">닫기</span></button>
       <div class="sv-rail__list" id="sv-rail-list">        <div class="sv-rail__ch" data-ch="1"><button type="button" class="sv-rail__h" data-sv-to-i="0"><b>01</b> 공동체</button>
-          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="0" data-ch="1" aria-label="장면 01 — 함께 생활한다는 것"><img src="images/v2/story-scene-01-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="1" data-ch="1" aria-label="장면 02 — 작은 교회에서 만나, 오랜 식구가 되었습니다"><img src="images/v2/story-scene-02-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="2" data-ch="1" aria-label="장면 03 — 서로의 아픈 날을 알고 있습니다"><img src="images/v2/story-scene-03-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="3" data-ch="1" aria-label="장면 04 — 많은 식구의 식탁을 어떻게 꾸릴 수 있을까"><img src="images/v2/story-scene-04-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="0" data-ch="1" aria-label="01 — 함께 생활한다는 것"><img src="images/v2/story-scene-01-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="1" data-ch="1" aria-label="02 — 작은 교회에서 만나, 오랜 식구가 되었습니다"><img src="images/v2/story-scene-02-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="2" data-ch="1" aria-label="03 — 서로의 아픈 날을 알고 있습니다"><img src="images/v2/story-scene-03-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="3" data-ch="1" aria-label="04 — 많은 식구의 식탁을 어떻게 꾸릴 수 있을까"><img src="images/v2/story-scene-04-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
         </div>        <div class="sv-rail__ch" data-ch="2"><button type="button" class="sv-rail__h" data-sv-to-i="4"><b>02</b> 농사</button>
-          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="4" data-ch="2" aria-label="장면 05 — 약 3천 평의 밭에서 시작했습니다"><img src="images/v2/story-scene-05-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="5" data-ch="2" aria-label="장면 06 — 서툴러도 지키기로 한 기준이 있었습니다"><img src="images/v2/story-scene-06-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="6" data-ch="2" aria-label="장면 07 — 팔기 어려운 수확물도, 우리에게는 먹거리였습니다"><img src="images/v2/story-scene-07-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="7" data-ch="2" aria-label="장면 08 — 토양을 돌보는 동안, 흙이 달라졌습니다"><img src="images/v2/story-scene-08-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="4" data-ch="2" aria-label="05 — 약 3천 평의 밭에서 시작했습니다"><img src="images/v2/story-scene-05-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="5" data-ch="2" aria-label="06 — 서툴러도 지키기로 한 기준이 있었습니다"><img src="images/v2/story-scene-06-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="6" data-ch="2" aria-label="07 — 팔기 어려운 못난이 수확물도, 우리에게는 먹거리였습니다"><img src="images/v2/story-scene-07-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="7" data-ch="2" aria-label="08 — 토양을 돌보는 동안, 흙이 달라졌습니다"><img src="images/v2/story-scene-08-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
         </div>        <div class="sv-rail__ch" data-ch="3"><button type="button" class="sv-rail__h" data-sv-to-i="8"><b>03</b> 발효의 시작</button>
-          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="8" data-ch="3" aria-label="장면 09 — 우리 곁의 재료를 다시 보았습니다"><img src="images/v2/story-scene-09-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="9" data-ch="3" aria-label="장면 10 — 발효는 생각처럼 되지 않았습니다"><img src="images/v2/story-scene-10-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="10" data-ch="3" aria-label="장면 11 — 답을 찾으러, 먼 길을 다녔습니다"><img src="images/v2/story-scene-11-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="8" data-ch="3" aria-label="09 — 우리 곁의 재료를 다시 보았습니다"><img src="images/v2/story-scene-09-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="9" data-ch="3" aria-label="10 — 발효는 생각보다 쉽지 않았습니다"><img src="images/v2/story-scene-10-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="10" data-ch="3" aria-label="11 — 답을 찾으러, 먼 길을 다녔습니다"><img src="images/v2/story-scene-11-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
         </div>        <div class="sv-rail__ch" data-ch="4"><button type="button" class="sv-rail__h" data-sv-to-i="11"><b>04</b> 길우관의 이야기</button>
-          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="11" data-ch="4" aria-label="장면 12 — 저는 오랜 돌봄 속에서 자랐습니다"><img src="images/v2/story-scene-12-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="12" data-ch="4" aria-label="장면 13 — 여러 일터를 거쳐, 발효를 배우는 자리로"><img src="images/v2/story-scene-13-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="11" data-ch="4" aria-label="12 — 저는 오랜 돌봄 속에서 자랐습니다"><img src="images/v2/story-scene-12-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="12" data-ch="4" aria-label="13 — 여러 일터를 거쳐, 발효를 배우는 자리로"><img src="images/v2/story-scene-13-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
         </div>        <div class="sv-rail__ch" data-ch="5"><button type="button" class="sv-rail__h" data-sv-to-i="13"><b>05</b> 오늘의 과정</button>
-          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="13" data-ch="5" aria-label="장면 14 — 발효가 완성되기까지, 많은 손을 거칩니다"><img src="images/v2/story-scene-14-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="14" data-ch="5" aria-label="장면 15 — 천천히 기다리고, 상태를 살핍니다"><img src="images/v2/story-scene-15-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="15" data-ch="5" aria-label="장면 16 — 내놓지 않기로 한 결과물도 있습니다"><img src="images/v2/story-scene-16-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="16" data-ch="5" aria-label="장면 17 — 지금도 배우며, 관리하는 기준을 다듬습니다"><img src="images/v2/story-scene-17-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="13" data-ch="5" aria-label="14 — 발효가 완성되기까지, 많은 손을 거칩니다"><img src="images/v2/story-scene-14-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="14" data-ch="5" aria-label="15 — 천천히 기다리고, 상태를 살핍니다."><img src="images/v2/story-scene-15-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="15" data-ch="5" aria-label="16 — 내놓지 않기로 한 결과물도 있습니다"><img src="images/v2/story-scene-16-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li><li><button type="button" class="sv-th sv-th--rail" data-i="16" data-ch="5" aria-label="17 — 지금도 배우며, 관리하는 기준을 다듬고 있습니다"><img src="images/v2/story-scene-17-192.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
         </div>        <div class="sv-rail__ch" data-ch="6"><button type="button" class="sv-rail__h" data-sv-to-i="17"><b>06</b> 여러분의 식탁으로</button>
-          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="17" data-ch="6" aria-label="장면 18 — 영동에덴원이 함께 기르고 만든 먹거리입니다"><img src="images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-480.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
+          <ul><li><button type="button" class="sv-th sv-th--rail" data-i="17" data-ch="6" aria-label="맺으며 — 영동에덴원이 함께 기르고 만든 먹거리입니다"><img src="images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-480.webp" alt="" width="96" height="64" loading="lazy" decoding="async"></button></li></ul>
         </div>      </div>
     </nav>
     <section class="sv-chap" id="ch1" aria-labelledby="ch1-t">
@@ -158,9 +159,9 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-01-1440.webp" aria-label="함께 생활한다는 것 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-01-192.webp 192w, images/v2/story-scene-01-480.webp 480w, images/v2/story-scene-01-960.webp 960w, images/v2/story-scene-01-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-01-960.jpg" srcset="images/v2/story-scene-01-192.jpg 192w, images/v2/story-scene-01-480.jpg 480w, images/v2/story-scene-01-960.jpg 960w, images/v2/story-scene-01-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="함께 생활한다는 것" class="sv-img" loading="eager" fetchpriority="high" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>01</b> 공동체 · 우리가 함께 살아온 시간</p>
-          <p class="sv-no">장면 01</p>
+          <p class="sv-no">01</p>
           <h3 class="sv-t" id="s1-t">함께 생활한다는 것</h3>
-          <div class="sv-prose"><p>우리에게 일상 중 하나는 여러 사람의 식사가 매일 돌아오는 일이었습니다. 무엇을 사고, 어떻게 만들고, 누구와 나눌 것인지. 식탁을 마련하는 일에는 늘 여러 사람의 손길과 사정이 함께 놓였습니다.</p><p>지금 영동에덴원이 짓는 농사와 만드는 발효식품을 설명하려면, 먼저 이 식탁의 이야기를 해야 합니다. 우리가 직접 먹을 것을 마련하려던 일이 지금의 재배와 제조로 이어졌기 때문입니다.</p></div>
+          <div class="sv-prose"><p>많은 식구가 함께 살면서 어려운 점은, <br>많은 양의 식재료가 필요하다는 것입니다. <br>무엇을 사고, 어떻게 만들지, <br>식탁을 마련하는 일에는 늘 여러 사람의 손길과 사정이 함께 놓였습니다.</p><p>지금 영동에덴원이 짓는 농사와 만드는 발효식품은, 우리가 직접 먹을 것을 마련하려던 일이 지금의 재배와 제조로 이어졌습니다.</p></div>
 
         </div>
       </article>
@@ -168,9 +169,9 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-02-1440.webp" aria-label="작은 교회에서 만나, 오랜 식구가 되었습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-02-192.webp 192w, images/v2/story-scene-02-480.webp 480w, images/v2/story-scene-02-960.webp 960w, images/v2/story-scene-02-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-02-960.jpg" srcset="images/v2/story-scene-02-192.jpg 192w, images/v2/story-scene-02-480.jpg 480w, images/v2/story-scene-02-960.jpg 960w, images/v2/story-scene-02-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="작은 교회에서 만나, 오랜 식구가 되었습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>01</b> 공동체 · 우리가 함께 살아온 시간</p>
-          <p class="sv-no">장면 02</p>
+          <p class="sv-no">02</p>
           <h3 class="sv-t" id="s2-t">작은 교회에서 만나,<br>오랜 식구가 되었습니다</h3>
-          <div class="sv-prose"><p>영동에덴원은  수원에서 시작한 작은 개척 교회 ‘예수의 집’에서 비롯됐습니다. 교회를 오가며 하나둘 인연을 맺은 사람들이 오랜 세월 관계를 이어왔습니다.</p><p>그렇게 함께하는 시간이 쌓이며 서로의 형편과 건강, 가족의 사정까지 아는 사이가 되었습니다. 지금은 서른 명이 채 되지 않는 공동체지만, 그 안에는 오랫동안 함께 지내온 시간이 담겨 있습니다.</p></div>
+          <div class="sv-prose"><p>영동에덴원은  수원의 작은 예배당에서 시작되어, 예배당을 오가며 만난 사람들이 오랜 세월 관계를 이어오고 있습니다.</p><p>지금은 서른 명이 채 되지 않는 공동체지만, 그 안에는 함께 지내온 시간이 담겨 있습니다.</p></div>
 
         </div>
       </article>
@@ -178,9 +179,9 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-03-1440.webp" aria-label="서로의 아픈 날을 알고 있습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-03-192.webp 192w, images/v2/story-scene-03-480.webp 480w, images/v2/story-scene-03-960.webp 960w, images/v2/story-scene-03-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-03-960.jpg" srcset="images/v2/story-scene-03-192.jpg 192w, images/v2/story-scene-03-480.jpg 480w, images/v2/story-scene-03-960.jpg 960w, images/v2/story-scene-03-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="서로의 아픈 날을 알고 있습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>01</b> 공동체 · 우리가 함께 살아온 시간</p>
-          <p class="sv-no">장면 03</p>
+          <p class="sv-no">03</p>
           <h3 class="sv-t" id="s3-t">서로의 아픈 날을<br>알고 있습니다</h3>
-          <div class="sv-prose"><p>우리 식구들 가운데에는 오랫동안 몸의 아픔을 안고 살아가는 분들이 많습니다. 어머니 역시 어린 시절부터 몸이 안 좋으셨고, 여러 사람들이 같이 지내면서 아픔을 서로 나누기도, 위로하기도 했습니다. 그러던 중 함께 지내던 몇몇 분들을 먼저 떠나보내기도 해야 했습니다.</p><p>오래 관계를 이어온 우리에게 누군가의 건강과 끼니는 먼 이야기가 아니었습니다. 안부를 묻고 식사를 챙기는 일은 공동체의 생활 안에 자리 잡았습니다.</p></div>
+          <div class="sv-prose"><p>우리 식구들 가운데에는 오랫동안 몸의 아픔을 안고 살아가는 분들이 많습니다. 어머니 역시 어린 시절부터 몸이 안 좋으셨고, 여러 사람들이 같이 지내면서 아픔을 서로 나누기도, 위로하기도 했습니다. 그러던 중 함께하던 몇몇 분들을 먼저 떠나보내기도 했습니다.</p><p>오래 관계를 이어온 우리에게 식사를 챙기는 일은 공동체의 생활 안에 자리 잡았습니다.</p></div>
 
         </div>
       </article>
@@ -188,7 +189,7 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-04-1440.webp" aria-label="많은 식구의 식탁을 어떻게 꾸릴 수 있을까 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-04-192.webp 192w, images/v2/story-scene-04-480.webp 480w, images/v2/story-scene-04-960.webp 960w, images/v2/story-scene-04-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-04-960.jpg" srcset="images/v2/story-scene-04-192.jpg 192w, images/v2/story-scene-04-480.jpg 480w, images/v2/story-scene-04-960.jpg 960w, images/v2/story-scene-04-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="많은 식구의 식탁을 어떻게 꾸릴 수 있을까" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>01</b> 공동체 · 우리가 함께 살아온 시간</p>
-          <p class="sv-no">장면 04</p>
+          <p class="sv-no">04</p>
           <h3 class="sv-t" id="s4-t">많은 식구의 식탁을<br>어떻게 꾸릴 수 있을까</h3>
           <div class="sv-prose"><p>먹거리에 신경 써야 할 식구들은 많았지만, 형편이 넉넉하지는 않았습니다. 식재료를 구입해 먹던 시절부터 식비와 재료를 함께 고민해야 했습니다.</p><p>우리는 믿고 먹을 수 있는 식재료를 마련하고 싶었습니다. 식비를 아끼면서 스스로 기를 수 있는 방법을 찾다 보니, 결국 밭으로 가게 되었습니다.</p></div>
 
@@ -201,9 +202,9 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-05-1440.webp" aria-label="약 3천 평의 밭에서 시작했습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-05-192.webp 192w, images/v2/story-scene-05-480.webp 480w, images/v2/story-scene-05-960.webp 960w, images/v2/story-scene-05-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-05-960.jpg" srcset="images/v2/story-scene-05-192.jpg 192w, images/v2/story-scene-05-480.jpg 480w, images/v2/story-scene-05-960.jpg 960w, images/v2/story-scene-05-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="약 3천 평의 밭에서 시작했습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>02</b> 농사 · 우리 식탁을 위해, 토양부터</p>
-          <p class="sv-no">장면 05</p>
+          <p class="sv-no">05</p>
           <h3 class="sv-t" id="s5-t">약 3천 평의 밭에서<br>시작했습니다</h3>
-          <div class="sv-prose"><p>처음에는 약 3천 평의 밭을 주말농장처럼 일궜습니다. 하지만, 농사를 잘 아는 사람들이 모인 것은 아니었습니다. 함께 먹을 것을 직접 길러보겠다는 마음으로 식구들이 밭에 모였습니다.</p><p>농지는 한때 만 평, 이만 평을 넘는 규모로 커지기도 했습니다. 큰 기계를 사용하기 전까지는 대부분의 작업에 사람의 손이 필요했습니다. 평일에도 주말에도 여러 식구가 참여하며 농사를 이어왔습니다.</p></div>
+          <div class="sv-prose"><p>처음에는 약 3천 평의 밭을 주말농장처럼 일궜습니다. 하지만, 농사를 잘 아는 사람들이 모인 것은 아니었습니다. 함께 먹을 것을 직접 길러보겠다는 마음으로 식구들이 밭에 모였습니다.</p><p>농지는 한때 만 평, 이만 평을 넘는 규모로 커지기도 했습니다. 큰 기계를 사용하기 전까지는 대부분의 작업에 사람의 손이 필요했습니다. 주말에 여러 식구가 참여하며 농사를 이어왔습니다.</p></div>
 
         </div>
       </article>
@@ -211,19 +212,19 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-06-1440.webp" aria-label="서툴러도 지키기로 한 기준이 있었습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-06-192.webp 192w, images/v2/story-scene-06-480.webp 480w, images/v2/story-scene-06-960.webp 960w, images/v2/story-scene-06-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-06-960.jpg" srcset="images/v2/story-scene-06-192.jpg 192w, images/v2/story-scene-06-480.jpg 480w, images/v2/story-scene-06-960.jpg 960w, images/v2/story-scene-06-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="서툴러도 지키기로 한 기준이 있었습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>02</b> 농사 · 우리 식탁을 위해, 토양부터</p>
-          <p class="sv-no">장면 06</p>
+          <p class="sv-no">06</p>
           <h3 class="sv-t" id="s6-t">서툴러도 지키기로 한<br>기준이 있었습니다</h3>
           <div class="sv-prose"><p>처음 만난 밭은 호미로 일구기 어려울 만큼 단단했습니다. 농사에 익숙하지 않았던 우리는 풀을 다루고 퇴비를 넣어보며 시행착오를 겪었습니다.</p><p>그때부터 지킨 기준은 제초제를 쓰지 않겠다는 것이었습니다. 작물 곁의 풀을 관리하고 단단한 땅을 일구는 일은 쉽지 않았습니다. 우리가 먹을 작물이 자라는 곳이기에, 손이 더 가더라도 직접 돌보며 농사를 배웠습니다.</p></div>
 
         </div>
       </article>
       <article class="sv-scene" id="s7" data-ch="2" aria-labelledby="s7-t">
-        <button class="sv-fig" type="button" data-full="images/v2/story-scene-07-1440.webp" aria-label="팔기 어려운 수확물도, 우리에게는 먹거리였습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-07-192.webp 192w, images/v2/story-scene-07-480.webp 480w, images/v2/story-scene-07-960.webp 960w, images/v2/story-scene-07-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-07-960.jpg" srcset="images/v2/story-scene-07-192.jpg 192w, images/v2/story-scene-07-480.jpg 480w, images/v2/story-scene-07-960.jpg 960w, images/v2/story-scene-07-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="팔기 어려운 수확물도, 우리에게는 먹거리였습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <button class="sv-fig" type="button" data-full="images/v2/story-scene-07-1440.webp" aria-label="팔기 어려운 못난이 수확물도, 우리에게는 먹거리였습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-07-192.webp 192w, images/v2/story-scene-07-480.webp 480w, images/v2/story-scene-07-960.webp 960w, images/v2/story-scene-07-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-07-960.jpg" srcset="images/v2/story-scene-07-192.jpg 192w, images/v2/story-scene-07-480.jpg 480w, images/v2/story-scene-07-960.jpg 960w, images/v2/story-scene-07-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="팔기 어려운 못난이 수확물도, 우리에게는 먹거리였습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>02</b> 농사 · 우리 식탁을 위해, 토양부터</p>
-          <p class="sv-no">장면 07</p>
-          <h3 class="sv-t" id="s7-t">팔기 어려운 수확물도,<br>우리에게는 먹거리였습니다</h3>
-          <div class="sv-prose"><p>농사가 서툴다 보니 모양과 크기가 고른 작물을 거두기 어려웠습니다. 판매할 만한 상품이 충분히 나오지 않을 때도 있었습니다.</p><p>그래도 수확한 작물은 식구들의 식탁에서 제 역할을 했습니다. 씻고 다듬어 함께 먹으며, 우리는 직접 기른 먹거리가 생활에 보탬이 되는 경험을 했습니다.</p></div>
+          <p class="sv-no">07</p>
+          <h3 class="sv-t" id="s7-t">팔기 어려운 못난이 수확물도,<br>우리에게는 먹거리였습니다</h3>
+          <div class="sv-prose"><p>농사가 서툴다 보니 모양과 크기가 고른 작물을 거두기 어려웠습니다. 판매할 만한 상품이 나오지 않았습니다.</p><p>그래도 수확한 작물은 식구들의 식탁에서 제 역할을 했습니다. 씻고 다듬어 함께 먹으며, 직접 기른 먹거리가 건강에 도움이 되는 경험을 했습니다.</p></div>
 
         </div>
       </article>
@@ -231,9 +232,9 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-08-1440.webp" aria-label="토양을 돌보는 동안, 흙이 달라졌습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-08-192.webp 192w, images/v2/story-scene-08-480.webp 480w, images/v2/story-scene-08-960.webp 960w, images/v2/story-scene-08-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-08-960.jpg" srcset="images/v2/story-scene-08-192.jpg 192w, images/v2/story-scene-08-480.jpg 480w, images/v2/story-scene-08-960.jpg 960w, images/v2/story-scene-08-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="토양을 돌보는 동안, 흙이 달라졌습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>02</b> 농사 · 우리 식탁을 위해, 토양부터</p>
-          <p class="sv-no">장면 08</p>
+          <p class="sv-no">08</p>
           <h3 class="sv-t" id="s8-t">토양을 돌보는 동안,<br>흙이 달라졌습니다</h3>
-          <div class="sv-prose"><p>여러 해 농사를 이어가면서 흙의 변화를 경험했습니다. 처음에는 일구기 어려웠던 토양이 조금씩 부드러워졌고, 손으로 만지는 느낌도 달라졌습니다. 그리고 저희가 농사짓는 농산물에 저희 몸에 필요하다는 것도 느꼈습니다.</p><p>그 경험은 토양을 더 알고 싶게 했습니다. 유기농업과 발효퇴비, 유기질 비료와 농업자재에 관한 교육과 정보를 찾아 공부했습니다. 지금의 자연농법은 그 배움을 이어오며 세워온 재배 방향입니다.</p></div>
+          <div class="sv-prose"><p>제초제와 화학 비료 없이, 여러 해 농사를 이어오면서 흙의 변화를 경험했습니다. 처음에는 일구기 어려웠던 토양이 조금씩 부드러워졌고, 손으로 만지는 느낌도 달라졌습니다. 그리고 우리가 재배한 농산물이 우리 몸에 유익하다는 것도 느꼈습니다.</p><p>그 경험은 토양을 알고 싶게 했고, 영동군 농업기술센터와 충북 유기농업 대학에 문을 두드리게 했습니다. 그 교육을 통해 유기농업과 발효퇴비, 유기질 비료와 농업자재에 관한 교육과 정보를 공부했습니다. 지금의 자연농법은 그 배움을 적용하며 재배하고 있습니다.</p></div>
           <p class="sv-more"><a href="farming.html">농사 이야기 더 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 </a></p>
 
@@ -246,19 +247,19 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-09-1440.webp" aria-label="우리 곁의 재료를 다시 보았습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-09-192.webp 192w, images/v2/story-scene-09-480.webp 480w, images/v2/story-scene-09-960.webp 960w, images/v2/story-scene-09-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-09-960.jpg" srcset="images/v2/story-scene-09-192.jpg 192w, images/v2/story-scene-09-480.jpg 480w, images/v2/story-scene-09-960.jpg 960w, images/v2/story-scene-09-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="우리 곁의 재료를 다시 보았습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>03</b> 발효의 시작 · 가까운 재료에서 시작한 발효</p>
-          <p class="sv-no">장면 09</p>
+          <p class="sv-no">09</p>
           <h3 class="sv-t" id="s9-t">우리 곁의 재료를<br>다시 보았습니다</h3>
-          <div class="sv-prose"><p>어머니는 오래전부터 토종 작물과 주변에서 구할 수 있는 식물에 관심이 있었습니다. 형편이 좋지 않아, 비싼 재료를 계속 구입하기보다, 가까이에서 얻거나 직접 기를 수 있는 재료를 활용할 방법을 찾았습니다.</p><p>영동에덴원 식구들 중에는 소화에 어려움을 느끼는 분들도 많았습니다. 어른들에게 익숙한 발효음식에 자연스럽게 관심을 갖게 되었고, 우리 재료로 직접 만들어 먹기 위한 배움이 시작됐습니다.</p></div>
+          <div class="sv-prose"><p>어머니는 오래전부터 토종 작물과 주변에서 구할 수 있는 식물에 관심이 있었지만, 형편이 여의치 않았습니다. 매번 재료를 구입하기보단 가까이에서 얻거나 직접 기를 수 있는 재료를 활용할 방법을 찾았습니다.</p><p>영동에덴원 식구들 중에는 소화에 어려움을 느끼는 분들도 많았습니다. 그래서 발효음식에 자연스럽게 관심을 갖게 되었고, 우리 재료로 직접 만들어 먹기 위한 배움이 시작됐습니다.</p></div>
 
         </div>
       </article>
       <article class="sv-scene sv-scene--rev" id="s10" data-ch="3" aria-labelledby="s10-t">
-        <button class="sv-fig" type="button" data-full="images/v2/story-scene-10-1440.webp" aria-label="발효는 생각처럼 되지 않았습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-10-192.webp 192w, images/v2/story-scene-10-480.webp 480w, images/v2/story-scene-10-960.webp 960w, images/v2/story-scene-10-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-10-960.jpg" srcset="images/v2/story-scene-10-192.jpg 192w, images/v2/story-scene-10-480.jpg 480w, images/v2/story-scene-10-960.jpg 960w, images/v2/story-scene-10-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="발효는 생각처럼 되지 않았습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <button class="sv-fig" type="button" data-full="images/v2/story-scene-10-1440.webp" aria-label="발효는 생각보다 쉽지 않았습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-10-192.webp 192w, images/v2/story-scene-10-480.webp 480w, images/v2/story-scene-10-960.webp 960w, images/v2/story-scene-10-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-10-960.jpg" srcset="images/v2/story-scene-10-192.jpg 192w, images/v2/story-scene-10-480.jpg 480w, images/v2/story-scene-10-960.jpg 960w, images/v2/story-scene-10-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="발효는 생각보다 쉽지 않았습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>03</b> 발효의 시작 · 가까운 재료에서 시작한 발효</p>
-          <p class="sv-no">장면 10</p>
-          <h3 class="sv-t" id="s10-t">발효는 생각처럼<br>되지 않았습니다</h3>
-          <div class="sv-prose"><p>처음에는 몇 번은 방법을 찾았다고 생각했습니다. 그러나 실제 결과는 기대와 달랐고, 실패는 여러 차례 반복됐습니다. 재료를 준비하고 기다리는 데 시간을 들여도 원하는 결과를 얻지 못했습니다.</p><p>원재료를 구입하는 부담이라도 줄이려고 필요한 작물을 직접 길렀습니다. 그렇게 농사와 발효는 점점 더 가까이 연결됐습니다. 우리가 발효하고 먹을 재료이기에, 재배 과정부터 직접 살피려 했습니다.</p></div>
+          <p class="sv-no">10</p>
+          <h3 class="sv-t" id="s10-t">발효는 생각보다<br>쉽지 않았습니다</h3>
+          <div class="sv-prose"><p>처음 몇 번은 방법을 찾았다고 생각했습니다. 그러나 실제 결과물은 기대와 다르게, 실패가 반복됐습니다. 재료를 준비하고 기다리는 데 시간을 들여도 원하는 결과를 얻지 못했습니다.</p><p>원재료를 구입하는 부담이라도 줄이려고 필요한 작물을 직접 길렀습니다. 우리가 발효하고 먹을 재료이기에, 재배 과정부터 직접 살피기 시작했습니다.</p></div>
 
         </div>
       </article>
@@ -266,9 +267,11 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-11-1440.webp" aria-label="답을 찾으러, 먼 길을 다녔습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-11-192.webp 192w, images/v2/story-scene-11-480.webp 480w, images/v2/story-scene-11-960.webp 960w, images/v2/story-scene-11-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-11-960.jpg" srcset="images/v2/story-scene-11-192.jpg 192w, images/v2/story-scene-11-480.jpg 480w, images/v2/story-scene-11-960.jpg 960w, images/v2/story-scene-11-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="답을 찾으러, 먼 길을 다녔습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>03</b> 발효의 시작 · 가까운 재료에서 시작한 발효</p>
-          <p class="sv-no">장면 11</p>
+          <p class="sv-no">11</p>
           <h3 class="sv-t" id="s11-t">답을 찾으러,<br>먼 길을 다녔습니다</h3>
-          <div class="sv-prose"><p>그러던 중 어머니는 전남 영암의 발효연구소를 알게 되었습니다. 전통적인 방법을 바탕으로 자연 복합 발효를 하는 곳에서, 그동안 궁금했었던 발효에 대해 배우고 물을 수 있는 기회를 만났습니다.</p><p>어머니와 식구들은 수원에서 영암까지 먼 길을 당일 일정으로 오가며 교육을 받았습니다. 한 번의 설명으로 끝나는 일이 아니었기 때문에, 현장에서 보고, 직접 해보고, 돌아와 다시 시도하는 시간이 이어졌습니다.</p></div>
+          <div class="sv-prose"><p>그러던 중 어머니는 전남 영암의 참발효연구소를 알게 되었습니다. 전통적인 방법을 바탕으로 자연 복합 발효를 하는 곳에서, 그동안 궁금했었던 발효에 대해 배우고 물을 수 있는 기회를 만났습니다.</p><p>어머니와 식구들은 수원에서 영암까지 먼 길을 당일 일정으로 오가며 교육을 받았습니다. 한 번의 설명으로 끝나는 일이 아니었기 때문에, 현장에서 보고, 직접 해보고, 돌아와 다시 시도하는 시간이 이어졌습니다.</p></div>
+          <p class="sv-more"><a href="fermentation.html">발효 이야기 더 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></p>
 
         </div>
       </article>
@@ -279,9 +282,9 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-12-1440.webp" aria-label="저는 오랜 돌봄 속에서 자랐습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-12-192.webp 192w, images/v2/story-scene-12-480.webp 480w, images/v2/story-scene-12-960.webp 960w, images/v2/story-scene-12-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-12-960.jpg" srcset="images/v2/story-scene-12-192.jpg 192w, images/v2/story-scene-12-480.jpg 480w, images/v2/story-scene-12-960.jpg 960w, images/v2/story-scene-12-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="저는 오랜 돌봄 속에서 자랐습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>04</b> 길우관의 이야기 · 그 배움에 제 삶도 이어졌습니다</p>
-          <p class="sv-no">장면 12</p>
+          <p class="sv-no">12</p>
           <h3 class="sv-t" id="s12-t">저는 오랜 돌봄 속에서<br>자랐습니다</h3>
-          <div class="sv-prose"><p>저는 1992년생 청년농업인 길우관입니다. 네 살 때 추락 사고로 반신마비를 겪었고 지금도 온전치는 않습니다. 가족의 돌봄과 오랜 운동 속에서 몸을 움직이는 법을 익히는 시간을 이어왔고, 학창 시절에는 신체의 어려움과 신체적 이유로 차별을 겪기도 했습니다.</p><p>중학교 졸업 이후에는 주말농사에 참여하며 몸을 더 세밀하게 쓰려고 노력했습니다. 쉽지 않은 시간을 지나오는 동안, 부모님과 영동에덴원 식구들의 도움은 제 삶을 지탱해주었습니다.</p></div>
+          <div class="sv-prose"><p>저는 1992년생 청년농업인 길우관입니다. 네 살 때 추락 사고로 왼쪽 신경이 마비되었고, 지금도 온전치는 않습니다. 학창 시절에는 신체적 불편함을 이유로 차별과 따돌림도 당했습니다.</p><p>쉽지 않은 시간을 지나오는 동안, 부모님과 영동에덴원 식구들의 도움은 제 삶을 지탱해주었습니다.</p></div>
 
         </div>
       </article>
@@ -289,9 +292,9 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-13-1440.webp" aria-label="여러 일터를 거쳐, 발효를 배우는 자리로 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-13-192.webp 192w, images/v2/story-scene-13-480.webp 480w, images/v2/story-scene-13-960.webp 960w, images/v2/story-scene-13-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-13-960.jpg" srcset="images/v2/story-scene-13-192.jpg 192w, images/v2/story-scene-13-480.jpg 480w, images/v2/story-scene-13-960.jpg 960w, images/v2/story-scene-13-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="여러 일터를 거쳐, 발효를 배우는 자리로" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>04</b> 길우관의 이야기 · 그 배움에 제 삶도 이어졌습니다</p>
-          <p class="sv-no">장면 13</p>
+          <p class="sv-no">13</p>
           <h3 class="sv-t" id="s13-t">여러 일터를 거쳐,<br>발효를 배우는 자리로</h3>
-          <div class="sv-prose"><p>저는 어렸을 때부터 일을 시작해 물류회사와 보안회사, 수산시장 등 여러 직장에서 일했습니다. 취업이 어려울 때는 단기 일자리와 택배 상하차, 건설 현장에서도 일하며 제가 할 수 있는 일을 찾아야 했습니다.</p><p>약 10년의 직장 생활 이후 어머니가 추구해온 방향에 뜻을 함께하며, 영암의 발효연구소에서 2년 동안, 문하생으로 지냈습니다. 처음에는 발효를 잘 몰랐지만, 원료를 다루고 현장의 일을 반복하며 기초와 실습을 익혔습니다.</p><p>지금은 영동에덴원에서 농사를 짓고, 농업회사법인 주식회사 에프엔엘바이오푸드를 운영하며 그 배움을 이어가고 있습니다.</p></div>
+          <div class="sv-prose"><p>저는 고등학교에 진학하지 않고 검정고시 준비와 함께 불편한 몸으로 일을 시작해야만 했습니다. 물류회사와 보안회사, 수산시장 등 여러 직장에서 일했습니다. 취업이 어려울 때는 단기 일자리와 택배 상하차, 건설 현장에서도 일하며 제가 할 수 있는 일을 찾아야 했습니다.</p><p>30대에 접어들며 어머니가 추구해온 방향에 동참하기로 했습니다. 처음에는 발효를 잘 몰랐지만, 단야푸드앤바이오 대표님에게 배우면서 원료를 다루고 현장의 일을 반복하며 이론과 실습을 익히고 있습니다.</p><p>그래서, 지금은 영동에덴원에서 농사를 짓고, 농업회사법인 주식회사 에프엔엘바이오푸드를 운영하며 그 배움을 이어가고 있습니다.</p></div>
 
         </div>
       </article>
@@ -302,19 +305,19 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-14-1440.webp" aria-label="발효가 완성되기까지, 많은 손을 거칩니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-14-192.webp 192w, images/v2/story-scene-14-480.webp 480w, images/v2/story-scene-14-960.webp 960w, images/v2/story-scene-14-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-14-960.jpg" srcset="images/v2/story-scene-14-192.jpg 192w, images/v2/story-scene-14-480.jpg 480w, images/v2/story-scene-14-960.jpg 960w, images/v2/story-scene-14-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="발효가 완성되기까지, 많은 손을 거칩니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>05</b> 오늘의 과정 · 우리가 택한 방식에 필요한 일들</p>
-          <p class="sv-no">장면 14</p>
+          <p class="sv-no">14</p>
           <h3 class="sv-t" id="s14-t">발효가 완성되기까지,<br>많은 손을 거칩니다</h3>
-          <div class="sv-prose"><p>원료를 직접 기르는 일에서 끝나지 않습니다. 수확한 재료를 손질하고, 발효에 맞게 준비하고, 필요한 상태로 보관해야 합니다. 재료마다 해야 할 일이 다르고, 그 일을 위한 공간과 도구도 필요합니다.</p><p>여러 식구가 역할을 나누어 농사와 발효를 함께 합니다. 완성된 발효식품에는 그 사이를 채운 많은 사람의 노동과 시간이 들어 있습니다. 오랫동안 교육과 실습에 시간과 비용을 들인 것도, 이 과정을 제대로 해낼 기반을 갖추기 위해서였습니다.</p></div>
+          <div class="sv-prose"><p>원료를 직접 기르고, 수확한 재료를 손질하고, 발효에 맞게 준비하며, 필요한 상태로 보관해야 합니다. 재료마다 해야 할 일이 다르고, 그 일을 위한 공간과 도구도 필요합니다.</p><p>완성된 발효식품에는 그 사이를 채운 많은 사람의 노동과 시간이 들어 있습니다. 오랫동안 교육과 실습에 시간과 비용을 들인 것도, 이 과정을 제대로 해낼 기반을 갖추기 위해서였습니다.</p></div>
 
         </div>
       </article>
       <article class="sv-scene" id="s15" data-ch="5" aria-labelledby="s15-t">
-        <button class="sv-fig" type="button" data-full="images/v2/story-scene-15-1440.webp" aria-label="천천히 기다리고, 상태를 살핍니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-15-192.webp 192w, images/v2/story-scene-15-480.webp 480w, images/v2/story-scene-15-960.webp 960w, images/v2/story-scene-15-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-15-960.jpg" srcset="images/v2/story-scene-15-192.jpg 192w, images/v2/story-scene-15-480.jpg 480w, images/v2/story-scene-15-960.jpg 960w, images/v2/story-scene-15-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="천천히 기다리고, 상태를 살핍니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <button class="sv-fig" type="button" data-full="images/v2/story-scene-15-1440.webp" aria-label="천천히 기다리고, 상태를 살핍니다. 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-15-192.webp 192w, images/v2/story-scene-15-480.webp 480w, images/v2/story-scene-15-960.webp 960w, images/v2/story-scene-15-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-15-960.jpg" srcset="images/v2/story-scene-15-192.jpg 192w, images/v2/story-scene-15-480.jpg 480w, images/v2/story-scene-15-960.jpg 960w, images/v2/story-scene-15-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="천천히 기다리고, 상태를 살핍니다." class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>05</b> 오늘의 과정 · 우리가 택한 방식에 필요한 일들</p>
-          <p class="sv-no">장면 15</p>
-          <h3 class="sv-t" id="s15-t">천천히 기다리고,<br>상태를 살핍니다</h3>
-          <div class="sv-prose"><p>우리는 종균을 따로 첨가하지 않는 자연 복합 발효 방식을 택했습니다. 우리가 경험하고 좋아하게 된 발효식품의 은은한 풍미를 이어가고자 하는 선택입니다.</p><p>이 방식에는 긴 발효 시간이 필요합니다. 농사를 지으면서도 수백 개 옹기의 상태를 함께 살핍니다. 옹기가 자연스럽게 발효가 이어지도록 관리하며, 그 상태를 확인합니다.</p></div>
+          <p class="sv-no">15</p>
+          <h3 class="sv-t" id="s15-t">천천히 기다리고,<br>상태를 살핍니다.</h3>
+          <div class="sv-prose"><p>우리는 종균을 넣지 않고 자연 복합 발효 방식을 택했습니다. 우리가 경험하고 좋아하게 된 발효식품의 은은한 풍미를 이어가기 위한 선택입니다.</p><p>우리 발효는 긴 발효 시간이 필요합니다. 농사를 지으면서도 수백 개 옹기의 상태를 함께 살핍니다. 옹기 안에서 발효가 자연스럽게 이어지도록 관리하며, 그 상태를 확인합니다.</p></div>
 
         </div>
       </article>
@@ -322,19 +325,19 @@
         <button class="sv-fig" type="button" data-full="images/v2/story-scene-16-1440.webp" aria-label="내놓지 않기로 한 결과물도 있습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-16-192.webp 192w, images/v2/story-scene-16-480.webp 480w, images/v2/story-scene-16-960.webp 960w, images/v2/story-scene-16-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-16-960.jpg" srcset="images/v2/story-scene-16-192.jpg 192w, images/v2/story-scene-16-480.jpg 480w, images/v2/story-scene-16-960.jpg 960w, images/v2/story-scene-16-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="내놓지 않기로 한 결과물도 있습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>05</b> 오늘의 과정 · 우리가 택한 방식에 필요한 일들</p>
-          <p class="sv-no">장면 16</p>
+          <p class="sv-no">16</p>
           <h3 class="sv-t" id="s16-t">내놓지 않기로 한<br>결과물도 있습니다</h3>
           <div class="sv-prose"><p>배우는 과정에서 연구소 선생님이나 미생물 전문가로부터 발효 상태에 문제가 있다는 판단을 받으면, 큰 손실을 감수하고라도 폐기하고 다시 시도했습니다.</p><p>재료와 시간이 아깝지 않았던 것은 아닙니다. 그럼에도 상태에 문제가 있다고 판단한 결과물을 내놓을 수는 없었습니다. 실패를 줄일 방법을 배우고, 우리가 하는 일을 설명할 수 있는 기준을 갖추려 노력했습니다.</p></div>
 
         </div>
       </article>
       <article class="sv-scene" id="s17" data-ch="5" aria-labelledby="s17-t">
-        <button class="sv-fig" type="button" data-full="images/v2/story-scene-17-1440.webp" aria-label="지금도 배우며, 관리하는 기준을 다듬습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-17-192.webp 192w, images/v2/story-scene-17-480.webp 480w, images/v2/story-scene-17-960.webp 960w, images/v2/story-scene-17-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-17-960.jpg" srcset="images/v2/story-scene-17-192.jpg 192w, images/v2/story-scene-17-480.jpg 480w, images/v2/story-scene-17-960.jpg 960w, images/v2/story-scene-17-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="지금도 배우며, 관리하는 기준을 다듬습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
+        <button class="sv-fig" type="button" data-full="images/v2/story-scene-17-1440.webp" aria-label="지금도 배우며, 관리하는 기준을 다듬고 있습니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/story-scene-17-192.webp 192w, images/v2/story-scene-17-480.webp 480w, images/v2/story-scene-17-960.webp 960w, images/v2/story-scene-17-1440.webp 1440w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/story-scene-17-960.jpg" srcset="images/v2/story-scene-17-192.jpg 192w, images/v2/story-scene-17-480.jpg 480w, images/v2/story-scene-17-960.jpg 960w, images/v2/story-scene-17-1440.jpg 1440w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="지금도 배우며, 관리하는 기준을 다듬고 있습니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>05</b> 오늘의 과정 · 우리가 택한 방식에 필요한 일들</p>
-          <p class="sv-no">장면 17</p>
-          <h3 class="sv-t" id="s17-t">지금도 배우며,<br>관리하는 기준을 다듬습니다</h3>
-          <div class="sv-prose"><p>현재는 전북 진안에서 미생물을 전공한 박사님께 교육을 받으며, 현장에서 익힌 경험에 이론을 더하고 있습니다. 현재도 발효가 진행되는 과정을 더 깊이 이해하고 어떻게 더 잘 관리할지 배우며 적용하는 중입니다.</p><p>주기적으로 옹기의 상태를 확인하고, 발효실에서도 발효에 필요한 데이터 측정과 정밀 관리를 진행합니다. 경험으로 익힌 것을 더 분명하게 이해하고 설명할 수 있도록, 지금도 배우고 현장에 적용하는 과정을 이어갑니다.</p></div>
+          <p class="sv-no">17</p>
+          <h3 class="sv-t" id="s17-t">지금도 배우며,<br>관리하는 기준을 다듬고 있습니다</h3>
+          <div class="sv-prose"><p>현재도 단야푸드앤바이오에서 미생물을 전공한 박사님께 교육을 받으며, 현장에서 익힌 경험에 이론을 더하고 있습니다. 발효가 진행되는 과정을 더 깊이 이해하고 어떻게 더 잘 관리할지 배우며 적용하는 중입니다.</p><p>주기적으로 옹기 안의 상태를 확인하고, 발효실에서도 발효에 필요한 데이터 측정과 정밀 관리를 진행합니다. 경험으로 익힌 것을 더 분명하게 이해하고 설명할 수 있도록, 지금도 배우고 현장에 적용하는 과정을 이어갑니다.</p></div>
 
         </div>
       </article>
@@ -345,7 +348,7 @@
         <button class="sv-fig" type="button" data-full="images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-1536.webp" aria-label="영동에덴원이 함께 기르고 만든 먹거리입니다 삽화 크게 보기"><picture data-photo-kind="ai"><source type="image/webp" srcset="images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-480.webp 480w, images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-960.webp 960w, images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-1536.webp 1536w" sizes="(max-width: 860px) 100vw, 680px"><img src="images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-960.jpg" srcset="images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-480.jpg 480w, images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-960.jpg 960w, images/v2/chatgpt-2026-10-21-04-29-39-20261027020326-1536.jpg 1536w" sizes="(max-width: 860px) 100vw, 680px" width="960" height="640" alt="영동에덴원이 함께 기르고 만든 먹거리입니다" class="sv-img" loading="lazy" fetchpriority="low" decoding="async"></picture></button>
         <div class="sv-txt">
           <p class="sv-bkch"><b>06</b> 여러분의 식탁으로 · 이제 여러분의 식탁으로</p>
-          <p class="sv-no">장면 18</p>
+          <p class="sv-no">맺으며</p>
           <h3 class="sv-t" id="s18-t">영동에덴원이 함께 기르고<br>만든 먹거리입니다</h3>
           <div class="sv-prose"><p>처음에는 함께 먹을 것을 마련하기 위해 농사를 시작했고, 직접 기른 재료를 활용하려다 발효를 배웠고, 실패를 겪으며 지금의 방식과 기준을 다듬어왔습니다.</p><p>영동에덴원 먹거리에는 한 사람의 노력만 담겨 있지 않습니다. 밭을 돌보고, 원료를 손질하고, 옹기를 살피고, 함께 배우며 일해온 식구들의 시간이 들어 있습니다.</p><p>우리의 기준을 지키면서 이 일을 오래 이어갈 방법을 찾는 것 역시 앞으로의 과제입니다. 영동에덴원 식구들과 함께 나눴던 먹거리, 이제 여러분의 식탁에도 건네고 싶습니다.</p></div>
 
@@ -360,10 +363,10 @@
   <div class="sv-bar" data-sv-bar hidden>
     <div class="container sv-bar__in">
       <div class="sv-ctl">
-        <button type="button" class="sv-nb" data-sv-prev aria-label="이전 장면"><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+        <button type="button" class="sv-nb" data-sv-prev aria-label="이전"><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
 <span>이전</span></button>
         <p class="sv-cnt" aria-live="polite"><b data-sv-curn>01</b> / 18 <span data-sv-chn>01 공동체</span></p>
-        <button type="button" class="sv-nb sv-nb--dark" data-sv-next aria-label="다음 장면"><span>다음</span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+        <button type="button" class="sv-nb sv-nb--dark" data-sv-next aria-label="다음"><span>다음</span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
 </button>
         <a class="sv-nb sv-nb--dark sv-nb--go" href="products.html?cat=onggi" data-sv-go hidden><span>옹기발효 상품 보기</span><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 </a>

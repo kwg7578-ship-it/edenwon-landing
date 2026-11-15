@@ -211,7 +211,7 @@
     var curN = sv.querySelector("[data-sv-curn]"), chn = sv.querySelector("[data-sv-chn]"), modeBox = sv.querySelector("[data-sv-mode]");
     var cur = 0, mode = R.classList.contains("sv-book") ? "book" : "scroll";
     scenes.forEach(function (s, i) { if (R.getAttribute("data-sv-cur") === s.id) cur = i; });
-    modeBox.hidden = false;
+    mode = "scroll"; modeBox.hidden = true;   // 11-15 대표: 그림책 전부 제외(PC·휴대폰) — scroll 고정·토글(입구) 숨김(기억·#해시로도 일반 이야기, 코드는 남김)
     var two = function (n) { return (n < 10 ? "0" : "") + n; };
     function mark(ci) {
       links.forEach(function (a, i) {
