@@ -140,6 +140,7 @@
   var LAST_RE = /지난\s?번|저번|예전처럼|전에\s?(산|담았|담은|시킨|샀)|그대로|똑같이/;
   var ASSIST_RE = /추천|예산|인기|잘\s?나가|가성비|제일\s?(좋|잘|맛)|뭐\s?(가\s?(좋|맛있)|사|살|좋|맛있|부터|담을|사면)|어떤\s?(게|거)\s?좋|좋은\s?거\s?뭐|[가-힣]*원\s?(으로|어치|대로|짜리)/;
   var DEL_RE = /빼|지워|지우|줄여|줄이|취소/;
+  var ADD_VERB = /담아|담기|담을|담아서|넣어|넣고|추가/;   // 명확한 담기 말(없고 상품 하나·수량 없으면 V1 찾기로)
   var ORDER_RE = /(주문|결제|계산)\s?(할게|하러|해\s?줘|할래|하자|해\s?주세요|하고\s?싶)|주문서/;
   var VIEW_RE = /(장바구니|카트|바구니|담은\s?거|담긴\s?거|뭐\s?담았|담았는지)\s?\S*\s?(보여|열어|보자|확인|로\s?가|가\s?줘|갈래|줘|보)|^\s?(장바구니|내\s?장바구니)\s?$/;
   var SUM_RE = /장바구니|카트|바구니|총(?!각)|전부|다\s?해서|합계|합이|총액|금액|얼마치|결제하면|얼마나\s?돼|(얼마|올마)\s?나와|값이?\s?(얼마|올마)/;
@@ -180,10 +181,10 @@
     if (n >= 2) return { ok: true, ask: true, key: best.key, name: best.name, href: best.href };
     return { ok: true, key: best.key, opt: null, name: best.name, href: best.href };
   }
-  function fin(r, qty) {
+  function fin(r, qty, exq) {
     if (r.page) return { page: true, key: r.key, name: r.name, href: r.href };
     if (r.ask) return { ask: true, key: r.key, name: r.name, href: r.href };
-    return { key: r.key, opt: r.opt || null, name: r.name, href: r.href, qty: qty };
+    return { key: r.key, opt: r.opt || null, name: r.name, href: r.href, qty: qty, exq: !!exq };
   }
   var CNT_U = /^(개|병|통|봉지|봉|세트|팩|상자|박스|포대|단|망)$/;
   function qtyTok(tok) {   // 수량 토큰이면 숫자(키로·kg 등 크기 단위는 옵션일 수 있어 수량으로 안 봄)
@@ -204,9 +205,9 @@
       if (!got) for (L = 1; L <= end - i && !got; L++) { var r2 = resolveItem(toks.slice(i, i + L).join(" "), D); if (r2.ok) { got = r2; used = L; } }   // 상품은 짧은 창 우선(옆 상품 안 삼킴)
       if (!got) { i++; unknown++; continue; }
       i += used;
-      var qty = 1;
-      if (i < toks.length) { var q = qtyTok(toks[i]); if (q != null) { qty = q; i++; if (i < toks.length && CNT_U.test(toks[i])) i++; } }
-      items.push(fin(got, qty));
+      var qty = 1, exq = false;
+      if (i < toks.length) { var q = qtyTok(toks[i]); if (q != null) { qty = q; exq = true; i++; if (i < toks.length && CNT_U.test(toks[i])) i++; } }
+      items.push(fin(got, qty, exq));
     }
     return { items: items, unknown: unknown };
   }
@@ -231,7 +232,10 @@
     if (VIEW_RE.test(t)) return { intent: "view" };
     if (SUM_RE.test(t)) return { intent: "sum" };
     var pa = parseItems(t, D);
-    return pa.items.length ? { intent: "add", items: pa.items } : { intent: "none" };
+    if (!pa.items.length) return { intent: "none" };
+    var multi = pa.items.length > 1, exq = pa.items.some(function (it) { return it.exq; });
+    if (ADD_VERB.test(t) || multi || exq) return { intent: "add", items: pa.items };
+    return { intent: "find", items: pa.items };   // 상품 하나·수량 없음·담기 말 없음 → V1 찾기(이동)
   }
 
   var API_ = { match: match, clean: clean, jamo: jamo, lev: lev, parseCommand: parseCommand };
