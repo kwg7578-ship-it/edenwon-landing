@@ -128,6 +128,20 @@
   window.EdenCart = Cart;
   window.addEventListener("storage", function (e) { if (e.key === CART_KEY) Cart.render(); });
 
+  /* 대표 11-16: 한 품목 20개 상한 — 수량이 20에 닿으면 안내 + 단체·기업 구매 문의 링크(afterEl 아래 한 줄) */
+  function qtyMaxNote(afterEl, show, contactHref, label) {
+    if (!afterEl || !afterEl.parentNode) return;
+    var ex = afterEl.parentNode.querySelector(".qty-max-note");
+    if (!show) { if (ex) ex.remove(); return; }
+    if (ex) return;
+    var p = document.createElement("p"); p.className = "qty-max-note";
+    p.appendChild(document.createTextNode("20개 넘게 필요하시면 "));
+    var a = document.createElement("a"); a.href = contactHref; a.textContent = label; p.appendChild(a);
+    p.appendChild(document.createTextNode("로 문의해 주세요."));
+    afterEl.parentNode.insertBefore(p, afterEl.nextSibling);
+  }
+  window.EdenQtyMaxNote = qtyMaxNote;   // 음성 확인·주문 오류 자리에서도 같은 안내
+
   /* ── 서랍 메뉴: 왼쪽에서 열림, 포커스 가둠, ESC 닫힘 ── */
   function initDrawer() {
     var drawer = document.getElementById("drawer");
@@ -1425,6 +1439,7 @@
         list.appendChild(li);
         tq += l.qty; tw += o.price * l.qty;
       });
+      qtyMaxNote(list, lines.some(function (l) { return l.qty >= Cart.MAX_QTY; }), (document.documentElement.getAttribute("data-root") || "") + "contact.html", "단체·기업 구매");   // 대표 11-16: 20 상한 안내
       var tqEl = buy.querySelector("[data-total-qty]"), twEl = buy.querySelector("[data-total]");
       if (tqEl) tqEl.textContent = String(tq);
       if (twEl) twEl.textContent = won(tw);
@@ -1688,6 +1703,7 @@
         list.appendChild(row);
         if (!so) { avail++; if (chk.checked) { sel++; sub += hit.price * it.qty; } }
       });
+      qtyMaxNote(list, items.some(function (it) { return it.qty >= Cart.MAX_QTY; }), (document.documentElement.getAttribute("data-root") || "") + "contact.html", "단체·기업 구매");   // 대표 11-16: 20 상한 안내
       page.querySelector("[data-sel-count]").textContent = String(sel);
       page.querySelector("[data-line-count]").textContent = String(items.length);
       all.checked = avail > 0 && sel === avail; all.disabled = avail === 0;
@@ -1764,7 +1780,16 @@
       return gifts.map(function (g) { return { set: g.it.gift, items: g.it.items.map(function (x) { return { key: x.key, option_id: x.option }; }) }; });
     }
     function withGifts(b) { if (gifts.length) b.gifts = reqGifts(); return b; }
-    function say(t) { if (!errBox) return; errBox.textContent = t; errBox.hidden = !t; }
+    function say(t) {
+      if (!errBox) return;
+      errBox.textContent = t; errBox.hidden = !t;
+      if (t && /수량은|20개/.test(t)) {   // 대표 11-16: 서버 수량 상한 거절엔 단체·기업 구매 문의 링크
+        errBox.appendChild(document.createTextNode(" "));
+        var a = document.createElement("a"); a.className = "qty-max-link";
+        a.href = (document.documentElement.getAttribute("data-root") || "") + "contact.html"; a.textContent = "단체·기업 구매 문의";
+        errBox.appendChild(a);
+      }
+    }
     function localQuote() {
       var goods = 0, gift = 0; lines.forEach(function (l) { goods += l.o.price * l.qty; });
       gifts.forEach(function (g) { goods += g.v.sum; gift += g.v.off; });

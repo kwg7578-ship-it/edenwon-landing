@@ -311,6 +311,9 @@ html[data-season-moved] .hero[data-sea-built] .hero__track{visibility:hidden}   
 .qty{display:flex;align-items:center;border:1px solid var(--line);background:var(--bg)}
 .qty__btn{width:44px;height:44px;background:none;border:0;color:var(--ink);font-size:18px;cursor:pointer}
 .qty__btn:disabled{color:var(--line);cursor:default}
+/* 대표 11-16: 한 품목 20개 상한 안내(상세·장바구니·주문 오류 공통) */
+.qty-max-note{margin:8px 0 0;font-size:13px;color:var(--muted);line-height:1.5}
+.qty-max-note a,.qty-max-link{color:var(--ink);text-decoration:underline}
 .qty__n{min-width:36px;text-align:center;font-weight:500}
 .buy__msg{color:#A4532A;font-size:14px}
 .buy__msg[hidden]{display:none}
