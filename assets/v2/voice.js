@@ -18,6 +18,11 @@
     }
     return o;
   }
+  /* 소리 접힘(2a·대표 11-16): 받아쓰기가 자주 헷갈리는 자모를 한 꼴로 모아 «근접» 단계에서만 견줌 — 샤↔사↔차 같은 일반 규칙(개별 상품 예외 아님).
+     반자음 떨어짐(ㅑ→ㅏ…)·ㅐ/ㅔ 합침·거센/된소리 섞임(ㅊ→ㅅ 등). 정확·부분일치 단계는 접지 않아 또렷한 말은 그대로 간다. */
+  var SNDFOLD = { "ㅑ": "ㅏ", "ㅕ": "ㅓ", "ㅛ": "ㅗ", "ㅠ": "ㅜ", "ㅒ": "ㅔ", "ㅖ": "ㅔ", "ㅐ": "ㅔ", "ㅆ": "ㅅ", "ㅊ": "ㅅ", "ㅋ": "ㄱ", "ㅌ": "ㄷ", "ㅍ": "ㅂ", "ㅟ": "ㅣ", "ㅢ": "ㅣ" };
+  function fold(ja) { for (var i = 0; i < ja.length; i++) if (SNDFOLD[ja[i]]) ja[i] = SNDFOLD[ja[i]]; return ja; }
+  function foldj(s) { return fold(jamo(s)); }
   function lev(a, b) {
     var m = a.length, n = b.length, p = [], q, i, j;
     for (j = 0; j <= n; j++) p[j] = j;
@@ -63,7 +68,7 @@
     var all = [];
     (D.entries || []).forEach(function (e) {
       var ex = {}; (e.x || []).forEach(function (a) { ex[a] = 1; });
-      e.a.forEach(function (a) { all.push({ a: a, j: jamo(a), x: !!ex[a] || a.length === 1, e: e }); });
+      e.a.forEach(function (a) { all.push({ a: a, j: jamo(a), jf: foldj(a), x: !!ex[a] || a.length === 1, e: e }); });
     });
     all.sort(function (p, q) { return q.a.length - p.a.length; });
     D._ix = all; return all;
@@ -122,16 +127,17 @@
       return result(best.e, "sub", c.qty);
     }
     if (o.noFuzzy || ns.length < 2) return { type: "none", how: "nomatch", qty: c.qty };
-    var J = jamo(ns), sc = [];   // 5 자모 근접(두 글자 이상 별명만)
+    var J = jamo(ns), Jf = foldj(ns), sc = [];   // 5 자모 근접(두 글자 이상 별명만) — 2a: 또렷한 자모 거리 우선, 소리 접힘 거리는 가산으로만(틀린 매칭 줄임)
     for (i = 0; i < ix.length; i++) {
       h = ix[i]; if (h.x || h.a.length < 2) continue;
-      var r = lev(J, h.j) / Math.max(J.length, h.j.length);
-      if (r <= T + Math.max(M, 0)) sc.push({ r: r, e: h.e });
+      var denom = Math.max(J.length, h.j.length);
+      var r = lev(J, h.j) / denom, rf = lev(Jf, h.jf) / denom, rr = Math.min(r, rf);   // 2a·3: 또렷한 거리 또는 소리 접힘 거리 중 가까운 쪽(차이→샤인 같은 센 오인식도 잡음) — 가짜일치는 V1/NZ·coverOk 로 거름
+      if (rr <= T + Math.max(M, 0)) sc.push({ r: rr, ru: r, e: h.e });   // ru=또렷한 거리(되묻기 묶음 판정은 이걸로)
     }
     sc.sort(function (p, q) { return p.r - q.r; });
     if (!sc.length || sc[0].r > T) return { type: "none", how: "nomatch", qty: c.qty };
     if (sc[0].e.k === "none") return { type: "none", how: "notours", qty: c.qty };
-    var near = sc.filter(function (x) { return x.r <= sc[0].r + M && !same(x.e, sc[0].e) && x.e.k !== "none"; });
+    var near = sc.filter(function (x) { return x.r <= sc[0].r + M && x.ru <= sc[0].ru + M && !same(x.e, sc[0].e) && x.e.k !== "none"; });   // 접힘으로 끌려온 후보는 또렷한 거리까지 가까워야 되묻기(시초→식초 하나로)
     if (near.length && !o.noAsk) return multi([sc[0].e].concat(near.map(function (x) { return x.e; })), "fuzzy-tie", c.qty);
     return result(sc[0].e, "fuzzy", c.qty);
   }
@@ -140,10 +146,13 @@
   var LAST_RE = /지난\s?번|저번|예전처럼|전에\s?(산|담았|담은|시킨|샀)|그대로|똑같이/;
   var ASSIST_RE = /추천|예산|인기|잘\s?나가|가성비|제일\s?(좋|잘|맛)|뭐\s?(가\s?(좋|맛있)|사|살|좋|맛있|부터|담을|사면)|어떤\s?(게|거)\s?좋|좋은\s?거\s?뭐|[가-힣]*원\s?(으로|어치|대로|짜리)/;
   var DEL_RE = /빼|지워|지우|줄여|줄이|취소/;
-  var ADD_VERB = /담아|담기|담을|담아서|넣어|넣고|추가/;   // 명확한 담기 말(없고 상품 하나·수량 없으면 V1 찾기로)
+  var ADD_VERB = /담아|담기|담을|담아서|넣어|넣고|추가|장바구니\s?에/;   // 명확한 담기 말(장바구니에 = 담을 곳) — 없고 상품 하나·수량 없으면 V1 찾기로
+  var MONEY_RE = /(지금|담은\s?거|담긴\s?거|전체|전부|모두|장바구니|카트|바구니)\s?\S*\s?(얼마|올마|금액)|^\s?얼마\s?(예요|에요|야|인가요?|지|인교)?\s?$/;   // 2f: 장바구니 맥락 «얼마/금액» 이면 SUM 우선(VIEW보다) — «배송 얼마나»·«비트코인 얼마야»는 제외
   var ORDER_RE = /(주문|결제|계산)\s?(할게|하러|해\s?줘|할래|하자|해\s?주세요|하고\s?싶)|주문서/;
   var VIEW_RE = /(장바구니|카트|바구니|담은\s?거|담긴\s?거|뭐\s?담았|담았는지)\s?\S*\s?(보여|열어|보자|확인|로\s?가|가\s?줘|갈래|줘|보)|^\s?(장바구니|내\s?장바구니)\s?$/;
   var SUM_RE = /장바구니|카트|바구니|총(?!각)|전부|다\s?해서|합계|합이|총액|금액|얼마치|결제하면|얼마나\s?돼|(얼마|올마)\s?나와|값이?\s?(얼마|올마)/;
+  var BAG_RE = /장바구니|카트|바구니/;   // 2b: «상품+수량+장바구니»=ADD 판별용(담는 곳)
+  var VIEWV_RE = /보여|열어|보자|확인|보\b/;   // 보기 말 — 있으면 담기로 보지 않음
   var SPLIT_RE = /\s*(?:이?랑|하고|그리고|및|,|、|\+)\s*/;
   var EACH_RE = /씩/;
   var VSTRIP = /담아서|담아|담기|담을|넣어서|넣어|넣고|빼\s?주세요|빼\s?줘|빼고|빼|지워\s?주세요|지워\s?줘|지워|지우|줄여\s?줘|줄여|줄이|취소|주문\S*|결제\S*|계산\S*|주세요|주이소|주라|해\s?주세요|해\s?줘|부탁\S*/g;
@@ -155,10 +164,15 @@
     D._oc = oc; return oc;
   }
   function coverOk(text, key, opt, D) {   // 짧은 별명이 긴 낯선 말 속에 든 가짜일치 거르기 — 맨 앞에서 시작 + 60%↑ 덮어야(비트코인·앞에 딴 상품 삼킴 막음)
-    var ns = text.replace(/\s+/g, ""), ok = false;
+    var ns = text.replace(/\s+/g, ""), nsj = foldj(ns), nl = nsj.length, ok = false;   // 2a·3: 소리 접힘 자모로 견줌(사인머스캣잼→샤인머스캣잼 통과)
     (D.entries || []).forEach(function (e) {
       if (e.key !== key || (e.opt || null) !== (opt || null)) return;
-      (e.a || []).forEach(function (a) { var aa = a.replace(/\s+/g, ""); if (aa.length >= 2 && ns.indexOf(aa) === 0 && aa.length >= ns.length * 0.6) ok = true; });
+      (e.a || []).forEach(function (a) {
+        var aa = a.replace(/\s+/g, ""); if (aa.length < 2) return;
+        var aj = foldj(aa), pref = aj.length <= nl;
+        for (var i = 0; pref && i < aj.length; i++) if (aj[i] !== nsj[i]) pref = false;   // 접힘 자모가 맨 앞에서 일치
+        if (pref && aj.length >= nl * 0.6) ok = true;
+      });
     });
     return ok;
   }
@@ -231,13 +245,16 @@
       return di.length ? { intent: "del", items: di } : { intent: "none" };
     }
     if (ORDER_RE.test(t)) return { intent: "order" };
+    var pa = parseItems(t, D);
+    if (ADD_VERB.test(t) && pa.items.length) return { intent: "add", items: pa.items };   // 2b: 담기 말+상품이면 ADD(장바구니에 담아) — VIEW/SUM 보다 우선
+    if (pa.items.length && pa.items.some(function (it) { return it.exq; }) && BAG_RE.test(t) && !MONEY_RE.test(t) && !VIEWV_RE.test(t))
+      return { intent: "add", items: pa.items };   // 2b: «상품+수량+장바구니»(담기 말 없이도) = ADD — 돈/보기 말 없을 때만
+    if (MONEY_RE.test(t)) return { intent: "sum" };   // 2f: 얼마/금액 → SUM 우선
     if (VIEW_RE.test(t)) return { intent: "view" };
     if (SUM_RE.test(t)) return { intent: "sum" };
-    var pa = parseItems(t, D);
     if (!pa.items.length) return { intent: "none" };
     var multi = pa.items.length > 1, exq = pa.items.some(function (it) { return it.exq; });
-    if (ADD_VERB.test(t) || multi || exq) return { intent: "add", items: pa.items };
-    return { intent: "find", items: pa.items };   // 상품 하나·수량 없음·담기 말 없음 → V1 찾기(이동)
+    return (multi || exq) ? { intent: "add", items: pa.items } : { intent: "find", items: pa.items };   // 상품 하나·수량 없음·담기 말 없음 → V1 찾기(이동)
   }
 
   var API_ = { match: match, clean: clean, jamo: jamo, lev: lev, parseCommand: parseCommand };
@@ -246,6 +263,7 @@
 
   /* ════════ 화면(브라우저) ════════ */
   var doc = G.document, UA = (G.navigator && G.navigator.userAgent) || "";
+  var ISPREVIEW = !doc.documentElement.getAttribute("data-api");   // 1(대표 11-16): «들은 말: …»은 미리보기(data-api 없음)에서만 — 출시판엔 안 나옴. 저장은 여전히 0
   function T_(s) { return G.Eden && G.Eden.T ? G.Eden.T(s) : s; }
   function root() { return doc.documentElement.getAttribute("data-root") || ""; }
   var SR = G.SpeechRecognition || G.webkitSpeechRecognition;
@@ -347,9 +365,24 @@
     for (i = 0; i < es.length; i++) if (es[i].k === "option" && es[i].key === key) return es[i].opt;
     return null;
   }
-  function cartRefresh() {   // 대표 11-16 ④: 머리글 숫자 + 열린 장바구니 화면 즉시 갱신
+  function prodName(key) { var e = dict && (dict.entries || []).filter(function (x) { return x.k === "product" && x.key === key; })[0]; return e ? e.n : key; }
+  function optList(key) {   // 2d: 상품의 옵션 [{opt, label}] — 종류 이름 읽기·되묻기 단추용(옵션 이름에서 상품 이름 떼기)
+    if (!dict) return [];
+    var pw = prodName(key).split(/\s+/), out = [], seen = {};
+    (dict.entries || []).forEach(function (e) {
+      if (e.k !== "option" || e.key !== key || seen[e.opt]) return; seen[e.opt] = 1;
+      var lab = e.n; pw.forEach(function (w) { if (w) lab = lab.split(w).join(""); });
+      lab = lab.replace(/\s+/g, " ").trim() || e.n;
+      out.push({ opt: e.opt, label: lab, name: e.n, href: e.h });
+    });
+    return out;
+  }
+  function cartRefresh() {   // 대표 11-16 ④·2g: 머리글 숫자 + 열린 장바구니 화면 즉시 갱신
     try { if (G.EdenCart) G.EdenCart.render(); } catch (e) {}
-    if (doc.querySelector("[data-cart-page]")) timer = setTimeout(function () { G.location.reload(); }, 1100);
+    var cp = doc.querySelector("[data-cart-page]");
+    if (!cp) return;
+    if (cp._edRender) { try { cp._edRender(); return; } catch (e) {} }   // 2g: 리로드 없이 즉시 다시 그림(P 준비됐을 때)
+    timer = setTimeout(function () { G.location.reload(); }, 1100);     // 아직 상품 로드 전이면 리로드로 대체
   }
   function loginLink() { var a = el("a", "vc__pick", T_("로그인")); a.href = root() + "account/login.html?next=" + encodeURIComponent(G.location.pathname + G.location.search); return a; }
   function contactLink() { var a = el("a", "vc__pick", T_("단체·기업 구매 문의")); a.href = root() + "contact.html"; return a; }
@@ -367,6 +400,22 @@
       var rq = it.qty || 1, q = Math.min(rq, 20); if (rq > 20) over = true;
       lines.push({ key: it.key, option: oid, qty: q }); names.push(it.name + " " + q + T_("개"));
     });
+    if (!lines.length && ambig.length === 1) {
+      var a0 = ambig[0];
+      if (a0.page) {   // 2d: 6종+ → 종류 많아서 화면에서 골라 주세요(이동 전 말하기)
+        say(Tf_("«{0}»은 종류가 많아서 화면에서 골라 주세요.", a0.name));
+        if (a0.href) { body.appendChild(link(T_("고르기"), a0.href)); body.querySelector("a").focus(); timer = setTimeout(function () { go(a0.href); }, 2400); }
+        return;
+      }
+      var ol = optList(a0.key);   // 2d: 2~5종 → 종류 이름 읽어 주며 되묻기 + 단추(누르면 그 종류로 담기)
+      if (ol.length) {
+        say(Tf_("«{0}» 종류는 {1}가 있어요. 어느 걸로 할까요?", a0.name, ol.map(function (o) { return o.label; }).join(", ")));
+        ol.forEach(function (o) { var b = el("button", "vc__pick", o.label); b.type = "button"; b.addEventListener("click", function () { doAdd([{ key: a0.key, option: o.opt, qty: a0.qty || 1 }], (a0.qty || 1) > 20); }); body.appendChild(b); });
+        var bn = el("button", "vc__no", T_("아니요")); bn.type = "button"; bn.addEventListener("click", close); body.appendChild(bn);
+        body.querySelector("button").focus();
+        return;
+      }
+    }
     if (!lines.length) {
       if (ambig.length === 1 && ambig[0].href) { say(Tf_("«{0}» 종류를 골라 주세요", ambig[0].name)); body.appendChild(link(T_("고르기"), ambig[0].href)); body.querySelector("a").focus(); }
       else act({ type: "none" });
@@ -380,7 +429,10 @@
     var bFix = el("button", "vc__no", T_("고치기")); bFix.type = "button";
     var bNo = el("button", "vc__no", T_("아니요")); bNo.type = "button";
     bAdd.addEventListener("click", function () { doAdd(lines, over); });
-    bFix.addEventListener("click", function () { if (SR && STATE === "on") listen(); else { body.textContent = ""; typed(); } });
+    bFix.addEventListener("click", function () {   // 2e: 담을 상품 교체 — 다시 들은 말이 대기 중인 담기를 대신함(후보 여럿이면 confirmAdd 가 되묻음)
+      if (SR && STATE === "on") { say(T_("담을 상품을 다시 말해 주세요.")); body.textContent = ""; listen(); }
+      else { body.textContent = ""; typed(T_("담을 상품을 바꿔 적어 주세요.")); }
+    });
     bNo.addEventListener("click", close);
     body.appendChild(bAdd); body.appendChild(bFix); body.appendChild(bNo); bAdd.focus();
   }
@@ -495,28 +547,33 @@
     if (i === "del") { gate(function () { confirmDel(cmd.items); }); return; }
     act({ type: "none" });
   }
+  function showHeard(raw0, picked) {   // 1(대표 11-16): 미리보기에서만 · 저장 0. 1순위와 실제 고른 후보가 다르면 둘 다 보임
+    if (!ISPREVIEW || !heard) return;
+    heard.textContent = (picked && picked !== raw0)
+      ? T_("들은 말") + ": " + raw0 + " → " + T_("고른 말") + ": " + picked
+      : T_("들은 말") + ": " + raw0;
+  }
   function handle(alts) {   // 명령(담기·빼기·합계 등)이면 runCmd · 찾기/못 알아들음이면 V1 match→act(상품·여러 후보·안내 그대로)
-    var cmd = null, i;
-    for (i = 0; i < alts.length && (!cmd || cmd.intent === "none"); i++) cmd = parseCommand(alts[i], dict);
-    if (cmd && cmd.intent !== "none" && cmd.intent !== "find") { runCmd(cmd); return; }
-    var r = null;
-    for (i = 0; i < alts.length && (!r || r.type === "none"); i++) r = match(alts[i], dict);
+    var cmd = null, i, picked = alts[0];
+    for (i = 0; i < alts.length && (!cmd || cmd.intent === "none"); i++) { cmd = parseCommand(alts[i], dict); if (cmd && cmd.intent !== "none") picked = alts[i]; }
+    if (cmd && cmd.intent !== "none" && cmd.intent !== "find") { showHeard(alts[0], picked); runCmd(cmd); return; }
+    var r = null, rp = alts[0];
+    for (i = 0; i < alts.length && (!r || r.type === "none"); i++) { r = match(alts[i], dict); if (r && r.type !== "none") rp = alts[i]; }
+    showHeard(alts[0], (r && r.type !== "none") ? rp : alts[0]);   // 고른 말은 실제로 결과가 나온 후보(없으면 1순위 그대로)
     act(r || { type: "none" });
   }
   function listen() {
     open(); stat("mic_open"); fromMic = true;   // ⑤ 소리 답은 마이크 뒤에만
     loadDict().catch(function () {});
-    rec = new SR(); rec.lang = "ko-KR"; rec.interimResults = false; rec.maxAlternatives = 3; rec.continuous = false;
+    rec = new SR(); rec.lang = "ko-KR"; rec.interimResults = false; rec.maxAlternatives = 5; rec.continuous = false;   // 2a: 후보 5개(처음 해석되는 것 사용 — handle 이 돌림)
     btn.setAttribute("data-listening", ""); say(T_("듣고 있어요"));
     rec.onresult = function (ev) {
       var alts = [], res = ev.results[0];
       for (var i = 0; i < res.length; i++) alts.push(res[i].transcript);
       stat("heard");
-      heard.textContent = T_("들은 말") + ": " + alts[0];   // 화면에만 잠깐 — 저장·콘솔 없음
       loadDict().then(function () {
-        handle(alts);
+        handle(alts);   // 1: «들은 말»은 handle 안에서(고른 후보까지) — 다음 마이크 누를 때 open()이 지움. 저장·콘솔 0
         alts = null;
-        setTimeout(function () { if (heard) heard.textContent = ""; }, 2500);
       }, fail);
     };
     rec.onerror = function (ev) {

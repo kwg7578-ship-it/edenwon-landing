@@ -1744,6 +1744,7 @@
         notice.hidden = false;
       }
       render();
+      page._edRender = render;   // 2g: 음성 담기·빼기 뒤 열린 장바구니를 리로드 없이 즉시 다시 그림(P 준비된 뒤에만 노출)
     }).catch(function () { notice.textContent = T("상품 정보를 불러오지 못했습니다. 잠시 뒤 다시 열어 주세요."); notice.hidden = false; full.hidden = false; empty.hidden = true; });
   }
 
