@@ -87,14 +87,14 @@ main:focus{outline:none}
 .hd__mic[data-listening]::after{content:"";position:absolute;inset:8px;border-radius:50%;border:1.5px solid var(--accent);animation:vc-pulse 1.4s ease-out infinite}
 @keyframes vc-pulse{from{opacity:.9;transform:scale(.85)}to{opacity:0;transform:scale(1.25)}}
 @media (prefers-reduced-motion:reduce){.hd__mic[data-listening]::after{animation:none}}
-.vc{position:fixed;left:16px;right:16px;bottom:16px;z-index:60;max-width:440px;margin:0 auto;background:#FFFFFF;border:1px solid var(--line);box-shadow:0 8px 28px rgba(0,0,0,.14);padding:20px 20px 18px}
+.vc{position:fixed;left:16px;right:16px;bottom:16px;z-index:60;max-width:440px;margin:0 auto;background:var(--bg);border:1px solid var(--line);box-shadow:0 8px 28px rgba(0,0,0,.14);padding:20px 20px 18px}
 .vc[hidden]{display:none}
 .vc__close{position:absolute;top:6px;right:6px;width:44px;height:44px;border:0;background:none;font-size:24px;line-height:1;color:var(--ink);cursor:pointer}
 .vc__live{margin:0 40px 6px 0;font-size:17px;font-weight:700;line-height:1.45}
-.vc__heard{margin:0 0 10px;color:var(--muted,#6B6259);font-size:14px;min-height:1.4em}
+.vc__heard{margin:0 0 10px;color:var(--muted);font-size:14px;min-height:1.4em}
 .vc__body{display:flex;flex-direction:column;gap:8px}
-.vc__pick,.vc__no{display:flex;align-items:center;min-height:48px;padding:0 16px;border:1px solid var(--line);color:var(--ink);text-decoration:none;background:#FFFFFF;font-size:15px;cursor:pointer}
-.vc__no{color:var(--muted,#6B6259)}
+.vc__pick,.vc__no{display:flex;align-items:center;min-height:48px;padding:0 16px;border:1px solid var(--line);color:var(--ink);text-decoration:none;background:var(--bg);font-size:15px;cursor:pointer}
+.vc__no{color:var(--muted)}
 .vc__ex,.vc__note{margin:0;font-size:14px;line-height:1.55}
 .vc__form{display:flex;gap:8px}
 .vc__form input{flex:1;min-width:0;min-height:48px;border:1px solid var(--line);padding:0 14px;font-size:16px;border-radius:0}
@@ -105,17 +105,17 @@ main:focus{outline:none}
   .vc-fab-wrap{display:block;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:45;transition:transform .2s ease,opacity .2s ease}
   .vc-fab-wrap:not([data-voice-state=on]):not([data-voice-state=inapp]){display:none}
   .page-detail .vc-fab-wrap{bottom:calc(80px + env(safe-area-inset-bottom))}   /* ④ 상세 담기 막대 위(고정 막대 cart-fab·status-fab 는 order.html 전용·마이크 없음) */
-  .vc-fab{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;border:0;padding:0;background:var(--ink);color:#FFFFFF;box-shadow:0 4px 16px rgba(0,0,0,.22);cursor:pointer}
+  .vc-fab{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;border:0;padding:0;background:var(--ink);color:var(--bg);box-shadow:0 4px 16px rgba(0,0,0,.22);cursor:pointer}
   .vc-fab-wrap[data-voice-state=inapp] .vc-fab{opacity:.45}
   .vc-fab[data-listening]{background:var(--accent)}
   .vc-fab__fold,.vc-fab__tab{display:none;cursor:pointer}
   /* × 누름상자 44px 는 위로 빼 마이크 원과 겹침 0(화면 오른쪽 끝이라 위로) · 보이는 배지는 상자 아래쪽에 두어 마이크에 붙임 */
   .vc-fab-wrap[data-vc-ready]:not([data-vc-collapsed]) .vc-fab__fold{display:block;position:absolute;top:-46px;right:-16px;width:44px;height:44px;border:0;background:none;color:var(--ink);padding:0}
-  .vc-fab__fold::before{content:"";position:absolute;left:9px;bottom:0;width:26px;height:26px;border-radius:50%;background:#FFFFFF;border:1px solid var(--line);box-shadow:0 2px 6px rgba(0,0,0,.18)}
+  .vc-fab__fold::before{content:"";position:absolute;left:9px;bottom:0;width:26px;height:26px;border-radius:50%;background:var(--bg);border:1px solid var(--line);box-shadow:0 2px 6px rgba(0,0,0,.18)}
   .vc-fab__fold svg{position:absolute;left:50%;bottom:5px;transform:translateX(-50%)}
   .vc-fab-wrap[data-vc-collapsed]{right:0}
   .vc-fab-wrap[data-vc-collapsed] .vc-fab{display:none}
-  .vc-fab-wrap[data-vc-ready][data-vc-collapsed] .vc-fab__tab{display:flex;align-items:center;justify-content:center;width:34px;height:56px;border-radius:14px 0 0 14px;border:0;padding:0;background:var(--ink);color:#FFFFFF;box-shadow:-2px 3px 12px rgba(0,0,0,.2)}
+  .vc-fab-wrap[data-vc-ready][data-vc-collapsed] .vc-fab__tab{display:flex;align-items:center;justify-content:center;width:34px;height:56px;border-radius:14px 0 0 14px;border:0;padding:0;background:var(--ink);color:var(--bg);box-shadow:-2px 3px 12px rgba(0,0,0,.2)}
   /* 보강②: 아래로 스크롤 시 숨김(멈춰도 그대로 · 보임=위로/맨 위/맨 끝) · opacity 0 으로 확실히 가림 · 접힘(탭)은 안 숨김 */
   .vc-fab-wrap[data-vc-away]:not([data-vc-collapsed]){transform:translateY(calc(100% + 28px + env(safe-area-inset-bottom)));opacity:0;pointer-events:none}
   /* 보강①: 둥근 단추 쪽 본문 맨 아래 여백(마이크 보일 때만 — 바닥글 가림 막음) */

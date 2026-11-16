@@ -182,16 +182,18 @@
     return { ok: true, key: best.key, opt: null, name: best.name, href: best.href };
   }
   function fin(r, qty, exq) {
-    if (r.page) return { page: true, key: r.key, name: r.name, href: r.href };
-    if (r.ask) return { ask: true, key: r.key, name: r.name, href: r.href };
+    if (r.page) return { page: true, key: r.key, name: r.name, href: r.href, qty: qty, exq: !!exq };
+    if (r.ask) return { ask: true, key: r.key, name: r.name, href: r.href, qty: qty, exq: !!exq };
     return { key: r.key, opt: r.opt || null, name: r.name, href: r.href, qty: qty, exq: !!exq };
   }
   var CNT_U = /^(개|병|통|봉지|봉|세트|팩|상자|박스|포대|단|망)$/;
+  var BIGNUM = { "스무": 20, "스물": 20, "서른": 30, "마흔": 40, "쉰": 50, "예순": 60, "일흔": 70, "여든": 80, "아흔": 90, "백": 100, "이백": 200, "삼백": 300 };
   function qtyTok(tok) {   // 수량 토큰이면 숫자(키로·kg 등 크기 단위는 옵션일 수 있어 수량으로 안 봄)
     var m = tok.match(/^(\d+)(?:개|병|통|봉지|봉|세트|팩|상자|박스|포대|단|망)?$/); if (m) return +m[1];
     if (NUMW[tok] != null) return NUMW[tok];
-    m = tok.match(/^(한|하나|두|둘|세|셋|석|네|넷|넉|다섯|여섯|일곱|여덟|아홉|열)(?:개|병|통|봉지|봉|세트|팩|상자|박스|단|망)$/);
-    return m ? NUMW[m[1]] : null;
+    if (BIGNUM[tok] != null) return BIGNUM[tok];
+    m = tok.match(/^(한|하나|두|둘|세|셋|석|네|넷|넉|다섯|여섯|일곱|여덟|아홉|열|스무|스물|서른|마흔|쉰|예순|일흔|여든|아흔|백|이백|삼백)(?:개|병|통|봉지|봉|세트|팩|상자|박스|단|망)$/);
+    return m ? (NUMW[m[1]] != null ? NUMW[m[1]] : BIGNUM[m[1]]) : null;
   }
   function parseItems(raw, D) {   // 토큰 스캔: 연결어·공백 모두 통일, 상품 창(1~3) + 뒤 수량
     var body = raw.replace(VSTRIP, " ").replace(/\s줘(?=\s|$)/g, " ").replace(/\s요(?=\s|$)/g, " ").replace(/\s좀(?=\s|$)/g, " ")
@@ -225,7 +227,7 @@
     if (ASSIST_RE.test(t)) return { intent: "assist", target: assistTarget(t, D) };
     if (DEL_RE.test(t)) {
       var pd = parseItems(t, D);
-      var di = pd.items.map(function (it) { return it.ask || it.page ? { key: it.key, opt: null, name: it.name, href: it.href, qty: it.qty || 1 } : it; });   // 빼기는 상품 단위(되묻지 않음)
+      var di = pd.items.map(function (it) { return it.ask || it.page ? { key: it.key, opt: null, name: it.name, href: it.href, qty: it.qty || 1, exq: it.exq } : it; });   // 빼기는 상품 단위(되묻지 않음)·수량 유지
       return di.length ? { intent: "del", items: di } : { intent: "none" };
     }
     if (ORDER_RE.test(t)) return { intent: "order" };
