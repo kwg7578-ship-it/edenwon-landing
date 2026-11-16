@@ -153,19 +153,18 @@
     var oc = {}; (D.entries || []).forEach(function (e) { if (e.k === "option") oc[e.key] = (oc[e.key] || 0) + 1; });
     D._oc = oc; return oc;
   }
-  function coverOk(text, key, opt, D) {   // 짧은 별명이 긴 낯선 말 속에 든 가짜일치 거르기(비트코인·민트초코)
-    var ns = text.replace(/\s+/g, ""), best = 0;
+  function coverOk(text, key, opt, D) {   // 짧은 별명이 긴 낯선 말 속에 든 가짜일치 거르기 — 맨 앞에서 시작 + 60%↑ 덮어야(비트코인·앞에 딴 상품 삼킴 막음)
+    var ns = text.replace(/\s+/g, ""), ok = false;
     (D.entries || []).forEach(function (e) {
       if (e.key !== key || (e.opt || null) !== (opt || null)) return;
-      (e.a || []).forEach(function (a) { var aa = a.replace(/\s+/g, ""); if (ns.indexOf(aa) >= 0) best = Math.max(best, aa.length); });
+      (e.a || []).forEach(function (a) { var aa = a.replace(/\s+/g, ""); if (aa.length >= 2 && ns.indexOf(aa) === 0 && aa.length >= ns.length * 0.6) ok = true; });
     });
-    return best >= 2 && best >= ns.length * 0.6;
+    return ok;
   }
   function resolveItem(text, D) {   // 세그먼트 → 상품/옵션/되묻기(ask)/화면안내(page). 어순 바뀐 옵션도(고추장 흑마늘)
     if (!text) return { ok: false };
     var w = text.split(" ").filter(Boolean), forms = [text, text.replace(/\s+/g, "")];
-    if (w.length === 2) { forms.push(w[1] + w[0]); forms.push(w[1] + " " + w[0]); }
-    if (w.length >= 2) forms.push(w.slice().reverse().join(""));
+    if (w.length === 2) { forms.push(w[1] + w[0]); forms.push(w[1] + " " + w[0]); }   // 어순 바뀐 옵션(고추장 흑마늘 → 흑마늘고추장) — 2단어만(3+ 는 앞 상품 삼킴 막음)
     var best = null, other = null;
     for (var i = 0; i < forms.length; i++) {
       var r = match(forms[i], D, { noAsk: true });
