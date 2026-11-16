@@ -56,7 +56,13 @@
     return root() + "account/login.html?next=" + encodeURIComponent(location.pathname + location.search);
   }
   function initMember() {
-    if (!API) { Member.ready = Promise.resolve(null); return; }
+    if (!API) {   // 미리보기(라이브 연결 0): ?mock=member 면 모의 회원으로 회원 흐름 시험(대표 11-16) — 서버로 아무것도 안 보냄
+      if (/[?&]mock=member\b/.test(location.search)) {
+        Member.me = { name: "미리보기 회원", phone: "", points: 0, affiliations: [], _mock: true };
+        Member.ready = Promise.resolve(Member.me); paintMember(Member.me); return;
+      }
+      Member.ready = Promise.resolve(null); return;
+    }
     var onAcct = /\/account\//.test(location.pathname);
     if (!onAcct) document.querySelectorAll("[data-hd-login], [data-dr-login]").forEach(function (a) { a.href = loginHref(); });
     Member.ready = acall("GET", "/api/v2/me").then(function (j) {
