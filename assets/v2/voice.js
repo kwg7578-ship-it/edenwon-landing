@@ -293,7 +293,7 @@
     if (note) body.appendChild(el("p", "vc__note", note));
     i.type = "search"; i.setAttribute("aria-label", T_("찾을 말")); i.autocomplete = "off"; b.type = "submit";
     f.appendChild(i); f.appendChild(b); body.appendChild(f);
-    f.addEventListener("submit", function (e) { e.preventDefault(); var v = i.value; i.value = ""; loadDict().then(function () { act(match(v, dict)); }, fail); });
+    f.addEventListener("submit", function (e) { e.preventDefault(); var v = i.value; i.value = ""; loadDict().then(function () { runCmd(parseCommand(v, dict)); }, fail); });
     i.focus();
   }
   function fail() { say(T_("잠시 뒤 다시 눌러 주세요.")); }
@@ -321,6 +321,109 @@
     }
   }
   function Tf_(d) { var a = arguments; return T_(d).replace(/\{(\d)\}/g, function (m, k) { return a[+k + 1]; }); }
+
+  /* ════ A단계 화면 핸들러 — 담기·빼기·보기·주문·추천(AI 없음). 소리 답·SUM 견적은 다음 단계 ════ */
+  var CONTACT_OVER = "한 번에 20개까지예요. 더 필요하시면 단체·기업 구매로 문의해 주세요.";
+  function defaultOpt(key) {   // 단일옵션 상품 기본 옵션 id(사전 do) — 없으면 null(다옵션=되묻기)
+    if (!dict) return null;
+    var es = dict.entries || [], i;
+    for (i = 0; i < es.length; i++) if (es[i].k === "product" && es[i].key === key && es[i].do) return es[i].do;
+    for (i = 0; i < es.length; i++) if (es[i].k === "option" && es[i].key === key) return es[i].opt;
+    return null;
+  }
+  function cartRefresh() {   // 대표 11-16 ④: 머리글 숫자 + 열린 장바구니 화면 즉시 갱신
+    try { if (G.EdenCart) G.EdenCart.render(); } catch (e) {}
+    if (doc.querySelector("[data-cart-page]")) timer = setTimeout(function () { G.location.reload(); }, 1100);
+  }
+  function loginLink() { var a = el("a", "vc__pick", T_("로그인")); a.href = root() + "account/login.html?next=" + encodeURIComponent(G.location.pathname + G.location.search); return a; }
+  function contactLink() { var a = el("a", "vc__pick", T_("단체·기업 구매 문의")); a.href = root() + "contact.html"; return a; }
+  function gate(then) {   // 회원만(비회원은 로그인 안내 · 들은 문장 저장·이어담기 없음 — ⑤)
+    var M = G.Eden && G.Eden.member;
+    function dec() { if (!M || M.me) then(); else { stat("login_needed"); say(T_("회원만 말로 담을 수 있어요. 로그인한 뒤 다시 말씀해 주세요.")); body.textContent = ""; body.appendChild(loginLink()); var a = body.querySelector("a"); if (a) a.focus(); } }
+    if (M && M.ready && M.ready.then) M.ready.then(dec, dec); else dec();
+  }
+  function confirmAdd(items) {
+    body.textContent = "";
+    var lines = [], names = [], over = false, ambig = [];
+    items.forEach(function (it) {
+      if (it.ask || it.page) { ambig.push(it); return; }
+      var oid = it.opt || defaultOpt(it.key); if (!oid) { ambig.push(it); return; }
+      var rq = it.qty || 1, q = Math.min(rq, 20); if (rq > 20) over = true;
+      lines.push({ key: it.key, option: oid, qty: q }); names.push(it.name + " " + q + T_("개"));
+    });
+    if (!lines.length) {
+      if (ambig.length === 1 && ambig[0].href) { say(Tf_("«{0}» 종류를 골라 주세요", ambig[0].name)); body.appendChild(link(T_("고르기"), ambig[0].href)); body.querySelector("a").focus(); }
+      else act({ type: "none" });
+      return;
+    }
+    say(T_("담을까요?"));
+    body.appendChild(el("p", "vc__heard", names.join(", ")));
+    if (over) { body.appendChild(el("p", "vc__note", T_(CONTACT_OVER))); body.appendChild(contactLink()); }
+    if (ambig.length) { body.appendChild(el("p", "vc__note", T_("나머지 종류는 상품 화면에서 골라 주세요."))); ambig.forEach(function (a) { if (a.href) body.appendChild(link(a.name, a.href)); }); }
+    var bAdd = el("button", "btn btn--dark vc__ext", T_("담기")); bAdd.type = "button";
+    var bFix = el("button", "vc__no", T_("고치기")); bFix.type = "button";
+    var bNo = el("button", "vc__no", T_("아니요")); bNo.type = "button";
+    bAdd.addEventListener("click", function () { doAdd(lines, over); });
+    bFix.addEventListener("click", function () { if (SR && STATE === "on") listen(); else { body.textContent = ""; typed(); } });
+    bNo.addEventListener("click", close);
+    body.appendChild(bAdd); body.appendChild(bFix); body.appendChild(bNo); bAdd.focus();
+  }
+  function doAdd(lines, over) {
+    var ok = false; try { ok = G.EdenCart && G.EdenCart.add(lines); } catch (e) {}
+    stat(ok ? "voice_add" : "voice_add_fail");
+    if (ok) { say(T_("담았어요.")); body.textContent = ""; if (over) { body.appendChild(el("p", "vc__note", T_(CONTACT_OVER))); body.appendChild(contactLink()); } cartRefresh(); }
+    else say(T_("담지 못했어요. 장바구니를 확인해 주세요."));
+  }
+  function confirmDel(items) {
+    body.textContent = "";
+    var cur = (G.EdenCart && G.EdenCart.read()) || [], acts = [], names = [];
+    items.forEach(function (it) {
+      if (!cur.some(function (c) { return c.key === it.key && (!it.opt || c.option === it.opt); })) return;
+      acts.push({ key: it.key, opt: it.opt || null, qty: it.exq ? (it.qty || 1) : null });   // ③ 수량 있으면 그만큼, 없으면 통째
+      names.push(it.name + (it.exq ? " " + (it.qty || 1) + T_("개") : ""));
+    });
+    if (!acts.length) { say(T_("장바구니에 그 상품이 없어요.")); return; }
+    say(T_("뺄까요?"));
+    body.appendChild(el("p", "vc__heard", names.join(", ")));
+    var bDel = el("button", "btn btn--dark vc__ext", T_("빼기")); bDel.type = "button";
+    var bNo = el("button", "vc__no", T_("아니요")); bNo.type = "button";
+    bDel.addEventListener("click", function () { doDel(acts); });
+    bNo.addEventListener("click", close);
+    body.appendChild(bDel); body.appendChild(bNo); bDel.focus();
+  }
+  function doDel(acts) {
+    try {
+      var cur = G.EdenCart.read();
+      acts.forEach(function (a) {
+        for (var i = cur.length - 1; i >= 0; i--) if (cur[i].key === a.key && (!a.opt || cur[i].option === a.opt)) {
+          if (a.qty == null || cur[i].qty <= a.qty) cur.splice(i, 1); else cur[i].qty -= a.qty;
+        }
+      });
+      G.EdenCart.write(cur);
+    } catch (e) {}
+    stat("voice_del"); say(T_("뺐어요.")); body.textContent = ""; cartRefresh();
+  }
+  function doAssist(target) {   // ④ 예산·추천 → «곧 AI 상담» + 분류/인기 안내
+    say(T_("곧 AI 상담에서 도와드릴게요."));
+    body.appendChild(link(target && target.name ? target.name : T_("인기 상품 보기"), target && target.href ? target.href : "products.html"));
+    var a = body.querySelector("a"); if (a) a.focus();
+  }
+  function doSum() { say(T_("장바구니 합계로 가요.")); timer = setTimeout(function () { go("cart.html"); }, 900); }   // SUM 견적 소리 답은 다음 단계
+  function doLast(items) { say(T_("지난번 주문 담기는 곧 지원할게요.")); }   // LAST(STOP4)는 다음
+  function runCmd(cmd) {
+    body.textContent = "";
+    var i = cmd && cmd.intent;
+    if (!i || i === "none") { act({ type: "none" }); return; }
+    if (i === "find") { var f = cmd.items[0]; stat("match_product"); say(Tf_("«{0}»(으)로 갑니다", f.name)); timer = setTimeout(function () { go(f.href); }, 900); return; }
+    if (i === "view") { stat("voice_view"); say(T_("장바구니로 갑니다")); timer = setTimeout(function () { go("cart.html"); }, 700); return; }
+    if (i === "assist") { stat("voice_assist"); doAssist(cmd.target); return; }
+    if (i === "sum") { stat("voice_sum"); doSum(); return; }
+    if (i === "order") { gate(function () { stat("voice_order"); say(T_("주문서로 갑니다")); timer = setTimeout(function () { go("cart.html"); }, 700); }); return; }
+    if (i === "last") { gate(function () { doLast(cmd.items); }); return; }
+    if (i === "add") { gate(function () { confirmAdd(cmd.items); }); return; }
+    if (i === "del") { gate(function () { confirmDel(cmd.items); }); return; }
+    act({ type: "none" });
+  }
   function listen() {
     open(); stat("mic_open");
     loadDict().catch(function () {});
@@ -332,10 +435,10 @@
       stat("heard");
       heard.textContent = T_("들은 말") + ": " + alts[0];   // 화면에만 잠깐 — 저장·콘솔 없음
       loadDict().then(function () {
-        var r = null;
-        for (var j = 0; j < alts.length && (!r || r.type === "none"); j++) r = match(alts[j], dict);
+        var cmd = null;
+        for (var j = 0; j < alts.length && (!cmd || cmd.intent === "none"); j++) cmd = parseCommand(alts[j], dict);
         alts = null;
-        act(r);
+        runCmd(cmd);
         setTimeout(function () { if (heard) heard.textContent = ""; }, 2500);
       }, fail);
     };
