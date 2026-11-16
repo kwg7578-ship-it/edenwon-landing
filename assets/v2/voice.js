@@ -408,7 +408,34 @@
     body.appendChild(link(target && target.name ? target.name : T_("인기 상품 보기"), target && target.href ? target.href : "products.html"));
     var a = body.querySelector("a"); if (a) a.focus();
   }
-  function doSum() { say(T_("장바구니 합계로 가요.")); timer = setTimeout(function () { go("cart.html"); }, 900); }   // SUM 견적 소리 답은 다음 단계
+  function wonDigit(n) { return Math.round(n).toLocaleString("ko-KR") + "원"; }
+  function wonKo(n) {   // ① 반올림 없이 자연스러운 한국어 금액 — «3만 2천5백 원»(소리용)
+    n = Math.round(n); if (n <= 0) return "0원";
+    var man = Math.floor(n / 10000), r = n % 10000, s = "";
+    if (man) s += man + "만";
+    var cheon = Math.floor(r / 1000), r2 = r % 1000;
+    if (cheon) s += (s ? " " : "") + cheon + "천";
+    var baek = Math.floor(r2 / 100), r3 = r2 % 100;
+    if (baek) s += baek + "백";
+    if (r3) s += r3;
+    return s + "원";
+  }
+  function doSum() {   // SUM: 장바구니 상품키·옵션·수량만 /api/v2/quote 로 → 서버 금액 읽기(브라우저 계산 0). 비회원도 읽기(⑥)
+    var items = ((G.EdenCart && G.EdenCart.read()) || []).filter(function (c) { return c.key && c.option && c.qty > 0; });
+    if (!items.length) { say(T_("장바구니가 비어 있어요.")); return; }
+    if (!(G.Eden && G.Eden.acall && G.Eden.API)) { say(T_("합계는 장바구니에서 확인해 주세요.")); timer = setTimeout(function () { go("cart.html"); }, 900); return; }
+    say(T_("합계를 알아볼게요…"));
+    var M = G.Eden.member, phone = (M && M.me && M.me.phone) || "";
+    var req = { lines: items.map(function (c) { return { key: c.key, option_id: c.option, qty: c.qty }; }), receive: { method: "parcel" }, buyer: { phone: phone }, points_use: 0 };
+    G.Eden.acall("POST", "/api/v2/quote", req, true).then(function (j) {
+      if (!j || !j.ok || !j.breakdown) { say(j && j.error ? j.error : T_("합계를 불러오지 못했어요. 장바구니에서 확인해 주세요.")); return; }
+      var b = j.breakdown, free = !b.shipping;
+      say(Tf_("상품 {0}, ", wonKo(b.goods)) + (free ? T_("배송비 무료, ") : Tf_("배송비 {0}, ", wonKo(b.shipping))) + Tf_("모두 {0}", wonKo(j.amount)));   // 소리: 한국어 금액
+      body.textContent = "";
+      body.appendChild(el("p", "vc__note", "상품 " + wonDigit(b.goods) + " · " + (free ? T_("배송비 무료") : "배송비 " + wonDigit(b.shipping)) + " · 모두 " + wonDigit(j.amount)));   // 화면: 같은 값(숫자)
+      body.appendChild(link(T_("장바구니 보기"), "cart.html"));
+    }, function () { say(T_("합계를 불러오지 못했어요.")); });
+  }
   function doLast(items) { say(T_("지난번 주문 담기는 곧 지원할게요.")); }   // LAST(STOP4)는 다음
   function runCmd(cmd) {
     body.textContent = "";
