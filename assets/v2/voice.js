@@ -136,7 +136,106 @@
     return result(sc[0].e, "fuzzy", c.qty);
   }
 
-  var API_ = { match: match, clean: clean, jamo: jamo, lev: lev };
+  /* ════ A단계(2026-11-16): 규칙 명령 — 담기·합계·보기·빼기·주문·지난번·추천(AI 없음). AI·서버로 소리 보내기 없음은 V1 과 같음 ════ */
+  var LAST_RE = /지난\s?번|저번|예전처럼|전에\s?(산|담았|담은|시킨|샀)|그대로|똑같이/;
+  var ASSIST_RE = /추천|예산|인기|잘\s?나가|가성비|제일\s?(좋|잘|맛)|뭐\s?(가\s?(좋|맛있)|사|살|좋|맛있|부터|담을|사면)|어떤\s?(게|거)\s?좋|좋은\s?거\s?뭐|[가-힣]*원\s?(으로|어치|대로|짜리)/;
+  var DEL_RE = /빼|지워|지우|줄여|줄이|취소/;
+  var ORDER_RE = /(주문|결제|계산)\s?(할게|하러|해\s?줘|할래|하자|해\s?주세요|하고\s?싶)|주문서/;
+  var VIEW_RE = /(장바구니|카트|바구니|담은\s?거|담긴\s?거|뭐\s?담았|담았는지)\s?\S*\s?(보여|열어|보자|확인|로\s?가|가\s?줘|갈래|줘|보)|^\s?(장바구니|내\s?장바구니)\s?$/;
+  var SUM_RE = /장바구니|카트|바구니|총(?!각)|전부|다\s?해서|합계|합이|총액|금액|얼마치|결제하면|얼마나\s?돼|(얼마|올마)\s?나와|값이?\s?(얼마|올마)/;
+  var SPLIT_RE = /\s*(?:이?랑|하고|그리고|및|,|、|\+)\s*/;
+  var EACH_RE = /씩/;
+  var VSTRIP = /담아서|담아|담기|담을|넣어서|넣어|넣고|빼\s?주세요|빼\s?줘|빼고|빼|지워\s?주세요|지워\s?줘|지워|지우|줄여\s?줘|줄여|줄이|취소|주문\S*|결제\S*|계산\S*|주세요|주이소|주라|해\s?주세요|해\s?줘|부탁\S*/g;
+  var _QU = "개|병|통|봉지|봉|세트|팩|상자|박스|포대|단|망|키로|킬로|kg|근|줄";
+
+  function optCounts(D) {
+    if (D._oc) return D._oc;
+    var oc = {}; (D.entries || []).forEach(function (e) { if (e.k === "option") oc[e.key] = (oc[e.key] || 0) + 1; });
+    D._oc = oc; return oc;
+  }
+  function coverOk(text, key, opt, D) {   // 짧은 별명이 긴 낯선 말 속에 든 가짜일치 거르기(비트코인·민트초코)
+    var ns = text.replace(/\s+/g, ""), best = 0;
+    (D.entries || []).forEach(function (e) {
+      if (e.key !== key || (e.opt || null) !== (opt || null)) return;
+      (e.a || []).forEach(function (a) { var aa = a.replace(/\s+/g, ""); if (ns.indexOf(aa) >= 0) best = Math.max(best, aa.length); });
+    });
+    return best >= 2 && best >= ns.length * 0.6;
+  }
+  function resolveItem(text, D) {   // 세그먼트 → 상품/옵션/되묻기(ask)/화면안내(page). 어순 바뀐 옵션도(고추장 흑마늘)
+    if (!text) return { ok: false };
+    var w = text.split(" ").filter(Boolean), forms = [text, text.replace(/\s+/g, "")];
+    if (w.length === 2) { forms.push(w[1] + w[0]); forms.push(w[1] + " " + w[0]); }
+    if (w.length >= 2) forms.push(w.slice().reverse().join(""));
+    var best = null, other = null;
+    for (var i = 0; i < forms.length; i++) {
+      var r = match(forms[i], D, { noAsk: true });
+      if (!r || r.type === "none") continue;
+      if (r.type !== "product") { other = other || r; continue; }
+      if ((r.how === "sub" || r.how === "sub-tie") && !coverOk(forms[i], r.key, r.opt, D)) continue;   // 부분일치(짧은 별명이 긴 낯선 말 속)만 거름 — fuzzy 받아쓰기·exact 옵션은 통과
+      if (r.opt) return { ok: true, key: r.key, opt: r.opt, name: r.name, href: r.href };   // 옵션 지정 — 바로
+      if (!best) best = r;
+    }
+    if (!best) return other ? { ok: false, other: other } : { ok: false };
+    var n = optCounts(D)[best.key] || 0;
+    if (n >= 6) return { ok: true, page: true, key: best.key, name: best.name, href: best.href };
+    if (n >= 2) return { ok: true, ask: true, key: best.key, name: best.name, href: best.href };
+    return { ok: true, key: best.key, opt: null, name: best.name, href: best.href };
+  }
+  function fin(r, qty) {
+    if (r.page) return { page: true, key: r.key, name: r.name, href: r.href };
+    if (r.ask) return { ask: true, key: r.key, name: r.name, href: r.href };
+    return { key: r.key, opt: r.opt || null, name: r.name, href: r.href, qty: qty };
+  }
+  var CNT_U = /^(개|병|통|봉지|봉|세트|팩|상자|박스|포대|단|망)$/;
+  function qtyTok(tok) {   // 수량 토큰이면 숫자(키로·kg 등 크기 단위는 옵션일 수 있어 수량으로 안 봄)
+    var m = tok.match(/^(\d+)(?:개|병|통|봉지|봉|세트|팩|상자|박스|포대|단|망)?$/); if (m) return +m[1];
+    if (NUMW[tok] != null) return NUMW[tok];
+    m = tok.match(/^(한|하나|두|둘|세|셋|석|네|넷|넉|다섯|여섯|일곱|여덟|아홉|열)(?:개|병|통|봉지|봉|세트|팩|상자|박스|단|망)$/);
+    return m ? NUMW[m[1]] : null;
+  }
+  function parseItems(raw, D) {   // 토큰 스캔: 연결어·공백 모두 통일, 상품 창(1~3) + 뒤 수량
+    var body = raw.replace(VSTRIP, " ").replace(/\s줘(?=\s|$)/g, " ").replace(/\s요(?=\s|$)/g, " ").replace(/\s좀(?=\s|$)/g, " ")
+      .replace(/으로(?=\s|$)/g, " ").replace(SPLIT_RE, " ").replace(/씩/g, " ").replace(/\s+/g, " ").trim();
+    var toks = body.split(" ").filter(Boolean), items = [], unknown = 0, i = 0;
+    while (i < toks.length) {
+      if (qtyTok(toks[i]) != null) { i++; continue; }
+      var end = i; while (end < toks.length && end - i < 3 && qtyTok(toks[end]) == null) end++;
+      var got = null, used = 0, L;
+      for (L = end - i; L >= 1 && !got; L--) { var r1 = resolveItem(toks.slice(i, i + L).join(" "), D); if (r1.ok && r1.opt) { got = r1; used = L; } }   // 옵션 지정은 긴 창 우선
+      if (!got) for (L = 1; L <= end - i && !got; L++) { var r2 = resolveItem(toks.slice(i, i + L).join(" "), D); if (r2.ok) { got = r2; used = L; } }   // 상품은 짧은 창 우선(옆 상품 안 삼킴)
+      if (!got) { i++; unknown++; continue; }
+      i += used;
+      var qty = 1;
+      if (i < toks.length) { var q = qtyTok(toks[i]); if (q != null) { qty = q; i++; if (i < toks.length && CNT_U.test(toks[i])) i++; } }
+      items.push(fin(got, qty));
+    }
+    return { items: items, unknown: unknown };
+  }
+  function assistTarget(raw, D) {   // 추천/예산 → 분류/세트(있으면), 없으면 인기
+    var r = match(raw, D, { noAsk: true });
+    if (r && (r.type === "category" || r.type === "set")) return { type: r.type, key: r.key, name: r.name, href: r.href };
+    if (r && r.type === "product") return { type: "category", key: r.key, name: r.name, href: r.href };
+    return null;
+  }
+  function parseCommand(raw, D, o) {
+    o = o || {};
+    var t = String(raw || "").toLowerCase().replace(/[.,!?~…"'“”‘’()\[\]·]/g, " ").replace(/\s+/g, " ").trim();
+    if (!t) return { intent: "none" };
+    if (LAST_RE.test(t)) return { intent: "last", items: parseItems(t, D).items };
+    if (ASSIST_RE.test(t)) return { intent: "assist", target: assistTarget(t, D) };
+    if (DEL_RE.test(t)) {
+      var pd = parseItems(t, D);
+      var di = pd.items.map(function (it) { return it.ask || it.page ? { key: it.key, opt: null, name: it.name, href: it.href, qty: it.qty || 1 } : it; });   // 빼기는 상품 단위(되묻지 않음)
+      return di.length ? { intent: "del", items: di } : { intent: "none" };
+    }
+    if (ORDER_RE.test(t)) return { intent: "order" };
+    if (VIEW_RE.test(t)) return { intent: "view" };
+    if (SUM_RE.test(t)) return { intent: "sum" };
+    var pa = parseItems(t, D);
+    return pa.items.length ? { intent: "add", items: pa.items } : { intent: "none" };
+  }
+
+  var API_ = { match: match, clean: clean, jamo: jamo, lev: lev, parseCommand: parseCommand };
   if (typeof module === "object" && module.exports) { module.exports = API_; return; }
   G.EdenVoice = API_;
 
