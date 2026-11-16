@@ -553,13 +553,20 @@
       ? T_("들은 말") + ": " + raw0 + " → " + T_("고른 말") + ": " + picked
       : T_("들은 말") + ": " + raw0;
   }
+  var ALT_THR = 0.5;   // 후보 가드(대표 11-16): 2순위 이하 후보는 1순위와 음절 편집거리 ≤ 0.5(절반 이하 차이)일 때만 채택. 실제 오인식·변형은 0.17~0.40, 엉뚱한 점프는 1.00 로 갈림
+  function sylDist(a, b) {   // 음절(공백 뺀 글자) 편집거리 / 긴 쪽 길이 — 일반 기준(상품·명령 안 가리고 소리 거리만)
+    var A = String(a || "").replace(/\s+/g, "").split(""), B = String(b || "").replace(/\s+/g, "").split("");
+    return lev(A, B) / Math.max(A.length, B.length, 1);
+  }
   function handle(alts) {   // 명령(담기·빼기·합계 등)이면 runCmd · 찾기/못 알아들음이면 V1 match→act(상품·여러 후보·안내 그대로)
-    var cmd = null, i, picked = alts[0];
-    for (i = 0; i < alts.length && (!cmd || cmd.intent === "none"); i++) { cmd = parseCommand(alts[i], dict); if (cmd && cmd.intent !== "none") picked = alts[i]; }
-    if (cmd && cmd.intent !== "none" && cmd.intent !== "find") { showHeard(alts[0], picked); runCmd(cmd); return; }
-    var r = null, rp = alts[0];
-    for (i = 0; i < alts.length && (!r || r.type === "none"); i++) { r = match(alts[i], dict); if (r && r.type !== "none") rp = alts[i]; }
-    showHeard(alts[0], (r && r.type !== "none") ? rp : alts[0]);   // 고른 말은 실제로 결과가 나온 후보(없으면 1순위 그대로)
+    var base = alts[0];
+    var use = alts.filter(function (a, i) { return i === 0 || sylDist(base, a) <= ALT_THR; });   // 후보 가드: 1순위와 소리 가까운 후보만(멀면 버림 → 1순위가 NONE이고 가까운 후보 없으면 NONE 그대로)
+    var cmd = null, i, picked = base;
+    for (i = 0; i < use.length && (!cmd || cmd.intent === "none"); i++) { cmd = parseCommand(use[i], dict); if (cmd && cmd.intent !== "none") picked = use[i]; }
+    if (cmd && cmd.intent !== "none" && cmd.intent !== "find") { showHeard(base, picked); runCmd(cmd); return; }
+    var r = null, rp = base;
+    for (i = 0; i < use.length && (!r || r.type === "none"); i++) { r = match(use[i], dict); if (r && r.type !== "none") rp = use[i]; }
+    showHeard(base, (r && r.type !== "none") ? rp : base);   // 고른 말은 실제로 결과가 나온 후보(없으면 1순위 그대로)
     act(r || { type: "none" });
   }
   function listen() {
