@@ -267,7 +267,13 @@
       var x = el("button", "vc__close", "×"); x.type = "button"; x.setAttribute("aria-label", T_("닫기")); x.addEventListener("click", close);
       live = el("p", "vc__live"); live.setAttribute("aria-live", "polite"); live.setAttribute("role", "status");
       heard = el("p", "vc__heard"); body = el("div", "vc__body");
-      panel.appendChild(x); panel.appendChild(live); panel.appendChild(heard); panel.appendChild(body);
+      panel.appendChild(x);
+      if (SPK) {   // ⑤ 소리 끄기 토글(음성 합성 되는 기기만) · edenwon_vc_mute 기억
+        var mb = el("button", "vc__mute"); mb.type = "button"; mb.textContent = muted() ? T_("소리 켜기") : T_("소리 끄기"); mb.setAttribute("aria-pressed", String(muted()));
+        mb.addEventListener("click", function () { var m = !muted(); setMuted(m); if (m) { try { SPK.cancel(); } catch (e) {} } mb.textContent = m ? T_("소리 켜기") : T_("소리 끄기"); mb.setAttribute("aria-pressed", String(m)); });
+        panel.appendChild(mb);
+      }
+      panel.appendChild(live); panel.appendChild(heard); panel.appendChild(body);
       doc.body.appendChild(panel);
       panel.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
     }
@@ -276,11 +282,19 @@
   }
   function close() {
     if (rec) { try { rec.abort(); } catch (e) {} rec = null; }
+    if (SPK) { try { SPK.cancel(); } catch (e) {} }
     clearTimeout(timer);
     if (panel) { panel.hidden = true; heard.textContent = ""; body.textContent = ""; live.textContent = ""; }
     btn.removeAttribute("data-listening"); btn.setAttribute("aria-expanded", "false"); btn.focus();
   }
-  function say(t) { live.textContent = t; }
+  var MUTE_KEY = "edenwon_vc_mute", SPK = G.speechSynthesis, fromMic = false;
+  function muted() { try { return G.localStorage.getItem(MUTE_KEY) === "1"; } catch (e) { return false; } }
+  function setMuted(m) { try { if (m) G.localStorage.setItem(MUTE_KEY, "1"); else G.localStorage.removeItem(MUTE_KEY); } catch (e) {} }   // ⑤ 소리 끄기 기억(S1 허용 키)
+  function speak(t) {   // ⑤ 소리 답: 마이크 누른 뒤에만 · 소리 끄기면 안 함 · 음성 합성 안 되는 기기는 글만. AI·서버로 소리 보내기 0
+    if (!SPK || !fromMic || muted() || !t) return;
+    try { SPK.cancel(); var u = new G.SpeechSynthesisUtterance(String(t)); u.lang = "ko-KR"; SPK.speak(u); } catch (e) {}
+  }
+  function say(t) { live.textContent = t; speak(t); }
   function go(href) { heard.textContent = ""; G.location.href = root() + href; }
   function link(name, href) { var a = el("a", "vc__pick", name); a.href = root() + href; return a; }
   function examples() {
@@ -293,7 +307,7 @@
     if (note) body.appendChild(el("p", "vc__note", note));
     i.type = "search"; i.setAttribute("aria-label", T_("찾을 말")); i.autocomplete = "off"; b.type = "submit";
     f.appendChild(i); f.appendChild(b); body.appendChild(f);
-    f.addEventListener("submit", function (e) { e.preventDefault(); var v = i.value; i.value = ""; loadDict().then(function () { runCmd(parseCommand(v, dict)); }, fail); });
+    f.addEventListener("submit", function (e) { e.preventDefault(); var v = i.value; i.value = ""; fromMic = false; loadDict().then(function () { handle([v]); }, fail); });   // 글 입력은 소리 답 없음
     i.focus();
   }
   function fail() { say(T_("잠시 뒤 다시 눌러 주세요.")); }
@@ -451,8 +465,16 @@
     if (i === "del") { gate(function () { confirmDel(cmd.items); }); return; }
     act({ type: "none" });
   }
+  function handle(alts) {   // 명령(담기·빼기·합계 등)이면 runCmd · 찾기/못 알아들음이면 V1 match→act(상품·여러 후보·안내 그대로)
+    var cmd = null, i;
+    for (i = 0; i < alts.length && (!cmd || cmd.intent === "none"); i++) cmd = parseCommand(alts[i], dict);
+    if (cmd && cmd.intent !== "none" && cmd.intent !== "find") { runCmd(cmd); return; }
+    var r = null;
+    for (i = 0; i < alts.length && (!r || r.type === "none"); i++) r = match(alts[i], dict);
+    act(r || { type: "none" });
+  }
   function listen() {
-    open(); stat("mic_open");
+    open(); stat("mic_open"); fromMic = true;   // ⑤ 소리 답은 마이크 뒤에만
     loadDict().catch(function () {});
     rec = new SR(); rec.lang = "ko-KR"; rec.interimResults = false; rec.maxAlternatives = 3; rec.continuous = false;
     btn.setAttribute("data-listening", ""); say(T_("듣고 있어요"));
@@ -462,10 +484,8 @@
       stat("heard");
       heard.textContent = T_("들은 말") + ": " + alts[0];   // 화면에만 잠깐 — 저장·콘솔 없음
       loadDict().then(function () {
-        var cmd = null;
-        for (var j = 0; j < alts.length && (!cmd || cmd.intent === "none"); j++) cmd = parseCommand(alts[j], dict);
+        handle(alts);
         alts = null;
-        runCmd(cmd);
         setTimeout(function () { if (heard) heard.textContent = ""; }, 2500);
       }, fail);
     };
