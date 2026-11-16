@@ -436,33 +436,45 @@
     if (r3) s += r3;
     return s + "원";
   }
-  function doSum() {   // SUM: 장바구니 상품키·옵션·수량만 /api/v2/quote 로 → 서버 금액 읽기(브라우저 계산 0). 비회원도 읽기(⑥)
-    var items = ((G.EdenCart && G.EdenCart.read()) || []).filter(function (c) { return c.key && c.option && c.qty > 0; });
-    if (!items.length) { say(T_("장바구니가 비어 있어요.")); return; }
+  function sumSel() {   // 대표 11-16 (가): 주문서 source() 와 같은 기준 — 체크한 품목만(+ 유효)
+    var all = ((G.EdenCart && G.EdenCart.read()) || []).filter(function (c) { return c.key && c.option && c.qty > 0; });
+    var items = all.filter(function (c) { return c.checked !== false; });
+    return { all: all, items: items, unchecked: all.length > items.length };
+  }
+  function sumSuf(sel) {   // 조건부 덧붙임 — 해제 품목 있을 때만 «체크한 N개 기준», 적립금>0 회원일 때만 «적립금 쓰기 전». 둘 다 없으면 금액만
+    var s = "", M = G.Eden && G.Eden.member;
+    if (sel.unchecked) s += Tf_(" (체크한 {0}개 기준이에요)", sel.items.length);
+    if (M && M.me && (+M.me.points || 0) > 0) s += T_(" (적립금 쓰기 전 금액이에요)");
+    return s;
+  }
+  function doSum() {   // SUM: 체크한 품목만 /api/v2/quote(주문서와 같은 기준) → 서버 금액 읽기(브라우저 계산 0). 비회원도 읽기(⑥)
+    var sel = sumSel();
+    if (!sel.all.length) { say(T_("장바구니가 비어 있어요.")); return; }
+    if (!sel.items.length) { say(T_("체크한 품목이 없어요. 장바구니에서 골라 주세요.")); timer = setTimeout(function () { go("cart.html"); }, 1000); return; }
     if (!(G.Eden && G.Eden.acall && G.Eden.API)) {
-      if (G.Eden && G.Eden.member && G.Eden.member.me && G.Eden.member.me._mock) { mockSum(items); return; }   // 미리보기 모의(라이브 연결 0)
+      if (G.Eden && G.Eden.member && G.Eden.member.me && G.Eden.member.me._mock) { mockSum(sel); return; }   // 미리보기 모의(라이브 연결 0)
       say(T_("합계는 장바구니에서 확인해 주세요.")); timer = setTimeout(function () { go("cart.html"); }, 900); return;
     }
     say(T_("합계를 알아볼게요…"));
     var M = G.Eden.member, phone = (M && M.me && M.me.phone) || "";
-    var req = { lines: items.map(function (c) { return { key: c.key, option_id: c.option, qty: c.qty }; }), receive: { method: "parcel" }, buyer: { phone: phone }, points_use: 0 };
+    var req = { lines: sel.items.map(function (c) { return { key: c.key, option_id: c.option, qty: c.qty }; }), receive: { method: "parcel" }, buyer: { phone: phone }, points_use: 0 };
     G.Eden.acall("POST", "/api/v2/quote", req, true).then(function (j) {
       if (!j || !j.ok || !j.breakdown) { say(j && j.error ? j.error : T_("합계를 불러오지 못했어요. 장바구니에서 확인해 주세요.")); return; }
-      var b = j.breakdown, free = !b.shipping;
-      say(Tf_("상품 {0}, ", wonKo(b.goods)) + (free ? T_("배송비 무료, ") : Tf_("배송비 {0}, ", wonKo(b.shipping))) + Tf_("모두 {0}", wonKo(j.amount)));   // 소리: 한국어 금액
+      var b = j.breakdown, free = !b.shipping, suf = sumSuf(sel);
+      say(Tf_("상품 {0}, ", wonKo(b.goods)) + (free ? T_("배송비 무료, ") : Tf_("배송비 {0}, ", wonKo(b.shipping))) + Tf_("모두 {0}", wonKo(j.amount)) + suf);   // 소리: 한국어 금액 + 조건부
       body.textContent = "";
-      body.appendChild(el("p", "vc__note", "상품 " + wonDigit(b.goods) + " · " + (free ? T_("배송비 무료") : "배송비 " + wonDigit(b.shipping)) + " · 모두 " + wonDigit(j.amount)));   // 화면: 같은 값(숫자)
+      body.appendChild(el("p", "vc__note", "상품 " + wonDigit(b.goods) + " · " + (free ? T_("배송비 무료") : "배송비 " + wonDigit(b.shipping)) + " · 모두 " + wonDigit(j.amount) + suf));   // 화면: 같은 값
       body.appendChild(link(T_("장바구니 보기"), "cart.html"));
     }, function () { say(T_("합계를 불러오지 못했어요.")); });
   }
   function doLast(items) { say(T_("지난번 주문 담기는 곧 지원할게요.")); }   // LAST(STOP4)는 다음
   var _prodP;
   function loadProd() { if (!_prodP) _prodP = fetch(root() + "assets/v2/products.json", { credentials: "same-origin" }).then(function (r) { if (!r.ok) throw 0; return r.json(); }); return _prodP; }
-  function mockSum(items) {   // 미리보기 전용 모의 합계(서버 연결 0 · «모의 금액» 표시 · 실 금액은 라이브 서버 견적)
+  function mockSum(sel) {   // 미리보기 전용 모의 합계(서버 연결 0 · «모의 금액» 표시 · 실 금액은 라이브 서버 견적) — 체크 품목만·조건부 덧붙임
     loadProd().then(function (P) {
       var byk = (P && P.products) || {}, goods = 0;
-      items.forEach(function (c) { var p = byk[c.key]; if (!p) return; var o = (p.options || []).filter(function (x) { return x.id === c.option; })[0]; if (o) goods += (o.price || 0) * c.qty; });
-      var sh = (P && P.shipping) || { fee: 5000, free_over: 100000 }, shipping = goods >= sh.free_over ? 0 : sh.fee, amount = goods + shipping, free = !shipping, mk = T_(" (미리보기 모의 금액)");
+      sel.items.forEach(function (c) { var p = byk[c.key]; if (!p) return; var o = (p.options || []).filter(function (x) { return x.id === c.option; })[0]; if (o) goods += (o.price || 0) * c.qty; });
+      var sh = (P && P.shipping) || { fee: 5000, free_over: 100000 }, shipping = goods >= sh.free_over ? 0 : sh.fee, amount = goods + shipping, free = !shipping, mk = sumSuf(sel) + T_(" (미리보기 모의 금액)");
       say(Tf_("상품 {0}, ", wonKo(goods)) + (free ? T_("배송비 무료, ") : Tf_("배송비 {0}, ", wonKo(shipping))) + Tf_("모두 {0}", wonKo(amount)) + mk);
       body.textContent = "";
       body.appendChild(el("p", "vc__note", "상품 " + wonDigit(goods) + " · " + (free ? T_("배송비 무료") : "배송비 " + wonDigit(shipping)) + " · 모두 " + wonDigit(amount) + mk));
