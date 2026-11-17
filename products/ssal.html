@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(d){try{var t=localStorage.getItem("edenwon_theme");if(t==="dark"||t==="light")d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement)</script>
+<meta name="theme-color" content="#FAF8F5" media="(prefers-color-scheme:light)">
+<meta name="theme-color" content="#16120F" media="(prefers-color-scheme:dark)">
 <script>/* 2-H 계절 자동: 손님 날짜(한국 시각)의 기상 계절 — CSS 앞에서 정해 색이 바뀌는 순간이 없게. 빌드 계절과 다르면 표시(홈 배너가 순서를 다시 정할 때까지 가림) */(function(r){var b=r.getAttribute("data-season"),s=["winter","spring","summer","autumn"][(new Date(Date.now()+324e5).getUTCMonth()+1)%12/3|0];r.setAttribute("data-season",s);if(s!==b)r.setAttribute("data-season-moved","")})(document.documentElement)</script>
 <meta name="robots" content="noindex, nofollow">
 <title>영동에덴원</title>
@@ -57,6 +60,7 @@
 </button><ul class="gnb__sub gnb__sub--plain" id="gnb-sub-story" hidden><li><a href="../story.html">영동에덴원 이야기</a></li><li><a href="../farming.html">농사 이야기</a></li><li><a href="../fermentation.html">발효 이야기</a></li></ul></div><a href="../contact.html" style="min-width:6.28em">단체·기업 문의</a>    </nav>
     <div class="hd__actions">
 <button type="button" class="icon-btn hd__mic" aria-label="말로 찾기" aria-controls="voice-panel" aria-expanded="false" data-voice><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5"/></svg>
+</button><button type="button" class="icon-btn hd__theme" aria-label="화면 밝기 바꾸기" aria-pressed="false" data-theme-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="7.5"/><path d="M12 4.5a7.5 7.5 0 0 0 0 15z" fill="currentColor" stroke="none"/></svg>
 </button>      <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
 </button>
       <a class="icon-btn hd__mypage" href="../account/" aria-label="마이페이지"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg>
@@ -98,7 +102,14 @@
 
 <a href="../order-status.html">주문 조회</a><a href="../contact.html">고객센터</a>      <a href="../account/">마이페이지</a>
     </nav>
-  </div>
+<div class="drawer__theme" role="radiogroup" aria-label="화면 밝기">
+      <span class="drawer__theme-t">화면 밝기</span>
+      <div class="drawer__theme-opts">
+        <button type="button" class="drawer__theme-opt" role="radio" aria-checked="false" data-theme-set="light">밝게</button>
+        <button type="button" class="drawer__theme-opt" role="radio" aria-checked="false" data-theme-set="dark">어둡게</button>
+        <button type="button" class="drawer__theme-opt" role="radio" aria-checked="false" data-theme-set="system">기기 설정</button>
+      </div>
+    </div>  </div>
 </div>
 <div class="vc-fab-wrap" data-vc-wrap>
   <button type="button" class="vc-fab" aria-label="말로 찾기" aria-controls="voice-panel" aria-expanded="false" data-voice><svg aria-hidden="true" focusable="false" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5"/></svg>
