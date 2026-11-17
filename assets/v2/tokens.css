@@ -6,19 +6,40 @@
 @font-face{font-family:"Noto Serif KR fb";src:local("Batang"),local("바탕");font-weight:300 900;size-adjust:97.7%;ascent-override:117.7%;descent-override:29.7%;line-gap-override:0%}
 /* 웹 글꼴(Noto) 자체는 fonts.css(A 글꼴 직접 두기, 대표 10-23) */
 :root{
-  --bg:#FAF8F5; --surface:#F1EDE7; --line:#E3DDD4;
-  --ink:#221A15; --muted:#6B625A;
+  color-scheme:light;
+  --bg:#FAF8F5; --surface:#F1EDE7; --surface-2:#FFFFFF; --line:#E3DDD4;
+  --ink:#221A15; --muted:#6B625A; --sv-body:#3D342D;
   --primary:#2E241E; --on-primary:#FAF8F5;
-  --photo:#F5EDE0;                 /* 제품 사진 칸 배경 — 고정 */
+  --photo:#F5EDE0;                 /* 제품 사진 칸 배경 — 고정(어둡게에서 사진은 filter:brightness .9) */
+  --band:#221A15;                  /* «지금 옹기에서» 띠 등 진한 섹션 바탕(밝게=검정 띠 / 어둡게=바탕보다 한 단계 밝게) */
   --foot:#221A15; --foot-ink:#EDE7DF; --foot-muted:#ABA298; --foot-line:#3A302A;
   --accent:#A4532A;                /* 계절 액센트: 봄 #4F6B27 · 여름 #2C6680 · 가을 #A4532A · 겨울 #4C5866 */
   --accent-on-dark:#E0A27E;        /* 어두운 띠 위 액센트 */
+  --on-accent:#FFFFFF;             /* 액센트/진한 바탕을 채운 칩 위 글자·숫자(어둡게=액센트가 밝아져 글자는 어둡게) */
+  --on-photo:#FAF8F5;              /* 사진 위 흰 글자·외곽선 단추(두 테마 같은 흰색, scrim 과 함께) */
+  --on-photo-line:rgba(245,237,224,.7); /* 사진 위 흰 테두리 */
+  --sv-blue:#2C5C86;               /* 스토리 «원칙» 라벨 */
+  --danger:#9B2C1F; --danger-bg:#FBEDEA;   /* 오류·경고(주문·내정보·문의폼) */
+  --ok:#2F6A3A;                    /* 성공·라이브(입력 통과·농장 중계 초록) */
+  --accent-soft:#C27A50;           /* 스토리 큰 장 번호(밝은 바탕에서 3:1 넘는 가장 연한 감빛) */
+  --hanji-bg:#F6F0E3; --hanji-glow:rgba(252,249,243,.92);   /* 한지 결 배너(사진 아닌 CSS 질감) */
   --scrim:rgba(20,15,12,.42);      /* 사진 위 글자 가림막: 단색만, 그라데이션 금지 */
+  --hd-bg:rgba(250,248,245,.94);   /* 머리글 붙었을 때 반투명 바탕 */
+  --panel-bg:rgba(250,248,245,.96);/* 떠 있는 패널·목차 반투명 바탕 */
+  /* 그림자(2단계 테마) — 어둡게에선 더 짙게 + 경계선(--line)이 입체를 보강 */
+  --shadow-1:0 2px 6px rgba(0,0,0,.18);
+  --shadow-2:0 8px 24px rgba(20,15,12,.12);
+  --shadow-3:0 18px 40px rgba(20,15,12,.32);
+  --shadow-drop:0 10px 28px rgba(34,26,21,.10);
+  --shadow-head:0 1px 0 var(--line),0 6px 18px rgba(34,26,21,.06);
+  --shadow-fab:0 4px 16px rgba(0,0,0,.22);
+  --shadow-panel:0 8px 28px rgba(0,0,0,.14);
+  --shadow-tab:-2px 3px 12px rgba(0,0,0,.2);
   --serif:'Noto Serif KR','Noto Serif KR fb',serif; --sans:'Noto Sans KR','Noto Sans KR fb',sans-serif;
   --container:1360px; --gutter:40px;
   --ease:cubic-bezier(.2,.7,.2,1); --dur-fast:.2s; --dur-mid:.35s; --dur-slow:.8s;   /* 2-I 커서 반응 */
   --ts-sm:.85; --ts-lg:1.15;       /* 2-J-3 제목·큰 문구 글자 크기 단계(부모 글 크기에 곱함) */
-  /* 2-G 테이스팅 빛깔 견본(정해진 8색만 — blocks.json swatches) */
+  /* 2-G 테이스팅 빛깔 견본(정해진 8색만 — blocks.json swatches · 제품 빛깔이라 두 테마 고정) */
   --sw-amber:#B7792B; --sw-honey:#D9A441; --sw-plum:#8E3B46; --sw-tomato:#B5452E;
   --sw-grape:#A9B65A; --sw-doenjang:#6B4A2E; --sw-chili:#9C2F24; --sw-vinegar:#D8C27A;
 }
@@ -27,3 +48,59 @@ html[data-season="summer"]{--accent:#2C6680}
 html[data-season="autumn"]{--accent:#A4532A}
 html[data-season="winter"]{--accent:#4C5866}
 @media (max-width:768px){:root{--gutter:20px}}
+
+/* ── 다크 테마(11-01 기획 B편 · B-2 표) ──
+   원칙(대표): 시스템 따름 + 단추로 고르면 기억. :root=밝게 전부 / 시스템이 어둡고 data-theme 이 light 가 아니면 어둡게 / data-theme=dark 면 같은 값.
+   부품 규칙 안에서 테마별 색 직접 분기 금지 — 색은 전부 이 토큰으로. 아래 두 블록은 같은 값(함께 고칠 것). */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#16120F; --surface:#211B17; --surface-2:#2A231D; --line:#382E28;
+    --ink:#EDE7DF; --muted:#ABA298; --sv-body:#D8D0C6;
+    --primary:#EDE7DF; --on-primary:#221A15;
+    --band:#211B17; --foot:#0D0A08;
+    --accent:#E0A27E; --accent-on-dark:#E0A27E; --on-accent:#16120F;
+    --sv-blue:#8FB8DB;
+    --danger:#F0806F; --danger-bg:#3A1E1A;
+    --ok:#86C79A; --accent-soft:#E0A27E;
+    --hanji-bg:#211B17; --hanji-glow:rgba(42,35,29,.92);
+    --hd-bg:rgba(22,18,15,.94); --panel-bg:rgba(22,18,15,.96);
+    --shadow-1:0 2px 6px rgba(0,0,0,.5);
+    --shadow-2:0 8px 24px rgba(0,0,0,.55);
+    --shadow-3:0 18px 44px rgba(0,0,0,.6);
+    --shadow-drop:0 10px 28px rgba(0,0,0,.55);
+    --shadow-head:0 1px 0 var(--line),0 6px 18px rgba(0,0,0,.5);
+    --shadow-fab:0 6px 18px rgba(0,0,0,.6);
+    --shadow-panel:0 10px 30px rgba(0,0,0,.6);
+    --shadow-tab:-2px 3px 14px rgba(0,0,0,.6);
+  }
+  html[data-season="spring"]:not([data-theme="light"]){--accent:#A9C47F}
+  html[data-season="summer"]:not([data-theme="light"]){--accent:#8EC1D6}
+  html[data-season="autumn"]:not([data-theme="light"]){--accent:#E0A27E}
+  html[data-season="winter"]:not([data-theme="light"]){--accent:#AEB8C6}
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#16120F; --surface:#211B17; --surface-2:#2A231D; --line:#382E28;
+  --ink:#EDE7DF; --muted:#ABA298; --sv-body:#D8D0C6;
+  --primary:#EDE7DF; --on-primary:#221A15;
+  --band:#211B17; --foot:#0D0A08;
+  --accent:#E0A27E; --accent-on-dark:#E0A27E; --on-accent:#16120F;
+  --sv-blue:#8FB8DB;
+  --danger:#F0806F; --danger-bg:#3A1E1A;
+  --ok:#86C79A; --accent-soft:#E0A27E;
+  --hanji-bg:#211B17; --hanji-glow:rgba(42,35,29,.92);
+  --hd-bg:rgba(22,18,15,.94); --panel-bg:rgba(22,18,15,.96);
+  --shadow-1:0 2px 6px rgba(0,0,0,.5);
+  --shadow-2:0 8px 24px rgba(0,0,0,.55);
+  --shadow-3:0 18px 44px rgba(0,0,0,.6);
+  --shadow-drop:0 10px 28px rgba(0,0,0,.55);
+  --shadow-head:0 1px 0 var(--line),0 6px 18px rgba(0,0,0,.5);
+  --shadow-fab:0 6px 18px rgba(0,0,0,.6);
+  --shadow-panel:0 10px 30px rgba(0,0,0,.6);
+  --shadow-tab:-2px 3px 14px rgba(0,0,0,.6);
+}
+html[data-theme="dark"][data-season="spring"]{--accent:#A9C47F}
+html[data-theme="dark"][data-season="summer"]{--accent:#8EC1D6}
+html[data-theme="dark"][data-season="autumn"]{--accent:#E0A27E}
+html[data-theme="dark"][data-season="winter"]{--accent:#AEB8C6}

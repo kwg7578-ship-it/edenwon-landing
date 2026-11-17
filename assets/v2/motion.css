@@ -48,7 +48,7 @@ a,button,.btn,.pill,.gnb a,.cats__item,.card__text{transition:color .2s ease-out
 /* 움직임 줄이기: 움직임(transform)은 없이 색만 바뀐다 */
 @media (hover:hover) and (prefers-reduced-motion:reduce){
   .gnb a:hover,.gnb a:focus-visible,.link-under:hover,.link-under:focus-visible,.hd__actions .icon-btn:hover,.hd__actions .icon-btn:focus-visible{color:var(--accent)}
-  .hero__arrow:hover,.hero__arrow:focus-visible{background:#FFFFFF;color:var(--ink)}
+  .hero__arrow:hover,.hero__arrow:focus-visible{background:var(--surface-2);color:var(--ink)}
   .card__bag{transform:none}
 }
 @media (hover:hover) and (prefers-reduced-motion:no-preference){
@@ -63,9 +63,9 @@ a,button,.btn,.pill,.gnb a,.cats__item,.card__text{transition:color .2s ease-out
   .btn--line:not(:disabled):hover,.btn--line:not(:disabled):focus-visible{color:var(--bg)}
   .btn--line-white:hover,.btn--line-white:focus-visible{color:var(--ink)}
   .hero__cta:hover,.hero__cta:focus-visible{color:var(--ink)}
-  .hero__slide--light .hero__cta:hover,.hero__slide--light .hero__cta:focus-visible{color:#FFFFFF}
+  .hero__slide--light .hero__cta:hover,.hero__slide--light .hero__cta:focus-visible{color:var(--on-photo)}
   .btn:not(:disabled):hover svg,.btn:not(:disabled):focus-visible svg,.hero__cta:hover svg,.hero__cta:focus-visible svg{transform:translateX(4px)}
-  .hero__arrow:hover,.hero__arrow:focus-visible{background:#FFFFFF;color:var(--ink)}
+  .hero__arrow:hover,.hero__arrow:focus-visible{background:var(--surface-2);color:var(--ink)}
   .hero__arrow[data-prev]:hover svg,.hero__arrow[data-prev]:focus-visible svg{transform:translateX(-3px)}
   .hero__arrow[data-next]:hover svg,.hero__arrow[data-next]:focus-visible svg{transform:translateX(3px)}
   .hero__dot:hover span,.hero__dot:focus-visible span{transform:scaleY(1.4);opacity:1}
