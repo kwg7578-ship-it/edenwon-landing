@@ -2546,8 +2546,43 @@
     });
   }
 
+  /* 11-01 다크 테마: 단추(머리글 아이콘·서랍 «화면 밝기») 로 밝기를 고르면 기억. 깜빡임 방지는 <head> 인라인 스크립트가 CSS 앞에서 data-theme 을 박음(app.js 는 defer).
+     edenwon_theme = light/dark(명시) · 없음=기기 설정(시스템 따름). color-scheme 토큰은 tokens.css. */
+  var THEME_KEY = "edenwon_theme";
+  function themePref() { try { var t = localStorage.getItem(THEME_KEY); return (t === "dark" || t === "light") ? t : "system"; } catch (e) { return "system"; } }
+  function sysDark() { return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches); }
+  function effDark() { var p = themePref(); return p === "dark" || (p === "system" && sysDark()); }
+  function setThemeColor() {   // theme-color 를 유효 테마로(토글·override·시스템 변화 모두 반영) — 두 벌 media 메타를 JS 가 한 벌로 넘겨받음
+    var metas = document.querySelectorAll('meta[name="theme-color"]');
+    if (!metas.length) return;
+    metas[0].removeAttribute("media"); metas[0].setAttribute("content", effDark() ? "#16120F" : "#FAF8F5");
+    for (var i = metas.length - 1; i >= 1; i--) metas[i].parentNode.removeChild(metas[i]);
+  }
+  function syncThemeUI() {
+    var pref = themePref(), dark = effDark();
+    document.querySelectorAll("[data-theme-toggle]").forEach(function (b) { b.setAttribute("aria-pressed", String(dark)); });
+    document.querySelectorAll("[data-theme-set]").forEach(function (b) { b.setAttribute("aria-checked", String(b.getAttribute("data-theme-set") === pref)); });
+  }
+  function applyTheme(pref) {   // pref = light/dark/system
+    try { if (pref === "system") localStorage.removeItem(THEME_KEY); else localStorage.setItem(THEME_KEY, pref); } catch (e) {}
+    if (pref === "system") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", pref);
+    syncThemeUI(); setThemeColor();
+  }
+  function initTheme() {
+    if (!document.querySelector("[data-theme-toggle],[data-theme-set]")) return;
+    syncThemeUI(); setThemeColor();
+    document.querySelectorAll("[data-theme-toggle]").forEach(function (b) { b.addEventListener("click", function () { applyTheme(effDark() ? "light" : "dark"); }); });   // 머리글 아이콘: 밝게↔어둡게(aria-pressed=어둡게)
+    document.querySelectorAll("[data-theme-set]").forEach(function (b) { b.addEventListener("click", function () { applyTheme(b.getAttribute("data-theme-set")); }); });   // 서랍 3상태: 밝게·어둡게·기기 설정
+    if (window.matchMedia) {   // «기기 설정»일 때 시스템 밝기 바뀌면 단추·theme-color 따라감
+      var mq = window.matchMedia("(prefers-color-scheme: dark)");
+      var onCh = function () { if (themePref() === "system") { syncThemeUI(); setThemeColor(); } };
+      if (mq.addEventListener) mq.addEventListener("change", onCh); else if (mq.addListener) mq.addListener(onCh);
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll("[data-cform]").forEach(initInquiry);
+    initTheme();
     initSeasonWords();
     document.querySelectorAll("[data-sgal]").forEach(initSeasonGallery);
     document.querySelectorAll("[data-feed]").forEach(initFeed);
