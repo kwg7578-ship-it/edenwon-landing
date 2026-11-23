@@ -2140,3 +2140,41 @@ html.sv-js .sv-allb{display:inline-block}
 /* 11-08 대표: 주문서 화면 밀림(PC 0.49) — 본문(주문서·빈 장바구니 안내)은 app.js 가 상품 자료를 받은 뒤 보이므로, 그 전에 한 화면 높이를 먼저 잡아
    바닥글이 처음부터 화면 아래에 있게(보이다가 밀려 내려가지 않게) · 스크롤 막대도 처음부터 있어 폭이 바뀌지 않음 */
 .order[data-checkout]{min-height:100vh}
+
+/* 11-22 대표 «매거진·카탈로그 눈에 띄게» — 홈 큰 카드 2장(히어로 바로 아래, 늘 보임) · 제품 목록 위 PDF 띠 · 단체 구매 첫 단추 · 상세 작은 링크. 색은 토큰만 */
+.hcards{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding-top:32px;padding-bottom:8px}
+.hcard{display:flex;flex-direction:column;background:var(--surface-2);border:1px solid var(--line);color:var(--ink);text-decoration:none;min-width:0;transition:box-shadow var(--dur-fast),border-color var(--dur-fast)}
+.hcard:hover{border-color:var(--ink);box-shadow:var(--shadow-2)}
+.hcard:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.hcard__ph{display:block;aspect-ratio:16/9;overflow:hidden;background:var(--photo)}
+.hcard__ph picture,.hcard__img{display:block;width:100%;height:100%}
+.hcard__img{object-fit:cover}
+.hcard--catalog .hcard__ph{background:var(--surface)}
+.hcard--catalog .hcard__img{object-fit:contain;padding:14px 0;filter:drop-shadow(var(--shadow-1))}/* A4 표지 전체(책처럼) */
+.hcard__txt{display:flex;flex-direction:column;gap:6px;padding:22px 24px 24px}
+.hcard__ey{font-size:var(--fs-13);font-weight:500;letter-spacing:.12em;color:var(--accent)}
+.hcard__t{font-family:var(--serif);font-size:var(--fs-26);font-weight:600;line-height:1.3}
+.hcard__sub{font-size:var(--fs-15);color:var(--muted)}
+.hcard__cta{margin-top:10px;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;min-height:48px;padding:0 20px;background:var(--primary);color:var(--on-primary);font-size:var(--fs-15);font-weight:500}
+@media (max-width:600px){
+  .hcards{grid-template-columns:1fr;gap:12px;padding-top:16px;padding-bottom:4px}
+  .hcard{flex-direction:row;align-items:stretch;min-height:148px}
+  .hcard__ph{flex:none;width:118px;aspect-ratio:auto}
+  .hcard__txt{padding:14px 16px;gap:4px;justify-content:center}
+  .hcard__ey{font-size:12px;letter-spacing:.06em}
+  .hcard__t{font-size:var(--fs-20)}
+  .hcard__sub{font-size:var(--fs-14)}
+  .hcard__cta{margin-top:6px;min-height:44px;padding:0 14px;font-size:var(--fs-14)}
+}
+.pdfband{display:flex;align-items:center;gap:12px;margin:20px 0 4px;padding:14px 18px;min-height:56px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none}
+.pdfband:hover{border-color:var(--ink)}
+.pdfband:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.pdfband svg{flex:none;color:var(--accent)}
+.pdfband__t{flex:1;min-width:0;font-size:var(--fs-15);font-weight:500}
+.pdfband__cta{flex:none;font-size:var(--fs-14);font-weight:600;color:var(--accent);border-bottom:1px solid currentColor}
+.contact__pdf{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:0 0 28px}
+.contact__pdf .btn{display:inline-flex;align-items:center;gap:8px;min-height:52px}
+.contact__pdf span{font-size:var(--fs-14);color:var(--muted)}
+.pd-maglinks{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding-top:8px;padding-bottom:24px;font-size:var(--fs-14);color:var(--muted)}
+.pd-maglinks a{display:inline-flex;align-items:center;min-height:44px;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.pd-maglinks a:hover{color:var(--ink)}

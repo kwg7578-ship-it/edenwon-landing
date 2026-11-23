@@ -21,6 +21,11 @@
   /* 2-G 테이스팅 빛깔 견본(정해진 8색만 — blocks.json swatches) */
   --sw-amber:#B7792B; --sw-honey:#D9A441; --sw-plum:#8E3B46; --sw-tomato:#B5452E;
   --sw-grape:#A9B65A; --sw-doenjang:#6B4A2E; --sw-chili:#9C2F24; --sw-vinegar:#D8C27A;
+  /* 11-22 웹 매거진 계절색(원본 매거진 값) — 어둡게(다크 테마) 값은 다크 테마 출시 때 함께 */
+  --mg-spring:#55632E; --mg-summer:#2F5D46; --mg-autumn:#8A5424; --mg-winter:#46505C;
+  /* 11-24 매거진 LIVEFIX: 매거진·홈 카드·공지 띠가 쓰는 토큰(remodel-v2 밝은 값 그대로 — 라이브의 다른 규칙은 안 씀) */
+  --surface-2:#FFFFFF; --band:#221A15; --on-accent:#FFFFFF; --on-photo:#FAF8F5; --on-photo-line:rgba(245,237,224,.7);
+  --panel-bg:rgba(250,248,245,.96); --shadow-1:0 2px 6px rgba(0,0,0,.18); --shadow-2:0 8px 24px rgba(20,15,12,.12);
 }
 html[data-season="spring"]{--accent:#4F6B27}
 html[data-season="summer"]{--accent:#2C6680}

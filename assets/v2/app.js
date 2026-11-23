@@ -170,6 +170,36 @@
   }
 
   /* ── K12 위 메뉴(PC): 대분류에 마우스 올리면 소분류 펼침(마우스 기기만), 펼침 단추로 키보드 열고 닫기, Esc·밖 누름·초점 떠남 닫기 ── */
+  /* 11-22 대표: 매거진·카탈로그 자리별 클릭 건수만(어느 자리 [data-promo] 를 눌렀나 — 개인정보·쿠키·기기 정보 0, 자리 이름 한 낱말만).
+     보내는 곳 POST /api/v2/promo-stats {p} 는 주문 서버에 아직 없음 → html[data-promo-stats] 가 있을 때만 보냄(빌드 PROMO_STATS=1 · 지금은 0 = 아무것도 안 보냄).
+     쿠키 없이(credentials omit), 실패해도 조용히. 링크 이동은 막지 않음(keepalive). */
+  function initPromoStats() {
+    var R = document.documentElement;
+    if (!API || !R.hasAttribute("data-promo-stats") || !window.fetch) return;
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("[data-promo]");
+      if (!a) return;
+      var p = a.getAttribute("data-promo");
+      if (!/^[a-z0-9_]{1,32}$/.test(p)) return;
+      try { fetch(API + "/api/v2/promo-stats", { method: "POST", credentials: "omit", keepalive: true, headers: { "Content-Type": "application/json", "X-Edenwon": "1" }, body: JSON.stringify({ p: p }) }).catch(function () {}); } catch (x) {}
+    }, true);
+  }
+  /* 11-22 대표: 홈 «매거진·카탈로그» 카드 사진 늦게 받기 — 주소는 data-srcset 에만(picture_defer). 쪽을 다 읽고 한가할 때, 또는 카드가 화면 가까이 오면 그때 채움.
+     자리는 width·height·CSS 비율로 미리 잡혀 있어 채울 때 밀림 0 */
+  function initHcards() {
+    var pics = [].slice.call(document.querySelectorAll(".hcards picture[data-defer]"));
+    if (!pics.length) return;
+    function fill(p) { p.querySelectorAll("[data-srcset]").forEach(function (el) { el.setAttribute("srcset", el.getAttribute("data-srcset")); el.removeAttribute("data-srcset"); }); p.removeAttribute("data-defer"); }
+    function all() { pics.forEach(function (p) { if (p.hasAttribute("data-defer")) fill(p); }); }
+    function later() {   // load 뒤에만 시작(첫 화면 무게에서 빠지게): 보이는 카드는 바로, 나머지는 한가할 때
+      if (window.IntersectionObserver) {
+        var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { fill(e.target); io.unobserve(e.target); } }); }, { rootMargin: "0px 0px 200px 0px" });
+        pics.forEach(function (p) { io.observe(p); });
+      }
+      if (window.requestIdleCallback) requestIdleCallback(all, { timeout: 2000 }); else setTimeout(all, 800);
+    }
+    if (document.readyState === "complete") later(); else window.addEventListener("load", later);
+  }
   function initGnb() {
     var items = Array.prototype.slice.call(document.querySelectorAll("[data-gnb-item]"));
     if (!items.length) return;
@@ -443,9 +473,10 @@
      3장 = 수확 달이 이번 달인 농산물(없으면 다음 수확 1~2개 «곧 만나요», 그것도 없으면 장을 뺌), 4장 = 설·추석 35일 전~다음 날 선물세트, 그 밖엔 옹기 이야기 ── */
   function b4Trim(root) {   // 1장 = 사진 장 첫 장(H1-2 순서 그대로 — 손님 계절 첫 장), 나머지 사진 장은 뺀다(받지도 않음)
     var t = root.querySelector(".hero__track");
-    var photos = [].slice.call(t.querySelectorAll("[data-slide]:not([data-b4])")), first = photos.filter(function (s) { return !s.hidden; })[0] || photos[0];
+    var mag = t.querySelector("[data-mag]");   // 11-22 매거진 장이 있으면 사진 장 대신 1장(대표 «4장 유지» — 사진 장은 빌드가 이미 뺌)
+    var photos = [].slice.call(t.querySelectorAll("[data-slide]:not([data-b4]):not([data-mag])")), first = mag || photos.filter(function (s) { return !s.hidden; })[0] || photos[0];
     photos.forEach(function (s) { if (s !== first) s.remove(); });
-    t.insertBefore(first, t.firstChild);
+    if (first) t.insertBefore(first, t.firstChild);
   }
   function b4Load(root, done) {   // 2~4장 조각(같은 사이트 빌드 파일) — 못 받으면 1장만 그대로
     if (!window.fetch) return;
@@ -2516,6 +2547,8 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll("[data-cform]").forEach(initInquiry);
+    initPromoStats();
+    initHcards();
     initSeasonWords();
     document.querySelectorAll("[data-sgal]").forEach(initSeasonGallery);
     document.querySelectorAll("[data-feed]").forEach(initFeed);
