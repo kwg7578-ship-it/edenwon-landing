@@ -106,7 +106,7 @@
   </div>
 </div>
 <main id="main" tabindex="-1">
-<script type="application/json" id="product-data">{"key": "pea", "name": "햇 완두콩", "img": "chatgpt-2026-10-17-12-57-55-20261017005827.jpg", "href": "products/pea.html", "options": [{"id": "1kg", "label": "1kg", "price": 10000, "sold_out": true, "size": [1, "kg"]}, {"id": "3kg", "label": "3kg", "price": 30000, "sold_out": true, "size": [3, "kg"]}], "up": true}</script>
+<script type="application/json" id="product-data">{"key": "pea", "name": "완두콩", "img": "chatgpt-2026-10-17-12-57-55-20261017005827.jpg", "href": "products/pea.html", "options": [{"id": "1kg", "label": "1kg", "price": 10000, "sold_out": true, "size": [1, "kg"]}, {"id": "3kg", "label": "3kg", "price": 30000, "sold_out": true, "size": [3, "kg"]}, {"id": "마린-완두콩-400g", "label": "말린 완두콩 400g", "price": 10000, "sold_out": false, "size": [400, "g"]}], "up": true}</script>
 <div class="pd container">
   <nav class="crumbs crumbs--muted" aria-label="현재 위치">
     <a href="../index.html">홈</a><span aria-hidden="true">/</span>
@@ -126,23 +126,47 @@
     <div class="buy" id="buy" data-buy>
       <div class="buy__head">
         <p class="buy__cat">제철 농산물</p>
-        <h1 class="buy__name">햇 완두콩</h1>
+        <h1 class="buy__name">완두콩</h1>
         <p class="buy__lede">발효퇴비 · 풀과 함께</p>
 <a class="buy__rating" href="#reviews" data-rv-badge hidden><span aria-hidden="true" class="buy__stars">★</span><span data-rv-badge-avg></span><span class="muted" data-rv-badge-n></span></a>        <div class="buy__price">
-          <span class="buy__won" data-buy-won><span class="sr-only">품절, </span>10,000원~</span>
+          <span class="buy__won" data-buy-won>10,000원</span>
         </div>
-<p class="buy__unit" data-buy-unit>1kg 외 · 100g당 1,000원</p>        <a class="buy__login" href="../account/login.html" data-login-link>로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
+<p class="buy__unit" data-buy-unit>400g 외 · 100g당 2,500원</p>        <a class="buy__login" href="../account/login.html" data-login-link>로그인하면 소속 할인가와 적립금이 적용됩니다.</a>
         <p class="buy__member" data-member-price hidden></p>
       </div>
 
       <dl class="buy__facts">
 <dt>배송</dt><dd>택배 5,000원 · 100,000원 이상 무료</dd><dt>직접 수령</dt><dd>영동 농장 (충북 영동군 학산면)</dd><dt>주문 알림</dt><dd>주문 즉시 주문번호·결제 안내 문자</dd><dt>적립</dt><dd>회원 구매 시 2% 적립</dd>      </dl>
 
-      <p class="buy__soldout" role="status">지금은 모든 옵션이 품절입니다.</p>
+      <div class="opts" role="group" aria-labelledby="opts-h" data-opts>
+        <p class="opts__h" id="opts-h"><span>옵션</span> <span class="opts__n">3종</span></p>
+        <div class="opts__g" data-opts-g>
+          <ul class="opts__list" id="og0">
+<li><button type="button" class="opt" data-opt="1kg" aria-pressed="false" disabled><span class="opt__t"><span class="opt__n">1kg</span><span class="opt__s" data-opt-sub>100g당 1,000원</span></span><span class="opt__p" data-opt-price>10,000원 <span class="opt__so">품절</span></span></button></li><li><button type="button" class="opt" data-opt="3kg" aria-pressed="false" disabled><span class="opt__t"><span class="opt__n">3kg</span><span class="opt__s" data-opt-sub>100g당 1,000원</span></span><span class="opt__p" data-opt-price>30,000원 <span class="opt__so">품절</span></span></button></li><li><button type="button" class="opt" data-opt="마린-완두콩-400g" aria-pressed="false"><span class="opt__t"><span class="opt__n">말린 완두콩 400g</span><span class="opt__s" data-opt-sub>100g당 2,500원</span></span><span class="opt__p" data-opt-price>10,000원</span></button></li>          </ul>
+        </div>
+      </div>
+      <ul class="lines" data-lines aria-label="선택한 옵션"></ul>
+      <template id="line-tpl">
+        <li class="line">
+          <div class="line__top"><span class="line__name"></span>
+            <button type="button" class="line__del" data-del><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button></div>
+          <div class="line__bottom">
+            <div class="qty">
+              <button type="button" class="qty__btn" data-dec>−</button>
+              <span class="qty__n" aria-live="polite"></span>
+              <button type="button" class="qty__btn" data-inc>+</button>
+            </div>
+            <span class="line__sum"></span>
+          </div>
+        </li>
+      </template>
+      <p class="buy__msg" data-buy-msg role="alert" hidden></p>
+      <div class="buy__total"><span>총 상품 금액 <span class="muted">(<span data-total-qty>0</span>개)</span></span><b data-total>0원</b></div>
       <div class="buy__actions">
         <button type="button" class="buy__like" aria-label="찜하기" aria-pressed="false" data-like="pea"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
-        <button type="button" class="btn btn--line buy__cart" data-to-cart disabled>장바구니</button>
-        <button type="button" class="btn btn--dark buy__now" data-buy-now disabled>품절</button>
+        <button type="button" class="btn btn--line buy__cart" data-to-cart>장바구니</button>
+        <button type="button" class="btn btn--dark buy__now" data-buy-now>바로 구매</button>
       </div>
     </div>
   </div>
@@ -162,7 +186,7 @@
 <section class="sb container" id="glance" data-sec data-in-toc aria-labelledby="glance-h">
   <h2 class="sb__h" id="glance-h">한눈에 보기</h2>
   <dl class="glance">
-<div class="glance__cell"><dt>재배</dt><dd>풀과 함께(초생재배)</dd></div><div class="glance__cell"><dt>거름</dt><dd>6개월 발효한 퇴비 · 유기질 비료</dd></div><div class="glance__cell"><dt>용량</dt><dd>1kg · 3kg</dd></div><div class="glance__cell"><dt>발송</dt><dd>평일 낮 12시 이전 결제 시 당일 발송</dd></div><div class="glance__cell"><dt>보관</dt><dd>깍지째 씻지 않고 냉장 보관. 오래 보관하려면 깐 뒤 씻지 않은 채 지퍼백에 밀봉해 냉동 보관하세요.</dd></div>  </dl>
+<div class="glance__cell"><dt>재배</dt><dd>풀과 함께(초생재배)</dd></div><div class="glance__cell"><dt>거름</dt><dd>6개월 발효한 퇴비 · 유기질 비료</dd></div><div class="glance__cell"><dt>용량</dt><dd>1kg · 3kg · 400g</dd></div><div class="glance__cell"><dt>발송</dt><dd>평일 낮 12시 이전 결제 시 당일 발송</dd></div><div class="glance__cell"><dt>보관</dt><dd>깍지째 씻지 않고 냉장 보관. 오래 보관하려면 깐 뒤 씻지 않은 채 지퍼백에 밀봉해 냉동 보관하세요.</dd></div>  </dl>
 </section>
 <section class="gx gx-lead gx-lead--left" id="gx-lead" data-sec aria-labelledby="gx-lead-h">
   <div class="gx-in">
@@ -230,11 +254,11 @@
   <details class="fold" data-fold>
     <summary class="fold__sum"><span>상품정보제공고시</span><span class="fold__icon" aria-hidden="true"></span></summary>
     <dl class="infotable infotable--fold">
-<dt>품목 또는 명칭</dt><dd>햇 완두콩</dd><dt>포장단위별 내용물의 용량(중량), 수량, 크기</dt><dd>1kg · 3kg</dd><dt>생산자, 수입품의 경우 수입자를 함께 표기</dt><dd>농업회사법인 주식회사 에프엔엘바이오푸드 · 충청북도 영동군 학산면 모리2길 3-1</dd><dt>「농수산물의 원산지 표시 등에 관한 법률」에 따른 원산지</dt><dd>국내산(영동군)</dd><dt>제조연월일, 소비기한 또는 품질유지기한</dt><dd>신선 농산물로 별도 소비기한 없음 — 수확 후 바로 발송합니다. 받으신 뒤 냉장 보관하고 되도록 빨리 드세요.</dd><dt>상품구성</dt><dd data-lopt-cell><span data-lopt="1kg">햇 완두콩(깍지째) 1kg · 상자 1개</span><span data-lopt="3kg" hidden>햇 완두콩(깍지째) 3kg · 상자 1개</span></dd><dt>보관방법 또는 취급방법</dt><dd>깍지째 씻지 않고 냉장 보관. 오래 보관하려면 깐 뒤 씻지 않은 채 지퍼백에 밀봉해 냉동 보관하세요.</dd><dt>소비자 안전을 위한 주의사항 (「식품 등의 표시ㆍ광고에 관한 법률 시행규칙」 제5조 및 [별표 2]에 따른 표시사항을 말함)</dt><dd>흙이나 이물이 묻어 있을 수 있으니 흐르는 물에 씻어 드세요. 받으신 날 상태를 확인하시고 문제가 있으면 바로 연락 주세요. 부정불량 식품신고 : 국번없이 1399. 소비자 상담실 : 010-5126-7578</dd><dt>소비자 상담 관련 전화번호</dt><dd>010-5126-7578</dd>    </dl>    <details class="lopt" data-lopt-all open>
+<dt>품목 또는 명칭</dt><dd>완두콩</dd><dt>포장단위별 내용물의 용량(중량), 수량, 크기</dt><dd>1kg · 3kg · 400g</dd><dt>생산자, 수입품의 경우 수입자를 함께 표기</dt><dd>농업회사법인 주식회사 에프엔엘바이오푸드 · 충청북도 영동군 학산면 모리2길 3-1</dd><dt>「농수산물의 원산지 표시 등에 관한 법률」에 따른 원산지</dt><dd>국내산(영동군)</dd><dt>제조연월일, 소비기한 또는 품질유지기한</dt><dd data-lopt-cell><span data-lopt="1kg">신선 농산물로 별도 소비기한 없음 — 수확 후 바로 발송합니다. 받으신 뒤 냉장 보관하고 되도록 빨리 드세요.</span><span data-lopt="3kg" hidden>신선 농산물로 별도 소비기한 없음 — 수확 후 바로 발송합니다. 받으신 뒤 냉장 보관하고 되도록 빨리 드세요.</span><span data-lopt="마린-완두콩-400g" hidden>포장일로부터 1년 (밀봉해 서늘하고 건조한 곳에 보관할 때)</span></dd><dt>상품구성</dt><dd data-lopt-cell><span data-lopt="1kg">햇 완두콩(깍지째) 1kg · 상자 1개</span><span data-lopt="3kg" hidden>햇 완두콩(깍지째) 3kg · 상자 1개</span><span data-lopt="마린-완두콩-400g" hidden>말린 완두콩 400g · 1봉</span></dd><dt>보관방법 또는 취급방법</dt><dd data-lopt-cell><span data-lopt="1kg">깍지째 씻지 않고 냉장 보관. 오래 보관하려면 깐 뒤 씻지 않은 채 지퍼백에 밀봉해 냉동 보관하세요.</span><span data-lopt="3kg" hidden>깍지째 씻지 않고 냉장 보관. 오래 보관하려면 깐 뒤 씻지 않은 채 지퍼백에 밀봉해 냉동 보관하세요.</span><span data-lopt="마린-완두콩-400g" hidden>밀봉해 서늘하고 건조한 곳에 보관, 개봉 후에는 밀폐 용기에 담아 보관</span></dd><dt>소비자 안전을 위한 주의사항 (「식품 등의 표시ㆍ광고에 관한 법률 시행규칙」 제5조 및 [별표 2]에 따른 표시사항을 말함)</dt><dd>흙이나 이물이 묻어 있을 수 있으니 흐르는 물에 씻어 드세요. 받으신 날 상태를 확인하시고 문제가 있으면 바로 연락 주세요. 부정불량 식품신고 : 국번없이 1399. 소비자 상담실 : 010-5126-7578</dd><dt>소비자 상담 관련 전화번호</dt><dd>010-5126-7578</dd>    </dl>    <details class="lopt" data-lopt-all open>
       <summary class="lopt__sum">전체 옵션 고시 보기</summary>
       <div class="lopt__wrap" tabindex="0" role="region" aria-label="전체 옵션 고시 표"><table class="lopt__table">
-        <thead><tr><th scope="col">옵션</th><th scope="col">상품구성</th></tr></thead>
-        <tbody><tr><th scope="row">1kg</th><td>햇 완두콩(깍지째) 1kg · 상자 1개</td></tr><tr><th scope="row">3kg</th><td>햇 완두콩(깍지째) 3kg · 상자 1개</td></tr></tbody>
+        <thead><tr><th scope="col">옵션</th><th scope="col">제조연월일, 소비기한 또는 품질유지기한</th><th scope="col">상품구성</th><th scope="col">보관방법 또는 취급방법</th></tr></thead>
+        <tbody><tr><th scope="row">1kg</th><td>신선 농산물로 별도 소비기한 없음 — 수확 후 바로 발송합니다. 받으신 뒤 냉장 보관하고 되도록 빨리 드세요.</td><td>햇 완두콩(깍지째) 1kg · 상자 1개</td><td>깍지째 씻지 않고 냉장 보관. 오래 보관하려면 깐 뒤 씻지 않은 채 지퍼백에 밀봉해 냉동 보관하세요.</td></tr><tr><th scope="row">3kg</th><td>신선 농산물로 별도 소비기한 없음 — 수확 후 바로 발송합니다. 받으신 뒤 냉장 보관하고 되도록 빨리 드세요.</td><td>햇 완두콩(깍지째) 3kg · 상자 1개</td><td>깍지째 씻지 않고 냉장 보관. 오래 보관하려면 깐 뒤 씻지 않은 채 지퍼백에 밀봉해 냉동 보관하세요.</td></tr><tr><th scope="row">말린 완두콩 400g</th><td>포장일로부터 1년 (밀봉해 서늘하고 건조한 곳에 보관할 때)</td><td>말린 완두콩 400g · 1봉</td><td>밀봉해 서늘하고 건조한 곳에 보관, 개봉 후에는 밀폐 용기에 담아 보관</td></tr></tbody>
       </table></div>
     </details>
   </details>
@@ -314,6 +338,11 @@
   </div>
 </section>
 <p class="pd-ainote container">활용하는 방법의 요리 사진 등 일부 사진은 AI로 만든 연출 이미지입니다.</p>
+<div class="buybar" data-buybar>
+  <button type="button" class="buy__like" aria-label="찜하기" aria-pressed="false" data-like="pea"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+  <button type="button" class="btn btn--line" data-to-cart>장바구니</button>
+  <button type="button" class="btn btn--dark" data-buy-now>바로 구매</button>
+</div>
 </main>
 <footer class="ft">
   <div class="ft__navwrap">
