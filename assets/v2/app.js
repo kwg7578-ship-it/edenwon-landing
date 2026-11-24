@@ -1639,6 +1639,8 @@
 
   /* ── 선물세트 묶음(2-B-3 개정 2-3): 장바구니 줄 {gift:"jam", items:[{key, option}×4], qty:1, checked}.
      세트 정의(허용 품목·할인)는 products.json 의 gift(서버 GIFT_SETS 와 같은 값). 금액은 표시용 — 주문 때 서버가 다시 정한다. ── */
+  /* 대표 11-25: 세트 구성품 정가 합(합산가)이 gift.min(55,000) 이상일 때만 할인 — 서버 order_v2.gift_off 와 같은 규칙(min 이 없으면 예전대로) */
+  function giftOff(G, sum) { return sum >= (G.min || 0) ? Math.min(G.discount, sum) : 0; }
   function giftView(P, it) {
     var G = P && P.gift, d = G && G.sets[it.gift];
     if (!d || !Array.isArray(it.items) || it.items.length !== G.slots) return null;
@@ -1648,8 +1650,8 @@
       if (!h || d.allow.indexOf(x.key) < 0) return null;
       parts.push(h); sum += h.o.price; so = so || !!h.o.sold_out;
     }
-    var off = Math.min(G.discount, sum);
-    return { name: d.name, img: d.img, href: "giftset.html?set=" + it.gift, parts: parts, sum: sum, off: off, price: sum - off, so: so,
+    var off = giftOff(G, sum), short = G.min && sum < G.min ? G.min - sum : 0;
+    return { name: d.name, img: d.img, href: "giftset.html?set=" + it.gift, parts: parts, sum: sum, off: off, price: sum - off, so: so, short: short,
              label: parts.map(function (h) { return h.p.name + " " + pOpt(h.p, h.o); }).join(" · ") };
   }
   function lineInfo(P, it) {   // 장바구니·주문서 공통: 일반 줄과 세트 줄을 같은 모양으로
@@ -1696,7 +1698,9 @@
         if (cup) { var cu = document.createElement("span"); cu.className = "crow__unit"; cu.textContent = cup; row.querySelector(".crow__opt").insertAdjacentElement("afterend", cu); }
         if (hit.gift) {   // 세트: 펼치면 구성이 보인다
           var dt = document.createElement("details"), sm = document.createElement("summary");
-          dt.className = "crow__set"; sm.textContent = Tf("구성 보기 · 합산가 {0}에서 {1} 할인", won(hit.gift.sum), won(hit.gift.off));
+          dt.className = "crow__set"; sm.textContent = hit.gift.short
+            ? Tf("구성 보기 · 합산가 {0} · {1}까지 {2} 남았어요", won(hit.gift.sum), won(P.gift.min), won(hit.gift.short))
+            : Tf("구성 보기 · 합산가 {0}에서 {1} 할인", won(hit.gift.sum), won(hit.gift.off));
           dt.appendChild(sm); dt.appendChild(giftList(hit.gift));
           row.querySelector(".crow__opt").insertAdjacentElement("afterend", dt);
         }
@@ -2079,7 +2083,9 @@
         var li = tpl.content.firstElementChild.cloneNode(true);
         li.querySelector("img").src = root() + "images/v2/" + g.v.img.replace(/\.jpg$/, "") + "-480.jpg";
         li.querySelector(".co__item-name").textContent = g.v.name;
-        li.querySelector(".co__item-opt").textContent = Tf("{0} · 합산가에서 {1} 할인", g.v.label, won(g.v.off));
+        li.querySelector(".co__item-opt").textContent = g.v.short
+          ? Tf("{0} · 할인 없음(합산가 {1} 미만)", g.v.label, won(g.v.sum + g.v.short))
+          : Tf("{0} · 합산가에서 {1} 할인", g.v.label, won(g.v.off));
         li.querySelector(".co__item-sum").textContent = won(g.v.price);
         ul.appendChild(li); n += 1;
       });
@@ -2276,7 +2282,9 @@
         if (x) li.appendChild(infoBox(i, x.key));
         slotsEl.appendChild(li);
       });
-      var full = n === G.slots, off = full ? Math.min(G.discount, sum) : 0;
+      var full = n === G.slots, off = full ? giftOff(G, sum) : 0;
+      var minEl = page.querySelector("[data-gift-min]"), short = full && G.min && sum < G.min ? G.min - sum : 0;
+      if (minEl) { minEl.hidden = !short; minEl.textContent = short ? Tf("{0}까지 {1} 남았어요", won(G.min), won(short)) : ""; }
       page.querySelector("[data-gift-goods]").textContent = won(sum);
       page.querySelector("[data-gift-off]").textContent = "−" + won(off);
       page.querySelector("[data-gift-total]").textContent = won(sum - off);
