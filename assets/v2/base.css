@@ -126,6 +126,12 @@ main:focus{outline:none}
 .drawer__nav{display:flex;flex-direction:column;padding:8px 0;border-bottom:1px solid var(--line)}
 .drawer__nav a{display:flex;align-items:center;min-height:52px;font-size:17px;text-decoration:none}
 .drawer__nav a[aria-current="page"]{font-weight:700}
+.hd__notice-promo{display:none;color:inherit;text-decoration:none;overflow:hidden;text-overflow:ellipsis}/* 11-22 매거진 공지(기간만) — 같은 한 줄 자리라 밀림 0 */
+html[data-pn] .hd__notice-promo{display:block}
+html[data-pn] .hd__notice-base{display:none}
+.hd__notice-promo:hover,.hd__notice-promo:focus-visible{text-decoration:underline}
+.drawer__nav a.drawer__mag{gap:10px;font-weight:600;color:var(--ink)}/* 11-22 대표: 서랍 맨 위 «매거진 · 겨울호» */
+.drawer__mag-tag{display:inline-flex;align-items:center;min-height:24px;padding:0 9px;border-radius:12px;background:var(--accent);color:var(--on-accent);font-size:13px;font-weight:600;letter-spacing:.02em}
 .drawer__util{display:flex;flex-direction:column;padding-top:8px}
 .drawer__util a{display:flex;align-items:center;min-height:44px;font-size:14px;color:var(--muted);text-decoration:none}
 body.is-locked{overflow:hidden}
@@ -137,7 +143,8 @@ body.is-locked{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.drawer__panel{transition:none}.drawer.is-open .drawer__nav a,.drawer.is-open .drawer__util>a,.drawer.is-open .drawer__util .hd__member>*{animation:none}}
 /* K12 분류 두 단계 — 위 메뉴 대분류 펼침(PC) · 서랍 대분류 눌러 펼침(휴대폰). 한 단계 분류면 쓰이지 않음
    메뉴가 6칸이라 1024~1280 은 간격을 줄여 한 줄, 769~1023 은 한 줄에 안 들어가 서랍 메뉴(☰)로 */
-.gnb--groups{flex-wrap:nowrap;column-gap:clamp(16px,calc(5vw - 34px),40px)}
+.gnb--groups{flex-wrap:nowrap;column-gap:clamp(12px,calc(5vw - 46px),40px)}/* 11-22 «매거진» 항목이 늘어 간격만 줄임(넘침 0 — 1200~1920 재봄) */
+@media (min-width:1200px) and (max-width:1319px){.hd--groups .hd__bar{column-gap:16px}}/* 11-22 대표: 1209~1279px 머리글 넘침(원래 있던 것) — 로고·메뉴·단추 사이 간격만 그 폭에서 줄임 */
 .gnb--groups>*,.hd--groups .logo{flex-shrink:0;white-space:nowrap}
 @media (min-width:769px) and (max-width:1199px){.gnb--groups{display:none}.hd--groups .hd__menu{display:inline-flex}}   /* 11-03 대표: 글자 B 에서 1024 머리줄 밀림 → 1199 까지 메뉴 단추 */
 /* 11-03 글자 B — 좁은 휴대폰(389 이하): 로고 글은 지금 크기(아이콘 줄 밀림 막음) · 카드 단위 가격은 «…»로 자르지 않고 줄바꿈. 선택자를 한 단계 높여 type.css 보다 앞섬 */

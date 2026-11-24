@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ko" data-season="autumn" data-season-auto data-ic="xl" data-root="../" data-api="https://api.yd-edenwon.com">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* 2-H 계절 자동: 손님 날짜(한국 시각)의 기상 계절 — CSS 앞에서 정해 색이 바뀌는 순간이 없게. 빌드 계절과 다르면 표시(홈 배너가 순서를 다시 정할 때까지 가림) */(function(r){var b=r.getAttribute("data-season"),s=["winter","spring","summer","autumn"][(new Date(Date.now()+324e5).getUTCMonth()+1)%12/3|0];r.setAttribute("data-season",s);if(s!==b)r.setAttribute("data-season-moved","")})(document.documentElement)</script>
+<title>사계절의 발자취 — 영동에덴원 웹 매거진</title>
+<meta name="description" content="씨앗부터 식탁까지, 영동에덴원의 봄·여름·가을·겨울과 그 시간이 담긴 발효식품 이야기. 사계절의 발자취 2026 겨울호.">
+<meta property="og:title" content="사계절의 발자취 — 영동에덴원 웹 매거진">
+<meta property="og:description" content="씨앗부터 식탁까지, 영동에덴원의 봄·여름·가을·겨울과 그 시간이 담긴 발효식품 이야기. 사계절의 발자취 2026 겨울호.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://yd-edenwon.com/magazine/2026-winter">
+<meta property="og:image" content="https://yd-edenwon.com/images/v2/mag26w-hero-1600.jpg">
+<meta property="og:locale" content="ko_KR">
+<link rel="canonical" href="https://yd-edenwon.com/magazine/2026-winter">
+<link rel="icon" href="../favicon.ico">
+<link rel="preload" href="../assets/v2/noto-sans-kr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/v2/fonts.css">
+<link rel="preload" href="../assets/v2/noto-serif-kr.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" as="image" type="image/webp" imagesrcset="../images/v2/mag26w-hero-480.webp 480w, ../images/v2/mag26w-hero-960.webp 960w, ../images/v2/mag26w-hero-1280.webp 1280w, ../images/v2/mag26w-hero-1440.webp 1440w, ../images/v2/mag26w-hero-1600.webp 1600w" imagesizes="100vw" fetchpriority="high">
+<link rel="stylesheet" href="../assets/v2/magazine.css"><link rel="stylesheet" href="../assets/v2/tokens.css">
+<link rel="stylesheet" href="../assets/v2/base.css">
+<link rel="stylesheet" href="../assets/v2/pages.css">
+<link rel="stylesheet" href="../assets/v2/motion.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="../assets/v2/motion.css"></noscript>
+<link rel="stylesheet" href="../assets/v2/type.css"><script type="application/json" id="ed-texts">{"곧 만나요":"영동에덴원\n제철 농산물","다음 수확을 기다리는 작물입니다":"영동에덴원 농산물을 계절별로 만나보세요.","영동 농장 직접 수령":"영동에덴원 방문 or 직접 수령","지금 밭에서 거두는 것":"영동에덴원 농산물","발효퇴비로 기른 땅에서, 풀과 함께 키웠습니다":"발효퇴비와 풀로 만든 토양에서, \n자연농법으로 농산물을 키웠습니다"}</script><script src="../assets/v2/app.js" defer></script>
+</head>
+<body class="page-magazine">
+<div class="added" id="added" role="dialog" aria-modal="false" aria-labelledby="added-h" hidden>
+  <p class="added__h" id="added-h">장바구니에 담았습니다</p>
+  <p class="added__item" data-added-item></p>
+  <div class="added__btns">
+    <a class="btn btn--dark" href="../cart.html">장바구니로 가기</a>
+    <button type="button" class="btn btn--line" data-added-close>계속 보기</button>
+  </div>
+</div>
+<p class="sr-only" role="status" aria-live="polite" data-added-live></p>
+<div class="hd-top" role="region" aria-label="공지와 회원 메뉴">
+  <a class="skip" href="#main">본문 바로가기</a>
+  <p class="hd__notice"><span class="hd__notice-base">주문하시면 바로 주문번호와 결제 안내를 문자로 보내드립니다</span></p>  <div class="hd__util container">
+    <span class="hd__member" data-hd-member>
+  <a href="../account/login.html" data-hd-login data-m-anon>로그인</a>
+  <a href="../account/signup.html" data-hd-signup data-m-anon>회원가입</a>
+  <span data-hd-name data-m-in hidden></span>
+  <a href="../account/" data-hd-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-hd-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="../order-status.html">주문 조회</a><a href="../contact.html">고객센터</a>  </div>
+</div>
+<header class="hd hd--groups" data-hd>
+  <div class="hd__bar container">
+    <button type="button" class="icon-btn hd__menu" aria-label="메뉴 열기" aria-controls="drawer" aria-expanded="false" data-drawer-open><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+    <a class="logo" href="../index.html">
+      <span class="logo__ko">영동에덴원</span><span class="sr-only"> 홈</span>
+      <span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span>
+    </a>
+    <nav class="gnb gnb--groups" aria-label="주 메뉴">
+<div class="gnb__item" data-gnb-item><a class="gnb__link" href="../products.html?cat=onggi" style="min-width:3.76em">옹기발효</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-onggi" aria-label="옹기발효 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-onggi" hidden><li><a href="../products.html?cat=onggi">옹기발효 전체</a></li><li><a href="../products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="../products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="../products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="gnb__item" data-gnb-item><a class="gnb__link" href="../products.html?cat=processed" style="min-width:3.76em">가공식품</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-processed" aria-label="가공식품 소분류" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub" id="gnb-sub-processed" hidden><li><a href="../products.html?cat=processed">가공식품 전체</a></li><li><a href="../products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="../products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="../products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="../products.html?cat=farm" style="min-width:2.82em">농산물</a><a href="../products.html?cat=gift" style="min-width:3.76em">선물세트</a><div class="gnb__item" data-gnb-item><a class="gnb__link" href="../story.html" style="min-width:2.82em">브랜드 스토리</a><button type="button" class="gnb__tog" aria-expanded="false" aria-controls="gnb-sub-story" aria-label="이야기 펼치기" data-gnb-tog><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="gnb__sub gnb__sub--plain" id="gnb-sub-story" hidden><li><a href="../story.html">영동에덴원 이야기</a></li><li><a href="../farming.html">농사 이야기</a></li><li><a href="../fermentation.html">발효 이야기</a></li></ul></div><a href="../magazine/2026-winter.html" style="min-width:2.82em" aria-current="page" data-promo="gnb_mag">매거진</a><a href="../contact.html" style="min-width:6.28em">단체·기업 문의</a>    </nav>
+    <div class="hd__actions">
+      <button type="button" class="icon-btn" aria-label="검색" aria-controls="search" aria-expanded="false" data-search-toggle><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+</button>
+      <a class="icon-btn hd__mypage" href="../account/" aria-label="마이페이지"><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg>
+</a>
+      <a class="icon-btn hd__cart" href="../cart.html" data-cart-link><svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+<span class="sr-only" data-cart-sr>장바구니</span><span class="hd__count" data-cart-count aria-hidden="true" hidden></span></a>
+    </div>
+  </div>
+  <div class="hd__search" id="search" hidden>
+    <form class="container" action="../products.html" method="get" role="search">
+      <label class="sr-only" for="q">제품 검색</label>
+      <input id="q" name="q" type="search" placeholder="제품 이름으로 찾기" autocomplete="off">
+      <button type="submit" class="btn btn--dark">찾기</button>
+    </form>
+  </div>
+  <div class="hd__line"></div>
+</header>
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__scrim" data-drawer-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="메뉴">
+    <div class="drawer__top">
+      <span class="logo__ko">영동에덴원</span>
+      <button type="button" class="icon-btn" aria-label="메뉴 닫기" data-drawer-close><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</button>
+    </div>
+    <nav class="drawer__nav" aria-label="모바일 주 메뉴">
+      <a class="drawer__mag" href="../magazine/2026-winter.html" aria-current="page" data-promo="drawer_mag">매거진<span class="drawer__mag-tag">겨울호</span></a>
+<div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-onggi" data-dr-tog>옹기발효<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-onggi" hidden><li><a href="../products.html?cat=onggi">옹기발효 전체</a></li><li><a href="../products.html?cat=onggi&amp;sub=jang">장류</a></li><li><a href="../products.html?cat=onggi&amp;sub=vinegar">식초</a></li><li><a href="../products.html?cat=onggi&amp;sub=bibim">비빔장</a></li></ul></div><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-processed" data-dr-tog>가공식품<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-processed" hidden><li><a href="../products.html?cat=processed">가공식품 전체</a></li><li><a href="../products.html?cat=processed&amp;sub=jam">잼</a></li><li><a href="../products.html?cat=processed&amp;sub=jocheong">조청</a></li><li><a href="../products.html?cat=processed&amp;sub=ferment-tea">발효 재료·차</a></li></ul></div><a href="../products.html?cat=farm">농산물</a><a href="../products.html?cat=gift">선물세트</a><div class="drawer__grp"><button type="button" class="drawer__tog" aria-expanded="false" aria-controls="dr-sub-story" data-dr-tog>브랜드 스토리<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>
+</button><ul class="drawer__sub" id="dr-sub-story" hidden><li><a href="../story.html">영동에덴원 이야기</a></li><li><a href="../farming.html">농사 이야기</a></li><li><a href="../fermentation.html">발효 이야기</a></li></ul></div><a href="../contact.html">단체·기업 문의</a>    </nav>
+    <nav class="drawer__util" aria-label="회원·고객 메뉴">
+      <span class="hd__member" data-dr-member>
+  <a href="../account/login.html" data-dr-login data-m-anon>로그인</a>
+  <a href="../account/signup.html" data-dr-signup data-m-anon>회원가입</a>
+  <span data-dr-name data-m-in hidden></span>
+  <a href="../account/" data-dr-my data-m-in hidden>마이</a>
+  <button type="button" class="hd__logout" data-dr-logout data-m-in data-logout hidden>로그아웃</button>
+</span>
+
+<a href="../order-status.html">주문 조회</a><a href="../contact.html">고객센터</a>      <a href="../account/">마이페이지</a>
+    </nav>
+  </div>
+</div>
+<main id="main" tabindex="-1">
+<article class="mg" data-mg="2026-winter">
+  <section class="mg-cover" aria-labelledby="mg-cover-t">
+    <picture><source type="image/webp" srcset="../images/v2/mag26w-hero-480.webp 480w, ../images/v2/mag26w-hero-960.webp 960w, ../images/v2/mag26w-hero-1280.webp 1280w, ../images/v2/mag26w-hero-1440.webp 1440w, ../images/v2/mag26w-hero-1600.webp 1600w" sizes="100vw"><img src="../images/v2/mag26w-hero-960.jpg" srcset="../images/v2/mag26w-hero-480.jpg 480w, ../images/v2/mag26w-hero-960.jpg 960w, ../images/v2/mag26w-hero-1280.jpg 1280w, ../images/v2/mag26w-hero-1440.jpg 1440w, ../images/v2/mag26w-hero-1600.jpg 1600w" sizes="100vw" width="960" height="720" alt="새벽녘 밭을 가는 영동에덴원" class="mg-cover__img" loading="eager" fetchpriority="high" decoding="async" style="object-position:50% 62%"></picture>
+    <div class="mg-cover__scrim"></div>
+    <div class="mg-cover__in container">
+      <p class="mg-cover__ey">사계절의 발자취 · 2026 겨울호</p>
+      <h1 class="mg-cover__t" id="mg-cover-t">자연이 기다리고,<br>시간이 빚어낸 진심</h1>
+      <p class="mg-cover__sub">그리고… 농부의 발걸음, 사계절의 발자취</p>
+      <div class="mg-cover__ctas">
+        <a class="mg-btn mg-btn--light" href="#intro" data-promo="mag_cover_read">이야기 읽기</a>
+        <a class="mg-btn mg-btn--ghost" href="../files/edenwon-catalog-2027.pdf" data-promo="mag_cover_pdf">카탈로그 PDF 받기</a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="mg-toc" aria-label="매거진 목차">
+    <div class="container mg-toc__in"><a href="#seasons">사계절 이야기</a><a href="#time">발효의 시간</a><a href="#products">제품</a><a href="#seollal">설 선물</a><a href="#download" class="mg-toc__pdf"><svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10.5l5 5 5-5"/><path d="M5 20h14"/></svg>
+PDF 받기</a></div>
+  </nav>
+
+  <section class="mg-intro container" id="intro" aria-labelledby="mg-intro-t">
+    <div class="mg-intro__txt">
+      <p class="mg-ey">여는 글</p>
+      <h2 class="mg-h2" id="mg-intro-t">씨앗부터 식탁까지,<br>땅이 빚은 사계절의 정성</h2>
+<p class="mg-body">영동에덴원은 (주)농업회사법인 에프엔엘바이오푸드가 소속되어 있는 농원입니다. 화학농약과 화학비료 대신 유기농업자재와 직접 만든 발효퇴비, 유기질비료로 밭을 일구고, 그 밭에서 거둔 농산물로 발효식품을 생산합니다.</p><p class="mg-body">이 매거진은 봄·여름·가을·겨울을 차례로 따라가며, 영동에덴원의 사계절과 그 시간이 담긴 제품을 보여드립니다.</p>    </div>
+    <ol class="mg-steps" aria-label="씨앗부터 식탁까지">
+<li class="mg-steps__i"><span class="mg-steps__n">01</span><span class="mg-steps__c" aria-hidden="true"><svg aria-hidden="true" focusable="false" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.8c3.6 3 5.2 6.3 5.2 9.6a5.2 5.2 0 0 1-10.4 0c0-3.3 1.6-6.6 5.2-9.6z"/><path d="M12 9.5v7.4"/></svg>
+</span><span class="mg-steps__l">씨앗</span></li><li class="mg-steps__i"><span class="mg-steps__n">02</span><span class="mg-steps__c" aria-hidden="true"><svg aria-hidden="true" focusable="false" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5v-8.5"/><path d="M12 12c0-3.6-2.6-6.2-6.8-6.2 0 4 2.7 6.2 6.8 6.2z"/><path d="M12 14.2c0-3.1 2.3-5.6 6.2-5.6 0 3.5-2.4 5.6-6.2 5.6z"/><path d="M7.5 20.5h9"/></svg>
+</span><span class="mg-steps__l">재배</span></li><li class="mg-steps__i is-on"><span class="mg-steps__n">03</span><span class="mg-steps__c" aria-hidden="true"><svg aria-hidden="true" focusable="false" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V5.5"/><path d="M12 9c-2.1-.3-3.3-1.7-3.5-3.7 2.1.2 3.3 1.6 3.5 3.7z"/><path d="M12 9c2.1-.3 3.3-1.7 3.5-3.7-2.1.2-3.3 1.6-3.5 3.7z"/><path d="M12 13.4c-2.1-.3-3.3-1.7-3.5-3.7 2.1.2 3.3 1.6 3.5 3.7z"/><path d="M12 13.4c2.1-.3 3.3-1.7 3.5-3.7-2.1.2-3.3 1.6-3.5 3.7z"/><path d="M12 17.8c-2.1-.3-3.3-1.7-3.5-3.7 2.1.2 3.3 1.6 3.5 3.7z"/><path d="M12 17.8c2.1-.3 3.3-1.7 3.5-3.7-2.1.2-3.3 1.6-3.5 3.7z"/></svg>
+</span><span class="mg-steps__l">수확</span></li><li class="mg-steps__i"><span class="mg-steps__n">04</span><span class="mg-steps__c" aria-hidden="true"><svg aria-hidden="true" focusable="false" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9.2 4.6h5.6"/><path d="M9.6 6.6h4.8"/><path d="M9.9 6.6C6.6 8 5 10.6 5 13.6c0 3.6 2.6 6.4 4.4 7.2h5.2c1.8-.8 4.4-3.6 4.4-7.2 0-3-1.6-5.6-4.9-7"/><path d="M5.8 11.8c4 1 8.4 1 12.4 0"/></svg>
+</span><span class="mg-steps__l">발효</span></li><li class="mg-steps__i"><span class="mg-steps__n">05</span><span class="mg-steps__c" aria-hidden="true"><svg aria-hidden="true" focusable="false" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3.8 12.2h16.4c0 4.5-3.7 7.6-8.2 7.6s-8.2-3.1-8.2-7.6z"/><path d="M9.6 19.8h4.8"/><path d="M10 4.6c-.9 1 .9 2 0 3.2"/><path d="M14 4.6c-.9 1 .9 2 0 3.2"/></svg>
+</span><span class="mg-steps__l">식탁</span></li>    </ol>
+  </section>
+
+  <section class="mg-seasons" id="seasons" aria-labelledby="mg-seasons-t">
+    <div class="container mg-sec-head"><p class="mg-ey">사계절 이야기</p><h2 class="mg-h2" id="mg-seasons-t">밭에서 받은 질문에, 농부가 직접 답합니다</h2></div>
+    <article class="mg-season mg-season--spring" id="season-spring" aria-labelledby="mg-s-spring">
+      <div class="container mg-season__in">
+        <div class="mg-season__pics">
+          <picture><source type="image/webp" srcset="../images/v2/mag26w-spring-480.webp 480w, ../images/v2/mag26w-spring-960.webp 960w, ../images/v2/mag26w-spring-1600.webp 1600w" sizes="(max-width:900px) 100vw, 640px"><img src="../images/v2/mag26w-spring-960.jpg" srcset="../images/v2/mag26w-spring-480.jpg 480w, ../images/v2/mag26w-spring-960.jpg 960w, ../images/v2/mag26w-spring-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 640px" width="960" height="720" alt="봄의 영동에덴원" class="mg-season__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:50% 70%"></picture>
+          <div class="mg-season__row"><figure class="mg-fig"><picture><source type="image/webp" srcset="../images/v2/mag26w-spring-seedling-480.webp 480w, ../images/v2/mag26w-spring-seedling-960.webp 960w, ../images/v2/mag26w-spring-seedling-1000.webp 1000w" sizes="(max-width:900px) 50vw, 320px"><img src="../images/v2/mag26w-spring-seedling-960.jpg" srcset="../images/v2/mag26w-spring-seedling-480.jpg 480w, ../images/v2/mag26w-spring-seedling-960.jpg 960w, ../images/v2/mag26w-spring-seedling-1000.jpg 1000w" sizes="(max-width:900px) 50vw, 320px" width="960" height="720" alt="비닐 두둑에 한 포기씩 심는 모종" class="mg-fig__img" loading="lazy" fetchpriority="low" decoding="async"></picture><figcaption>비닐 두둑에 한 포기씩 심는 모종</figcaption></figure><figure class="mg-fig"><picture><source type="image/webp" srcset="../images/v2/mag26w-spring-sprout-480.webp 480w, ../images/v2/mag26w-spring-sprout-750.webp 750w" sizes="(max-width:900px) 50vw, 320px"><img src="../images/v2/mag26w-spring-sprout-750.jpg" srcset="../images/v2/mag26w-spring-sprout-480.jpg 480w, ../images/v2/mag26w-spring-sprout-750.jpg 750w" sizes="(max-width:900px) 50vw, 320px" width="750" height="1000" alt="포도나무에 돋은 새순" class="mg-fig__img" loading="lazy" fetchpriority="low" decoding="async"></picture><figcaption>포도나무에 돋은 새순</figcaption></figure></div>
+        </div>
+        <div class="mg-season__txt">
+          <div class="mg-season__hd"><span class="mg-season__hanja" aria-hidden="true">春</span><div><p class="mg-season__no">01 · 봄</p><h3 class="mg-season__t" id="mg-s-spring">땅을 깨우고,<br>씨앗을 심습니다</h3></div></div>
+          <p class="mg-season__qk">봄, 밭에서 받은 질문</p>
+          <div class="mg-qa"><details class="mg-qa__i" open><summary><span class="mg-qa__n">Q1</span><span class="mg-qa__q">여기서 키우는 게 뭐예요? 이게 나중에 어떤 제품이 되는 건가요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">에프엔엘바이오푸드는 영동에덴원이라는 농원 이름으로, 자연농법을 활용하여 식량작물, 과수, 수도작 등을 안전하고 건강한 농산물로 재배하고 있습니다. 저희가 직접 키운 원료는 정확한 발효 공정을 통해 안전하고 건강한 먹거리가 됩니다.</p></details><details class="mg-qa__i"><summary><span class="mg-qa__n">Q2</span><span class="mg-qa__q">씨앗부터 직접 키우는 거예요? 농산물을 사다 쓰는 게 아니고요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">맞습니다. 씨앗부터 식탁까지 책임진다는 마음가짐으로, 에프엔엘바이오푸드가 생산하는 발효 식품은 저희가 직접 재배하고 채집한 농산물과 원료로 만들고 있습니다.</p></details><details class="mg-qa__i"><summary><span class="mg-qa__n">Q3</span><span class="mg-qa__q">농약은 치세요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">에프엔엘바이오푸드는 농사를 지을 때 유기농업자재를 활용하여 방제를 하고 있습니다. 최근에는 자닮 미생물 농약을 직접 만들어 활용하고, 미생물 제제를 농사에 활용하고 있습니다.</p></details><details class="mg-qa__i"><summary><span class="mg-qa__n">Q4</span><span class="mg-qa__q">유기농업자재가 일반 농약이랑 뭐가 달라요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">유기농업자재는 화학 합성 성분 없이 천연 원료로 만든 자재입니다. 일반 농약보다 2배 더 비싸고 효과는 더디지만, 토양과 사람에게 안전합니다. 더 안전하고 건강한 먹거리를 만들기 위해, 에프엔엘바이오푸드는 유기농업자재를 활용하여 농사를 짓습니다.</p></details><details class="mg-qa__i"><summary><span class="mg-qa__n">Q5</span><span class="mg-qa__q">비료는요? 화학비료도 안 써요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">에프엔엘바이오푸드는 화학비료 대신 유기질비료를 자가제조해서 사용하고 있습니다. 매년 왕겨, 쌀겨, 골분, 어분, 비지, 미생물제제, 발효제를 섞어서 누적 온도 600°C 이상 발효시켜 만들어 농사에 활용합니다.</p></details></div>
+        </div>
+      </div>
+    </article>
+    <article class="mg-season mg-season--summer mg-season--rev" id="season-summer" aria-labelledby="mg-s-summer">
+      <div class="container mg-season__in">
+        <div class="mg-season__pics">
+          <picture><source type="image/webp" srcset="../images/v2/mag26w-summer-480.webp 480w, ../images/v2/mag26w-summer-960.webp 960w, ../images/v2/mag26w-summer-1600.webp 1600w" sizes="(max-width:900px) 100vw, 640px"><img src="../images/v2/mag26w-summer-960.jpg" srcset="../images/v2/mag26w-summer-480.jpg 480w, ../images/v2/mag26w-summer-960.jpg 960w, ../images/v2/mag26w-summer-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 640px" width="960" height="720" alt="여름의 영동에덴원" class="mg-season__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:50% 55%"></picture>
+          <div class="mg-season__row"><figure class="mg-fig"><picture><source type="image/webp" srcset="../images/v2/mag26w-summer-grape-480.webp 480w, ../images/v2/mag26w-summer-grape-960.webp 960w, ../images/v2/mag26w-summer-grape-1000.webp 1000w" sizes="(max-width:900px) 50vw, 320px"><img src="../images/v2/mag26w-summer-grape-960.jpg" srcset="../images/v2/mag26w-summer-grape-480.jpg 480w, ../images/v2/mag26w-summer-grape-960.jpg 960w, ../images/v2/mag26w-summer-grape-1000.jpg 1000w" sizes="(max-width:900px) 50vw, 320px" width="960" height="720" alt="송이가 여문 청포도" class="mg-fig__img" loading="lazy" fetchpriority="low" decoding="async"></picture><figcaption>송이가 여문 청포도</figcaption></figure><figure class="mg-fig"><picture><source type="image/webp" srcset="../images/v2/mag26w-summer-weeds-480.webp 480w, ../images/v2/mag26w-summer-weeds-960.webp 960w, ../images/v2/mag26w-summer-weeds-1000.webp 1000w" sizes="(max-width:900px) 50vw, 320px"><img src="../images/v2/mag26w-summer-weeds-960.jpg" srcset="../images/v2/mag26w-summer-weeds-480.jpg 480w, ../images/v2/mag26w-summer-weeds-960.jpg 960w, ../images/v2/mag26w-summer-weeds-1000.jpg 1000w" sizes="(max-width:900px) 50vw, 320px" width="960" height="720" alt="풀과 함께 자라는 밭" class="mg-fig__img" loading="lazy" fetchpriority="low" decoding="async"></picture><figcaption>풀과 함께 자라는 밭</figcaption></figure></div>
+        </div>
+        <div class="mg-season__txt">
+          <div class="mg-season__hd"><span class="mg-season__hanja" aria-hidden="true">夏</span><div><p class="mg-season__no">02 · 여름</p><h3 class="mg-season__t" id="mg-s-summer">풀과 함께,<br>작물이 자랍니다</h3></div></div>
+          <p class="mg-season__qk">여름, 밭에서 받은 질문</p>
+          <div class="mg-qa"><details class="mg-qa__i" open><summary><span class="mg-qa__n">Q1</span><span class="mg-qa__q">잡초가 많네요. 제초제는 안 쳐요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">에프엔엘바이오푸드는 가족이 먹는 식탁을 씨앗부터 식탁까지 책임진다는 생각으로 농사를 짓고 있습니다. 우리 가족이 먹을 식탁에 올라가는 원료입니다. 제초제를 사용하지 않는 이유가 여기 있습니다.</p></details><details class="mg-qa__i"><summary><span class="mg-qa__n">Q2</span><span class="mg-qa__q">직접 키운 농산물로 만든 식품이랑 그냥 사다 만든 식품이랑 맛이 달라요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">완전히 다르다고 말씀드릴 수 있습니다. 제초제와 화학비료를 사용하지 않고 자연농법으로 키우면, 작물 고유의 맛과 기능성이 살아납니다. 이렇게 키운 원료로 만든 발효식품은 재료 본연의 맛과 향, 기능성을 그대로 담습니다.</p></details><details class="mg-qa__i"><summary><span class="mg-qa__n">Q3</span><span class="mg-qa__q">이렇게 힘들게 직접 키우지 말고, 좋은 농산물 사다 쓰면 안 돼요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">흔히, 작물은 농부의 발소리를 들으며 자란다고 했습니다. 에프엔엘바이오푸드는 농부이자, 발효식품 생산자입니다. 소비자가 믿을 수 있는 안전하고 건강한 발효식품을 만들기 위해 앞으로도 작물에 우리의 발소리를 계속 들려주겠습니다.</p></details></div>
+        </div>
+      </div>
+    </article>
+    <article class="mg-season mg-season--autumn" id="season-autumn" aria-labelledby="mg-s-autumn">
+      <div class="container mg-season__in">
+        <div class="mg-season__pics">
+          <picture><source type="image/webp" srcset="../images/v2/mag26w-autumn-480.webp 480w, ../images/v2/mag26w-autumn-960.webp 960w, ../images/v2/mag26w-autumn-1600.webp 1600w" sizes="(max-width:900px) 100vw, 640px"><img src="../images/v2/mag26w-autumn-960.jpg" srcset="../images/v2/mag26w-autumn-480.jpg 480w, ../images/v2/mag26w-autumn-960.jpg 960w, ../images/v2/mag26w-autumn-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 640px" width="960" height="720" alt="가을의 영동에덴원" class="mg-season__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:50% 60%"></picture>
+          <div class="mg-season__row"><figure class="mg-fig"><picture><source type="image/webp" srcset="../images/v2/mag26w-autumn-beans-480.webp 480w, ../images/v2/mag26w-autumn-beans-750.webp 750w" sizes="(max-width:900px) 50vw, 320px"><img src="../images/v2/mag26w-autumn-beans-750.jpg" srcset="../images/v2/mag26w-autumn-beans-480.jpg 480w, ../images/v2/mag26w-autumn-beans-750.jpg 750w" sizes="(max-width:900px) 50vw, 320px" width="750" height="1000" alt="가을에 거둔 콩" class="mg-fig__img" loading="lazy" fetchpriority="low" decoding="async"></picture><figcaption>가을에 거둔 콩</figcaption></figure><figure class="mg-fig"><picture><source type="image/webp" srcset="../images/v2/mag26w-autumn-pepper-480.webp 480w, ../images/v2/mag26w-autumn-pepper-960.webp 960w, ../images/v2/mag26w-autumn-pepper-1000.webp 1000w" sizes="(max-width:900px) 50vw, 320px"><img src="../images/v2/mag26w-autumn-pepper-960.jpg" srcset="../images/v2/mag26w-autumn-pepper-480.jpg 480w, ../images/v2/mag26w-autumn-pepper-960.jpg 960w, ../images/v2/mag26w-autumn-pepper-1000.jpg 1000w" sizes="(max-width:900px) 50vw, 320px" width="960" height="720" alt="말린 고추 손질" class="mg-fig__img" loading="lazy" fetchpriority="low" decoding="async"></picture><figcaption>말린 고추 손질</figcaption></figure></div>
+        </div>
+        <div class="mg-season__txt">
+          <div class="mg-season__hd"><span class="mg-season__hanja" aria-hidden="true">秋</span><div><p class="mg-season__no">03 · 가을</p><h3 class="mg-season__t" id="mg-s-autumn">밭에서 가꾼 작물을 수확해<br>발효를 준비합니다</h3></div></div>
+          <p class="mg-season__qk">가을, 밭에서 받은 질문</p>
+          <div class="mg-qa"><details class="mg-qa__i" open><summary><span class="mg-qa__n">Q1</span><span class="mg-qa__q">이 콩이 된장·간장이 되는 거예요? 수확량이 얼마나 돼요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">네, 우리가 수확한 콩으로 장을 담급니다. 자연농법으로 농사짓기 때문에, 수확량이 일반 농사보다 훨씬 적습니다. 그렇지만, 우리가 농사지은 풀과 함께 자란 콩은 밍밍하지 않고, 콩 특유의 고소한 맛과 단백함이 극대화되어 맛이 좋습니다.</p></details><details class="mg-qa__i"><summary><span class="mg-qa__n">Q2</span><span class="mg-qa__q">영동에덴원 고추장은 마트 고추장과 다른 점이 뭔가요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">자연농법으로 재배한 고추의 고유의 맛과 기능성을 최대한 살린 고춧가루를 사용합니다. 다양한 원료를 발효하고 조청을 활용하여 만든 고추장은 최소 18개월 이상의 햇볕치기와 바람치기를 통해 풍미가 깊어집니다.</p></details><details class="mg-qa__i"><summary><span class="mg-qa__n">Q3</span><span class="mg-qa__q">수확하고 바로 발효식품을 만드는 건가요? 얼마나 걸려요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">에프엔엘바이오푸드의 발효 시간은 겨울부터 시작됩니다. 겨울 동안 최적의 환경에서 메주를 완전히 띄우고, 다시 봄이 되면 메주를 활용해 전통 옹기에 장을 담습니다. 옹기에 담긴 그날부터 여러분의 식탁에 오르기까지, 최소 2년의 시간이 흐릅니다.</p></details></div>
+        </div>
+      </div>
+    </article>
+    <article class="mg-season mg-season--winter mg-season--rev" id="season-winter" aria-labelledby="mg-s-winter">
+      <div class="container mg-season__in">
+        <div class="mg-season__pics">
+          <picture><source type="image/webp" srcset="../images/v2/mag26w-winter-480.webp 480w, ../images/v2/mag26w-winter-960.webp 960w, ../images/v2/mag26w-winter-1600.webp 1600w" sizes="(max-width:900px) 100vw, 640px"><img src="../images/v2/mag26w-winter-960.jpg" srcset="../images/v2/mag26w-winter-480.jpg 480w, ../images/v2/mag26w-winter-960.jpg 960w, ../images/v2/mag26w-winter-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 640px" width="960" height="720" alt="겨울의 영동에덴원" class="mg-season__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:50% 60%"></picture>
+          <div class="mg-season__row"><figure class="mg-fig"><picture><source type="image/webp" srcset="../images/v2/mag26w-winter-meju-hand-480.webp 480w, ../images/v2/mag26w-winter-meju-hand-857.webp 857w" sizes="(max-width:900px) 50vw, 320px"><img src="../images/v2/mag26w-winter-meju-hand-857.jpg" srcset="../images/v2/mag26w-winter-meju-hand-480.jpg 480w, ../images/v2/mag26w-winter-meju-hand-857.jpg 857w" sizes="(max-width:900px) 50vw, 320px" width="857" height="643" alt="손으로 빚는 메주" class="mg-fig__img" loading="lazy" fetchpriority="low" decoding="async"></picture><figcaption>손으로 빚는 메주</figcaption></figure><figure class="mg-fig"><picture><source type="image/webp" srcset="../images/v2/mag26w-winter-meju-dry-480.webp 480w, ../images/v2/mag26w-winter-meju-dry-960.webp 960w, ../images/v2/mag26w-winter-meju-dry-1000.webp 1000w" sizes="(max-width:900px) 50vw, 320px"><img src="../images/v2/mag26w-winter-meju-dry-960.jpg" srcset="../images/v2/mag26w-winter-meju-dry-480.jpg 480w, ../images/v2/mag26w-winter-meju-dry-960.jpg 960w, ../images/v2/mag26w-winter-meju-dry-1000.jpg 1000w" sizes="(max-width:900px) 50vw, 320px" width="960" height="720" alt="바람에 말리는 메주" class="mg-fig__img" loading="lazy" fetchpriority="low" decoding="async"></picture><figcaption>바람에 말리는 메주</figcaption></figure></div>
+        </div>
+        <div class="mg-season__txt">
+          <div class="mg-season__hd"><span class="mg-season__hanja" aria-hidden="true">冬</span><div><p class="mg-season__no">04 · 겨울</p><h3 class="mg-season__t" id="mg-s-winter">메주를 띄우고,<br>장을 기다립니다</h3></div></div>
+          <p class="mg-season__qk">겨울, 밭에서 받은 질문</p>
+          <div class="mg-qa"><details class="mg-qa__i" open><summary><span class="mg-qa__n">Q1</span><span class="mg-qa__q">겨울에는 농사를 못 하잖아요. 이때는 뭐 하세요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">겨울은 에프엔엘바이오푸드의 가장 바쁜 시기인 발효를 하는 계절입니다. 가을에 수확한 콩을 사용하여, 장을 담을 메주와 청국장을 정확한 이론과 최적의 발효 환경에서 띄우고, 장을 담기 위한 준비를 합니다.</p></details><details class="mg-qa__i"><summary><span class="mg-qa__n">Q2</span><span class="mg-qa__q">옹기가 눈을 맞으면 안에 있는 장은 얼지 않나요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">옛날부터 선조들이 항아리에 장을 담은 이유가 있습니다. 추운 겨울이 되면 외부 유해 미생물이 활동하기 어려운 온도가 됩니다. 반면, 옹기 안에 있는 장은 얼지 않고 활동하는 미생물로 시간이 지날수록 숙성이 되어 깊은 맛을 냅니다.</p></details><details class="mg-qa__i"><summary><span class="mg-qa__n">Q3</span><span class="mg-qa__q">모든 원료를 직접 재배하나요?</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">핵심 원료는 우리 밭에서 납니다. 우리 밭 콩이 간장·된장·청국장이 되고, 우리 밭 고추가 고추장이 됩니다. 생산량이 부족할 때는 신뢰할 수 있는 농가에서 직접 가져옵니다.</p></details><details class="mg-qa__i"><summary><span class="mg-qa__n">Q4</span><span class="mg-qa__q">직접 키운 원료로 만든 거니까 더 비쌀 수 밖에 없겠네요.</span><span class="mg-qa__plus" aria-hidden="true">+</span></summary><p class="mg-qa__a">네. 우리 발효식품은, 더 안전하고 건강한 먹거리를 위하는 농부의 발소리를 들으며 자란 농산물을 사용하여 최적의 환경과 발효 기술로 발효식품을 만듭니다. 사계절을 기다린 자연과 시간이 빚은 진심 — 직접 드셔보시면 그 차이를 아실 겁니다.</p></details></div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="mg-time" id="time" aria-labelledby="mg-time-t">
+    <div class="container">
+      <div class="mg-time__hd">
+        <div><p class="mg-ey">발효의 시간</p><h2 class="mg-h2" id="mg-time-t">밭에 뿌린 씨앗부터<br>식탁에 오르기까지...</h2></div>
+        <p class="mg-time__min"><span>최소</span><b>3년</b></p>
+      </div>
+      <ol class="mg-time__list"><li class="mg-time__i mg-c--spring"><picture><source type="image/webp" srcset="../images/v2/mag26w-time-plough-480.webp 480w, ../images/v2/mag26w-time-plough-960.webp 960w, ../images/v2/mag26w-time-plough-1000.webp 1000w" sizes="112px"><img src="../images/v2/mag26w-time-plough-960.jpg" srcset="../images/v2/mag26w-time-plough-480.jpg 480w, ../images/v2/mag26w-time-plough-960.jpg 960w, ../images/v2/mag26w-time-plough-1000.jpg 1000w" sizes="112px" width="960" height="720" alt="밭을 갈고 씨앗을 심습니다" class="mg-time__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span class="mg-time__k">봄</span><span class="mg-time__t">밭을 갈고 씨앗을 심습니다</span><span class="mg-time__b">화학퇴비 대신 직접 만든 발효퇴비로 땅을 준비합니다.</span></li><li class="mg-time__i mg-c--summer"><picture><source type="image/webp" srcset="../images/v2/mag26w-summer-weeds-480.webp 480w, ../images/v2/mag26w-summer-weeds-960.webp 960w, ../images/v2/mag26w-summer-weeds-1000.webp 1000w" sizes="112px"><img src="../images/v2/mag26w-summer-weeds-960.jpg" srcset="../images/v2/mag26w-summer-weeds-480.jpg 480w, ../images/v2/mag26w-summer-weeds-960.jpg 960w, ../images/v2/mag26w-summer-weeds-1000.jpg 1000w" sizes="112px" width="960" height="720" alt="풀과 함께 키웁니다" class="mg-time__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span class="mg-time__k">여름</span><span class="mg-time__t">풀과 함께 키웁니다</span><span class="mg-time__b">제초제 없이, 유기농업자재와 미생물 제제로 작물을 돌봅니다.</span></li><li class="mg-time__i mg-c--autumn"><picture><source type="image/webp" srcset="../images/v2/mag26w-autumn-beans-480.webp 480w, ../images/v2/mag26w-autumn-beans-750.webp 750w" sizes="112px"><img src="../images/v2/mag26w-autumn-beans-750.jpg" srcset="../images/v2/mag26w-autumn-beans-480.jpg 480w, ../images/v2/mag26w-autumn-beans-750.jpg 750w" sizes="112px" width="750" height="1000" alt="콩과 고추를 거둡니다" class="mg-time__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span class="mg-time__k">가을</span><span class="mg-time__t">콩과 고추를 거둡니다</span><span class="mg-time__b">콩은 간장·된장·청국장의 재료가 되고, 고추는 고추장의 재료가 됩니다.</span></li><li class="mg-time__i mg-c--winter"><picture><source type="image/webp" srcset="../images/v2/mag26w-winter-meju-dry-480.webp 480w, ../images/v2/mag26w-winter-meju-dry-960.webp 960w, ../images/v2/mag26w-winter-meju-dry-1000.webp 1000w" sizes="112px"><img src="../images/v2/mag26w-winter-meju-dry-960.jpg" srcset="../images/v2/mag26w-winter-meju-dry-480.jpg 480w, ../images/v2/mag26w-winter-meju-dry-960.jpg 960w, ../images/v2/mag26w-winter-meju-dry-1000.jpg 1000w" sizes="112px" width="960" height="720" alt="메주를 띄웁니다" class="mg-time__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span class="mg-time__k">겨울</span><span class="mg-time__t">메주를 띄웁니다</span><span class="mg-time__b">최적의 발효 환경에서 메주와 청국장을 띄웁니다.</span></li><li class="mg-time__i mg-c--spring"><picture><source type="image/webp" srcset="../images/v2/mag26w-time-onggi-480.webp 480w, ../images/v2/mag26w-time-onggi-750.webp 750w" sizes="112px"><img src="../images/v2/mag26w-time-onggi-750.jpg" srcset="../images/v2/mag26w-time-onggi-480.jpg 480w, ../images/v2/mag26w-time-onggi-750.jpg 750w" sizes="112px" width="750" height="1000" alt="옹기에 장을 담급니다" class="mg-time__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span class="mg-time__k">이듬해 봄</span><span class="mg-time__t">옹기에 장을 담급니다</span><span class="mg-time__b">완전히 뜬 메주로 전통 옹기에 장을 담급니다.</span></li><li class="mg-time__i mg-c--accent"><picture><source type="image/webp" srcset="../images/v2/mag26w-winter-480.webp 480w, ../images/v2/mag26w-winter-960.webp 960w, ../images/v2/mag26w-winter-1600.webp 1600w" sizes="112px"><img src="../images/v2/mag26w-winter-960.jpg" srcset="../images/v2/mag26w-winter-480.jpg 480w, ../images/v2/mag26w-winter-960.jpg 960w, ../images/v2/mag26w-winter-1600.jpg 1600w" sizes="112px" width="960" height="720" alt="계절을 지나며 발효와 숙성이 됩니다" class="mg-time__img" loading="lazy" fetchpriority="low" decoding="async"></picture><span class="mg-time__k">숙성</span><span class="mg-time__t">계절을 지나며 발효와 숙성이 됩니다</span><span class="mg-time__b">옹기 속 미생물이 계절을 거치며 깊은 맛을 냅니다.</span></li></ol>
+    </div>
+  </section>
+
+  <section class="mg-prods container" id="products" aria-labelledby="mg-prods-t">
+    <div class="mg-sec-head mg-sec-head--flush">
+      <p class="mg-ey">제품</p>
+      <h2 class="mg-h2" id="mg-prods-t">사계절이 담긴 영동에덴원의 발효 식탁</h2>
+      <p class="mg-body mg-muted">가격과 옵션은 각 상품 페이지에서 확인하실 수 있습니다.</p>
+      <nav class="mg-chips" aria-label="제품 분류"><a href="#products" aria-current="true">전체</a><a href="#cat-onggi">옹기발효</a><a href="#cat-proc">가공식품</a><a href="#cat-farm">농산물</a><a href="#seollal">선물세트</a></nav>
+    </div>
+    <h3 class="mg-grp" id="cat-onggi"><span>01</span>옹기발효 · 장류</h3>
+<div class="mg-feat"><article class="mg-feat__i"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-doenjang-480.webp 480w, ../images/v2/mag26w-p-doenjang-960.webp 960w, ../images/v2/mag26w-p-doenjang-1000.webp 1000w" sizes="(max-width:900px) 100vw, 400px"><img src="../images/v2/mag26w-p-doenjang-960.jpg" srcset="../images/v2/mag26w-p-doenjang-480.jpg 480w, ../images/v2/mag26w-p-doenjang-960.jpg 960w, ../images/v2/mag26w-p-doenjang-1000.jpg 1000w" sizes="(max-width:900px) 100vw, 400px" width="960" height="960" alt="옹기숙성 된장" class="mg-feat__img" loading="lazy" fetchpriority="low" decoding="async"></picture><div class="mg-feat__body"><span class="mg-badge">2년 이상 숙성</span><h4 class="mg-feat__t">옹기숙성 된장</h4><p class="mg-feat__sub">자가 재배 콩 · 천일염</p><p class="mg-feat__k">이 제품의 사계절</p><ol class="mg-flow"><li><span>우리 밭 콩</span></li><li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<span>겨울 메주 띄우기</span></li><li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<span>이듬해 봄 장 담그기</span></li><li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<span>옹기 2년 이상 숙성</span></li></ol><a class="mg-more" href="../products/doenjang.html">상품 보기<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></div></article><article class="mg-feat__i"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-gochujang-480.webp 480w, ../images/v2/mag26w-p-gochujang-960.webp 960w, ../images/v2/mag26w-p-gochujang-1000.webp 1000w" sizes="(max-width:900px) 100vw, 400px"><img src="../images/v2/mag26w-p-gochujang-960.jpg" srcset="../images/v2/mag26w-p-gochujang-480.jpg 480w, ../images/v2/mag26w-p-gochujang-960.jpg 960w, ../images/v2/mag26w-p-gochujang-1000.jpg 1000w" sizes="(max-width:900px) 100vw, 400px" width="960" height="960" alt="옹기숙성 고추장" class="mg-feat__img" loading="lazy" fetchpriority="low" decoding="async"></picture><div class="mg-feat__body"><span class="mg-badge">1년 6개월 이상 숙성</span><h4 class="mg-feat__t">옹기숙성 고추장</h4><p class="mg-feat__sub">엿기름 당화액 · 메주가루</p><p class="mg-feat__k">이 제품의 사계절</p><ol class="mg-flow"><li><span>우리 밭 고추</span></li><li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<span>엿기름 당화</span></li><li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<span>메주가루와 버무림</span></li><li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<span>옹기 1년 6개월 이상 숙성</span></li></ol><a class="mg-more" href="../products/gochujang.html">상품 보기<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></div></article><article class="mg-feat__i"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-eoganjang-480.webp 480w, ../images/v2/mag26w-p-eoganjang-960.webp 960w, ../images/v2/mag26w-p-eoganjang-1000.webp 1000w" sizes="(max-width:900px) 100vw, 400px"><img src="../images/v2/mag26w-p-eoganjang-960.jpg" srcset="../images/v2/mag26w-p-eoganjang-480.jpg 480w, ../images/v2/mag26w-p-eoganjang-960.jpg 960w, ../images/v2/mag26w-p-eoganjang-1000.jpg 1000w" sizes="(max-width:900px) 100vw, 400px" width="960" height="960" alt="옹기숙성 어간장" class="mg-feat__img" loading="lazy" fetchpriority="low" decoding="async"></picture><div class="mg-feat__body"><span class="mg-badge">3년 액젓 + 2년 간장</span><h4 class="mg-feat__t">옹기숙성 어간장</h4><p class="mg-feat__sub">액젓과 간장을 옹기에서 함께 숙성</p><p class="mg-feat__k">이 제품의 사계절</p><ol class="mg-flow"><li><span>3년 숙성 액젓</span></li><li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<span>2년 숙성 간장</span></li><li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<span>옹기에서 숙성</span></li></ol><a class="mg-more" href="../products/eoganjang.html">상품 보기<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></div></article></div><div class="mg-cards"><article class="mg-card"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-cheonggukjang-480.webp 480w, ../images/v2/mag26w-p-cheonggukjang-880.webp 880w" sizes="(max-width:600px) 50vw, 280px"><img src="../images/v2/mag26w-p-cheonggukjang-880.jpg" srcset="../images/v2/mag26w-p-cheonggukjang-480.jpg 480w, ../images/v2/mag26w-p-cheonggukjang-880.jpg 880w" sizes="(max-width:600px) 50vw, 280px" width="880" height="1100" alt="옹기발효 청국장" class="mg-card__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="mg-card__t">옹기발효 청국장</h4><p class="mg-card__sub">냄새를 줄인 옹기 발효</p><a class="mg-more mg-more--sm" href="../products/cheonggukjang.html" aria-label="옹기발효 청국장 상품 보기">상품 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article><article class="mg-card"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-meju-480.webp 480w, ../images/v2/mag26w-p-meju-880.webp 880w" sizes="(max-width:600px) 50vw, 280px"><img src="../images/v2/mag26w-p-meju-880.jpg" srcset="../images/v2/mag26w-p-meju-480.jpg 480w, ../images/v2/mag26w-p-meju-880.jpg 880w" sizes="(max-width:600px) 50vw, 280px" width="880" height="1100" alt="명품 메주" class="mg-card__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="mg-card__t">명품 메주</h4><p class="mg-card__sub">발효실에서 속까지 띄운 메주</p><a class="mg-more mg-more--sm" href="../products/meju.html" aria-label="명품 메주 상품 보기">상품 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article><article class="mg-card"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-bibim-doenjang-480.webp 480w, ../images/v2/mag26w-p-bibim-doenjang-880.webp 880w" sizes="(max-width:600px) 50vw, 280px"><img src="../images/v2/mag26w-p-bibim-doenjang-880.jpg" srcset="../images/v2/mag26w-p-bibim-doenjang-480.jpg 480w, ../images/v2/mag26w-p-bibim-doenjang-880.jpg 880w" sizes="(max-width:600px) 50vw, 280px" width="880" height="1100" alt="옹기숙성 비빔된장" class="mg-card__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="mg-card__t">옹기숙성 비빔된장</h4><p class="mg-card__sub">밥에 비비거나 쌈장으로</p><a class="mg-more mg-more--sm" href="../products/bibim-doenjang.html" aria-label="옹기숙성 비빔된장 상품 보기">상품 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article><article class="mg-card"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-bibim-gochujang-480.webp 480w, ../images/v2/mag26w-p-bibim-gochujang-880.webp 880w" sizes="(max-width:600px) 50vw, 280px"><img src="../images/v2/mag26w-p-bibim-gochujang-880.jpg" srcset="../images/v2/mag26w-p-bibim-gochujang-480.jpg 480w, ../images/v2/mag26w-p-bibim-gochujang-880.jpg 880w" sizes="(max-width:600px) 50vw, 280px" width="880" height="1100" alt="옹기숙성 비빔고추장" class="mg-card__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="mg-card__t">옹기숙성 비빔고추장</h4><p class="mg-card__sub">밥에 비비거나 쌈장으로</p><a class="mg-more mg-more--sm" href="../products/bibim-gochujang.html" aria-label="옹기숙성 비빔고추장 상품 보기">상품 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article><article class="mg-card"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-vinegar-480.webp 480w, ../images/v2/mag26w-p-vinegar-880.webp 880w" sizes="(max-width:600px) 50vw, 280px"><img src="../images/v2/mag26w-p-vinegar-880.jpg" srcset="../images/v2/mag26w-p-vinegar-480.jpg 480w, ../images/v2/mag26w-p-vinegar-880.jpg 880w" sizes="(max-width:600px) 50vw, 280px" width="880" height="1100" alt="발효의 초심 천연식초" class="mg-card__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="mg-card__t">발효의 초심 천연식초</h4><p class="mg-card__sub">자연 발효 · 산야초·과일·프리미엄 24종</p><a class="mg-more mg-more--sm" href="../products/vinegar.html" aria-label="발효의 초심 천연식초 상품 보기">상품 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article></div>    <h3 class="mg-grp" id="cat-proc"><span>02</span>가공식품 · 발효 재료와 차</h3>
+<div class="mg-cards"><article class="mg-card"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-jam-480.webp 480w, ../images/v2/mag26w-p-jam-880.webp 880w" sizes="(max-width:600px) 50vw, 280px"><img src="../images/v2/mag26w-p-jam-880.jpg" srcset="../images/v2/mag26w-p-jam-480.jpg 480w, ../images/v2/mag26w-p-jam-880.jpg 880w" sizes="(max-width:600px) 50vw, 280px" width="880" height="1100" alt="진짜&#39;S 잼" class="mg-card__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="mg-card__t">진짜&#39;S 잼</h4><p class="mg-card__sub">가마솥 3시간 · 샤인머스캣·복숭아·토마토·흑포도·딸기</p><a class="mg-more mg-more--sm" href="../products/jam.html" aria-label="진짜&#39;S 잼 상품 보기">상품 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article><article class="mg-card"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-jocheong-480.webp 480w, ../images/v2/mag26w-p-jocheong-880.webp 880w" sizes="(max-width:600px) 50vw, 280px"><img src="../images/v2/mag26w-p-jocheong-880.jpg" srcset="../images/v2/mag26w-p-jocheong-480.jpg 480w, ../images/v2/mag26w-p-jocheong-880.jpg 880w" sizes="(max-width:600px) 50vw, 280px" width="880" height="1100" alt="진짜&#39;S 조청" class="mg-card__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="mg-card__t">진짜&#39;S 조청</h4><p class="mg-card__sub">자가 재배 엿기름 · 가마솥 6시간</p><a class="mg-more mg-more--sm" href="../products/jocheong.html" aria-label="진짜&#39;S 조청 상품 보기">상품 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article><article class="mg-card"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-jakdukongcha-480.webp 480w, ../images/v2/mag26w-p-jakdukongcha-880.webp 880w" sizes="(max-width:600px) 50vw, 280px"><img src="../images/v2/mag26w-p-jakdukongcha-880.jpg" srcset="../images/v2/mag26w-p-jakdukongcha-480.jpg 480w, ../images/v2/mag26w-p-jakdukongcha-880.jpg 880w" sizes="(max-width:600px) 50vw, 280px" width="880" height="1100" alt="초생재배 작두콩차" class="mg-card__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="mg-card__t">초생재배 작두콩차</h4><p class="mg-card__sub">풀과 함께 키운 작두콩으로 만든 차</p><a class="mg-more mg-more--sm" href="../products/eden-chosaengjaebae-jakdukongcha.html" aria-label="초생재배 작두콩차 상품 보기">상품 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article><article class="mg-card"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-nuruksogeum-480.webp 480w, ../images/v2/mag26w-p-nuruksogeum-880.webp 880w" sizes="(max-width:600px) 50vw, 280px"><img src="../images/v2/mag26w-p-nuruksogeum-880.jpg" srcset="../images/v2/mag26w-p-nuruksogeum-480.jpg 480w, ../images/v2/mag26w-p-nuruksogeum-880.jpg 880w" sizes="(max-width:600px) 50vw, 280px" width="880" height="1100" alt="옹기발효 누룩소금" class="mg-card__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="mg-card__t">옹기발효 누룩소금</h4><p class="mg-card__sub">옹기에서 발효한 누룩소금</p><a class="mg-more mg-more--sm" href="../products/eden-onggibalhyo-nuruksogeum.html" aria-label="옹기발효 누룩소금 상품 보기">상품 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article><article class="mg-card"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-mejugaru-480.webp 480w, ../images/v2/mag26w-p-mejugaru-880.webp 880w" sizes="(max-width:600px) 50vw, 280px"><img src="../images/v2/mag26w-p-mejugaru-880.jpg" srcset="../images/v2/mag26w-p-mejugaru-480.jpg 480w, ../images/v2/mag26w-p-mejugaru-880.jpg 880w" sizes="(max-width:600px) 50vw, 280px" width="880" height="1100" alt="옹기발효 찰개떡메주가루" class="mg-card__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="mg-card__t">옹기발효 찰개떡메주가루</h4><p class="mg-card__sub">옹기에서 발효한 메주가루</p><a class="mg-more mg-more--sm" href="../products/eden-onggibalhyo-chalgaetteokmejugaru.html" aria-label="옹기발효 찰개떡메주가루 상품 보기">상품 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article><article class="mg-card"><picture><source type="image/webp" srcset="../images/v2/mag26w-p-jwinunikong-480.webp 480w, ../images/v2/mag26w-p-jwinunikong-880.webp 880w" sizes="(max-width:600px) 50vw, 280px"><img src="../images/v2/mag26w-p-jwinunikong-880.jpg" srcset="../images/v2/mag26w-p-jwinunikong-480.jpg 480w, ../images/v2/mag26w-p-jwinunikong-880.jpg 880w" sizes="(max-width:600px) 50vw, 280px" width="880" height="1100" alt="옹기발효 쥐눈이콩" class="mg-card__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h4 class="mg-card__t">옹기발효 쥐눈이콩</h4><p class="mg-card__sub">옹기에서 발효한 쥐눈이콩</p><a class="mg-more mg-more--sm" href="../products/eden-onggibalhyo-jwinunikong.html" aria-label="옹기발효 쥐눈이콩 상품 보기">상품 보기<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article></div>    <h3 class="mg-grp" id="cat-farm"><span>03</span>농산물</h3>
+<ul class="mg-list"><li><a href="../products/shine-grape.html">청포도</a><em>제철</em></li><li><a href="../products/potato.html">감자</a></li><li><a href="../products/garlic.html">마늘</a></li><li><a href="../products/onion.html">양파</a></li><li><a href="../products/beet.html">비트</a></li><li><a href="../products/goguma.html">고구마</a></li><li><a href="../products/ssal.html">맵쌀(9분도)</a></li><li><a href="../products/chamkkae.html">참깨</a></li><li><a href="../products/pea.html">햇 완두콩</a></li></ul>  </section>
+
+  <section class="mg-gift" id="seollal" aria-labelledby="mg-gift-t">
+    <div class="container">
+      <div class="mg-gift__top">
+        <div class="mg-gift__txt">
+          <p class="mg-ey mg-ey--dk">설 선물 특집 · 2027</p>
+          <h2 class="mg-h2 mg-h2--dk" id="mg-gift-t">사계절을 담은<br>설 선물</h2>
+          <p class="mg-body mg-body--dk">2027년 설은 2월 7일입니다. 설 전에 받으시려면 1월 말까지 주문해 주세요. 정확한 택배 마감일은 1월 초에 다시 안내해 드릴게요.</p>
+          <div class="mg-gift__ctas"><a class="mg-btn mg-btn--light" href="../files/edenwon-catalog-2027.pdf" data-promo="mag_gift_pdf">설 선물 카탈로그 PDF 받기</a><a class="mg-btn mg-btn--ghost" href="../contact.html">단체·기업 구매 문의</a></div>
+        </div>
+        <div class="mg-gift__pic"><picture><source type="image/webp" srcset="../images/v2/mag26w-seollal-jangdok-480.webp 480w, ../images/v2/mag26w-seollal-jangdok-960.webp 960w, ../images/v2/mag26w-seollal-jangdok-1600.webp 1600w" sizes="(max-width:900px) 100vw, 560px"><img src="../images/v2/mag26w-seollal-jangdok-960.jpg" srcset="../images/v2/mag26w-seollal-jangdok-480.jpg 480w, ../images/v2/mag26w-seollal-jangdok-960.jpg 960w, ../images/v2/mag26w-seollal-jangdok-1600.jpg 1600w" sizes="(max-width:900px) 100vw, 560px" width="960" height="720" alt="눈 덮인 영동에덴원 장독대" class="mg-gift__img" loading="lazy" fetchpriority="low" decoding="async" style="object-position:50% 55%"></picture></div>
+      </div>
+      <div class="mg-gift__sets">
+<article class="mg-set"><picture><source type="image/webp" srcset="../images/v2/mag26w-gift-jang-480.webp 480w, ../images/v2/mag26w-gift-jang-960.webp 960w, ../images/v2/mag26w-gift-jang-1200.webp 1200w" sizes="(max-width:900px) 100vw, 380px"><img src="../images/v2/mag26w-gift-jang-960.jpg" srcset="../images/v2/mag26w-gift-jang-480.jpg 480w, ../images/v2/mag26w-gift-jang-960.jpg 960w, ../images/v2/mag26w-gift-jang-1200.jpg 1200w" sizes="(max-width:900px) 100vw, 380px" width="960" height="720" alt="장류 선물세트" class="mg-set__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h3 class="mg-set__t">장류 선물세트</h3><p class="mg-set__sub">4종 구성 고르기 · 합산가에서 5,000원 할인</p><a class="mg-more mg-more--dk" href="../giftset.html?set=jam">구성 고르기<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article><article class="mg-set"><picture><source type="image/webp" srcset="../images/v2/mag26w-gift-vinegar-480.webp 480w, ../images/v2/mag26w-gift-vinegar-960.webp 960w, ../images/v2/mag26w-gift-vinegar-1200.webp 1200w" sizes="(max-width:900px) 100vw, 380px"><img src="../images/v2/mag26w-gift-vinegar-960.jpg" srcset="../images/v2/mag26w-gift-vinegar-480.jpg 480w, ../images/v2/mag26w-gift-vinegar-960.jpg 960w, ../images/v2/mag26w-gift-vinegar-1200.jpg 1200w" sizes="(max-width:900px) 100vw, 380px" width="960" height="720" alt="식초 선물세트" class="mg-set__img" loading="lazy" fetchpriority="low" decoding="async"></picture><h3 class="mg-set__t">식초 선물세트</h3><p class="mg-set__sub">4종 구성 고르기 · 합산가에서 5,000원 할인</p><a class="mg-more mg-more--dk" href="../giftset.html?set=vinegar">구성 고르기<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article>        <article class="mg-set mg-set--b2b"><p class="mg-ey mg-ey--dk">단체 · 기업 선물</p><h3 class="mg-set__t">임직원·거래처 선물은<br>따로 상담해 드립니다</h3><p class="mg-set__sub">한 품목 20개가 넘는 대량 주문은 단체·기업 구매 문의로 받습니다. 구성과 수량, 받으실 날짜를 알려 주시면 견적을 드립니다.</p><a class="mg-more mg-more--dk" href="../contact.html">구매 문의하기<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mg-dl container" id="download" aria-labelledby="mg-dl-t">
+    <p class="mg-dl__q" id="mg-dl-t">사계절을 기다린 자연과 시간이 빚은 진심,<br>직접 드셔보시면 그 차이를 아실 겁니다.</p>
+    <a class="mg-dl__card" href="../files/edenwon-catalog-2027.pdf" data-promo="mag_download">
+      <span class="mg-dl__ic" aria-hidden="true"><svg aria-hidden="true" focusable="false" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10.5l5 5 5-5"/><path d="M5 20h14"/></svg>
+</span>
+      <span class="mg-dl__txt"><b>제품 카탈로그 2027 PDF</b><span>옹기발효 장류·가공식품·선물세트 · A4 인쇄용</span><em>PDF · 12쪽 · 3.2MB</em></span>
+    </a>
+  </section>
+</article>
+</main>
+<footer class="ft">
+  <div class="ft__navwrap">
+    <nav class="ft__nav container" aria-label="정책·안내">
+      <a href="../story.html">영동에덴원 소개</a>
+      <a href="../magazine/2026-winter.html" data-promo="footer_mag">사계절 매거진</a>      <a href="../files/edenwon-catalog-2027.pdf" data-promo="footer_pdf">제품 카탈로그 PDF</a>
+<a href="../gallery.html">계절 갤러리</a><a href="../terms.html">이용약관</a><a href="../privacy.html" class="is-strong">개인정보처리방침</a><a href="../refund.html">교환·반품·환불 안내</a>      <a href="../order-status.html">주문 조회</a>
+      <a href="../contact.html">단체·기업 문의</a>
+    </nav>
+  </div>
+  <div class="ft__body container">
+    <div class="ft__brand">
+      <p class="ft__logo"><span class="logo__ko">영동에덴원</span><span class="logo__en" aria-hidden="true">YEONGDONG EDENWON</span></p>
+      <p class="ft__legal">
+        <span>농업회사법인 주식회사 에프엔엘바이오푸드 · 대표 길우관</span>
+        <span>충청북도 영동군 학산면 모리2길 3-1</span>
+        <span>사업자등록번호 550-87-01994 · 통신판매업 신고 2021-충북영동-0123</span>
+        <span>kwg7978@naver.com</span>
+        <span>© 2026 영동에덴원. All rights reserved.</span>
+      </p>
+    </div>
+    <div class="ft__cs">
+      <p class="ft__cs-h">고객센터</p>
+      <p class="ft__tel"><a href="tel:01051267578">010-5126-7578</a></p>
+<p class="ft__hours">월~금 10:00~19:00</p>      <div class="ft__sns">
+        <a href="https://blog.naver.com/gr_edenfarm" rel="noopener">블로그</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
