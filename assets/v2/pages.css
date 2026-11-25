@@ -1807,6 +1807,8 @@ body.sheet-open{overflow:hidden}
 .b4__l{font-size:13px;color:var(--muted);line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .b4__soonline{margin-top:18px;display:inline-block;padding:8px 12px;font-size:13px;background:rgba(250,248,245,.9);color:var(--ink)}
 .b4__soonline[hidden]{display:none}
+.b4__gfoot{margin-top:20px;text-align:center}.b4__gline{margin:0;font-family:var(--serif);font-size:17px;font-weight:600;line-height:1.4;color:var(--ink)}.b4__gnote{margin:4px 0 0;font-size:13px;line-height:1.45;color:var(--muted)}   /* 11-25 대표: 선물 장 카드 아래 한 줄·가격 안내(한 번) */
+.b4--dark .b4__gline{color:#FAF8F5}.b4--dark .b4__gnote{color:rgba(250,248,245,.78)}
 .b4__bg{display:none;position:absolute;inset:0}
 .b4--farm .b4__bg{display:block}
 .b4__bg-s{display:none;position:absolute;inset:0}
@@ -1825,6 +1827,7 @@ body.sheet-open{overflow:hidden}
   .b4__sub{font-size:14px;margin:8px 0 12px}.b4__month{font-size:48px;margin-bottom:4px}.b4__text .hero__cta{min-height:42px;padding:0 20px;margin-top:0}
   .b4__stage{padding-top:20px}.b4__count{top:0}.b4__row{gap:12px;grid-auto-columns:calc((100% - (var(--per) - 1) * 12px) / var(--per))}
   .b4__meta{padding:8px 10px 10px}.b4__n,.b4--farm .b4__n{font-size:15px}.b4__l{font-size:12px}.b4__soonline{margin-top:10px;font-size:12px;padding:6px 10px}
+  .b4__gfoot{margin-top:12px}.b4__gline{font-size:15px}.b4__gnote{font-size:12px}
   .b4[data-b4-few] .b4__row,.b4--farm[data-b4-few] .b4__row{grid-template-columns:repeat(var(--n),calc((100% - 12px) / 2))}
   .hero[data-b4-card] .hero__controls-in{color:var(--ink)}}
 @media (hover:hover) and (prefers-reduced-motion:no-preference){.feed__ph img{transition:transform var(--dur-slow) var(--ease)}.feed__card:hover .feed__ph img,.feed__card:focus-visible .feed__ph img{transform:scale(1.05)}}
