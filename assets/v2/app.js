@@ -1653,6 +1653,7 @@
       var nm = r.name.replace(/ ?\(필수\)$| 선택$/, ""), last = out[out.length - 1];
       if (last && last.nm === nm) last.n.push(i + 1); else out.push({ n: [i + 1], nm: nm });
     });
+    if (out.length === 1) return Tf("{0} 중에서 {1}가지", out[0].nm, rule.length);   // 11-27 밤: 모든 칸이 같은 목록(장류)
     return out.map(function (x) { return x.n.join("·") + "번 " + x.nm; }).join(" · ");
   }
   /* 장바구니에 담겨 있던 옛 구성(칸 규칙이 생기기 전)은 선물세트로 주문할 수 없다 — 낱개 상품 줄로 바꾼다(할인 없음). 바꾼 세트 수를 돌려준다. */
