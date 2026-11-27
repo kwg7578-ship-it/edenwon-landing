@@ -1641,13 +1641,42 @@
      세트 정의(허용 품목·할인)는 products.json 의 gift(서버 GIFT_SETS 와 같은 값). 금액은 표시용 — 주문 때 서버가 다시 정한다. ── */
   /* 대표 11-25: 세트 구성품 정가 합(합산가)이 gift.min(55,000) 이상일 때만 할인 — 서버 order_v2.gift_off 와 같은 규칙(min 이 없으면 예전대로) */
   function giftOff(G, sum) { return sum >= (G.min || 0) ? Math.min(G.discount, sum) : 0; }
+  /* 대표 11-27: 칸 규칙이 있는 세트(d.rule — 식초)는 칸 순서마다 허용 옵션(서버 app.gift_slots_ok 와 같은 규칙). 없으면 예전대로 허용 품목. */
+  function slotOk(d, i, key, opt) {
+    if (!d.rule) return d.allow.indexOf(key) >= 0;
+    var a = d.rule[i] && d.rule[i].opts[key];
+    return !!a && a.indexOf(opt) >= 0;
+  }
+  function ruleDesc(rule) {   // build.py rule_desc 와 같은 규칙(«1번 식초 · 2번 어간장 · 3·4번 300g 제품»)
+    var out = [];
+    rule.forEach(function (r, i) {
+      var nm = r.name.replace(/ ?\(필수\)$| 선택$/, ""), last = out[out.length - 1];
+      if (last && last.nm === nm) last.n.push(i + 1); else out.push({ n: [i + 1], nm: nm });
+    });
+    return out.map(function (x) { return x.n.join("·") + "번 " + x.nm; }).join(" · ");
+  }
+  /* 장바구니에 담겨 있던 옛 구성(칸 규칙이 생기기 전)은 선물세트로 주문할 수 없다 — 낱개 상품 줄로 바꾼다(할인 없음). 바꾼 세트 수를 돌려준다. */
+  function regift(P, items) {
+    var out = [], conv = [], n = 0, G = P && P.gift;
+    items.forEach(function (it) {
+      var d = it && it.gift && G && G.sets[it.gift];
+      if (!d || !d.rule || giftView(P, it) || !Array.isArray(it.items) || !it.items.every(function (x) { return x && optOf(P, x.key, x.option); })) { out.push(it); return; }
+      n++; conv = conv.concat(it.items);
+    });
+    conv.forEach(function (x) {   // 같은 상품·옵션 줄이 이미 있으면 수량을 더한다(Cart.add 와 같이)
+      var hit = out.filter(function (o) { return !o.gift && o.key === x.key && o.option === x.option; })[0];
+      if (hit) hit.qty = Math.min(Cart.MAX_QTY, hit.qty + 1);
+      else out.push({ key: x.key, option: x.option, qty: 1, checked: true });
+    });
+    return { items: out, n: n };
+  }
   function giftView(P, it) {
     var G = P && P.gift, d = G && G.sets[it.gift];
     if (!d || !Array.isArray(it.items) || it.items.length !== G.slots) return null;
     var parts = [], sum = 0, so = false;
     for (var k = 0; k < it.items.length; k++) {
       var x = it.items[k], h = x && optOf(P, x.key, x.option);
-      if (!h || d.allow.indexOf(x.key) < 0) return null;
+      if (!h || !slotOk(d, k, x.key, x.option)) return null;
       parts.push(h); sum += h.o.price; so = so || !!h.o.sold_out;
     }
     var off = giftOff(G, sum), short = G.min && sum < G.min ? G.min - sum : 0;
@@ -1750,10 +1779,13 @@
     page.querySelector("[data-go-all]").addEventListener("click", function (e) { go(e, false); });
     loadProducts(page.getAttribute("data-products")).then(function (data) {
       P = data;
-      var c = Cart.read(), kept = c.filter(function (it) { return lineInfo(P, it) && it.qty > 0; });
-      if (kept.length !== c.length) {
+      var rg = regift(P, Cart.read()), c = rg.items, kept = c.filter(function (it) { return lineInfo(P, it) && it.qty > 0; });
+      if (kept.length !== c.length || rg.n) {
         Cart.write(kept);
-        notice.textContent = Tf("판매가 끝났거나 바뀐 상품 {0}개를 장바구니에서 뺐습니다.", c.length - kept.length);
+        var nt = [];
+        if (rg.n) nt.push(Tf("선물세트 구성 기준이 바뀌어, 담아 두신 예전 구성 {0}세트를 일반 상품으로 바꿨습니다(선물세트 할인 없음). 선물세트로 보내시려면 선물세트 화면에서 다시 골라 주세요.", rg.n));
+        if (kept.length !== c.length) nt.push(Tf("판매가 끝났거나 바뀐 상품 {0}개를 장바구니에서 뺐습니다.", c.length - kept.length));
+        notice.textContent = nt.join(" ");
         notice.hidden = false;
       }
       render();
@@ -2054,7 +2086,10 @@
       else loadScript("https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js").then(go, function () { say(T("우편번호 검색을 불러오지 못했습니다. 직접 입력해 주세요.")); });
     });
     loadProducts(page.getAttribute("data-products")).then(function (P) {
-      var src = source(), dropped = 0;
+      var rg = fromBuyNow ? null : regift(P, Cart.read());   // 11-27: 예전 식초 세트 구성은 낱개 상품 줄로(장바구니도 같이 바꿔 둠)
+      if (rg && rg.n) Cart.write(rg.items);
+      var src = source(), dropped = 0, regN = rg ? rg.n : 0;
+      if (fromBuyNow) { rg = regift(P, src); src = rg.items; regN = rg.n; }
       src.forEach(function (it) {
         if (it && it.gift) {
           var gv = giftView(P, it);
@@ -2090,7 +2125,12 @@
         ul.appendChild(li); n += 1;
       });
       $("[data-co-count]").textContent = Tf("{0}종 · {1}개", lines.length + gifts.length, n);
-      if (dropped) { var nt = $("[data-co-notice]"); nt.textContent = Tf("품절이거나 판매가 끝난 상품 {0}개는 주문서에서 뺐습니다.", dropped); nt.hidden = false; }
+      if (dropped || regN) {
+        var nt = $("[data-co-notice]"), nx = [];
+        if (regN) nx.push(Tf("선물세트 구성 기준이 바뀌어, 예전 구성 {0}세트는 일반 상품으로 담았습니다(선물세트 할인 없음). 선물세트로 보내시려면 선물세트 화면에서 다시 골라 주세요.", regN));
+        if (dropped) nx.push(Tf("품절이거나 판매가 끝난 상품 {0}개는 주문서에서 뺐습니다.", dropped));
+        nt.textContent = nx.join(" "); nt.hidden = false;
+      }
       paint();
       if (API) {
         loadMe().then(function () { requote(true); });
@@ -2275,7 +2315,7 @@
           sum += h.o.price; n++;
         } else {
           b.appendChild(el("span", "gift__slot-plus", "+"));
-          b.appendChild(el("span", "gift__slot-empty", Tf("{0}번째 칸 고르기", i + 1)));
+          b.appendChild(el("span", "gift__slot-empty", d().rule ? d().rule[i].name : Tf("{0}번째 칸 고르기", i + 1)));   // 11-27: 칸 규칙 세트는 칸 이름(«식초 (필수)» 등)
         }
         b.addEventListener("click", function () { open(i, b); });
         li.appendChild(b);
@@ -2316,8 +2356,11 @@
       sheet.querySelector("[data-sheet-slot]").textContent = String(i + 1);
       var ul = sheet.querySelector("[data-sheet-list]"); ul.innerHTML = ""; ul.hidden = false;
       sheet.querySelector("[data-sheet-opts]").hidden = true;
-      d().allow.forEach(function (k) {
+      (d().rule ? Object.keys(d().rule[i].opts) : d().allow).forEach(function (k) {   // 11-27: 칸 규칙 세트는 그 칸의 허용 상품만
         var p = P.products[k]; if (!p) return;
+        var okOpts = p.options.filter(function (o) { return slotOk(d(), i, k, o.id); });
+        if (!okOpts.length) return;
+        p = { name: p.name, img: p.img, opt_img: p.opt_img, options: okOpts };
         var avail = p.options.filter(function (o) { return !o.sold_out; });
         var li = el("li"), b = el("button", "sheet__item" + (avail.length ? "" : " is-soldout"));
         b.type = "button"; b.disabled = !avail.length;
@@ -2338,7 +2381,7 @@
       sheet.querySelector("[data-sheet-list]").hidden = true; box.hidden = false;
       box.querySelector("[data-sheet-opt-h]").textContent = Tf("{0} — 옵션을 골라 주세요", p.name);
       ul.innerHTML = "";
-      p.options.forEach(function (o) {
+      p.options.filter(function (o) { return slotOk(d(), cur, k, o.id); }).forEach(function (o) {   // 11-27: 그 칸에 허용된 옵션만
         var li = el("li"), b = el("button", "sheet__opt" + (o.sold_out ? " is-soldout" : ""), o.label + " · " + (o.sold_out ? T("품절") : won(o.price)));
         b.type = "button"; b.disabled = !!o.sold_out;
         b.addEventListener("click", function () { pick(k, o.id); });
@@ -2370,8 +2413,9 @@
     });
     page.querySelector("[data-gift-fill]").addEventListener("click", function () {
       d().def.forEach(function (x, i) {
-        var p = P.products[x[0]]; if (!p || i >= G.slots) return;
-        var o = p.options.filter(function (o) { return o.id === x[1] && !o.sold_out; })[0] || p.options.filter(function (o) { return !o.sold_out; })[0];
+        var p = x && P.products[x[0]]; if (!p || i >= G.slots) return;   // 11-27: 칸 규칙 세트는 맞지 않는 칸이 null
+        var ok = p.options.filter(function (o) { return !o.sold_out && slotOk(d(), i, x[0], o.id); });
+        var o = ok.filter(function (o) { return o.id === x[1]; })[0] || ok[0];
         if (o && !picks[i]) picks[i] = { key: x[0], option: o.id };
       });
       paint();
@@ -2396,7 +2440,8 @@
       P = data; G = P.gift;
       Object.keys(G.sets).forEach(function (id) {
         var x = page.querySelector('[data-set-desc="' + id + '"]');
-        if (x) x.textContent = Tf("{0} 중에서 {1}가지", G.sets[id].allow.map(function (k) { return P.products[k] ? P.products[k].name : k; }).join(" · "), G.slots);
+        if (x) x.textContent = G.sets[id].rule ? ruleDesc(G.sets[id].rule)   // 11-27: 칸 규칙 세트
+          : Tf("{0} 중에서 {1}가지", G.sets[id].allow.map(function (k) { return P.products[k] ? P.products[k].name : k; }).join(" · "), G.slots);
       });
       choose(want);
     });
